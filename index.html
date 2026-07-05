@@ -312,6 +312,23 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
 .sakura-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
 .sakura-petal{position:absolute;top:-10px;border-radius:50%;opacity:0;animation:sakuraFall linear infinite;filter:blur(0.3px)}
 @keyframes sakuraFall{0%{opacity:0;transform:translateY(0) rotate(0deg) translateX(0)}5%{opacity:.65}85%{opacity:.50}100%{opacity:0;transform:translateY(110vh) rotate(720deg) translateX(45px)}}
+/* ── Tagesquest ── */
+.questcard{background:linear-gradient(135deg,#FFF6E8,#FFEFD8);border:2px solid #F0C060;border-radius:var(--r);padding:12px 14px;margin:10px 0;box-shadow:var(--sh)}
+.questcard.done{background:linear-gradient(135deg,#EFF8EC,#E2F2DC);border-color:var(--erde)}
+.questcard .q-head{font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;color:#8A5A00;margin-bottom:8px;text-align:center}
+.questcard.done .q-head{color:var(--erded)}
+.questcard .q-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.75);border-radius:var(--rs);padding:9px 12px;margin:6px 0;cursor:pointer;font-weight:800;border:2px solid transparent;transition:transform .12s}
+.questcard .q-row:hover{transform:translateY(-2px);border-color:#F0C060}
+.questcard .q-row.ok{opacity:.72;border-color:var(--erde)}
+.questcard .q-ico{font-size:24px;flex:none}
+.questcard .q-txt{flex:1;font-size:15px;line-height:1.3}
+.questcard .q-go{font-size:12.5px;color:var(--gold2);white-space:nowrap}
+.questcard .q-note{text-align:center;font-size:12.5px;font-weight:800;color:#8A5A00;margin-top:6px}
+body.calm .questcard{box-shadow:none}
+/* ── Auto-Schwierigkeit Toast ── */
+.adapttoast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#3D2817;color:#FFE9B8;font-weight:800;font-size:15px;padding:11px 20px;border-radius:20px;z-index:1200;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:pop .3s;white-space:nowrap}
+/* ── Ruhe-Insel ── */
+#br-circle{will-change:transform}
 </style>
 </head>
 <body>
@@ -375,6 +392,8 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
  </div>
  <div id="calm-banner" style="display:none"></div>
  <div id="hub-companion"></div>
+ <div class="progresscard" id="hub-progress"></div>
+ <div id="hub-quest"></div>
  <div class="elrow" id="hub-els"></div>
  <div class="charrow" id="hub-chars"></div>
  <div class="diffbar" id="diffbar"></div>
@@ -400,12 +419,33 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
   <div class="mcard" style="background:#2A1F3D;color:#FFD54F" onclick="startAvatarQuiz()"><div style="font-size:38px">🌟</div><div class="mtitle">Avatar-Wissen</div><div class="mdesc">Wie gut kennst du die Se·rie?</div></div>
   <div class="mcard" style="background:#E8F3EC;color:#1F6E3A" onclick="go('s-map')"><div style="font-size:38px">🗺️</div><div class="mtitle">Welt·kar·te</div><div class="mdesc">Ent·de·cke die Na·ti·o·nen</div></div>
   <div class="mcard" style="background:#FFF0F6;color:#A8305A" onclick="startCooking()"><div style="font-size:38px">🍳</div><div class="mtitle">Irohs Küche</div><div class="mdesc">Ko·che &amp; ver·dopp·le Re·zep·te</div></div>
+  <div class="mcard" style="background:#E6F2FA;color:#1E5E82" onclick="startBreathe()"><div style="font-size:38px">🏝️</div><div class="mtitle">Ruhe-Insel</div><div class="mdesc">At·men &amp; ent·span·nen mit Appa</div></div>
  </div>
 
 
  <div style="text-align:center;margin:14px 0 4px">
+  <button class="btn bgray" style="font-size:12px;padding:5px 12px;opacity:.45" onclick="exportSave()">💾 Spiel·stand si·chern</button>
+  <button class="btn bgray" style="font-size:12px;padding:5px 12px;opacity:.45" onclick="document.getElementById('imp-file').click()">📂 Spiel·stand la·den</button>
+  <input type="file" id="imp-file" accept=".json,application/json" style="display:none" onchange="importSave(this)">
+  <br>
   <button class="btn bgray" style="font-size:12px;padding:5px 12px;opacity:.45" onclick="showResetConfirm()">↺ Spiel neu star·ten</button>
   <button class="btn bgray" style="font-size:12px;padding:5px 12px;opacity:.32" onclick="location.href='arena.html'" title="Für Tochter & Erwachsene">☯ Fa·mi·lie</button>
+ </div>
+</div>
+
+<!-- RUHE-INSEL -->
+<div id="s-breathe" class="sc">
+ <button class="btn bgray" onclick="stopBreathe();go('s-hub')">← Zurück</button>
+ <div class="gh"><div class="gt">Ruhe-Insel 🏝️</div><div class="gs">At·me ge·mein·sam mit Appa</div></div>
+ <div class="card" style="text-align:center">
+  <div id="br-stage" style="position:relative;height:250px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+   <div id="br-circle" style="width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#BFE3F5,#6AAAC8);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(60,120,160,.35)">
+    <div id="br-appa" style="width:84px;height:84px"></div>
+   </div>
+  </div>
+  <div id="br-phase" style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;min-height:34px;color:var(--wasserd)"></div>
+  <div id="br-count" style="font-size:15px;font-weight:800;color:var(--muted);min-height:22px;margin:2px 0 8px"></div>
+  <button class="btn bblue" id="br-btn" onclick="breatheGo()">🌊 Los geht's</button>
  </div>
 </div>
 
@@ -1146,13 +1186,15 @@ function loadSave(){
   if(typeof s.companion==='string')companion=s.companion;
   if(Array.isArray(s.storyUnlocked))storyUnlocked=s.storyUnlocked;
   if(Array.isArray(s.storiesDone))s.storiesDone.forEach(function(id){if(storyUnlocked.indexOf(id)<0)storyUnlocked.push(id);});
+  if(typeof s.diff==='string'&&DIFFCFG[s.diff])DIFF=s.diff;
+  if(typeof s.adapt==='boolean')ADAPT=s.adapt;
  }catch(e){}
- const t=todayStr();if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;}
+ const t=todayStr();if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;daily.qg='';daily.qgDone=false;daily.qsDone=false;daily.qBonus=false;}
 }
-function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({scrolls,unlocked,achievements,journeyDone,jAppaAt,daily,treasures,calm,storiesDone,companion,storyUnlocked}));}catch(e){}}
+function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({scrolls,unlocked,achievements,journeyDone,jAppaAt,daily,treasures,calm,storiesDone,companion,storyUnlocked,diff:DIFF,adapt:ADAPT}));}catch(e){}}
 function recordActivity(){
  const t=todayStr();
- if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;}
+ if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;daily.qg='';daily.qgDone=false;daily.qsDone=false;daily.qBonus=false;}
  daily.count++;
  if(daily.count>=6&&!daily.teamDone){daily.teamDone=true;award(5);}
  if(daily.last!==t){const y=new Date(Date.now()-86400000).toISOString().slice(0,10);daily.streak=(daily.last===y)?(daily.streak+1):1;daily.last=t;}
@@ -1160,7 +1202,7 @@ function recordActivity(){
 }
 function buildDailyBanner(){
  const el=document.getElementById('hub-progress');if(!el)return;
- const t=todayStr();if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;}
+ const t=todayStr();if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;daily.qg='';daily.qgDone=false;daily.qsDone=false;daily.qBonus=false;}
  const done=Math.min(daily.count,DAY_GOAL);
  let dots='';for(let i=0;i<DAY_GOAL;i++)dots+='<span class="pgdot">'+(i<done?'⭐':'☆')+'</span>';
  const reached=daily.count>=DAY_GOAL;
@@ -1179,8 +1221,8 @@ const DIFFCFG={
  schwer:{rows:[2,3,4,5,6,7,8,9,10],b:[2,10],plusA:[8,25],plusB:[4,15],minusA:[12,40]}
 };
 function dc(){return DIFFCFG[DIFF];}
-function setDiff(d){DIFF=d;buildDiffBar();sfxTea();}
-function buildDiffBar(){const bar=document.getElementById('diffbar');if(!bar)return;const opts=[['leicht','🌱 Leicht'],['normal','⭐ Normal'],['schwer','🔥 Schwer']];bar.innerHTML=opts.map(([k,l])=>`<button class="diffpill ${DIFF===k?'on':''}" onclick="setDiff('${k}')">${l}</button>`).join('');const hint={leicht:'Klei·ne Zah·len, ganz ent·spannt 🍵',normal:'Ge·nau rich·tig zum Üben ⭐',schwer:'Für ech·te Ava·tar-Meis·ter! 🔥'}[DIFF];const h=document.getElementById('diffhint');if(h)h.textContent=hint;}
+function setDiff(d){if(d==='auto'){ADAPT=true;}else{ADAPT=false;DIFF=d;}adaptRight=0;adaptWrong=0;persist();buildDiffBar();sfxTea();}
+function buildDiffBar(){const bar=document.getElementById('diffbar');if(!bar)return;const opts=[['auto','🪄 Auto'],['leicht','🌱 Leicht'],['normal','⭐ Normal'],['schwer','🔥 Schwer']];bar.innerHTML=opts.map(([k,l])=>`<button class="diffpill ${(k==='auto'?ADAPT:(!ADAPT&&DIFF===k))?'on':''}" onclick="setDiff('${k}')">${l}</button>`).join('');const names={leicht:'Leicht 🌱',normal:'Normal ⭐',schwer:'Schwer 🔥'};const hint=ADAPT?('Passt sich dir an — ge·ra·de: '+names[DIFF]):{leicht:'Klei·ne Zah·len, ganz ent·spannt 🍵',normal:'Ge·nau rich·tig zum Üben ⭐',schwer:'Für ech·te Ava·tar-Meis·ter! 🔥'}[DIFF];const h=document.getElementById('diffhint');if(h)h.textContent=hint;}
 function genRow(row){const c=dc();let r=row==='mix'?c.rows[rnd(0,c.rows.length-1)]:row;let b=rnd(c.b[0],c.b[1]);let ans=r*b;let q=Math.random()<0.5?`${r} × ${b}`:`${b} × ${r}`;return {q,ans,opts:makeOpts(ans),type:'×',a:r,b:b};}
 function genQ(mode){
  if(mode==='plus'){const c=dc();const a=rnd(c.plusA[0],c.plusA[1]),b=rnd(c.plusB[0],c.plusB[1]),ans=a+b;return {q:`${a} + ${b}`,ans,opts:makeOpts(ans),type:'+',a,b};}
@@ -1191,7 +1233,7 @@ function genQ(mode){
 }
 // ── Gut-gemacht / Pause ──
 let gamesFinished=0;
-function maybeBreak(){if(typeof recordActivity==='function')recordActivity();gamesFinished++;if(gamesFinished%2===0)setTimeout(showBreak,900);}
+function maybeBreak(){if(typeof recordActivity==='function')recordActivity();questGameCheck();gamesFinished++;const due=gamesFinished%2===0;if(missed.length)setTimeout(()=>showRevanche(due),900);else if(due)setTimeout(showBreak,900);}
 const MOVEBREAKS=[
  {emoji:'🪨',title:'Erd·bän·di·ger-Sprün·ge',text:'Steh auf und mach <b>3 kräf·ti·ge Sprün·ge</b> — stampf da·nach wie Toph fest auf den Bo·den!'},
  {emoji:'🌬️',title:'Luft·bän·di·ger-Wir·bel',text:'Steh auf und <b>wir·ble bei·de Ar·me 5 Mal</b> groß im Kreis — wie ein Luft·bän·di·ger!'},
@@ -1234,6 +1276,8 @@ function buildHub(){
  setIco('hi-div',AVA.Sokka());setIco('hi-fairy',AVA.Aang());
  buildDiffBar();
  buildCompanion();
+ buildDailyBanner();
+ buildQuestCard();
  const cb=document.getElementById('calmbtn');if(cb)cb.textContent=calm?'🌙':'🌤️';
  if(calm){const banner=document.getElementById('calm-banner');if(banner&&banner.style.display==='none')banner.style.display='block';}
 }
@@ -1281,12 +1325,12 @@ function answerRiddle(o,btn){
  const cur=riddle.items[riddle.idx];
  const fb=document.getElementById('riddle-fb');
  if(o===cur.a){
-  btn.classList.add('right');sfxRight();riddle.correct++;
+  btn.classList.add('right');sfxRight();adaptTrack(true);riddle.correct++;
   fb.textContent='✅ Richtig! Super gelesen!';
   fb.className='feedbk ok';
   setTimeout(nextRiddle,1000);
  }else{
-  btn.classList.add('wrong');sfxWrong();
+  btn.classList.add('wrong');sfxWrong();adaptTrack(false);remember({q:cur.q,ans:cur.a,opts:cur.opts});
   [...document.querySelectorAll('#riddle-opts .qopt')].forEach(b=>{if(b.textContent===cur.a)b.classList.add('right');});
   fb.textContent='❌ Das war nicht ganz richtig. Die richtige Antwort ist: '+cur.a;
   fb.className='feedbk no';
@@ -1314,8 +1358,8 @@ function startRace(){ensureAudio();race={pos:0,foe:0,row:raceRow,lock:false};doc
 function updateRacePos(){document.getElementById('racer-appa').style.left=(4+race.pos/10*82)+'%';document.getElementById('racer-foe').style.left=(4+race.foe/10*82)+'%';document.getElementById('r-pos').textContent=Math.floor(race.pos);document.getElementById('r-foe').textContent=Math.floor(race.foe);}
 function newRaceQ(){race.lock=false;const m=genRow(race.row);race.cur=m;document.getElementById('r-q').textContent=m.q;const g=document.getElementById('r-opts');g.innerHTML='';m.opts.forEach(o=>{const b=document.createElement('button');b.className='qopt';b.textContent=o;b.onclick=()=>raceAnswer(o,b);g.appendChild(b);});}
 function raceAnswer(o,btn){if(race.lock)return;race.lock=true;const fb=document.getElementById('r-fb');
- if(o===race.cur.ans){btn.classList.add('right');race.pos+=1;race.foe+=0.5;sfxRight();fb.textContent='✅ Richtig! Appa fliegt vor! 🦬💨';fb.className='feedbk ok';}
- else{btn.classList.add('wrong');race.foe+=0.8;sfxWrong();[...document.querySelectorAll('#r-opts .qopt')].forEach(b=>{if(+b.textContent===race.cur.ans)b.classList.add('right');});fb.textContent='❌ Richtig wäre '+race.cur.ans+'. Azula holt auf!';fb.className='feedbk no';}
+ if(o===race.cur.ans){btn.classList.add('right');race.pos+=1;race.foe+=0.5;sfxRight();adaptTrack(true);fb.textContent='✅ Richtig! Appa fliegt vor! 🦬💨';fb.className='feedbk ok';}
+ else{btn.classList.add('wrong');race.foe+=0.8;sfxWrong();adaptTrack(false);remember(race.cur);[...document.querySelectorAll('#r-opts .qopt')].forEach(b=>{if(+b.textContent===race.cur.ans)b.classList.add('right');});fb.textContent='❌ Richtig wäre '+race.cur.ans+'. Azula holt auf!';fb.className='feedbk no';}
  updateRacePos();if(race.pos>=10)return setTimeout(()=>raceEnd(true),900);if(race.foe>=10)return setTimeout(()=>raceEnd(false),900);setTimeout(newRaceQ,1100);}
 function raceEnd(win){
  if(win)award(2);
@@ -1365,9 +1409,9 @@ function moveMaze(dx,dy){if(maze.lock)return;const nx=maze.px+dx,ny=maze.py+dy;i
  maze.px=nx;maze.py=ny;sfxStep();if(cell>=10){maze.pending=[nx,ny,EORD[cell-10]];askMazeGem();}renderMaze();}
 function askMazeGem(){maze.lock=true;const el=maze.pending[2];const m=genRow(10);maze.cur=m;document.getElementById('mz-prompt').innerHTML=`Löse die Rechnung, um das <b>${el}</b>-Element zu sammeln! 🔟`;document.getElementById('maze-q').style.display='block';document.getElementById('mz-q').textContent=m.q;const g=document.getElementById('mz-opts');g.innerHTML='';m.opts.forEach(o=>{const b=document.createElement('button');b.className='qopt';b.textContent=o;b.onclick=()=>answerGem(o,b);g.appendChild(b);});document.getElementById('maze-q').scrollIntoView({behavior:'smooth',block:'nearest'});}
 function answerGem(o,btn){const[x,y,el]=maze.pending;
- if(o===maze.cur.ans){btn.classList.add('right');sfxRight();maze.grid[y][x]=0;maze.collected.push(el);document.getElementById('maze-msg').textContent='✅ '+el+'-Element gesammelt!';renderSlots();
+ if(o===maze.cur.ans){btn.classList.add('right');sfxRight();adaptTrack(true);maze.grid[y][x]=0;maze.collected.push(el);document.getElementById('maze-msg').textContent='✅ '+el+'-Element gesammelt!';renderSlots();
   setTimeout(()=>{document.getElementById('maze-q').style.display='none';maze.lock=false;renderMaze();if(maze.collected.length>=4)document.getElementById('maze-msg').innerHTML='🎉 Alle 4 Elemente! Das Tor 🏯 ist offen!';},700);}
- else{btn.classList.add('wrong');sfxWrong();[...document.querySelectorAll('#mz-opts .qopt')].forEach(b=>{if(+b.textContent===maze.cur.ans)b.classList.add('right');});document.getElementById('maze-msg').textContent='❌ Richtig wäre '+maze.cur.ans+'. Versuch es gleich nochmal!';setTimeout(()=>{document.getElementById('maze-q').style.display='none';maze.lock=false;},1500);}}
+ else{btn.classList.add('wrong');sfxWrong();adaptTrack(false);remember(maze.cur);[...document.querySelectorAll('#mz-opts .qopt')].forEach(b=>{if(+b.textContent===maze.cur.ans)b.classList.add('right');});document.getElementById('maze-msg').textContent='❌ Richtig wäre '+maze.cur.ans+'. Versuch es gleich nochmal!';setTimeout(()=>{document.getElementById('maze-q').style.display='none';maze.lock=false;},1500);}}
 function mazeWin(){award(2);document.getElementById('mw-msg').innerHTML='🏯 Geschafft, Rozarin! Du hast alle 4 Elemente gesammelt und den Weg durch Ba Sing Se gefunden! 🌬️🌊🪨🔥';document.getElementById('mw-again').setAttribute('onclick',"startMaze();go('s-maze')");sfxWin();fireConfetti();maybeBreak();go('s-mem-win');}
 document.addEventListener('keydown',e=>{const m={'ArrowLeft':[-1,0],'ArrowRight':[1,0],'ArrowUp':[0,-1],'ArrowDown':[0,1]};if(m[e.key]&&document.getElementById('s-maze').classList.contains('on')){e.preventDefault();moveMaze(...m[e.key]);}});
 
@@ -1416,7 +1460,7 @@ function chooseMove(m){if(D.over)return;D.heroShield=false;
  if(m.kind==='heal'){D.heroShield=true;D.heroHP=Math.min(100,D.heroHP+m.heal);if(m.gain)D.chi=Math.min(5,D.chi+m.gain);updateHP();sfxRight();log('🛡️ '+m.t.replace(/^.. /,'')+': du heilst dich +'+m.heal+(m.gain?' und bekommst +1⚡!':' !'));buildMoves(false);document.getElementById('turn-badge').textContent='...';setTimeout(foeTurn,1200);return;}
  if(m.kind==='dodge'){D.dodge=true;D.dodgeAvail=false;updateHP();sfxRight();log('✨ Aang macht sich bereit auszuweichen — der nächste Angriff geht ins Leere!');buildMoves(false);document.getElementById('turn-badge').textContent='...';setTimeout(foeTurn,1200);return;}
  D.pending=m;buildMoves(false);const mq=genQ(m.math||'mix');D.cur=mq;document.getElementById('duel-q').style.display='block';document.getElementById('dl-q').textContent=mq.q;const g=document.getElementById('dl-opts');g.innerHTML='';mq.opts.forEach(o=>{const b=document.createElement('button');b.className='qopt';b.textContent=o;b.onclick=()=>answerDuel(o,b);g.appendChild(b);});log('🔥 Löse die Rechnung für '+m.t+'!');document.getElementById('turn-badge').textContent='Rechne!';}
-function answerDuel(o,btn){const m=D.pending,correct=o===D.cur.ans;if(correct){btn.classList.add('right');sfxRight();}else{btn.classList.add('wrong');sfxWrong();[...document.querySelectorAll('#dl-opts .qopt')].forEach(b=>{if(+b.textContent===D.cur.ans)b.classList.add('right');});}
+function answerDuel(o,btn){const m=D.pending,correct=o===D.cur.ans;if(correct){btn.classList.add('right');sfxRight();adaptTrack(true);}else{btn.classList.add('wrong');sfxWrong();adaptTrack(false);remember(D.cur);[...document.querySelectorAll('#dl-opts .qopt')].forEach(b=>{if(+b.textContent===D.cur.ans)b.classList.add('right');});}
  setTimeout(()=>{document.getElementById('duel-q').style.display='none';let dmg=0;let bonus='';
   if(correct){dmg=m.base;D.chi=Math.min(5,D.chi+m.gain);if(m.chi>0)D.chi-=m.chi;
    const mult=EL_VS_FIRE[D.heroEl]||1;if(mult>1&&D.foeKey==='Azula'){dmg=Math.round(dmg*mult);bonus=' 💧(Wasser-Vorteil!)';}
@@ -1716,6 +1760,7 @@ const NATIONHUBS={
    {t:'Tempel der Achtsamkeit',d:'Ge·dächt·nis stär·ken',e:'🧘🏽‍♀️',go:"startMemXL()"},
    {t:'Appas Wortflug',d:'Wör·ter ein·sam·meln',e:'🌬️',go:"go('s-word-flight')"},
    {t:'Element-Labyrinth',d:'Den Weg fin·den',e:'🏯',go:"go('s-maze')"},
+   {t:'Ruhe-Insel',d:'At·men & ent·span·nen',e:'🏝️',go:"startBreathe()"},
    {t:'Luftbändiger-Bewegung',d:'Auf·ste·hen & be·we·gen',e:'🤸🏽‍♀️',go:"showBreak()"}
   ]},
  wasser:{name:'Wasserstamm',emoji:'🌊',sub:'Wörter & Sprachen',bg:'#E2F4F8',fg:'#0B5563',
@@ -1772,7 +1817,7 @@ function renderStoryPage(){var s=SR.story;if(!s)return;var pg=s.pages[SR.page];d
 function storyPrev(){if(SR.page>0){SR.page--;renderStoryPage();}}
 function storyNext(){var s=SR.story;if(!s)return;if(SR.page>=s.pages.length-1){finishStory();}else{SR.page++;renderStoryPage();}}
 function storySay(){var s=SR.story;if(!s)return;var t=s.pages[SR.page].text.replace(/<[^>]+>/g,' ').replace(/[\u00b7\u00ad]/g,'');speak(t);}
-function finishStory(){var s=SR.story;if(!s)return;var first=storiesDone.indexOf(s.id)<0;var msg='';if(first){storiesDone.push(s.id);msg='💛 Schön, dass du »'+s.title+'« zu En·de ge·le·sen hast!';if(s.unlock&&!unlocked[s.unlock]){unlocked[s.unlock]=true;msg+=' Und '+(getChar(s.unlock)?getChar(s.unlock).n:s.unlock)+' ist jetzt dein Freund! 🤝';}persist();fireConfetti();sfxWin();}else{msg='📖 Schön, sie noch·mal zu le·sen!';}buildStories();go('s-stories');var m=document.getElementById('stories-msg');if(m)m.innerHTML=msg;}
+function finishStory(){var s=SR.story;if(!s)return;var first=storiesDone.indexOf(s.id)<0;questStoryCheck(s.id);var msg='';if(first){storiesDone.push(s.id);msg='💛 Schön, dass du »'+s.title+'« zu En·de ge·le·sen hast!';if(s.unlock&&!unlocked[s.unlock]){unlocked[s.unlock]=true;msg+=' Und '+(getChar(s.unlock)?getChar(s.unlock).n:s.unlock)+' ist jetzt dein Freund! 🤝';}persist();fireConfetti();sfxWin();}else{msg='📖 Schön, sie noch·mal zu le·sen!';}buildStories();go('s-stories');var m=document.getElementById('stories-msg');if(m)m.innerHTML=msg;}
 
 const TP_CHARS=['Aang','Katara','Zuko','Toph','Sokka','Appa','Iroh','Azula'];
 const TP_MATH=[{id:'plus',n:'➕'},{id:'minus',n:'➖'},{id:'mal',n:'✖️'}];
@@ -1839,6 +1884,177 @@ function tpEnd(winner){
 }
 
 function fireConfetti(){if(calm)return;const cv=document.createElement('canvas');cv.className='confetti';cv.width=innerWidth;cv.height=innerHeight;document.body.appendChild(cv);const ctx=cv.getContext('2d');const cols=['#E0552B','#FFC107','#2E8FA8','#6FA53C','#5C9CE0'];let parts=Array.from({length:90},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height/2,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,s:6+Math.random()*6,c:cols[Math.floor(Math.random()*cols.length)],a:Math.random()*Math.PI}));let t=0;(function anim(){ctx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=.1;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);ctx.restore();});t++;if(t<150)requestAnimationFrame(anim);else cv.remove();})();}
+// ════ AUTO-SCHWIERIGKEIT (passt sich an) ════
+let ADAPT=true,adaptRight=0,adaptWrong=0;
+const DIFF_ORDER=['leicht','normal','schwer'];
+function adaptTrack(ok){
+ if(!ADAPT)return;
+ if(ok){adaptRight++;adaptWrong=0;}else{adaptWrong++;adaptRight=0;}
+ const i=DIFF_ORDER.indexOf(DIFF);
+ if(adaptWrong>=2&&i>0){DIFF=DIFF_ORDER[i-1];adaptRight=0;adaptWrong=0;persist();adaptToast(false);buildDiffBar();}
+ else if(adaptRight>=5&&i<DIFF_ORDER.length-1){DIFF=DIFF_ORDER[i+1];adaptRight=0;adaptWrong=0;persist();adaptToast(true);buildDiffBar();}
+}
+function adaptToast(up){
+ const old=document.querySelector('.adapttoast');if(old)old.remove();
+ const d=document.createElement('div');d.className='adapttoast';
+ d.textContent=up?'🔥 Stark! Jetzt et·was kniff·li·ger.':'🍵 Wir üben mit leich·te·ren Zah·len.';
+ document.body.appendChild(d);setTimeout(()=>d.remove(),2600);
+}
+// ════ REVANCHE: falsche Aufgaben zurückholen ════
+let missed=[];
+function remember(c){
+ if(!c||c.q==null||c.ans==null)return;
+ const q=String(c.q);if(missed.some(m=>m.q===q))return;
+ const opts=(c.opts||[]).map(o=>(o&&o.label!=null)?{label:o.label,val:o.val}:{label:o,val:o});
+ if(opts.length<2)return;
+ missed.push({q,ans:c.ans,ansLabel:c.ansLabel||null,visual:c.visual||'',opts});
+ if(missed.length>3)missed.shift();
+}
+function showRevanche(breakDue){
+ if(!missed.length){if(breakDue)showBreak();return;}
+ if(document.querySelector('.breakov'))return;
+ const items=missed.slice();missed=[];
+ let idx=0,won=0;
+ const ov=document.createElement('div');ov.className='breakov';
+ document.body.appendChild(ov);
+ function render(){
+  const it=items[idx];
+  ov.innerHTML='<div class="breakcard"><div style="font-size:44px">⚔️</div><div class="breaktitle">Re·van·che '+(idx+1)+'/'+items.length+'</div><div class="breaktext">Die·se Auf·ga·be hat dich vor·hin ge·är·gert. Zeig ihr, wer der Meis·ter ist! 💪</div>'+(it.visual||'')+'<div class="qbig" style="font-size:28px;margin:4px 0 10px">'+it.q+'</div><div class="qopts" id="rev-opts"></div><div class="feedbk" id="rev-fb"></div></div>';
+  const g=ov.querySelector('#rev-opts');let lock=false;
+  it.opts.forEach(o=>{const b=document.createElement('button');b.className='qopt';b.innerHTML=o.label;b.onclick=()=>{
+   if(lock)return;lock=true;const ok=(o.val===it.ans);
+   const fb=ov.querySelector('#rev-fb');
+   if(ok){b.classList.add('right');sfxRight();won++;award(1);fb.textContent='✅ Re·van·che ge·won·nen! +1 📜';fb.className='feedbk ok';}
+   else{b.classList.add('wrong');sfxWrong();[...g.children].forEach((x,xi)=>{if(it.opts[xi].val===it.ans)x.classList.add('right');});fb.textContent='Rich·tig ist: '+(it.ansLabel||it.ans)+' — merk sie dir! 💛';fb.className='feedbk no';}
+   setTimeout(()=>{idx++;if(idx>=items.length)finish();else render();},ok?950:1900);
+  };g.appendChild(b);});
+ }
+ function finish(){
+  ov.innerHTML='<div class="breakcard"><div style="font-size:52px">'+(won===items.length?'🏆':'💪')+'</div><div class="breaktitle">Re·van·che vor·bei!</div><div class="breaktext">Du hast <b>'+won+' von '+items.length+'</b> Auf·ga·ben zu·rück·ge·holt'+(won>0?' und 📜 ver·dient':'')+'. Feh·ler sind Hel·fer! 💛</div><button class="btn bgold" style="margin:0" id="rev-close">Wei·ter ▶</button></div>';
+  ov.querySelector('#rev-close').onclick=()=>{ov.remove();if(breakDue)setTimeout(showBreak,400);};
+ }
+ render();
+}
+// ════ TAGESQUEST: Heute für dich ════
+const QUEST_GAMES=[
+ {id:'race',n:'Appa-Rennen',e:'🦬',start:function(){go('s-race-pick');}},
+ {id:'memxl',n:'Tempel der Achtsamkeit',e:'🧘🏽‍♀️',start:function(){startMemXL();}},
+ {id:'maze',n:'Element-Labyrinth',e:'🏯',start:function(){go('s-maze');}},
+ {id:'spell',n:'Schriftrollen-Werkstatt',e:'📜',start:function(){startSpell();}},
+ {id:'english',n:'Sprache der Reisenden',e:'🗺️',start:function(){startEnglish();}},
+ {id:'money',n:'Markt von Ba Sing Se',e:'🪙',start:function(){startMoney();}},
+ {id:'shapes',n:'Steinmetz-Werkstatt',e:'🪨',start:function(){startShapes();}},
+ {id:'clock',n:'Sonnen-Uhr',e:'☀️',start:function(){startClock();}},
+ {id:'divide',n:'Irohs Vorräte',e:'🫖',start:function(){startDivide();}},
+ {id:'memory',n:'Spiegel-Erinnerung',e:'🌊',start:function(){go('s-memory');}},
+ {id:'duel',n:'Agni-Kai-Duell',e:'⚔️',start:function(){go('s-duel-intro');}},
+ {id:'cooking',n:'Irohs Küche',e:'🍳',start:function(){startCooking();}}
+];
+let _questArmed=false;
+function dayHash(s){let h=0;for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return h;}
+function ensureQuest(){
+ if(daily.qg&&QUEST_GAMES.some(g=>g.id===daily.qg)&&STORIES.some(s=>s.id===daily.qs))return;
+ const h=dayHash(todayStr());
+ daily.qg=QUEST_GAMES[h%QUEST_GAMES.length].id;
+ const unread=STORIES.filter(s=>storiesDone.indexOf(s.id)<0&&storyOwned(s.id));
+ const cheap=STORIES.filter(s=>storiesDone.indexOf(s.id)<0).sort((a,b)=>(a.cost||0)-(b.cost||0)).slice(0,4);
+ const pool=unread.length?unread:(cheap.length?cheap:STORIES);
+ daily.qs=pool[h%pool.length].id;
+ daily.qgDone=false;daily.qsDone=false;daily.qBonus=false;persist();
+}
+function questGameCheck(){if(_questArmed&&!daily.qgDone){daily.qgDone=true;_questArmed=false;persist();questMaybeReward();}buildQuestCard();}
+function questStoryCheck(id){ensureQuest();if(id===daily.qs&&!daily.qsDone){daily.qsDone=true;persist();questMaybeReward();}buildQuestCard();}
+function questMaybeReward(){if(daily.qgDone&&daily.qsDone&&!daily.qBonus){daily.qBonus=true;award(3);persist();sfxWin();fireConfetti();}}
+function buildQuestCard(){
+ const el=document.getElementById('hub-quest');if(!el)return;
+ ensureQuest();
+ const g=QUEST_GAMES.find(x=>x.id===daily.qg);const s=STORIES.find(x=>x.id===daily.qs);
+ if(!g||!s){el.innerHTML='';return;}
+ const both=daily.qgDone&&daily.qsDone;
+ el.innerHTML='<div class="questcard'+(both?' done':'')+'">'+
+  '<div class="q-head">🌅 Heu·te für dich'+(both?' — ge·schafft! 🎉':'')+'</div>'+
+  '<div class="q-row'+(daily.qgDone?' ok':'')+'" id="quest-g"><span class="q-ico">'+(daily.qgDone?'✅':g.e)+'</span><span class="q-txt">'+g.n+'</span><span class="q-go">'+(daily.qgDone?'Fertig':'Spielen ▶')+'</span></div>'+
+  '<div class="q-row'+(daily.qsDone?' ok':'')+'" id="quest-s"><span class="q-ico">'+(daily.qsDone?'✅':s.emoji)+'</span><span class="q-txt">'+s.title+'</span><span class="q-go">'+(daily.qsDone?'Ge·le·sen':'Lesen ▶')+'</span></div>'+
+  (both?'':'<div class="q-note">Bei·des ge·schafft = +3 📜 Bo·nus!</div>')+
+ '</div>';
+ const qg=document.getElementById('quest-g');
+ if(qg)qg.onclick=function(){if(!daily.qgDone)_questArmed=true;sfxTea();g.start();};
+ const qs=document.getElementById('quest-s');
+ if(qs)qs.onclick=function(){sfxTea();tapStory(s.id);};
+}
+// ════ RUHE-INSEL: Atmen mit Appa ════
+let BR=null;
+const BR_PHASES=[{n:'Ein·at·men 🌬️',dur:4000,from:1,to:1.45,tone:392},{n:'Hal·ten ✨',dur:2000,from:1.45,to:1.45,tone:0},{n:'Aus·at·men 🌊',dur:4000,from:1.45,to:1,tone:330}];
+function startBreathe(){
+ stopBreathe();go('s-breathe');
+ const a=document.getElementById('br-appa');if(a)a.innerHTML=AVA.Appa();
+ document.getElementById('br-circle').style.transform='scale(1)';
+ document.getElementById('br-phase').textContent='Be·reit?';
+ document.getElementById('br-count').textContent='5 ru·hi·ge Atem·zü·ge mit Appa';
+ const b=document.getElementById('br-btn');b.textContent='🌊 Los geht\'s';b.style.display='block';
+}
+function breatheGo(){
+ ensureAudio();document.getElementById('br-btn').style.display='none';
+ BR={breath:1,total:5,phase:0,t0:performance.now(),stop:false};
+ speak('Atme mit Appa. Ein… und aus…');
+ requestAnimationFrame(breatheTick);
+}
+function breatheTick(){
+ if(!BR||BR.stop)return;
+ const scr=document.getElementById('s-breathe');if(!scr||!scr.classList.contains('on')){stopBreathe();return;}
+ const p=BR_PHASES[BR.phase];const el=(performance.now()-BR.t0)/p.dur;
+ const k=Math.min(1,el);const e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+ document.getElementById('br-circle').style.transform='scale('+(p.from+(p.to-p.from)*e).toFixed(3)+')';
+ document.getElementById('br-phase').textContent=p.n;
+ document.getElementById('br-count').textContent='Atem·zug '+BR.breath+' von '+BR.total;
+ if(el>=1){
+  BR.phase++;
+  if(BR.phase>=BR_PHASES.length){BR.phase=0;BR.breath++;if(BR.breath>BR.total)return breatheEnd();}
+  BR.t0=performance.now();const np=BR_PHASES[BR.phase];if(np.tone)tone(np.tone,0.5,'sine',0.05);
+ }
+ requestAnimationFrame(breatheTick);
+}
+function breatheEnd(){
+ BR=null;
+ document.getElementById('br-circle').style.transform='scale(1)';
+ document.getElementById('br-phase').textContent='Appa schläft… 😴';
+ document.getElementById('br-count').textContent='Ganz ru·hig. Du hast das wun·der·bar ge·macht. 💙 +1 📜';
+ award(1);sfxTea();
+ const b=document.getElementById('br-btn');b.textContent='🌊 Noch·mal at·men';b.style.display='block';
+}
+function stopBreathe(){if(BR)BR.stop=true;BR=null;}
+// ════ SPIELSTAND SICHERN & LADEN ════
+function exportSave(){
+ persist();
+ const data=localStorage.getItem(SAVE_KEY)||'{}';
+ const blob=new Blob([data],{type:'application/json'});
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(blob);
+ a.download='avatar-akademie-spielstand-'+todayStr()+'.json';
+ document.body.appendChild(a);a.click();
+ setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},400);
+ sfxTea();
+}
+function importSave(inp){
+ const f=inp.files&&inp.files[0];inp.value='';if(!f)return;
+ const rd=new FileReader();
+ rd.onload=function(){
+  let s=null;
+  try{s=JSON.parse(rd.result);}catch(e){}
+  const ov=document.createElement('div');ov.className='storyconfirm';
+  if(!s||typeof s!=='object'||typeof s.scrolls!=='number'){
+   ov.innerHTML='<div class="box"><div class="scbig">🤔</div><div class="sctitle">Hm, das passt nicht</div><div class="scinfo">Das ist kei·ne Spiel·stand-Da·tei der Aka·de·mie.</div><button class="btn bgray" onclick="this.closest(\'.storyconfirm\').remove()">Okay</button></div>';
+  }else{
+   ov.innerHTML='<div class="box"><div class="scbig">📂</div><div class="sctitle">Spiel·stand la·den?</div><div class="scinfo">Ge·fun·den: <b>📜 '+s.scrolls+' Schrift·rol·len</b>.<br>Dein jet·zi·ger Stand wird er·setzt.</div><button class="btn bgold" id="imp-yes">Ja, la·den</button><button class="btn bgray" onclick="this.closest(\'.storyconfirm\').remove()">Ab·bre·chen</button></div>';
+  }
+  ov.onclick=function(e){if(e.target===ov)ov.remove();};
+  document.body.appendChild(ov);
+  const yes=document.getElementById('imp-yes');
+  if(yes)yes.onclick=function(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(s));}catch(e){}location.reload();};
+ };
+ rd.readAsText(f);
+}
+
 loadSave();if(calm)document.body.classList.add('calm');buildHub();setScrolls(scrolls);
 // ════ ADHS ERMUTIGUNGEN ════
 const CHEERS=['Ro·za·rin, du bist mu·tig! 💪','Su·per ge·macht! 🌟','Aang wä·re stolz auf dich! 🌬️','Du wirst im·mer bes·ser! ⭐','Toll ge·rech·net! 🎉','Du schaffst das! 💙','Wei·ter so! 🏆','Du bist klas·se! ✨'];
@@ -2490,8 +2706,8 @@ function nextQuizQ(){QZ.lock=false;const cfg=QZ.cfg;if(!QZ.recent)QZ.recent=[];v
 function quizRepeat(){if(QZ&&QZ.cur&&QZ.cur.say)speakL(QZ.cur.say,QZ.cur.lang||'de-DE');}
 function answerQuiz(o,btn){if(QZ.lock)return;QZ.lock=true;
  const val=(o&&o.val!=null)?o.val:o;const ans=QZ.cur.ans;const ok=val===ans;
- if(ok){QZ.score++;btn.classList.add('right');setFb('qz-fb','✅ Rich·tig!',true);sfxRight();maybeCheer();if(QZ.cur.sayWin)setTimeout(()=>speakL(QZ.cur.sayWin,QZ.cur.lang||'de-DE'),250);}
- else{btn.classList.add('wrong');[...document.querySelectorAll('#qz-opts .qopt')].forEach((b,idx)=>{const ov=QZ.cur.opts[idx];const v=(ov&&ov.val!=null)?ov.val:ov;if(v===ans)b.classList.add('right');});setFb('qz-fb','Feh·ler sind Hel·fer 💛 Rich·tig: '+(QZ.cur.ansLabel||ans),false);sfxWrong();award(1);}
+ if(ok){QZ.score++;btn.classList.add('right');setFb('qz-fb','✅ Rich·tig!',true);sfxRight();adaptTrack(true);maybeCheer();if(QZ.cur.sayWin)setTimeout(()=>speakL(QZ.cur.sayWin,QZ.cur.lang||'de-DE'),250);}
+ else{btn.classList.add('wrong');[...document.querySelectorAll('#qz-opts .qopt')].forEach((b,idx)=>{const ov=QZ.cur.opts[idx];const v=(ov&&ov.val!=null)?ov.val:ov;if(v===ans)b.classList.add('right');});setFb('qz-fb','Feh·ler sind Hel·fer 💛 Rich·tig: '+(QZ.cur.ansLabel||ans),false);sfxWrong();adaptTrack(false);remember(QZ.cur);award(1);}
  setTimeout(()=>{QZ.i++;if(QZ.i>=QZ.cfg.count){quizWin();}else nextQuizQ();},1050);}
 function quizWin(){award(2);const c=QZ.cfg;
  document.getElementById('gw-emoji').textContent=c.emoji||'🎉';
