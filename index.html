@@ -388,11 +388,8 @@ body.calm .questcard{box-shadow:none}
  <div class="coinbar" id="coinbar">📜 0</div>
  <div class="gh">
   <div class="gt">Avatar Lern-Akademie</div>
-  <div class="gs">Mathe, Deutsch &amp; Quiz mit Aang</div>
  </div>
  <div id="calm-banner" style="display:none"></div>
- <div id="hub-companion"></div>
- <div class="progresscard" id="hub-progress"></div>
  <div id="hub-quest"></div>
  <div class="diffbar" id="diffbar"></div>
  <div class="diffhint" id="diffhint"></div>
@@ -1278,8 +1275,6 @@ function buildHub(){
  setIco('hi-alb',AVA.Katara());setIco('hi-sym',SYM.Luft(46));setIco('hi-jour',SYM.Feuer(46));
  setIco('hi-div',AVA.Sokka());setIco('hi-fairy',AVA.Aang());
  buildDiffBar();
- buildCompanion();
- buildDailyBanner();
  buildQuestCard();
  const cb=document.getElementById('calmbtn');if(cb)cb.textContent=calm?'🌙':'🌤️';
  if(calm){const banner=document.getElementById('calm-banner');if(banner&&banner.style.display==='none')banner.style.display='block';}
