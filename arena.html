@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Avatar Arena — Family</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0c0d12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#0c0d12; --bg2:#13151e; --card:#181b27; --card2:#1f2330; --line:#2c3142;
+ --text:#eceef5; --muted:#959bb2; --dim:#6b7290;
+ --air:#aac2e6; --water:#3fa9cc; --earth:#7cb85c; --fire:#e85a30; --gold:#dcb45e; --spirit:#a274e6;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+ background:
+  radial-gradient(circle at 15% 8%, rgba(232,164,188,.08), transparent 42%),
+  radial-gradient(circle at 88% 12%, rgba(232,90,48,.08), transparent 40%),
+  radial-gradient(circle at 50% 100%, rgba(162,116,230,.08), transparent 50%),
+  var(--bg);
+ color:var(--text);
+ font-family:'Poppins',system-ui,sans-serif;
+ min-height:100vh;
+ -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:680px;margin:0 auto;padding:22px 18px 60px;position:relative;z-index:1}
+h1,h2,h3,.disp{font-family:'Rajdhani',sans-serif;letter-spacing:.5px;margin:0}
+.screen{display:none;animation:fade .35s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;
+ background:conic-gradient(from 220deg,var(--air),var(--water),var(--earth),var(--fire),var(--air));
+ box-shadow:0 0 22px rgba(63,169,204,.35)}
+.logo span{width:36px;height:36px;border-radius:9px;background:var(--bg2);display:grid;place-items:center}
+.brand b{font-family:'Rajdhani';font-size:23px;font-weight:700;line-height:1;letter-spacing:1px}
+.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-top:3px}
+.ghostbtn{background:var(--card);border:1px solid var(--line);color:var(--muted);font-family:'Space Grotesk';
+ font-weight:600;font-size:13px;padding:8px 13px;border-radius:10px;cursor:pointer;transition:.15s}
+.ghostbtn:hover{color:var(--text);border-color:#3b4258}
+.back{background:none;border:none;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;padding:6px 0;margin-bottom:6px;font-family:'Space Grotesk'}
+.back:hover{color:var(--text)}
+
+/* hero */
+.hero{margin:6px 0 22px}
+.hero h1{font-size:40px;font-weight:700;line-height:.98;letter-spacing:1px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--water),var(--fire));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);margin:9px 0 0;font-size:15px;max-width:46ch}
+
+.sectlabel{font-family:'Rajdhani';font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-size:12px;margin:24px 2px 11px}
+
+/* profile cards */
+.profiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.profile{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,var(--card2),var(--card));
+ border-radius:18px;padding:20px 14px;text-align:center;cursor:pointer;overflow:hidden;transition:.18s}
+.profile:hover{transform:translateY(-3px);border-color:#3d4458}
+.profile .em{font-size:38px}
+.profile .nm{font-family:'Rajdhani';font-weight:700;font-size:20px;margin-top:8px;letter-spacing:.5px}
+.profile .sub{color:var(--muted);font-size:12px;margin-top:3px;line-height:1.4}
+.profile::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% -10%,var(--gl,rgba(63,169,204,.22)),transparent 60%);opacity:.0;transition:.18s;pointer-events:none}
+.profile:hover::after{opacity:1}
+.profile.teen{--gl:rgba(232,90,48,.22)}
+.profile.adult{--gl:rgba(162,116,230,.22)}
+.profile.duel{--gl:rgba(220,180,94,.22)}
+
+/* mode grid */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mode{display:flex;gap:13px;align-items:flex-start;border:1px solid var(--line);background:var(--card);
+ border-radius:15px;padding:15px;cursor:pointer;transition:.16s;border-left:3px solid var(--ac,var(--water))}
+.mode:hover{background:var(--card2);transform:translateY(-2px)}
+.mode .mi{font-size:25px;line-height:1}
+.mode .mt{font-family:'Rajdhani';font-weight:700;font-size:17px;letter-spacing:.4px}
+.mode .md{color:var(--muted);font-size:12px;margin-top:3px;line-height:1.45}
+.full{grid-column:1/-1}
+
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.qhead .qt{font-family:'Rajdhani';font-weight:700;font-size:22px;letter-spacing:.5px}
+.pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:5px 13px;font-size:13px;font-weight:600;color:var(--muted)}
+.progress{height:5px;background:var(--card);border-radius:4px;overflow:hidden;margin-bottom:18px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--water),var(--fire));transition:width .35s}
+.qcard{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:24px 20px;text-align:center;margin-bottom:16px}
+.qvisual{font-size:54px;min-height:0;margin-bottom:6px}
+.qtext{font-family:'Space Grotesk';font-weight:600;font-size:21px;line-height:1.35}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.opt{background:var(--card);border:1px solid var(--line);color:var(--text);font-family:'Space Grotesk';font-weight:600;
+ font-size:16px;padding:16px 14px;border-radius:14px;cursor:pointer;transition:.14s;text-align:center}
+.opt:hover{border-color:#46506a;background:var(--card2)}
+.opt.right{background:rgba(124,184,92,.16);border-color:var(--earth);color:#cfe9bd}
+.opt.wrong{background:rgba(232,90,48,.16);border-color:var(--fire);color:#f3c4b4}
+.opt:disabled{cursor:default}
+.fb{min-height:24px;text-align:center;margin-top:14px;font-weight:600;font-size:15px}
+.fb.ok{color:var(--earth)}
+.fb.no{color:var(--fire)}
+.note{color:var(--muted);font-size:13px;text-align:center;margin-top:6px;line-height:1.5}
+
+/* big buttons */
+.cta{display:block;width:100%;border:none;border-radius:14px;padding:16px;font-family:'Rajdhani';font-weight:700;
+ font-size:19px;letter-spacing:1px;cursor:pointer;margin-top:12px;transition:.15s}
+.cta.pri{background:linear-gradient(90deg,var(--water),#2d7fa0);color:#fff;box-shadow:0 8px 24px rgba(63,169,204,.28)}
+.cta.fire{background:linear-gradient(90deg,var(--fire),#b8401f);color:#fff;box-shadow:0 8px 24px rgba(232,90,48,.28)}
+.cta.gold{background:linear-gradient(90deg,var(--gold),#b8923f);color:#1a1407;box-shadow:0 8px 24px rgba(220,180,94,.25)}
+.cta.ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
+.cta:hover{transform:translateY(-2px)}
+
+/* result */
+.result{text-align:center;padding:14px 0}
+.bigscore{font-family:'Rajdhani';font-weight:700;font-size:66px;line-height:1;letter-spacing:1px}
+.rmsg{color:var(--muted);font-size:16px;margin:10px 0 4px;line-height:1.5}
+.badge{display:inline-block;font-family:'Rajdhani';font-weight:700;letter-spacing:1px;padding:6px 16px;border-radius:20px;margin-top:10px;font-size:15px}
+
+/* personality result */
+.persona{border-radius:22px;padding:28px 22px;text-align:center;color:#fff;margin-bottom:16px}
+.persona .pe{font-size:60px}
+.persona .pn{font-family:'Rajdhani';font-weight:700;font-size:30px;letter-spacing:1px;margin-top:6px}
+.persona .pd{font-size:15px;line-height:1.55;margin-top:10px;opacity:.95}
+.persona .pc{font-weight:700;margin-top:12px;font-size:14px;opacity:.9}
+
+/* duel */
+.vs{display:flex;align-items:center;justify-content:center;gap:18px;margin:16px 0}
+.fighter{flex:1;text-align:center;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:18px 10px;transition:.16s}
+.fighter.act{border-color:var(--turncol);box-shadow:0 0 0 1px var(--turncol),0 0 26px -8px var(--turncol)}
+.fighter .fe{font-size:34px}
+.fighter .fn{font-family:'Rajdhani';font-weight:700;font-size:19px;margin-top:4px}
+.fighter .fs{font-family:'Rajdhani';font-weight:700;font-size:34px;line-height:1;margin-top:4px;color:var(--turncol2)}
+.vsbadge{font-family:'Rajdhani';font-weight:700;color:var(--muted);font-size:18px}
+.turnbanner{text-align:center;font-family:'Rajdhani';font-weight:700;font-size:20px;letter-spacing:1px;padding:10px;border-radius:12px;margin-bottom:14px}
+
+/* scores */
+.scorerow{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px 16px;margin-bottom:9px}
+.scorerow .sl{font-weight:600}
+.scorerow .sl small{display:block;color:var(--muted);font-size:12px;margin-top:2px;font-weight:500}
+.scorerow .sv{font-family:'Rajdhani';font-weight:700;font-size:22px;color:var(--gold)}
+.tally{display:flex;gap:12px;margin-bottom:18px}
+.tally .tc{flex:1;text-align:center;border:1px solid var(--line);background:linear-gradient(180deg,var(--card2),var(--card));border-radius:16px;padding:16px}
+.tally .tc .te{font-size:30px}
+.tally .tc .tn{font-family:'Rajdhani';font-weight:700;font-size:16px;margin-top:4px}
+.tally .tc .tw{font-family:'Rajdhani';font-weight:700;font-size:40px;line-height:1;margin-top:2px}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:28px;line-height:1.6}
+.foot a{color:var(--water);cursor:pointer;text-decoration:none}
+.scrollpill{background:rgba(220,180,94,.14);border:1px solid rgba(220,180,94,.4);color:var(--gold);font-family:'Rajdhani';font-weight:700;font-size:15px;padding:7px 13px;border-radius:20px;letter-spacing:.5px}
+.stickgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.stick{aspect-ratio:1;border-radius:16px;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:.16s}
+.stick.have{background:linear-gradient(180deg,var(--card2),var(--card));border-color:var(--sc,var(--water));box-shadow:inset 0 0 0 1px var(--sc,var(--water))}
+.stick .se{font-size:30px}
+.stick.miss .se{opacity:.45}
+.stick .sn{font-size:10px;font-weight:600;color:var(--muted);text-align:center;line-height:1.1;padding:0 2px}
+.stick.miss .sn{color:#4a5068}
+.storycard{display:flex;gap:14px;align-items:center;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;cursor:pointer;margin-bottom:11px;transition:.16s;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.storycard:hover{transform:translateY(-2px)}
+.storycard .stem{font-size:30px}
+.storycard .stt{font-family:'Rajdhani';font-weight:700;font-size:19px;letter-spacing:.4px}
+.storycard .std{color:rgba(255,255,255,.8);font-size:12px;margin-top:2px}
+.storycard .stlock{margin-left:auto;font-family:'Rajdhani';font-weight:700;font-size:14px;white-space:nowrap;background:rgba(0,0,0,.28);padding:5px 11px;border-radius:14px}
+.storycard.locked{filter:saturate(.7) brightness(.92)}
+.scene{border-radius:20px;padding:34px 18px;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:48px;margin-bottom:14px;box-shadow:inset 0 0 60px rgba(0,0,0,.25)}
+.stext{font-size:17px;line-height:1.65;color:var(--text);min-height:120px}
+.sdots{display:flex;gap:6px;justify-content:center;margin:16px 0}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.sdot.on{background:var(--water)}
+.snav{display:flex;gap:10px}
+.snav button{flex:1}
+.ovl{position:fixed;inset:0;background:rgba(6,7,11,.8);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:24px;z-index:100;animation:fade .2s}
+.ovbox{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 20px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+/* ── Kirschblüten ── */
+.sakura-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.sakura-petal{position:absolute;top:-10px;opacity:0;animation:sakuraFall linear infinite;filter:blur(0.3px);clip-path:polygon(50% 100%, 8% 42%, 22% 4%, 50% 30%, 78% 4%, 92% 42%)}
+@keyframes sakuraFall{0%{opacity:0;transform:translateY(0) rotate(0deg) translateX(0)}5%{opacity:.50}85%{opacity:.35}100%{opacity:0;transform:translateY(110vh) rotate(720deg) translateX(45px)}}
+/* ── DUEL Flammen ── */
+.duel-flames{position:fixed;left:0;right:0;bottom:0;top:0;pointer-events:none;z-index:0;display:none;overflow:hidden}
+body.duel-active .duel-flames{display:block}
+body.duel-active .sakura-wrap{display:none}
+.duel-flames .fglow{position:absolute;left:0;right:0;bottom:0;height:48%;background:radial-gradient(ellipse at 50% 122%,rgba(255,150,55,.5),rgba(232,90,48,.2) 42%,transparent 68%);animation:fglow 3.2s ease-in-out infinite}
+@keyframes fglow{0%,100%{opacity:.75}50%{opacity:1}}
+.flame{position:absolute;bottom:-22px;background:radial-gradient(ellipse at 50% 80%,#FFF0B0,#FFC24A 28%,#FF8A2E 52%,#E8421A 74%,rgba(184,38,26,0) 90%);border-radius:50% 50% 46% 46%/88% 88% 12% 12%;filter:blur(3px);transform-origin:50% 100%;animation:flicker var(--fdur,2.4s) ease-in-out infinite}
+@keyframes flicker{0%,100%{transform:scaleY(1) scaleX(1) translateY(0);opacity:.72}25%{transform:scaleY(1.24) scaleX(.88) translateY(-16px);opacity:.92}50%{transform:scaleY(.85) scaleX(1.1) translateY(5px);opacity:.6}75%{transform:scaleY(1.16) scaleX(.94) translateY(-9px);opacity:.84}}
+.flame.inner{filter:blur(1.5px);background:radial-gradient(ellipse at 50% 82%,#FFF6D0,#FFD86A 34%,#FF9A2E 60%,rgba(232,80,30,0) 86%)}
+/* ── DUEL Explosion ── */
+.boom-overlay{position:fixed;inset:0;z-index:200;pointer-events:none;overflow:hidden}
+.boom-flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 52%,rgba(255,244,210,.95),rgba(255,150,60,.5) 28%,transparent 58%);animation:boomFlash .55s ease-out forwards}
+@keyframes boomFlash{0%{opacity:0;transform:scale(.3)}14%{opacity:1}100%{opacity:0;transform:scale(1.7)}}
+.boom-core{position:absolute;left:50%;top:50%;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;background:radial-gradient(circle,#FFF6D0,#FFC24A 34%,#FF7A2E 60%,#E8421A 80%,rgba(184,38,26,0) 90%);animation:boomCore .75s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes boomCore{0%{opacity:0;transform:scale(.08)}18%{opacity:1}100%{opacity:0;transform:scale(5)}}
+.boom-spark{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:radial-gradient(circle,#FFEFA0,#FF6A1E 70%,rgba(232,66,26,0));animation:boomSpark .85s ease-out forwards}
+@keyframes boomSpark{0%{opacity:1;transform:translate(0,0) scale(1.1)}100%{opacity:0;transform:translate(var(--bx,0),var(--by,0)) scale(.25)}}
+.boom-ring{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:5px solid rgba(255,180,80,.85);animation:boomRing .7s ease-out forwards}
+@keyframes boomRing{0%{opacity:.9;transform:scale(.2)}100%{opacity:0;transform:scale(8)}}
+/* ── ZERYA blue explosion ── */
+.zboom-flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(214,240,255,.95),rgba(70,160,255,.5) 28%,transparent 58%);animation:boomFlash .6s ease-out forwards}
+.zboom-core{position:absolute;left:50%;top:50%;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;background:radial-gradient(circle,#EAF6FF,#9AD4FF 32%,#46A0FF 58%,#1E6BE8 80%,rgba(20,60,180,0) 100%);animation:boomCore .8s ease-out forwards}
+.zboom-spark{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:radial-gradient(circle,#DFF1FF,#46A0FF 70%,rgba(30,107,232,0));animation:boomSpark .85s ease-out forwards}
+.zboom-ring{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:5px solid rgba(120,190,255,.85);animation:boomRing .75s ease-out forwards}
+.zstar{position:absolute;left:50%;top:50%;font-size:22px;line-height:1;animation:boomSpark .9s ease-out forwards;text-shadow:0 0 10px rgba(120,190,255,.9)}
+.ember{position:absolute;width:4px;height:4px;border-radius:50%;background:radial-gradient(circle,#FFD27A,#E8551F);filter:blur(.4px);opacity:0;animation:emberRise linear infinite}
+@keyframes emberRise{0%{opacity:0;transform:translateY(0) translateX(0)}12%{opacity:.9}88%{opacity:.5}100%{opacity:0;transform:translateY(-78vh) translateX(var(--edx,20px))}}
+
+/* ── ZERYA'S WORLD SPECIAL STYLE ── */
+body.zerya-mode {
+ --bg: #F5EDE6;
+ --bg2: #FBF9F6;
+ --card: #FDFBF8;
+ --card2: #F9F5F1;
+ --line: #E8D4CB;
+ --text: #3D2817;
+ --muted: #8B7355;
+}
+body.zerya-mode::before {
+ background: radial-gradient(circle at 15% 8%, rgba(232,164,188,.12), transparent 42%),
+             radial-gradient(circle at 88% 12%, rgba(200,100,140,.08), transparent 40%),
+             radial-gradient(circle at 50% 100%, rgba(180,100,150,.08), transparent 50%) !important;
+}
+#teen {
+ font-family: 'Poppins', sans-serif !important;
+}
+body.zerya-mode .wrap {
+ font-family: 'Poppins', sans-serif !important;
+}
+body.zerya-mode h1 {
+ background: linear-gradient(120deg, #C8628F, #E8A4BC 55%, #D07099) !important;
+ -webkit-background-clip: text !important;
+ -webkit-text-fill-color: transparent !important;
+ background-clip: text !important;
+}
+body.zerya-mode .qt {
+ color: #C8628F !important;
+}
+body.zerya-mode .mode {
+ background: linear-gradient(135deg, #FFF5F0, #FFF9F6) !important;
+ border-color: #E8C4D0 !important;
+ color: #3D2817 !important;
+}
+body.zerya-mode .mode:hover {
+ background: linear-gradient(135deg, #FFF0E8, #FFF5F0) !important;
+ border-color: #E8A4BC !important;
+}
+body.zerya-mode .mt {
+ color: #3D2817 !important;
+}
+body.zerya-mode .md {
+ color: #8B7355 !important;
+}
+body.zerya-mode .sectlabel {
+ color: #8B7355 !important;
+}
+body.zerya-mode .sectlabel::after {
+ background: linear-gradient(90deg, rgba(139,115,85,.2), transparent) !important;
+}
+body.zerya-mode .qcard {
+ background: linear-gradient(180deg, #FFF9F6, #FDFBF8) !important;
+ border-color: #E8D4CB !important;
+}
+body.zerya-mode .opt {
+ background: #FDFBF8 !important;
+ border-color: #E8D4CB !important;
+ color: #3D2817 !important;
+}
+body.zerya-mode .opt:hover {
+ background: #FFF5F0 !important;
+ border-color: #E8A4BC !important;
+}
+body.zerya-mode .opt.right {
+ background: rgba(124,184,92,.16) !important;
+ border-color: var(--earth) !important;
+ color: #4a7030 !important;
+}
+body.zerya-mode .opt.wrong {
+ background: rgba(232,90,48,.14) !important;
+ border-color: var(--fire) !important;
+ color: #a8401f !important;
+}
+body.zerya-mode .pill,
+body.zerya-mode .progress {
+ background: #F5EDE6 !important;
+ border-color: #E8D4CB !important;
+}
+body.zerya-mode .note {
+ color: #8B7355 !important;
+}
+body.zerya-mode .back {
+ color: #8B7355 !important;
+}
+body.zerya-mode .back:hover {
+ color: #3D2817 !important;
+}
+body.zerya-mode .cta.ghost {
+ background: #FDFBF8 !important;
+ border-color: #E8D4CB !important;
+ color: #3D2817 !important;
+}
+body.zerya-mode .storycard {
+ border-color: #E8D4CB !important;
+ box-shadow: 0 4px 14px rgba(120,60,80,.10) !important;
+}
+body.zerya-mode .stick {
+ background: #FDFBF8 !important;
+ border-color: #E8D4CB !important;
+}
+body.zerya-mode .stick .sn {
+ color: #8B7355 !important;
+}
+body.zerya-mode .stick.miss .sn {
+ color: #C9B5A8 !important;
+}
+body.zerya-mode .scrollpill {
+ background: rgba(200,98,143,.12) !important;
+ border-color: rgba(200,98,143,.35) !important;
+ color: #C8628F !important;
+}
+body.zerya-mode .bigscore {
+ color: #C8628F !important;
+}
+</style>
+</head>
+<body>
+<div class="sakura-wrap" aria-hidden="true">
+  <div class="sakura-petal" style="left:4%;width:9px;height:9px;background:radial-gradient(ellipse at 40% 35%,#F5C4D9,#E896B0);animation-duration:9s;animation-delay:-1s"></div>
+  <div class="sakura-petal" style="left:16%;width:8px;height:8px;background:radial-gradient(ellipse at 40% 35%,#F8D4E3,#E885A0);animation-duration:12s;animation-delay:-4.5s"></div>
+  <div class="sakura-petal" style="left:30%;width:11px;height:11px;background:radial-gradient(ellipse at 40% 35%,#F5D0DC,#EB8BA8);animation-duration:8s;animation-delay:-7s"></div>
+  <div class="sakura-petal" style="left:46%;width:8px;height:8px;background:radial-gradient(ellipse at 40% 35%,#F3C8D5,#E878A0);animation-duration:10.5s;animation-delay:-2s"></div>
+  <div class="sakura-petal" style="left:62%;width:12px;height:12px;background:radial-gradient(ellipse at 40% 35%,#F5C4D9,#E896B0);animation-duration:11s;animation-delay:-5.5s"></div>
+  <div class="sakura-petal" style="left:76%;width:8px;height:8px;background:radial-gradient(ellipse at 40% 35%,#F0BFD0,#E880A8);animation-duration:9.5s;animation-delay:-3s"></div>
+  <div class="sakura-petal" style="left:89%;width:9px;height:9px;background:radial-gradient(ellipse at 40% 35%,#F5D0DC,#EB8BA8);animation-duration:13s;animation-delay:-8.5s"></div>
+  <div class="sakura-petal" style="left:52%;width:6px;height:6px;background:radial-gradient(ellipse at 40% 35%,#F5C4D9,#E88CA4);animation-duration:10s;animation-delay:-6s"></div>
+  <div class="sakura-petal" style="left:12%;width:9px;height:9px;background:radial-gradient(ellipse at 40% 35%,#F8D4E3,#E885A0);animation-duration:11s;animation-delay:-2.5s"></div>
+  <div class="sakura-petal" style="left:68%;width:8px;height:8px;background:radial-gradient(ellipse at 40% 35%,#F3C8D5,#E878A0);animation-duration:9.5s;animation-delay:-4s"></div>
+  <div class="sakura-petal" style="left:8%;width:8px;height:8px;background:radial-gradient(ellipse at 40% 35%,#F0BFD0,#E880A8);animation-duration:10s;animation-delay:-1.5s"></div>
+  <div class="sakura-petal" style="left:25%;width:9px;height:9px;background:radial-gradient(ellipse at 40% 35%,#F5D0DC,#EB8BA8);animation-duration:9s;animation-delay:-5s"></div>
+  <div class="sakura-petal" style="left:40%;width:6px;height:6px;background:radial-gradient(ellipse at 40% 35%,#F8D4E3,#E885A0);animation-duration:11.5s;animation-delay:-3.5s"></div>
+  <div class="sakura-petal" style="left:58%;width:9px;height:9px;background:radial-gradient(ellipse at 40% 35%,#F5C4D9,#E896B0);animation-duration:8.5s;animation-delay:-6.5s"></div>
+  <div class="sakura-petal" style="left:82%;width:8px;height:8px;background:radial-gradient(ellipse at 40% 35%,#F3C8D5,#E878A0);animation-duration:10s;animation-delay:-2s"></div>
+  <div class="sakura-petal" style="left:20%;width:11px;height:11px;background:radial-gradient(ellipse at 40% 35%,#F0BFD0,#E880A8);animation-duration:12s;animation-delay:-7.5s"></div>
+  <div class="sakura-petal" style="left:72%;width:6px;height:6px;background:radial-gradient(ellipse at 40% 35%,#F5D0DC,#EB8BA8);animation-duration:9s;animation-delay:-1.8s"></div>
+  <div class="sakura-petal" style="left:35%;width:8px;height:8px;background:radial-gradient(ellipse at 40% 35%,#F8D4E3,#E885A0);animation-duration:10.5s;animation-delay:-4.2s"></div>
+  <div class="sakura-petal" style="left:95%;width:9px;height:9px;background:radial-gradient(ellipse at 40% 35%,#F5C4D9,#E896B0);animation-duration:11s;animation-delay:-8s"></div>
+</div>
+<div class="duel-flames" aria-hidden="true">
+  <div class="fglow"></div>
+  <div class="flame" style="left:-4%;width:130px;height:185px;--fdur:2.6s;animation-delay:-.3s"></div>
+  <div class="flame" style="left:10%;width:100px;height:140px;--fdur:2.1s;animation-delay:-1.1s"></div>
+  <div class="flame" style="left:24%;width:140px;height:215px;--fdur:3.1s;animation-delay:-.6s"></div>
+  <div class="flame" style="left:40%;width:110px;height:165px;--fdur:2.4s;animation-delay:-1.6s"></div>
+  <div class="flame" style="left:55%;width:150px;height:225px;--fdur:2.9s;animation-delay:-.2s"></div>
+  <div class="flame" style="left:72%;width:105px;height:155px;--fdur:2.2s;animation-delay:-1.3s"></div>
+  <div class="flame" style="left:86%;width:135px;height:200px;--fdur:2.7s;animation-delay:-.8s"></div>
+  <div class="ember" style="left:14%;--edx:24px;animation-duration:6s;animation-delay:-1s"></div>
+  <div class="ember" style="left:28%;--edx:-18px;animation-duration:7.5s;animation-delay:-3s"></div>
+  <div class="ember" style="left:43%;--edx:30px;animation-duration:5.5s;animation-delay:-2s"></div>
+  <div class="ember" style="left:58%;--edx:-22px;animation-duration:8s;animation-delay:-4.5s"></div>
+  <div class="ember" style="left:69%;--edx:16px;animation-duration:6.5s;animation-delay:-.5s"></div>
+  <div class="ember" style="left:81%;--edx:-28px;animation-duration:7s;animation-delay:-2.8s"></div>
+  <div class="ember" style="left:91%;--edx:20px;animation-duration:5.8s;animation-delay:-3.6s"></div>
+</div>
+<div class="wrap">
+
+<!-- ===== HOME ===== -->
+<div id="home" class="screen on">
+ <div class="topbar">
+  <div class="brand">
+   <div class="logo"><span>☯</span></div>
+   <div><b>AVATAR ARENA</b><small>Family Edition</small></div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+   <div class="scrollpill" id="scroll-top">📜 0</div>
+   <button class="ghostbtn" onclick="show('scores')">🏆</button>
+  </div>
+ </div>
+
+ <div class="hero">
+  <h1>Test your <em>bending</em><br>knowledge.</h1>
+  <p>A tougher Avatar world for the big fans — lore, language, logic and head-to-head duels. Pick your player.</p>
+ </div>
+
+ <div class="sectlabel">Choose player</div>
+ <div class="profiles">
+  <div class="profile teen" onclick="zeryaBoom();show('teen')">
+   <div class="em">🌸</div><div class="nm">Zerya</div><div class="sub">Quests, stories &amp; stickers</div>
+  </div>
+  <div class="profile adult" onclick="show('adult')">
+   <div class="em">🍵</div><div class="nm">Grown-up</div><div class="sub">Expert &amp; wisdom</div>
+  </div>
+  <div class="profile duel" onclick="duelBoom();show('duel-setup')">
+   <div class="em">⚔️</div><div class="nm">Duel</div><div class="sub">Dad vs Daughter</div>
+  </div>
+ </div>
+
+ <div class="foot">
+  Made for Rozarin's family · <a onclick="goKids()">← back to kids app</a>
+ </div>
+</div>
+
+<!-- ===== TEEN HUB ===== -->
+<div id="teen" class="screen">
+ <button class="back" onclick="show('home')">← Players</button>
+ <div class="hero" style="margin-bottom:14px"><h1 style="font-size:30px">ZERYA'S WORLD 🌸</h1><p>Play quests, collect scrolls, open stickers and read stories.</p></div>
+ <div class="modes">
+  <div class="mode" style="--ac:var(--fire)" onclick="startBank('lore')"><div class="mi">🧘</div><div><div class="mt">Lore Quiz</div><div class="md">Wisdom & knowledge</div></div></div>
+  <div class="mode" style="--ac:var(--water)" onclick="startBank('eng')"><div class="mi">📚</div><div><div class="mt">English Words</div><div class="md">Tricky vocabulary</div></div></div>
+  <div class="mode" style="--ac:var(--earth)" onclick="startBank('math')"><div class="mi">🧮</div><div><div class="mt">Brain Math</div><div class="md">Gleichungen, Terme, % & Brüche</div></div></div>
+  <div class="mode" style="--ac:var(--gold)" onclick="startBank('quotes')"><div class="mi">💭</div><div><div class="mt">Who Said It?</div><div class="md">Quotes & characters</div></div></div>
+  <div class="mode" style="--ac:var(--water)" onclick="startBank('enggram')"><div class="mi">✏️</div><div><div class="mt">English Grammar</div><div class="md">Tenses, conditionals, passive</div></div></div>
+  <div class="mode" style="--ac:var(--fire)" onclick="startBank('degram')"><div class="mi">📝</div><div><div class="mt">Deutsch Grammatik</div><div class="md">Fälle, Zeiten, Konjunktiv</div></div></div>
+  <div class="mode full" style="--ac:var(--spirit)" onclick="startPersona()"><div class="mi">☯️</div><div><div class="mt">Which Nation Are You?</div><div class="md">Personality test — Air, Water, Earth or Fire</div></div></div>
+ </div>
+ <div class="sectlabel">Collect & relax</div>
+ <div class="modes">
+  <div class="mode" style="--ac:var(--gold)" onclick="openStoriesScreen()"><div class="mi">🎭</div><div><div class="mt">Stories</div><div class="md">Tales from the four nations</div></div></div>
+  <div class="mode" style="--ac:var(--water)" onclick="openStickerScreen()"><div class="mi">🎀</div><div><div class="mt">Stickers</div><div class="md">Open packs, fill your album</div></div></div>
+ </div>
+</div>
+
+<!-- ===== ADULT HUB ===== -->
+<div id="adult" class="screen">
+ <button class="back" onclick="show('home')">← Players</button>
+ <div class="hero" style="margin-bottom:14px"><h1 style="font-size:30px">GROWN-UP 🍵</h1><p>For the fan who knows the whole saga.</p></div>
+ <div class="modes">
+  <div class="mode" style="--ac:var(--spirit)" onclick="startBank('expert')"><div class="mi">📜</div><div><div class="mt">Expert Lore</div><div class="md">War, politics, timeline</div></div></div>
+  <div class="mode" style="--ac:var(--gold)" onclick="startBank('iroh')"><div class="mi">🍵</div><div><div class="mt">Iroh's Wisdom</div><div class="md">Life lessons &amp; meaning</div></div></div>
+  <div class="mode" style="--ac:var(--earth)" onclick="startBank('book')"><div class="mi">📺</div><div><div class="mt">Name the Book</div><div class="md">Which season was it?</div></div></div>
+  <div class="mode" style="--ac:var(--water)" onclick="startBank('engpro')"><div class="mi">🗣️</div><div><div class="mt">English Pro</div><div class="md">Trickier grammar</div></div></div>
+ </div>
+</div>
+
+<!-- ===== GENERIC QUIZ ===== -->
+<div id="quiz" class="screen">
+ <button class="back" onclick="backFromQuiz()">← Back</button>
+ <div class="qhead"><div class="qt" id="q-title">Quiz</div><div class="pill" id="q-score">0 pts</div></div>
+ <div class="progress"><i id="q-bar"></i></div>
+ <div class="qcard">
+  <div class="qvisual" id="q-vis"></div>
+  <div class="qtext" id="q-text"></div>
+ </div>
+ <div class="opts" id="q-opts"></div>
+ <div class="fb" id="q-fb"></div>
+</div>
+
+<!-- ===== QUIZ RESULT ===== -->
+<div id="qresult" class="screen">
+ <div class="result">
+  <div class="sectlabel" id="r-title" style="margin-top:8px">Result</div>
+  <div class="bigscore" id="r-score">0/0</div>
+  <div class="rmsg" id="r-msg"></div>
+  <div class="badge" id="r-best"></div>
+ </div>
+ <button class="cta pri" id="r-again">Play again</button>
+ <button class="cta ghost" onclick="backFromQuiz()">Back to menu</button>
+</div>
+
+<!-- ===== PERSONALITY ===== -->
+<div id="persona" class="screen">
+ <button class="back" onclick="show('teen')">← Teen Arena</button>
+ <div class="qhead"><div class="qt">Which Nation?</div><div class="pill" id="p-prog">1 / 6</div></div>
+ <div class="progress"><i id="p-bar"></i></div>
+ <div class="qcard"><div class="qtext" id="p-q"></div></div>
+ <div class="opts" id="p-opts" style="grid-template-columns:1fr"></div>
+</div>
+
+<div id="persona-result" class="screen">
+ <button class="back" onclick="show('teen')">← Teen Arena</button>
+ <div class="persona" id="pr-card">
+  <div class="pe" id="pr-em"></div>
+  <div class="pn" id="pr-name"></div>
+  <div class="pd" id="pr-desc"></div>
+  <div class="pc" id="pr-char"></div>
+ </div>
+ <button class="cta ghost" onclick="startPersona()">Try again</button>
+</div>
+
+<!-- ===== DUEL SETUP ===== -->
+<div id="duel-setup" class="screen">
+ <button class="back" onclick="show('home')">← Players</button>
+ <div class="hero" style="margin-bottom:16px"><h1 style="font-size:30px">DUEL ⚔️</h1><p>Pass-and-play. Choose a battleground, then take turns. Most correct wins — and it counts toward your family tally.</p></div>
+ <div class="vs">
+  <div class="fighter" style="--turncol:var(--fire);--turncol2:var(--fire)"><div class="fe">🔥</div><div class="fn">Dad</div></div>
+  <div class="vsbadge">VS</div>
+  <div class="fighter" style="--turncol:var(--water);--turncol2:var(--water)"><div class="fe">💧</div><div class="fn">Daughter</div></div>
+ </div>
+ <div class="sectlabel" style="margin-top:18px">Choose your battleground</div>
+ <div class="modes">
+  <div class="mode" style="--ac:var(--water)" onclick="startDuel('avatar')"><div class="mi">🌪️</div><div><div class="mt">Avatar</div><div class="md">Very hard — true masters only</div></div></div>
+  <div class="mode" style="--ac:var(--earth)" onclick="startDuel('lotr')"><div class="mi">💍</div><div><div class="mt">Herr der Ringe</div><div class="md">Medium difficulty</div></div></div>
+  <div class="mode" style="--ac:var(--spirit)" onclick="startDuel('matrix')"><div class="mi">🕶️</div><div><div class="mt">Matrix 1</div><div class="md">Medium difficulty</div></div></div>
+  <div class="mode" style="--ac:var(--fire)" onclick="startDuel('tfa')"><div class="mi">🇹🇷</div><div><div class="mt">Türkisch für Anfänger</div><div class="md">Mittel — die Serie</div></div></div>
+  <div class="mode" style="--ac:var(--gold)" onclick="startDuel('ulan')"><div class="mi">🏙️</div><div><div class="mt">Ulan İstanbul</div><div class="md">Mittel — die Serie</div></div></div>
+ </div>
+ <div class="note">Tip: hand the phone to the player whose turn it shows. No peeking! 👀</div>
+</div>
+
+<!-- ===== DUEL PLAY ===== -->
+<div id="duel" class="screen">
+ <div class="qhead"><div class="qt" id="d-title">Duel</div><div class="pill" id="d-round">Q1 / 10</div></div>
+ <div class="vs" style="margin:4px 0 14px">
+  <div class="fighter" id="d-f1" style="--turncol:var(--fire);--turncol2:var(--fire)"><div class="fe">🔥</div><div class="fn">Dad</div><div class="fs" id="d-s1">0</div></div>
+  <div class="vsbadge">VS</div>
+  <div class="fighter" id="d-f2" style="--turncol:var(--water);--turncol2:var(--water)"><div class="fe">💧</div><div class="fn">Daughter</div><div class="fs" id="d-s2">0</div></div>
+ </div>
+ <div class="turnbanner" id="d-turn"></div>
+ <div class="qcard"><div class="qtext" id="d-text"></div></div>
+ <div class="opts" id="d-opts"></div>
+ <div class="fb" id="d-fb"></div>
+</div>
+
+<!-- ===== DUEL RESULT ===== -->
+<div id="duel-result" class="screen">
+ <div class="result">
+  <div class="bigscore" id="dr-emoji" style="font-size:64px"></div>
+  <div class="qt" id="dr-win" style="font-size:30px;margin-top:6px"></div>
+  <div class="rmsg" id="dr-line"></div>
+ </div>
+ <button class="cta gold" onclick="startDuel()">Rematch</button>
+ <button class="cta ghost" onclick="show('scores')">See family tally</button>
+</div>
+
+<!-- ===== STORIES ===== -->
+<div id="stories" class="screen">
+ <button class="back" onclick="show('teen')">← Zerya</button>
+ <div class="qhead"><div class="qt">Stories 📖</div><div class="scrollpill" id="scroll-story">📜 0</div></div>
+ <div class="note" style="text-align:left;margin-bottom:14px">Locked tales cost scrolls. Earn scrolls by playing quests — the first story is free.</div>
+ <div id="stories-list"></div>
+</div>
+
+<!-- ===== STORY READER ===== -->
+<div id="story-read" class="screen">
+ <button class="back" onclick="openStoriesScreen()">← Stories</button>
+ <div class="qhead"><div class="qt" id="sr-title" style="font-size:19px"></div><div class="pill" id="sr-page"></div></div>
+ <div class="scene" id="sr-scene"></div>
+ <div class="stext" id="sr-text"></div>
+ <div class="sdots" id="sr-dots"></div>
+ <div class="snav">
+  <button class="cta ghost" id="sr-prev" onclick="storyPrev()" style="margin-top:0">← Back</button>
+  <button class="cta pri" id="sr-next" onclick="storyNext()" style="margin-top:0">Next →</button>
+ </div>
+</div>
+
+<!-- ===== STICKERS ===== -->
+<div id="stickers" class="screen">
+ <button class="back" onclick="show('teen')">← Zerya</button>
+ <div class="qhead"><div class="qt">Sticker Album ✨</div><div class="scrollpill" id="scroll-stick">📜 0</div></div>
+ <div class="note" style="text-align:left" id="stick-note"></div>
+ <button class="cta gold" id="stick-open" onclick="openPack()">Open a pack · 📜 6</button>
+ <div class="stickgrid" id="stick-grid" style="margin-top:16px"></div>
+</div>
+
+<!-- ===== SCORES ===== -->
+<div id="scores" class="screen">
+ <button class="back" onclick="show('home')">← Home</button>
+ <div class="hero" style="margin-bottom:14px"><h1 style="font-size:30px">FAMILY SCORES 🏆</h1></div>
+ <div class="sectlabel">Duel tally — Dad vs Daughter</div>
+ <div class="tally">
+  <div class="tc"><div class="te">🔥</div><div class="tn">Dad</div><div class="tw" id="t-dad" style="color:var(--fire)">0</div></div>
+  <div class="tc"><div class="te">💧</div><div class="tn">Daughter</div><div class="tw" id="t-girl" style="color:var(--water)">0</div></div>
+ </div>
+ <div class="sectlabel">Best scores</div>
+ <div id="best-list"></div>
+ <button class="cta ghost" style="margin-top:18px" onclick="resetScores()">Reset all scores</button>
+</div>
+
+</div>
+
+<script>
+/* ============ NAV ============ */
+function show(id){
+ if(id!=='duel' && typeof stopBattleMusic==='function'){ stopBattleMusic(); }
+ document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on');});
+ var el=document.getElementById(id); if(el){el.classList.add('on');}
+ var zeryaScreens=['teen','stories','story-read','stickers','persona','persona-result'];
+ var quizScreens=['quiz','qresult'];
+ var isZerya = zeryaScreens.indexOf(id)>=0 || (quizScreens.indexOf(id)>=0 && lastHub==='teen');
+ if(isZerya){ document.body.classList.add('zerya-mode'); }
+ else { document.body.classList.remove('zerya-mode'); }
+ if(id==='duel'){ document.body.classList.add('duel-active'); }
+ else { document.body.classList.remove('duel-active'); }
+ try{window.scrollTo(0,0);}catch(e){}
+ if(typeof updateScrollUI==='function')updateScrollUI();
+ if(id==='scores')renderScores();
+}
+function goKids(){ location.href='index.html'; }
+var lastHub='teen';
+function backFromQuiz(){ show(lastHub); }
+
+/* ============ STORAGE ============ */
+var SKEY='avatarArenaV1';
+var DATA=load();
+function load(){ try{return JSON.parse(localStorage.getItem(SKEY))||{};}catch(e){return {};} }
+function save(){ try{localStorage.setItem(SKEY,JSON.stringify(DATA));}catch(e){} }
+function bestOf(k){ return (DATA.best&&DATA.best[k])||0; }
+function setBest(k,v){ if(!DATA.best)DATA.best={}; if(v>(DATA.best[k]||0)){DATA.best[k]=v;save();return true;} return false; }
+
+/* ============ QUESTION BANKS (simple English) ============ */
+var BANKS={
+ lore:{title:'Lore Quiz',hub:'teen',vis:'🧠',q:[
+  {q:"What is the name of Aang's flying bison?",a:'Appa',o:['Appa','Momo','Naga','Druk']},
+  {q:'Toph invented a brand-new bending style. Which one?',a:'Metalbending',o:['Metalbending','Bloodbending','Lightning','Combustion']},
+  {q:'Who teaches Aang waterbending at the start?',a:'Katara',o:['Katara','Pakku','Yue','Hama']},
+  {q:"What is the name of Zuko's sister?",a:'Azula',o:['Azula','Mai','Ty Lee','Ursa']},
+  {q:'Which Avatar lived right before Aang?',a:'Roku',o:['Roku','Kyoshi','Kuruk','Yangchen']},
+  {q:'What kind of animal is Momo?',a:'Lemur',o:['Lemur','Cat','Fox','Bat']},
+  {q:'Katara and Sokka come from which tribe?',a:'Southern Water Tribe',o:['Southern Water Tribe','Northern Water Tribe','Foggy Swamp','Sun Warriors']},
+  {q:'Which element can ONLY the Avatar bend in all four forms?',a:'All four',o:['All four','Only fire','Only air','Energy']},
+  {q:'What weapon does Sokka throw that comes back?',a:'Boomerang',o:['Boomerang','Sword','Spear','Net']},
+  {q:'Who is the blind earthbending master of the group?',a:'Toph',o:['Toph','Suki','Jet','Haru']},
+  {q:'What is the name of the giant library spirit?',a:'Wan Shi Tong',o:['Wan Shi Tong','Koh','Hei Bai','Tui']},
+  {q:'Princess Yue becomes the spirit of the…?',a:'Moon',o:['Moon','Ocean','Sun','Forest']}
+ ]},
+ eng:{title:'English Words',hub:'teen',vis:'📚',q:[
+  {q:"'Reluctant' most nearly means…",a:'unwilling',o:['unwilling','eager','tired','curious']},
+  {q:"'Abundant' most nearly means…",a:'plentiful',o:['plentiful','rare','empty','tiny']},
+  {q:"'Meticulous' describes someone who is…",a:'very careful and precise',o:['very careful and precise','lazy','forgetful','rude']},
+  {q:"To 'alleviate' pain means to…",a:'ease it',o:['ease it','increase it','ignore it','cause it']},
+  {q:"'Inevitable' means…",a:'unavoidable',o:['unavoidable','unlikely','invisible','optional']},
+  {q:"'Ambiguous' means…",a:'open to more than one meaning',o:['open to more than one meaning','perfectly clear','very loud','extremely old']},
+  {q:"A 'resilient' person is able to…",a:'recover quickly',o:['recover quickly','give up easily','sleep a lot','complain often']},
+  {q:"If something 'deteriorates', it…",a:'gets worse',o:['gets worse','improves','disappears','freezes']},
+  {q:"'Frugal' means…",a:'careful with money',o:['careful with money','wasteful','generous','wealthy']},
+  {q:"'Tedious' work is…",a:'boring and tiring',o:['boring and tiring','exciting','dangerous','quick']},
+  {q:"A 'candid' answer is…",a:'honest and direct',o:['honest and direct','a lie','a secret','a joke']},
+  {q:"'Scarce' means…",a:'in short supply',o:['in short supply','everywhere','expensive','heavy']},
+  {q:"To 'postpone' an event is to…",a:'delay it',o:['delay it','cancel it','attend it','enjoy it']},
+  {q:"'Diligent' most nearly means…",a:'hard-working',o:['hard-working','careless','cheerful','wealthy']},
+  {q:"A 'plausible' excuse is…",a:'believable',o:['believable','ridiculous','written','final']}
+ ]},
+ enggram:{title:'English Grammar',hub:'teen',vis:'✏️',q:[
+  {q:"If I ___ more time, I would travel the world. (2nd conditional)",a:'had',o:['had','have','will have','would have']},
+  {q:"Reported speech: She said, 'I am tired.' → She said she ___ tired.",a:'was',o:['was','is','has been','will be']},
+  {q:"Passive: 'They built the house in 1990.' → 'The house ___ in 1990.'",a:'was built',o:['was built','is built','built','has built']},
+  {q:"3rd conditional: 'If she had studied, she ___ the exam.'",a:'would have passed',o:['would have passed','would pass','passed','will pass']},
+  {q:"Relative pronoun: 'The man ___ car was stolen called the police.'",a:'whose',o:['whose','who','which','whom']},
+  {q:"'I look forward to ___ you again soon.'",a:'seeing',o:['seeing','see','seen','to see']},
+  {q:"'By next June, I ___ here for ten years.'",a:'will have worked',o:['will have worked','will work','have worked','worked']},
+  {q:"Question tag: 'You're coming to the party, ___?'",a:"aren't you",o:["aren't you",'are you','do you',"don't you"]},
+  {q:"'He's been living in Bern ___ 2015.'",a:'since',o:['since','for','from','during']},
+  {q:"Present perfect: 'I ___ never ___ to Japan.'",a:'have / been',o:['have / been','has / been','had / gone','am / being']},
+  {q:"Choose the correct form: 'I wish I ___ taller.'",a:'were',o:['were','am','will be','have been']},
+  {q:"'Neither Tom nor his friends ___ here yet.'",a:'are',o:['are','is','was','has']}
+ ]},
+ degram:{title:'Deutsch Grammatik',hub:'teen',vis:'📝',q:[
+  {q:"Welcher Fall? „Ich gebe dem Mann das Buch.“ — „dem Mann“ steht im …",a:'Dativ',o:['Dativ','Akkusativ','Nominativ','Genitiv']},
+  {q:"Konjunktiv II: „Wenn ich Zeit ___, würde ich kommen.“",a:'hätte',o:['hätte','habe','hatte','haben']},
+  {q:"Relativpronomen: „Das ist der Mann, ___ ich gestern getroffen habe.“",a:'den',o:['den','dem','der','das']},
+  {q:"Welche Zeitform? „Ich hatte schon gegessen, als er kam.“",a:'Plusquamperfekt',o:['Plusquamperfekt','Perfekt','Präteritum','Futur II']},
+  {q:"Indirekte Rede (Konjunktiv I): „Er sagt, er ___ krank.“",a:'sei',o:['sei','ist','wäre','war']},
+  {q:"Genitiv: „Wegen ___ schlechten Wetters bleiben wir zu Hause.“",a:'des',o:['des','dem','der','den']},
+  {q:"Welche Wortart ist „schnell“ in „Sie läuft schnell“?",a:'Adverb',o:['Adverb','Adjektiv','Verb','Nomen']},
+  {q:"Wo muss ein Komma stehen? „Ich weiß ___ du kommst.“",a:'vor „dass“',o:['vor „dass“','nach „du“','gar nicht','nach „kommst“']},
+  {q:"Akkusativ: „Ich sehe ___ Hund.“",a:'den',o:['den','dem','der','des']},
+  {q:"Welches Verb steht im Passiv? „Das Haus wird gebaut.“",a:'wird gebaut',o:['wird gebaut','baut','hat gebaut','baute']},
+  {q:"Bestimme die Zeitform: „Er wird gegangen sein.“",a:'Futur II',o:['Futur II','Futur I','Perfekt','Präsens']},
+  {q:"Welches Wort ist eine Konjunktion?",a:'obwohl',o:['obwohl','schnell','Haus','dieser']}
+ ]},
+ quotes:{title:'Who Said It?',hub:'teen',vis:'💬',q:[
+  {q:'Who loves tea and gives calm, wise advice?',a:'Iroh',o:['Iroh','Zuko','Sokka','Ozai']},
+  {q:'Who is blind but "sees" by feeling the ground?',a:'Toph',o:['Toph','Katara','Suki','Mai']},
+  {q:'Who jokes a lot and plans the team\u2019s strategies?',a:'Sokka',o:['Sokka','Aang','Jet','Haru']},
+  {q:'Who hunts the Avatar to win back his honor?',a:'Zuko',o:['Zuko','Zhao','Combustion Man','Long Feng']},
+  {q:'Who bends a rare blue fire?',a:'Azula',o:['Azula','Ozai','Roku','Jeong Jeong']},
+  {q:'Who is the playful flying lemur?',a:'Momo',o:['Momo','Appa','Hawky','Bosco']},
+  {q:'Who leads the Kyoshi Warriors?',a:'Suki',o:['Suki','Ty Lee','Yue','Smellerbee']},
+  {q:'Who is the last airbender?',a:'Aang',o:['Aang','Tenzin','Gyatso','Roku']}
+ ]},
+ expert:{title:'Expert Lore',hub:'adult',vis:'📜',q:[
+  {q:'How many years did the Hundred Year War last?',a:'100',o:['100','50','12','200']},
+  {q:'Instead of killing Ozai, Aang took away his…?',a:'Bending',o:['Bending','Memory','Voice','Crown']},
+  {q:'Which comet hugely boosts firebending?',a:"Sozin's Comet",o:["Sozin's Comet",'Halley','Roku\u2019s Star','The Red Moon']},
+  {q:'What secret society does Iroh belong to?',a:'White Lotus',o:['White Lotus','Dai Li','Red Lotus','Rough Rhinos']},
+  {q:'Who secretly ran Ba Sing Se with the Dai Li?',a:'Long Feng',o:['Long Feng','Bumi','The Earth King','Jet']},
+  {q:'Ba Sing Se is the capital of which kingdom?',a:'Earth Kingdom',o:['Earth Kingdom','Fire Nation','Sun Empire','Si Wong']},
+  {q:'Aang was frozen in the iceberg for how long?',a:'100 years',o:['100 years','10 years','1000 years','40 years']},
+  {q:'The Moon and Ocean spirits are named…?',a:'Tui and La',o:['Tui and La','Raava and Vaatu','Agni and Yue','Koh and Hei Bai']},
+  {q:'Who was Fire Lord just before Ozai?',a:'Azulon',o:['Azulon','Sozin','Iroh','Zuko']},
+  {q:'Zuko\u2019s mother is named…?',a:'Ursa',o:['Ursa','Ilah','Mai','Kya']},
+  {q:'What was the name of Iroh\u2019s son, who died at Ba Sing Se?',a:'Lu Ten',o:['Lu Ten','Sozin','Lao','Bumi']},
+  {q:'Which admiral killed the Moon Spirit at the North Pole?',a:'Zhao',o:['Zhao','Zuko','Ozai','Long Feng']},
+  {q:'The dragons who taught the original firebending were named…?',a:'Ran and Shaw',o:['Ran and Shaw','Tui and La','Fang and Druk','Agni and Wan']},
+  {q:'Who was the very first Avatar?',a:'Wan',o:['Wan','Kyoshi','Yangchen','Kuruk']},
+  {q:'What style of swords does Zuko fight with as the Blue Spirit?',a:'Dao (dual swords)',o:['Dao (dual swords)','Katana','Rapier','Scimitar']},
+  {q:'Which Air Temple was Aang raised in?',a:'Southern Air Temple',o:['Southern Air Temple','Eastern Air Temple','Northern Air Temple','Western Air Temple']},
+  {q:'The Fire Nation prison on a lake of boiling water is called…?',a:'The Boiling Rock',o:['The Boiling Rock','Lake Laogai','The Cooler','Pohuai']},
+  {q:'Which spirit steals the faces of those who show emotion before it?',a:'Koh',o:['Koh','Hei Bai','Wan Shi Tong','Tui']},
+  {q:'Toph\u2019s signature bracelet is bent from a piece of…?',a:'A meteorite',o:['A meteorite','Pure gold','Platinum','Crystal']},
+  {q:'What is the name of the Earth King\u2019s pet bear?',a:'Bosco',o:['Bosco','Naga','Pabu','Druk']},
+  {q:'Who taught Sokka how to use a sword?',a:'Piandao',o:['Piandao','Master Pakku','Jeong Jeong','Bumi']}
+ ]},
+ iroh:{title:"Iroh's Wisdom",hub:'adult',vis:'🍵',q:[
+  {q:'Iroh draws wisdom from many places, not just one. Why?',a:'No single source has every answer',o:['No single source has every answer','It is faster','To confuse enemies','To sound clever']},
+  {q:'Iroh says failure can be the best teacher. The lesson is…?',a:'Mistakes help us grow',o:['Mistakes help us grow','Never try hard','Blame others','Give up early']},
+  {q:'Iroh stays calm in a crisis. His method is to first…?',a:'Breathe and think clearly',o:['Breathe and think clearly','Shout louder','Run away','Pick a fight']},
+  {q:'Iroh forgives Zuko many times. This shows he values…?',a:'Second chances',o:['Second chances','Winning','Revenge','Power']},
+  {q:'Iroh enjoys small things like tea and music. He believes…?',a:'Joy lives in simple moments',o:['Joy lives in simple moments','Only big wins matter','Rest is weakness','Money brings peace']},
+  {q:'Iroh tells Zuko to find his own path. He means…?',a:'Be true to yourself',o:['Be true to yourself','Copy your father','Always obey','Avoid choices']},
+  {q:'Iroh balances strength with kindness. Real power, he says, comes with…?',a:'Self-control',o:['Self-control','Anger','Fear','Luck']}
+ ]},
+ book:{title:'Name the Book',hub:'adult',vis:'📺',q:[
+  {q:'In which Book does Aang first learn earthbending?',a:'Book 2: Earth',o:['Book 2: Earth','Book 1: Water','Book 3: Fire','Book 4']},
+  {q:'Sozin\u2019s Comet and the final battle are in which Book?',a:'Book 3: Fire',o:['Book 3: Fire','Book 2: Earth','Book 1: Water','Book 4']},
+  {q:'The siege of the Northern Water Tribe ends which Book?',a:'Book 1: Water',o:['Book 1: Water','Book 2: Earth','Book 3: Fire','Book 4']},
+  {q:'How many Books (seasons) does the series have?',a:'Three',o:['Three','Four','Two','Five']},
+  {q:'Zuko joins Team Avatar in which Book?',a:'Book 3: Fire',o:['Book 3: Fire','Book 1: Water','Book 2: Earth','Book 4']},
+  {q:'Toph joins the team in which Book?',a:'Book 2: Earth',o:['Book 2: Earth','Book 1: Water','Book 3: Fire','Book 4']},
+  {q:'Each Book is named after an…?',a:'Element',o:['Element','Animal','City','Color']},
+  {q:'The fall of Ba Sing Se ends which Book?',a:'Book 2: Earth',o:['Book 2: Earth','Book 1: Water','Book 3: Fire','Book 4']}
+ ]},
+ engpro:{title:'English Pro',hub:'adult',vis:'🗣️',q:[
+  {q:'Choose the correct past tense: "Yesterday she ___ to the temple."',a:'went',o:['went','goed','gone','going']},
+  {q:'"There ___ four nations in the world."',a:'are',o:['are','is','was','be']},
+  {q:'Pick the right word: "He is taller ___ his brother."',a:'than',o:['than','then','that','from']},
+  {q:'"I have ___ this episode before."',a:'seen',o:['seen','saw','see','seeing']},
+  {q:'Choose: "The fire ___ all night."',a:'burned',o:['burned','burns','burning','burn']},
+  {q:'"If I ___ an Avatar, I would fly."',a:'were',o:['were','am','will','be']},
+  {q:'Plural of "child":',a:'children',o:['children','childs','childes','child']},
+  {q:'"They have lived here ___ ten years."',a:'for',o:['for','since','from','during']}
+ ]}
+};
+
+/* ============ GENERIC QUIZ RUNNER ============ */
+var QZ=null;
+function startBank(key){
+ var b=BANKS[key]; lastHub=b.hub;
+ var pool=b.q.slice().sort(function(){return Math.random()-.5;});
+ var count=Math.min(8,pool.length);
+ QZ={key:key,b:b,list:pool.slice(0,count),i:0,score:0,lock:false};
+ document.getElementById('q-title').textContent=b.title;
+ show('quiz'); renderQ();
+}
+function startMath(){}
+function shuffleArr(a){return a.slice().sort(function(){return Math.random()-.5;});}
+function renderQ(){
+ if(QZ.key==='math'){return;}
+ var cur=QZ.list[QZ.i]; QZ.lock=false;
+ document.getElementById('q-score').textContent=QZ.score+' pts';
+ document.getElementById('q-bar').style.width=((QZ.i)/QZ.list.length*100)+'%';
+ document.getElementById('q-vis').textContent=QZ.b.vis;
+ document.getElementById('q-text').textContent=cur.q;
+ document.getElementById('q-fb').textContent='';
+ var g=document.getElementById('q-opts'); g.innerHTML='';
+ shuffleArr(cur.o).forEach(function(opt){
+  var btn=document.createElement('button'); btn.className='opt'; btn.textContent=opt;
+  btn.onclick=function(){answerQ(opt,btn,cur.a);};
+  g.appendChild(btn);
+ });
+}
+function answerQ(opt,btn,ans){
+ if(QZ.lock)return; QZ.lock=true;
+ var fb=document.getElementById('q-fb');
+ var all=document.querySelectorAll('#q-opts .opt');
+ all.forEach(function(b){b.disabled=true; if(b.textContent===ans)b.classList.add('right');});
+ if(opt===ans){ btn.classList.add('right'); QZ.score++; fb.className='fb ok'; fb.textContent='✓ Correct!'; }
+ else{ btn.classList.add('wrong'); fb.className='fb no'; fb.textContent='✗ Answer: '+ans; }
+ document.getElementById('q-score').textContent=QZ.score+' pts';
+ setTimeout(nextQ, opt===ans?620:1150);
+}
+function nextQ(){
+ QZ.i++;
+ if(QZ.i>=QZ.list.length){ finishQuiz(); return; }
+ renderQ();
+}
+function finishQuiz(){
+ document.getElementById('q-bar').style.width='100%';
+ var total=QZ.list.length, sc=QZ.score;
+ var improved=setBest(QZ.key,sc);
+ document.getElementById('r-title').textContent=QZ.b.title;
+ document.getElementById('r-score').textContent=sc+'/'+total;
+ var pct=sc/total;
+ var msg = pct===1?'Flawless. A true master of the elements. 🌟'
+  : pct>=0.75?'Strong work — the White Lotus is impressed.'
+  : pct>=0.5?'Solid. Keep training, young one.'
+  : 'Even Aang fell off Appa sometimes. Try again!';
+ var earned=sc+(pct===1?3:0); awardScrolls(earned);
+ document.getElementById('r-msg').textContent=msg+'  ·  +'+earned+' 📜';
+ var best=bestOf(QZ.key);
+ var rb=document.getElementById('r-best');
+ rb.textContent = improved?'🏆 New best!':'Best: '+best+'/'+total;
+ rb.style.background = improved?'rgba(220,180,94,.18)':'var(--card)';
+ rb.style.color = improved?'var(--gold)':'var(--muted)';
+ document.getElementById('r-again').onclick=function(){startBank(QZ.key);};
+ show('qresult');
+}
+
+/* ============ MATH (generated) ============ */
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function genMath(){
+ var type=rnd(0,8), q, ans;
+ if(type===0){ var dn=[2,3,4][rnd(0,2)]; var mult=rnd(2,6); var whole=dn*mult; ans=mult; q='What is 1/'+dn+' of '+whole+'?'; }
+ else if(type===1){ var p=[10,20,25,50][rnd(0,3)]; var base=[20,40,60,80,100][rnd(0,4)]; ans=Math.round(base*p/100); q='What is '+p+'% of '+base+'?'; }
+ else if(type===2){ var a=rnd(2,9), x=rnd(2,9); ans=x; q='Solve: '+a+' + x = '+(a+x)+'  →  x = ?'; }
+ else if(type===3){ var m=rnd(2,6), xx=rnd(2,9); ans=xx; q='Solve: '+m+'x = '+(m*xx)+'  →  x = ?'; }
+ else if(type===4){ var a4=rnd(2,6), x4=rnd(2,9), b4=rnd(1,9); ans=x4; q='Solve: '+a4+'x + '+b4+' = '+(a4*x4+b4)+'  →  x = ?'; }
+ else if(type===5){ var a5=rnd(2,6), x5=rnd(3,9), b5=rnd(1,9); ans=x5; q='Solve: '+a5+'x − '+b5+' = '+(a5*x5-b5)+'  →  x = ?'; }
+ else if(type===6){ var c6=rnd(2,6), d6=rnd(1,9), x6=rnd(2,8); ans=c6*x6+d6; q='Evaluate: '+c6+'x + '+d6+'   for x = '+x6; }
+ else if(type===7){ var c7=rnd(2,5), x7=rnd(2,7), d7=rnd(1,6); ans=c7*(x7+d7); q='Evaluate: '+c7+'·(x + '+d7+')   for x = '+x7; }
+ else {
+  var v=['x','a','y','n'][rnd(0,3)]; var k1=rnd(2,6), k2=rnd(2,6), k3=rnd(1,Math.min(k1+k2-1,4)); var sumc=k1+k2-k3;
+  q='Simplify: '+k1+v+' + '+k2+v+' − '+k3+v;
+  ans=sumc+v;
+  var tset={}; tset[ans]=1; var tg=0;
+  while(Object.keys(tset).length<4 && tg++<40){ var dd=sumc+rnd(-3,3); if(dd>0)tset[dd+v]=1; }
+  return {q:q,a:ans,o:Object.keys(tset)};
+ }
+ var set={}; set[ans]=1;
+ var guard=0;
+ while(Object.keys(set).length<4 && guard++<60){ var d=ans+rnd(-5,6); if(d>=0)set[d]=1; }
+ var opts=Object.keys(set).map(Number);
+ return {q:q,a:String(ans),o:opts.map(String)};
+}
+function startMathQuiz(){
+ lastHub='teen';
+ var list=[]; for(var i=0;i<8;i++)list.push(genMath());
+ QZ={key:'math',b:{title:'Brain Math',vis:'➗',hub:'teen'},list:list,i:0,score:0,lock:false};
+ document.getElementById('q-title').textContent='Brain Math';
+ show('quiz'); renderMathQ();
+}
+function renderMathQ(){
+ var cur=QZ.list[QZ.i]; QZ.lock=false;
+ document.getElementById('q-score').textContent=QZ.score+' pts';
+ document.getElementById('q-bar').style.width=((QZ.i)/QZ.list.length*100)+'%';
+ document.getElementById('q-vis').textContent='➗';
+ document.getElementById('q-text').textContent=cur.q;
+ document.getElementById('q-fb').textContent='';
+ var g=document.getElementById('q-opts'); g.innerHTML='';
+ shuffleArr(cur.o).forEach(function(opt){
+  var btn=document.createElement('button'); btn.className='opt'; btn.textContent=opt;
+  btn.onclick=function(){answerMath(opt,btn,cur.a);};
+  g.appendChild(btn);
+ });
+}
+function answerMath(opt,btn,ans){
+ if(QZ.lock)return; QZ.lock=true;
+ var fb=document.getElementById('q-fb');
+ document.querySelectorAll('#q-opts .opt').forEach(function(b){b.disabled=true; if(b.textContent===ans)b.classList.add('right');});
+ if(opt===ans){ btn.classList.add('right'); QZ.score++; fb.className='fb ok'; fb.textContent='✓ Correct!'; }
+ else{ btn.classList.add('wrong'); fb.className='fb no'; fb.textContent='✗ Answer: '+ans; }
+ document.getElementById('q-score').textContent=QZ.score+' pts';
+ setTimeout(function(){ QZ.i++; if(QZ.i>=QZ.list.length){ QZ.b.title='Brain Math'; finishQuiz(); } else renderMathQ(); }, opt===ans?560:1050);
+}
+/* re-route math button */
+BANKS.math={title:'Brain Math',hub:'teen',vis:'➗',q:[]};
+var _startBank=startBank;
+startBank=function(key){ if(key==='math'){startMathQuiz();return;} _startBank(key); };
+
+/* ============ PERSONALITY ============ */
+var PQ=[
+ {q:'A friend is in real trouble. You…',o:[['find a clever way around it','air'],['comfort them first','water'],['stand firm and protect them','earth'],['charge in and fix it','fire']]},
+ {q:'Your perfect day is…',o:[['exploring somewhere new','air'],['time with family','water'],['a routine that just works','earth'],['a big challenge to win','fire']]},
+ {q:'People say you are…',o:[['free and funny','air'],['kind and caring','water'],['strong and honest','earth'],['bold and driven','fire']]},
+ {q:'In an argument you…',o:[['crack a joke and dodge','air'],['listen and seek peace','water'],['say exactly what you think','earth'],['fight to win','fire']]},
+ {q:'You learn best by…',o:[['trying many things','air'],['helping others','water'],['patient practice','earth'],['pushing your limits','fire']]},
+ {q:'Your weak spot might be…',o:[['avoiding hard feelings','air'],['forgetting yourself','water'],['being stubborn','earth'],['being too intense','fire']]}
+];
+var PERSONAS={
+ air:{em:'🌪️',name:'Air Nomad',col:'linear-gradient(150deg,#7e93b8,#454f6b)',desc:'Free, playful and quick-thinking. You value peace and adventure, and you solve problems with creativity rather than force.',ch:'Most like: Aang'},
+ water:{em:'💧',name:'Water Tribe',col:'linear-gradient(150deg,#3fa7c9,#1c5e76)',desc:'Caring, loyal and adaptable. You heal the people around you and stay strong for your family, flowing around any obstacle.',ch:'Most like: Katara'},
+ earth:{em:'🪨',name:'Earth Kingdom',col:'linear-gradient(150deg,#7cb85c,#3c6b2c)',desc:'Honest, grounded and tough. You wait for the right moment, then stand your ground. People trust your strength.',ch:'Most like: Toph'},
+ fire:{em:'🔥',name:'Fire Nation',col:'linear-gradient(150deg,#e85a30,#a3331a)',desc:'Bold, passionate and determined. You burn bright and never quit — and when you aim your fire well, nothing stops you.',ch:'Most like: Zuko'}
+};
+var PST=null;
+function startPersona(){ PST={i:0,tally:{air:0,water:0,earth:0,fire:0}}; show('persona'); renderPersona(); }
+function renderPersona(){
+ var cur=PQ[PST.i];
+ document.getElementById('p-prog').textContent=(PST.i+1)+' / '+PQ.length;
+ document.getElementById('p-bar').style.width=(PST.i/PQ.length*100)+'%';
+ document.getElementById('p-q').textContent=cur.q;
+ var g=document.getElementById('p-opts'); g.innerHTML='';
+ shuffleArr(cur.o).forEach(function(pair){
+  var btn=document.createElement('button'); btn.className='opt'; btn.style.textAlign='left'; btn.textContent=pair[0];
+  btn.onclick=function(){ PST.tally[pair[1]]++; PST.i++; if(PST.i>=PQ.length)finishPersona(); else renderPersona(); };
+  g.appendChild(btn);
+ });
+}
+function finishPersona(){
+ var t=PST.tally, best='air', bv=-1;
+ ['air','water','earth','fire'].forEach(function(k){ if(t[k]>bv){bv=t[k];best=k;} });
+ var p=PERSONAS[best];
+ document.getElementById('pr-card').style.background=p.col;
+ document.getElementById('pr-em').textContent=p.em;
+ document.getElementById('pr-name').textContent='You are '+p.name;
+ document.getElementById('pr-desc').textContent=p.desc;
+ document.getElementById('pr-char').textContent=p.ch;
+ show('persona-result');
+}
+
+/* ============ DUEL ============ */
+var DUEL=null;
+/* ── Zerya's World: blue explosion + melody ── */
+function zeryaMelody(){
+ try{
+  var AC=window.AudioContext||window.webkitAudioContext; if(!AC)return;
+  var ctx=new AC(); var now=ctx.currentTime;
+  var master=ctx.createGain(); master.gain.value=.42; master.connect(ctx.destination);
+  // soft reverb-ish delay
+  var delay=ctx.createDelay(); delay.delayTime.value=0.28;
+  var fb=ctx.createGain(); fb.gain.value=0.28;
+  var wet=ctx.createGain(); wet.gain.value=0.3;
+  delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
+  function tone(f,t,dur,vol,type){
+   var o=ctx.createOscillator(); o.type=type||'sine'; o.frequency.value=f;
+   var g=ctx.createGain(); g.gain.setValueAtTime(0,t);
+   g.gain.linearRampToValueAtTime(vol,t+0.12);
+   g.gain.exponentialRampToValueAtTime(.0006,t+dur);
+   o.connect(g); g.connect(master); g.connect(delay);
+   o.start(t); o.stop(t+dur+0.05);
+  }
+  // calm, slow lullaby in C major — spread over ~5s
+  // [freq, startOffset, duration]
+  var seq=[
+   [392.00,0.0,1.2],   // G4
+   [523.25,0.9,1.3],   // C5
+   [659.25,1.9,1.4],   // E5
+   [587.33,2.9,1.3],   // D5
+   [523.25,3.7,1.6],   // C5
+   [659.25,3.7,1.8]    // E5 (soft harmony)
+  ];
+  seq.forEach(function(n){ tone(n[0],now+n[1],n[2],.26,'triangle'); });
+  // warm pad underneath for the full 5s
+  [261.63,329.63,392.00].forEach(function(f){
+   var o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+   var g=ctx.createGain(); g.gain.setValueAtTime(0,now);
+   g.gain.linearRampToValueAtTime(.07,now+0.6);
+   g.gain.setValueAtTime(.07,now+3.6);
+   g.gain.exponentialRampToValueAtTime(.0005,now+5.0);
+   o.connect(g); g.connect(master); o.start(now); o.stop(now+5.1);
+  });
+  setTimeout(function(){try{ctx.close();}catch(e){}},5600);
+ }catch(e){}
+}
+function zeryaBoom(){
+ var ov=document.createElement('div'); ov.className='boom-overlay';
+ var flash=document.createElement('div'); flash.className='zboom-flash'; ov.appendChild(flash);
+ var ring=document.createElement('div'); ring.className='zboom-ring'; ov.appendChild(ring);
+ var ring2=document.createElement('div'); ring2.className='zboom-ring'; ring2.style.animationDelay='.12s'; ov.appendChild(ring2);
+ var core=document.createElement('div'); core.className='zboom-core'; ov.appendChild(core);
+ for(var i=0;i<24;i++){
+  var s=document.createElement('div'); s.className='zboom-spark';
+  var ang=(Math.PI*2)*(i/24)+(Math.random()-.5)*0.4;
+  var dist=180+Math.random()*260;
+  s.style.setProperty('--bx',Math.round(Math.cos(ang)*dist)+'px');
+  s.style.setProperty('--by',Math.round(Math.sin(ang)*dist)+'px');
+  s.style.animationDelay=(Math.random()*0.08).toFixed(2)+'s';
+  var sz=9+Math.round(Math.random()*13); s.style.width=sz+'px'; s.style.height=sz+'px'; s.style.marginLeft=(-sz/2)+'px'; s.style.marginTop=(-sz/2)+'px';
+  ov.appendChild(s);
+ }
+ // sparkly stars/snowflakes
+ var glyphs=['✦','❄','✧','⭐','💙'];
+ for(var j=0;j<10;j++){
+  var st=document.createElement('div'); st.className='zstar'; st.textContent=glyphs[j%glyphs.length];
+  var a=(Math.PI*2)*(j/10)+Math.random()*0.5; var d=150+Math.random()*220;
+  st.style.setProperty('--bx',Math.round(Math.cos(a)*d)+'px');
+  st.style.setProperty('--by',Math.round(Math.sin(a)*d)+'px');
+  st.style.animationDelay=(Math.random()*0.12).toFixed(2)+'s';
+  ov.appendChild(st);
+ }
+ document.body.appendChild(ov);
+ zeryaMelody();
+ setTimeout(function(){ if(ov.parentNode)ov.parentNode.removeChild(ov); }, 1100);
+}
+function duelBoom(){
+ var ov=document.createElement('div'); ov.className='boom-overlay';
+ var flash=document.createElement('div'); flash.className='boom-flash'; ov.appendChild(flash);
+ var ring=document.createElement('div'); ring.className='boom-ring'; ov.appendChild(ring);
+ var core=document.createElement('div'); core.className='boom-core'; ov.appendChild(core);
+ for(var i=0;i<20;i++){
+  var s=document.createElement('div'); s.className='boom-spark';
+  var ang=(Math.PI*2)*(i/20)+(Math.random()-.5)*0.4;
+  var dist=180+Math.random()*240;
+  s.style.setProperty('--bx',Math.round(Math.cos(ang)*dist)+'px');
+  s.style.setProperty('--by',Math.round(Math.sin(ang)*dist)+'px');
+  s.style.animationDelay=(Math.random()*0.07).toFixed(2)+'s';
+  var sz=10+Math.round(Math.random()*12); s.style.width=sz+'px'; s.style.height=sz+'px'; s.style.marginLeft=(-sz/2)+'px'; s.style.marginTop=(-sz/2)+'px';
+  ov.appendChild(s);
+ }
+ document.body.appendChild(ov);
+ setTimeout(function(){ if(ov.parentNode)ov.parentNode.removeChild(ov); }, 950);
+}
+function duelPool(){
+ var keys=['expert'];
+ var all=[];
+ keys.forEach(function(k){ BANKS[k].q.forEach(function(item){ all.push(item); }); });
+ return shuffleArr(all).slice(0,16);
+}
+/* ===== DUEL TOPICS ===== */
+var DUEL_TOPICS={
+ avatar:{title:'Avatar Duel ⚔️', q:[
+  {q:'Who was the very first Avatar?',a:'Wan',o:['Wan','Yangchen','Kuruk','Szeto']},
+  {q:'How long did Avatar Kyoshi live?',a:'230 years',o:['230 years','150 years','312 years','95 years']},
+  {q:"Which Air Nomad Avatar lived four lifetimes before Aang?",a:'Yangchen',o:['Yangchen','Kyoshi','Roku','Kuruk']},
+  {q:"What was the name of the Southern Raiders' leader who killed Katara's mother?",a:'Yon Rha',o:['Yon Rha','Zhao','Long Feng','Combustion Man']},
+  {q:"What was the name of Iroh's son who died at Ba Sing Se?",a:'Lu Ten',o:['Lu Ten','Bumi','Kuei','Mako']},
+  {q:'Who taught Katara bloodbending?',a:'Hama',o:['Hama','Yagoda','Kanna','Pakku']},
+  {q:"Which swordmaster secretly trained Sokka?",a:'Piandao',o:['Piandao','Jeong Jeong','Bumi','Pakku']},
+  {q:'Which two dragons taught Aang and Zuko firebending?',a:'Ran and Shaw',o:['Ran and Shaw','Fang and Druk','Sozin and Roku','Tui and La']},
+  {q:'What are the names of the moon and ocean spirits?',a:'Tui and La',o:['Tui and La','Yue and Sokka','Agni and Tui','La and Wan']},
+  {q:'Who was the Dai Li leader who conspired with Azula?',a:'Long Feng',o:['Long Feng','Joo Dee','Ty Lee','Zhao']},
+  {q:'What calm animal form does the forest spirit Hei Bai take?',a:'A panda',o:['A panda','A dragon','A fox','A bear']},
+  {q:'What new bending discipline did Toph invent?',a:'Metalbending',o:['Metalbending','Lightning','Sandbending','Healing']},
+  {q:"What is the name of the swamp that is one giant living tree?",a:'The Foggy Swamp',o:['The Foggy Swamp','The Spirit Oasis','Si Wong','Hei Bai Forest']},
+  {q:'Instead of killing Ozai, what did Aang take from him?',a:'His bending',o:['His bending','His memory','His voice','His crown']},
+  {q:'How many years did the Hundred Year War actually last?',a:'100',o:['100','99','87','120']},
+  {q:'Which secret society does Iroh belong to?',a:'The Order of the White Lotus',o:['The Order of the White Lotus','The Dai Li','The Rough Rhinos','The Si Wong Order']}
+ ]},
+ lotr:{title:'Lord of the Rings Duel 💍', q:[
+  {q:'Who ultimately destroys the One Ring in Mount Doom?',a:'Gollum',o:['Gollum','Frodo','Sam','Sauron']},
+  {q:"What is the name of Frodo's home in the Shire?",a:'Bag End',o:['Bag End','Rivendell','Edoras','Helm’s Deep']},
+  {q:'What is Aragorn’s reforged sword called?',a:'Andúril',o:['Andúril','Sting','Glamdring','Orcrist']},
+  {q:'What kind of creature was Gollum originally?',a:'A hobbit',o:['A hobbit','An elf','A dwarf','An orc']},
+  {q:'Who cut the Ring from Sauron’s hand?',a:'Isildur',o:['Isildur','Elrond','Aragorn','Boromir']},
+  {q:'Who is the elf in the Fellowship?',a:'Legolas',o:['Legolas','Elrond','Haldir','Thranduil']},
+  {q:'Who is the dwarf in the Fellowship?',a:'Gimli',o:['Gimli','Balin','Thorin','Glóin']},
+  {q:'What is the name of Gandalf’s horse?',a:'Shadowfax',o:['Shadowfax','Bill','Brego','Asfaloth']},
+  {q:'What is Saruman’s tower called?',a:'Orthanc',o:['Orthanc','Barad-dûr','Minas Tirith','Cirith Ungol']},
+  {q:'What giant spider attacks Frodo?',a:'Shelob',o:['Shelob','Ungoliant','Aragog','Smaug']},
+  {q:'What is the kingdom of the horse-lords called?',a:'Rohan',o:['Rohan','Gondor','Lothlórien','Erebor']},
+  {q:'Which man of the Fellowship tries to take the Ring?',a:'Boromir',o:['Boromir','Faramir','Denethor','Théoden']},
+  {q:'Who is the Elf-queen of Lothlórien?',a:'Galadriel',o:['Galadriel','Arwen','Éowyn','Tauriel']},
+  {q:'Sauron’s dark land is called?',a:'Mordor',o:['Mordor','Gondor','Mirkwood','Moria']},
+  {q:'Which wizard returns as Gandalf the White?',a:'Gandalf the Grey',o:['Gandalf the Grey','Saruman','Radagast','Sauron']},
+  {q:'In what tongue is the Ring inscription written?',a:'The Black Speech',o:['The Black Speech','Elvish','The Common Tongue','Dwarvish']}
+ ]},
+ matrix:{title:'The Matrix Duel 🕶️', q:[
+  {q:'Who offers Neo the red and blue pill?',a:'Morpheus',o:['Morpheus','Trinity','Cypher','Tank']},
+  {q:'Which pill does Neo take?',a:'The red pill',o:['The red pill','The blue pill','Both','Neither']},
+  {q:"What is Neo's real name?",a:'Thomas Anderson',o:['Thomas Anderson','John Murdoch','Tom Reagan','Neo Smith']},
+  {q:'Who is the main Agent hunting Neo?',a:'Agent Smith',o:['Agent Smith','Agent Brown','Cypher','The Architect']},
+  {q:'What is the name of Morpheus’ ship?',a:'The Nebuchadnezzar',o:['The Nebuchadnezzar','The Logos','The Osiris','The Icarus']},
+  {q:'Who betrays the crew to return to the Matrix?',a:'Cypher',o:['Cypher','Tank','Dozer','Mouse']},
+  {q:'Neo is believed to be…?',a:'The One',o:['The One','The Keymaker','The Architect','The Oracle']},
+  {q:'Who can see the future and bakes cookies?',a:'The Oracle',o:['The Oracle','Trinity','Niobe','Switch']},
+  {q:'What do the machines grow humans to be used as?',a:'Batteries',o:['Batteries','Soldiers','Food','Servants']},
+  {q:'What does Neo say after his combat upload?',a:'I know kung fu',o:['I know kung fu','I know karate','Show me','I’m ready']},
+  {q:'What is the last human city called?',a:'Zion',o:['Zion','Eden','Olympus','Haven']},
+  {q:'What dominant color tints scenes inside the Matrix?',a:'Green',o:['Green','Blue','Red','Sepia']},
+  {q:'What slow-motion effect is the film famous for?',a:'Bullet time',o:['Bullet time','Freeze frame','Time skip','Matrix jump']},
+  {q:'How does Neo revive at the end?',a:'Trinity kisses him',o:['Trinity kisses him','CPR','A pill','An injection']},
+  {q:'How does Neo finally defeat Agent Smith?',a:'He jumps inside him',o:['He jumps inside him','He shoots him','He unplugs him','He talks him down']},
+  {q:'Who is the captain that leads the crew?',a:'Morpheus',o:['Morpheus','Cypher','Tank','Apoc']}
+ ]},
+ tfa:{title:'Türkisch für Anfänger 🇹🇷', q:[
+  {q:'Wer erzählt die Serie aus ihrer Sicht?',a:'Lena',o:['Lena','Yağmur','Doris','Nils']},
+  {q:'Was ist Metin Öztürk von Beruf?',a:'Kriminalkommissar',o:['Kriminalkommissar','Lehrer','Arzt','Anwalt']},
+  {q:'Wie heißt Lenas Mutter?',a:'Doris',o:['Doris','Nina','Gabi','Sabine']},
+  {q:'Welchen Beruf hat Doris?',a:'Psychotherapeutin',o:['Psychotherapeutin','Lehrerin','Köchin','Journalistin']},
+  {q:'Wie heißt der türkische Macho-Stiefbruder?',a:'Cem',o:['Cem','Costa','Nils','Metin']},
+  {q:'Wie heißt Metins strenggläubige Tochter?',a:'Yağmur',o:['Yağmur','Leyla','Elif','Lena']},
+  {q:'Wie heißt Lenas kleiner Bruder?',a:'Nils',o:['Nils','Cem','Ben','Tom']},
+  {q:'Welcher Schauspieler spielt Cem?',a:'Elyas M’Barek',o:['Elyas M’Barek','Adnan Maral','Fahri Yardım','Kida Khodr Ramadan']},
+  {q:'Wer hat die Serie erschaffen?',a:'Bora Dağtekin',o:['Bora Dağtekin','Fatih Akın','Til Schweiger','Doris Dörrie']},
+  {q:'Welche Art Familie bilden die Schneiders und Öztürks?',a:'Eine Patchwork-Familie',o:['Eine Patchwork-Familie','Eine Großfamilie','Eine WG','Eine Pflegefamilie']},
+  {q:'In welcher Stadt spielt die Serie?',a:'Berlin',o:['Berlin','Hamburg','Köln','München']},
+  {q:'Wie viele Staffeln hat die Serie?',a:'3',o:['3','2','5','6']},
+  {q:'Wann kam der Kinofilm heraus?',a:'2012',o:['2012','2008','2015','2010']},
+  {q:'Wie heißt Lena mit Nachnamen?',a:'Schneider',o:['Schneider','Öztürk','Maral','Meier']},
+  {q:'Welche Schauspielerin spielt Lena?',a:'Josefine Preuß',o:['Josefine Preuß','Pegah Ferydoni','Anna Stieblich','Nora Tschirner']},
+  {q:'Worüber streitet Lena oft mit Yağmur?',a:'Über Religion',o:['Über Religion','Über Fußball','Über Geld','Über Hausaufgaben']}
+ ]},
+ ulan:{title:'Ulan İstanbul 🏙️', q:[
+  {q:'In welcher Stadt spielt „Ulan İstanbul“?',a:'İstanbul',o:['İstanbul','Ankara','İzmir','Bodrum']},
+  {q:'Was für eine Bande zeigt die Serie?',a:'Eine Trickbetrüger-Bande',o:['Eine Trickbetrüger-Bande','Polizisten','Sänger','Ärzte']},
+  {q:'Wie heißt der Anführer der Bande?',a:'Kandemir',o:['Kandemir','Ferdi','Bahadır','Karlos']},
+  {q:'Welcher Schauspieler spielt Kandemir?',a:'Uğur Polat',o:['Uğur Polat','Kaan Yıldırım','Salih Bademci','Emre Kınay']},
+  {q:'Unter welchem Familiennamen lebt die Bande?',a:'Nevizade',o:['Nevizade','Öztürk','Akça','Yıldız']},
+  {q:'Wer ist der Hacker der Bande?',a:'Bahadır',o:['Bahadır','Karlos','Ferdi','Yaren']},
+  {q:'Wer wollte eigentlich Sängerin werden?',a:'Yaren',o:['Yaren','Derya','Elif','Sanem']},
+  {q:'Welche Schauspielerin spielt Yaren?',a:'Şebnem Bozoklu',o:['Şebnem Bozoklu','Sevtap Özaltun','Demet Gül','Ayta Sözeri']},
+  {q:'Warum schließt sich Derya der Bande an?',a:'Um ihren Vater zu retten',o:['Um ihren Vater zu retten','Um reich zu werden','Aus Langeweile','Für die Liebe']},
+  {q:'Was ist das Motto der Bande?',a:'Gerecht stehlen',o:['Gerecht stehlen','Reich werden','Niemals lügen','Immer teilen']},
+  {q:'Was sind Ferdi und Karlos füreinander?',a:'Blutsbrüder',o:['Blutsbrüder','Cousins','Vater und Sohn','Rivalen']},
+  {q:'Auf welchem Sender lief die Serie?',a:'Kanal D',o:['Kanal D','Star TV','Show TV','ATV']},
+  {q:'Wie heißt Kandemirs Tochter, die er wiedersehen will?',a:'Elif',o:['Elif','Sanem','Derya','Yaren']},
+  {q:'Wer verliert eine Million Lira und beschuldigt Deryas Vater?',a:'Firuz',o:['Firuz','Kandemir','Doğan','Vahit']},
+  {q:'Welchen Beruf wollte Derya eigentlich erlernen?',a:'Schauspielerin',o:['Schauspielerin','Ärztin','Lehrerin','Anwältin']},
+  {q:'Welchen berühmten Duett-Song singen Yaren und Karlos?',a:'Yanarım',o:['Yanarım','Şıkıdım','Dön','Aşk']}
+ ]}
+};
+function duelPool(topic){
+ var bank=DUEL_TOPICS[topic]?DUEL_TOPICS[topic].q:DUEL_TOPICS.avatar.q;
+ return shuffleArr(bank.slice());
+}
+/* ===== BATTLE MUSIC ===== */
+var BATTLE={ctx:null,timer:null,playing:false};
+function startBattleMusic(){
+ stopBattleMusic();
+ try{
+  var AC=window.AudioContext||window.webkitAudioContext; if(!AC)return;
+  var ctx=new AC(); BATTLE.ctx=ctx; BATTLE.playing=true;
+  var master=ctx.createGain(); master.gain.value=0.16; master.connect(ctx.destination);
+  var tempo=0.22; // seconds per step (eighth note ~ 136bpm)
+  // driving A-minor riff
+  var bass=[110.00,110.00,130.81,146.83,164.81,146.83,130.81,110.00]; // A C D E D C A
+  var lead=[440.00,523.25,659.25,587.33,523.25,659.25,783.99,659.25]; // A C E D C E G E
+  function note(f,t,dur,vol,type){
+   var o=ctx.createOscillator(); o.type=type; o.frequency.value=f;
+   var g=ctx.createGain(); g.gain.setValueAtTime(0,t);
+   g.gain.linearRampToValueAtTime(vol,t+0.015);
+   g.gain.exponentialRampToValueAtTime(0.0005,t+dur);
+   o.connect(g); g.connect(master); o.start(t); o.stop(t+dur+0.02);
+  }
+  function hat(t,vol){
+   var b=ctx.createBuffer(1,ctx.sampleRate*0.05,ctx.sampleRate); var d=b.getChannelData(0);
+   for(var i=0;i<d.length;i++){d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);}
+   var src=ctx.createBufferSource(); src.buffer=b;
+   var hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=6000;
+   var g=ctx.createGain(); g.gain.value=vol;
+   src.connect(hp); hp.connect(g); g.connect(master); src.start(t);
+  }
+  function loop(){
+   if(!BATTLE.playing) return;
+   var now=ctx.currentTime+0.05;
+   for(var i=0;i<8;i++){
+    var t=now+i*tempo;
+    note(bass[i],t,tempo*1.6,0.45,'sawtooth');
+    note(lead[i],t,tempo*0.85,0.16,'square');
+    hat(t,0.06);
+    if(i%2===1) hat(t+tempo*0.5,0.04);
+   }
+   BATTLE.timer=setTimeout(loop, tempo*8*1000);
+  }
+  loop();
+ }catch(e){}
+}
+function stopBattleMusic(){
+ BATTLE.playing=false;
+ if(BATTLE.timer){clearTimeout(BATTLE.timer);BATTLE.timer=null;}
+ if(BATTLE.ctx){try{BATTLE.ctx.close();}catch(e){} BATTLE.ctx=null;}
+}
+function startDuel(topic){
+ DUEL_TOPIC=topic||DUEL_TOPIC||'avatar';
+ DUEL={list:duelPool(DUEL_TOPIC),i:0,s1:0,s2:0,lock:false};
+ var tt=document.getElementById('d-title'); if(tt)tt.textContent=(DUEL_TOPICS[DUEL_TOPIC]||DUEL_TOPICS.avatar).title;
+ document.getElementById('d-s1').textContent='0';
+ document.getElementById('d-s2').textContent='0';
+ show('duel'); renderDuel(); startBattleMusic();
+}
+var DUEL_TOPIC='avatar';
+function curPlayer(){ return DUEL.i%2===0?1:2; }
+function renderDuel(){
+ DUEL.lock=false;
+ var cur=DUEL.list[DUEL.i]; var pl=curPlayer();
+ document.getElementById('d-round').textContent='Q'+(DUEL.i+1)+' / '+DUEL.list.length;
+ document.getElementById('d-f1').classList.toggle('act',pl===1);
+ document.getElementById('d-f2').classList.toggle('act',pl===2);
+ var tb=document.getElementById('d-turn');
+ if(pl===1){ tb.textContent="🔥 Dad's turn"; tb.style.background='rgba(232,90,48,.14)'; tb.style.color='var(--fire)'; }
+ else{ tb.textContent="💧 Daughter's turn"; tb.style.background='rgba(63,169,204,.14)'; tb.style.color='var(--water)'; }
+ document.getElementById('d-text').textContent=cur.q;
+ document.getElementById('d-fb').textContent='';
+ var g=document.getElementById('d-opts'); g.innerHTML='';
+ shuffleArr(cur.o).forEach(function(opt){
+  var btn=document.createElement('button'); btn.className='opt'; btn.textContent=opt;
+  btn.onclick=function(){answerDuel(opt,btn,cur.a,pl);};
+  g.appendChild(btn);
+ });
+}
+function answerDuel(opt,btn,ans,pl){
+ if(DUEL.lock)return; DUEL.lock=true;
+ var fb=document.getElementById('d-fb');
+ document.querySelectorAll('#d-opts .opt').forEach(function(b){b.disabled=true; if(b.textContent===ans)b.classList.add('right');});
+ if(opt===ans){
+  btn.classList.add('right');
+  if(pl===1){DUEL.s1++;document.getElementById('d-s1').textContent=DUEL.s1;}
+  else{DUEL.s2++;document.getElementById('d-s2').textContent=DUEL.s2;}
+  fb.className='fb ok'; fb.textContent='✓ Point!';
+ } else { btn.classList.add('wrong'); fb.className='fb no'; fb.textContent='✗ Answer: '+ans; }
+ setTimeout(function(){ DUEL.i++; if(DUEL.i>=DUEL.list.length)finishDuel(); else renderDuel(); }, opt===ans?700:1150);
+}
+function finishDuel(){
+ if(!DATA.tally)DATA.tally={dad:0,girl:0};
+ var emoji,win,line;
+ if(DUEL.s1>DUEL.s2){ DATA.tally.dad++; emoji='🔥'; win='Dad wins!'; line='Dad '+DUEL.s1+' — '+DUEL.s2+' Daughter'; }
+ else if(DUEL.s2>DUEL.s1){ DATA.tally.girl++; emoji='💧'; win='Daughter wins!'; line='Daughter '+DUEL.s2+' — '+DUEL.s1+' Dad'; }
+ else { emoji='🤝'; win="It's a tie!"; line='Both scored '+DUEL.s1+'. Rematch?'; }
+ awardScrolls(5); save();
+ document.getElementById('dr-emoji').textContent=emoji;
+ document.getElementById('dr-win').textContent=win;
+ document.getElementById('dr-line').textContent=line;
+ show('duel-result');
+}
+
+/* ============ SCORES ============ */
+function renderScores(){
+ var t=DATA.tally||{dad:0,girl:0};
+ document.getElementById('t-dad').textContent=t.dad||0;
+ document.getElementById('t-girl').textContent=t.girl||0;
+ var labels={lore:'Lore Quiz',eng:'English',math:'Brain Math',quotes:'Who Said It?',expert:'Expert Lore',iroh:"Iroh's Wisdom",book:'Name the Book',engpro:'English Pro'};
+ var wrap=document.getElementById('best-list'); wrap.innerHTML='';
+ var best=DATA.best||{};
+ var keys=Object.keys(labels);
+ var any=false;
+ keys.forEach(function(k){
+  if(best[k]!=null){
+   any=true;
+   var row=document.createElement('div'); row.className='scorerow';
+   row.innerHTML='<div class="sl">'+labels[k]+'<small>best score</small></div><div class="sv">'+best[k]+'/8</div>';
+   wrap.appendChild(row);
+  }
+ });
+ if(!any){ wrap.innerHTML='<div class="note" style="text-align:left">No scores yet — play a few rounds and your bests will show up here.</div>'; }
+}
+function resetScores(){
+ if(confirm('Reset all family scores and the duel tally?')){ DATA={}; save(); renderScores(); }
+}
+
+/* ============ SCROLLS ============ */
+function awardScrolls(n){ DATA.scrolls=(DATA.scrolls||0)+n; save(); updateScrollUI(); return n; }
+function updateScrollUI(){ var v=DATA.scrolls||0; ['scroll-top','scroll-story','scroll-stick'].forEach(function(id){ var e=document.getElementById(id); if(e)e.textContent='📜 '+v; }); }
+
+/* ============ STICKERS ============ */
+var STICKERS=[
+ {id:'aang',e:'🧒',n:'Aang',c:'var(--air)'},{id:'appa',e:'🦬',n:'Appa',c:'var(--air)'},{id:'momo',e:'🐒',n:'Momo',c:'var(--air)'},{id:'katara',e:'💧',n:'Katara',c:'var(--water)'},
+ {id:'sokka',e:'🪃',n:'Sokka',c:'var(--water)'},{id:'yue',e:'🌙',n:'Yue',c:'var(--water)'},{id:'toph',e:'🪨',n:'Toph',c:'var(--earth)'},{id:'suki',e:'🥋',n:'Suki',c:'var(--earth)'},
+ {id:'bumi',e:'👴',n:'Bumi',c:'var(--earth)'},{id:'zuko',e:'🔥',n:'Zuko',c:'var(--fire)'},{id:'iroh',e:'🍵',n:'Iroh',c:'var(--fire)'},{id:'azula',e:'💙',n:'Azula',c:'var(--fire)'},
+ {id:'mai',e:'🗡️',n:'Mai',c:'var(--fire)'},{id:'tylee',e:'🤸',n:'Ty Lee',c:'var(--fire)'},{id:'avatar',e:'🌟',n:'Avatar State',c:'var(--gold)'},{id:'lotus',e:'🪷',n:'White Lotus',c:'var(--spirit)'}
+];
+var STICK_COST=6;
+function openStickerScreen(){ show('stickers'); renderStickers(); }
+function renderStickers(){
+ updateScrollUI();
+ var owned=DATA.stickers||[];
+ var note=document.getElementById('stick-note'), btn=document.getElementById('stick-open');
+ if(owned.length>=STICKERS.length){ note.textContent='🌟 Album complete! You collected all '+STICKERS.length+' stickers.'; btn.disabled=true; btn.style.opacity='.5'; btn.textContent='All collected!'; }
+ else { note.textContent='You have '+owned.length+' of '+STICKERS.length+' stickers. Each pack costs 📜 '+STICK_COST+'.'; btn.disabled=false; btn.style.opacity='1'; btn.textContent='Open a pack · 📜 '+STICK_COST; }
+ var g=document.getElementById('stick-grid'); g.innerHTML='';
+ STICKERS.forEach(function(s){
+  var have=owned.indexOf(s.id)>=0;
+  var d=document.createElement('div'); d.className='stick '+(have?'have':'miss'); d.style.setProperty('--sc',s.c);
+  d.innerHTML='<div class="se">'+(have?s.e:'❔')+'</div><div class="sn">'+(have?s.n:'???')+'</div>';
+  g.appendChild(d);
+ });
+}
+function openPack(){
+ var owned=DATA.stickers||[];
+ if(owned.length>=STICKERS.length)return;
+ if((DATA.scrolls||0)<STICK_COST){ overlayMsg('🔒','Not enough scrolls','You need 📜 '+STICK_COST+' to open a pack. Play a quest to earn more!'); return; }
+ DATA.scrolls-=STICK_COST;
+ var pool=STICKERS.filter(function(s){return owned.indexOf(s.id)<0;});
+ var pick=pool[Math.floor(Math.random()*pool.length)];
+ if(!DATA.stickers)DATA.stickers=[]; DATA.stickers.push(pick.id); save();
+ renderStickers(); revealSticker(pick);
+}
+function revealSticker(s){
+ var ov=document.createElement('div'); ov.className='ovl';
+ ov.innerHTML='<div class="ovbox"><div class="reveal"><div style="font-family:Rajdhani;font-weight:700;letter-spacing:2px;color:var(--muted);font-size:13px">NEW STICKER</div><div style="font-size:74px;margin:10px 0;animation:pop .5s ease">'+s.e+'</div><div style="font-family:Rajdhani;font-weight:700;font-size:26px;color:'+s.c+'">'+s.n+'</div></div><button class="cta pri" style="margin-top:6px" onclick="closeOverlay()">Nice!</button></div>';
+ document.body.appendChild(ov);
+}
+function overlayMsg(em,title,body){
+ var ov=document.createElement('div'); ov.className='ovl';
+ ov.innerHTML='<div class="ovbox"><div class="reveal"><div style="font-size:54px">'+em+'</div><div style="font-family:Rajdhani;font-weight:700;font-size:24px;margin-top:6px">'+title+'</div><div class="note" style="margin-top:8px">'+body+'</div></div><button class="cta ghost" style="margin-top:6px" onclick="closeOverlay()">OK</button></div>';
+ document.body.appendChild(ov);
+}
+function closeOverlay(){ var o=document.querySelector('.ovl'); if(o)o.remove(); }
+
+/* ============ STORIES ============ */
+var STORIES=[
+ {id:'twostones',title:'Two Stones',sub:'Two earthbending siblings',emoji:'🪨',cost:0,col:'linear-gradient(150deg,#5f9740,#2f5722)',pages:[
+  {art:['🪨','🪨'],text:"Suni and her little brother Bao lived in a small Earth Kingdom village. Suni was the best young earthbender around, and she made sure everyone knew it."},
+  {art:['🥇','🙄'],text:"To Suni, the world was simple. There were winners, and there were losers. 'Bao,' she said, 'you are too soft. Soft people always lose.'"},
+  {art:['⛰️','🪨'],text:"One day a rockslide blocked the road. Suni pushed and pushed with all her power, but the giant stone would not move. She only grew angry and tired."},
+  {art:['🤝','🌱'],text:"Bao knelt beside a frightened old man trapped near the rocks. He spoke to him gently, then asked the whole village to push together. The stone rolled away."},
+  {art:['💡','💚'],text:"Suni stared. Soft hands had done what hard fists could not. 'Maybe,' she said slowly, 'the world is not only strong and weak after all.'"},
+  {art:['🪨','✨'],text:"Suni still trained hard every day. But now she knew that kindness is its own kind of strength — and that her gentle brother had been strong all along."}
+ ]},
+ {id:'letters',title:'Letters Across the Water',sub:'A friend across the sea',emoji:'✉️',cost:8,col:'linear-gradient(150deg,#2f7f9c,#b8401f)',pages:[
+  {art:['✉️','🌊'],text:"Kaya of the Water Tribe found a bottle floating in the sea. Inside was a letter from a boy named Ren — a boy from the Fire Nation, her people's enemy."},
+  {art:['🔥','❓'],text:"She almost threw it back. The Fire Nation had hurt her home. But the letter only spoke of his little sister, his fears, and how much he loved the stars."},
+  {art:['🖊️','🌙'],text:"So Kaya wrote back. All winter, bottles crossed the water between them. Ren was funny and kind. Slowly, the 'enemy' became her friend."},
+  {art:['😟','🌊'],text:"'How can I like someone from THEM?' she wondered. Her heart felt twisted. The war told her one thing. Ren's letters told her another."},
+  {art:['🤝','✨'],text:"Then she understood. A whole nation is not one single face. Ren did not start the war. He was just a boy watching the same moon that she watched."},
+  {art:['💙','🔥'],text:"They never met in person. But Kaya kept every letter. People are not flags, she learned. Behind every side, there is a heart that could be a friend."}
+ ]},
+ {id:'voice',title:'The Smallest Voice',sub:'Finding the courage to speak',emoji:'🍃',cost:8,col:'linear-gradient(150deg,#5d7298,#39435f)',pages:[
+  {art:['🍃','😶'],text:"At the Air Temple, Mira was the quietest student of all. She always knew the answers — but her voice stayed locked deep inside her chest."},
+  {art:['🌪️','😣'],text:"'You will lead the morning meditation tomorrow,' said the monk. Mira's stomach dropped. 'I can't,' she whispered. 'Everyone here is better than me.'"},
+  {art:['🌅','💨'],text:"That night she could not sleep. A wise old nun sat beside her and said softly, 'The wind never asks if it is good enough. It simply blows.'"},
+  {art:['🍃','🧘'],text:"In the morning, Mira stood before the others. Her hands were shaking. She took one slow breath — the way the air had taught her — and began to speak."},
+  {art:['😮','✨'],text:"Her voice was soft, but it was clear. The students closed their eyes and followed every word. For the very first time, they were listening to HER."},
+  {art:['🌬️','💛'],text:"Mira was still a quiet girl. But now she knew a secret: feeling scared and doing it anyway is exactly what being brave means."}
+ ]},
+ {id:'shadow',title:"My Brother's Shadow",sub:'Stepping into your own light',emoji:'🌓',cost:8,col:'linear-gradient(150deg,#c66a2a,#7a3a12)',pages:[
+  {art:['🔥','🌓'],text:"Everyone loved Daro. He was a brilliant young firebender, and he was Lin's older brother. 'Are you Daro's sister?' people always asked. Never just, 'Who are you?'"},
+  {art:['😔','🔥'],text:"Lin practiced for hours, but her flames stayed small. 'You'll be great like Daro one day,' people said — as if being herself was simply not enough."},
+  {art:['🌊','📖'],text:"One evening Lin gave up bending and sat by the water with a book of maps. She loved faraway places. Daro found her there and quietly sat down beside her."},
+  {art:['🗺️','😲'],text:"'I wish I knew the world the way you do,' Daro said. 'I can make fire. But I get lost two streets from home.' Lin had never once thought of it like that."},
+  {art:['🤝','💡'],text:"She realized her brother was not her ceiling, and she was not his shadow. They were simply good at different things — and that was completely okay."},
+  {art:['🌓','❤️'],text:"After that, Lin stopped racing Daro. She started walking her own path — and her brother became the very first person to cheer her on."}
+ ]},
+ {id:'mask',title:'The Mask on the Wall',sub:'Seeing the other side',emoji:'🎭',cost:10,col:'linear-gradient(150deg,#7a4fc0,#3a2566)',pages:[
+  {art:['🎭','😠'],text:"Tao hated the soldiers who had taken over his town. To him they were monsters, every single one. He painted angry faces on a wall to show how much he hated them."},
+  {art:['🌧️','🧥'],text:"One rainy night, Tao saw a soldier sitting alone behind the barracks, taking off his helmet. Under the scary armor was a tired boy, barely older than Tao himself."},
+  {art:['🍞','🐱'],text:"The boy broke his bread in half and shared it with a stray cat. He whispered to it like an old friend. Tao watched, confused. Monsters don't feed hungry cats."},
+  {art:['💭','⚖️'],text:"Tao still hated the war. He still wanted his town to be free. But he could no longer pretend that every face on the other side was exactly the same."},
+  {art:['🎭','🫂'],text:"He went back to his wall and painted something new — not a monster, and not a hero. Just a face, with eyes that looked like they could feel something."},
+  {art:['🌅','💜'],text:"Tao learned the hardest lesson of all. The world is not painted in black and white. Real courage is seeing people — even the ones you have to fight."}
+ ]}
+];
+function storyOwned(s){ if(s.cost===0)return true; return (DATA.storyOwned||[]).indexOf(s.id)>=0; }
+function openStoriesScreen(){ show('stories'); renderStoriesList(); }
+function renderStoriesList(){
+ updateScrollUI();
+ var wrap=document.getElementById('stories-list'); wrap.innerHTML='';
+ STORIES.forEach(function(s){
+  var own=storyOwned(s); var read=(DATA.storyRead||[]).indexOf(s.id)>=0;
+  var d=document.createElement('div'); d.className='storycard'+(own?'':' locked'); d.style.background=s.col;
+  var right= own ? (read?'<div class="stlock">✓ read</div>':'') : '<div class="stlock">📜 '+s.cost+'</div>';
+  d.innerHTML='<div class="stem">'+s.emoji+'</div><div><div class="stt">'+s.title+'</div><div class="std">'+s.sub+'</div></div>'+right;
+  d.onclick=function(){ if(own)openStoryRead(s.id); else tryUnlock(s); };
+  wrap.appendChild(d);
+ });
+}
+function tryUnlock(s){
+ if((DATA.scrolls||0)<s.cost){ overlayMsg('🔒','Locked','This story costs 📜 '+s.cost+'. You have 📜 '+(DATA.scrolls||0)+'. Play a quest to earn more!'); return; }
+ var ov=document.createElement('div'); ov.className='ovl';
+ ov.innerHTML='<div class="ovbox"><div class="reveal"><div style="font-size:46px">'+s.emoji+'</div><div style="font-family:Rajdhani;font-weight:700;font-size:22px;margin-top:6px">'+s.title+'</div><div class="note" style="margin-top:8px">Unlock this story for 📜 '+s.cost+'?<br>You have 📜 '+(DATA.scrolls||0)+'.</div></div><button class="cta gold" onclick="confirmUnlock(\''+s.id+'\')">Unlock</button><button class="cta ghost" style="margin-top:8px" onclick="closeOverlay()">Maybe later</button></div>';
+ document.body.appendChild(ov);
+}
+function confirmUnlock(id){
+ var s=STORIES.find(function(x){return x.id===id;}); if(!s)return;
+ if((DATA.scrolls||0)<s.cost){ closeOverlay(); return; }
+ DATA.scrolls-=s.cost; if(!DATA.storyOwned)DATA.storyOwned=[]; DATA.storyOwned.push(id); save();
+ closeOverlay(); openStoryRead(id);
+}
+var SR={s:null,p:0};
+function openStoryRead(id){ var s=STORIES.find(function(x){return x.id===id;}); if(!s)return; SR={s:s,p:0}; show('story-read'); renderStoryPage(); }
+function renderStoryPage(){
+ var s=SR.s; if(!s)return; var pg=s.pages[SR.p];
+ document.getElementById('sr-title').textContent=s.emoji+' '+s.title;
+ document.getElementById('sr-page').textContent=(SR.p+1)+' / '+s.pages.length;
+ var sc=document.getElementById('sr-scene'); sc.style.background=s.col; sc.textContent=(pg.art||[]).join(' ');
+ document.getElementById('sr-text').textContent=pg.text;
+ var dots=''; for(var i=0;i<s.pages.length;i++)dots+='<div class="sdot'+(i===SR.p?' on':'')+'"></div>';
+ document.getElementById('sr-dots').innerHTML=dots;
+ document.getElementById('sr-prev').style.visibility=SR.p===0?'hidden':'visible';
+ document.getElementById('sr-next').textContent=(SR.p>=s.pages.length-1)?'Finish ✓':'Next →';
+ try{window.scrollTo(0,0);}catch(e){}
+}
+function storyPrev(){ if(SR.p>0){SR.p--;renderStoryPage();} }
+function storyNext(){ var s=SR.s; if(!s)return; if(SR.p>=s.pages.length-1){ if(!DATA.storyRead)DATA.storyRead=[]; if(DATA.storyRead.indexOf(s.id)<0){DATA.storyRead.push(s.id);save();} openStoriesScreen(); } else { SR.p++; renderStoryPage(); } }
+
+updateScrollUI();
+</script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');</script>
+</body>
+</html>
