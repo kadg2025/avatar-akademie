@@ -394,8 +394,6 @@ body.calm .questcard{box-shadow:none}
  <div id="hub-companion"></div>
  <div class="progresscard" id="hub-progress"></div>
  <div id="hub-quest"></div>
- <div class="elrow" id="hub-els"></div>
- <div class="charrow" id="hub-chars"></div>
  <div class="diffbar" id="diffbar"></div>
  <div class="diffhint" id="diffhint"></div>
 
@@ -408,17 +406,24 @@ body.calm .questcard{box-shadow:none}
   <div class="natportal feuer" onclick="openNationHub('feuer')"><div class="np-sym">🔥</div><div class="np-name">Feuernation</div><div class="np-sub">Rechnen &amp; Tempo</div></div>
  </div>
 
- <div class="seclabel">Für alle Nationen 🌏</div>
+ <div class="seclabel">📖 Geschichten &amp; Sammeln</div>
  <div class="menu">
   <div class="mcard" style="background:#FCE3EC;color:#9A2A55" onclick="go('s-stories')"><div style="font-size:38px">📖</div><div class="mtitle">Geschichten &amp; Märchen</div><div class="mdesc">Lesen &amp; vor·le·sen lassen</div></div>
-  <div class="mcard" style="background:var(--luftbg);color:var(--luftd)" onclick="go('s-gallery')"><div id="hi-gal"></div><div class="mtitle">Charaktere</div><div class="mdesc">Deine Freun·de ken·nen·ler·nen</div></div>
   <div class="mcard" style="background:#F3E9FB;color:#5B2A9A" onclick="go('s-album')"><div id="hi-alb"></div><div class="mtitle">Sticker-Album</div><div class="mdesc">Freun·de sam·meln 📜</div></div>
-  <div class="mcard" style="background:#FFF1C2;color:#8A5A00" onclick="go('s-shop')"><div style="font-size:38px">🏺</div><div class="mtitle">Belohnungs-Truhe</div><div class="mdesc">Schät·ze frei·schal·ten</div></div>
+  <div class="mcard" style="background:#E8F3EC;color:#1F6E3A" onclick="go('s-map')"><div style="font-size:38px">🗺️</div><div class="mtitle">Welt·kar·te</div><div class="mdesc">Ent·de·cke die Na·ti·o·nen</div></div>
+ </div>
+
+ <div class="seclabel">🌍 Extra-Abenteuer</div>
+ <div class="menu">
   <div class="mcard" style="background:#FFE9D6;color:#7A3000" onclick="go('s-journey')"><div id="hi-jour"></div><div class="mtitle">Appas Weltreise</div><div class="mdesc">4 ech·te Or·te der Welt</div></div>
   <div class="mcard" style="background:#E6F7E9;color:#1B6B2A" onclick="go('s-2p-setup')"><div style="font-size:38px">👊🏽</div><div class="mtitle">Team Avatar</div><div class="mdesc">Zu·sam·men spie·len</div></div>
   <div class="mcard" style="background:#2A1F3D;color:#FFD54F" onclick="startAvatarQuiz()"><div style="font-size:38px">🌟</div><div class="mtitle">Avatar-Wissen</div><div class="mdesc">Wie gut kennst du die Se·rie?</div></div>
-  <div class="mcard" style="background:#E8F3EC;color:#1F6E3A" onclick="go('s-map')"><div style="font-size:38px">🗺️</div><div class="mtitle">Welt·kar·te</div><div class="mdesc">Ent·de·cke die Na·ti·o·nen</div></div>
   <div class="mcard" style="background:#FFF0F6;color:#A8305A" onclick="startCooking()"><div style="font-size:38px">🍳</div><div class="mtitle">Irohs Küche</div><div class="mdesc">Ko·che &amp; ver·dopp·le Re·zep·te</div></div>
+ </div>
+
+ <div class="seclabel">🏺 Belohnung &amp; Ruhe</div>
+ <div class="menu">
+  <div class="mcard" style="background:#FFF1C2;color:#8A5A00" onclick="go('s-shop')"><div style="font-size:38px">🏺</div><div class="mtitle">Belohnungs-Truhe</div><div class="mdesc">Schät·ze frei·schal·ten</div></div>
   <div class="mcard" style="background:#E6F2FA;color:#1E5E82" onclick="startBreathe()"><div style="font-size:38px">🏝️</div><div class="mtitle">Ruhe-Insel</div><div class="mdesc">At·men &amp; ent·span·nen mit Appa</div></div>
  </div>
 
@@ -1268,11 +1273,9 @@ if(id==='s-stories-nation'){/* already built by openStoriesNation */}
 }
 
 function buildHub(){
- document.getElementById('hub-els').innerHTML=['Luft','Wasser','Erde','Feuer'].map(e=>`<div style="width:46px;height:46px;cursor:pointer" onclick="openElem('${e}')">${SYM[e](46)}</div>`).join('');
- document.getElementById('hub-chars').innerHTML=['Aang','Katara','Zuko','Toph','Sokka','Azula'].map(k=>`<div class="ava" style="cursor:pointer" onclick="openChar('${k}')">${AVA[k]()}</div>`).join('');
  const setIco=(id,svg)=>{const el=document.getElementById(id);if(el)el.innerHTML=`<div style="width:46px;height:46px;margin:0 auto">${svg}</div>`;};
  setIco('hi-race',AVA.Appa());setIco('hi-maze',SYM.Erde(46));setIco('hi-duel',AVA.Zuko());setIco('hi-mem',SYM.Wasser(46));
- setIco('hi-alb',AVA.Katara());setIco('hi-gal',AVA.Aang());setIco('hi-sym',SYM.Luft(46));setIco('hi-jour',SYM.Feuer(46));
+ setIco('hi-alb',AVA.Katara());setIco('hi-sym',SYM.Luft(46));setIco('hi-jour',SYM.Feuer(46));
  setIco('hi-div',AVA.Sokka());setIco('hi-fairy',AVA.Aang());
  buildDiffBar();
  buildCompanion();
