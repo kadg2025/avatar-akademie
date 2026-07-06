@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Zerya's World</title>
+<link rel="icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Bangers&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#FFF6EC; --ink:#241F21; --pink:#FF4D82; --pink-d:#C41F5C; --blue:#3E8EDE; --blue-d:#1B5FA8;
+ --yellow:#FFD23F; --yellow-d:#B8860B; --purple:#8C6FC9; --purple-d:#5B3E96; --green:#4CAF7D; --green-d:#2E7D53;
+ --panel:#FFFFFF; --panel2:#FFEFDD; --muted:#7A716B; --line:#241F21; --r:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+ background-image:radial-gradient(var(--ink) 1px,transparent 1.6px);background-size:16px 16px;opacity:.05}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px;position:relative;z-index:1}
+.screen{display:none}
+.screen.on{display:block;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+h1,h2,.disp{font-family:Bangers,cursive;letter-spacing:.5px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.pts{background:var(--panel);border:3px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800;box-shadow:3px 3px 0 var(--line);font-size:15px}
+.title-block{text-align:center;margin:6px 0 18px}
+.title-block h1{font-size:38px;margin:0;color:var(--pink-d);text-shadow:2px 2px 0 var(--ink)}
+.title-block p{margin:4px 0 0;color:var(--muted);font-weight:600;font-size:14px}
+
+.back{display:inline-block;background:var(--panel);border:3px solid var(--line);border-radius:14px;padding:8px 16px;font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--line);margin-bottom:14px;color:var(--ink);font-family:Poppins,sans-serif}
+.back:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+
+.cluster{margin:20px 0 8px}
+.cluster h2{font-size:19px;margin:0 0 10px;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:var(--panel);border:3px solid var(--line);border-radius:var(--r);padding:14px 12px;text-align:center;cursor:pointer;box-shadow:4px 4px 0 var(--line);transition:transform .1s}
+.card:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.card .ci{font-size:32px;margin-bottom:4px}
+.card .ct{font-family:Bangers,cursive;font-size:17px;letter-spacing:.3px}
+.card .cd{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+.card.wide{grid-column:1/-1}
+
+.panel{background:var(--panel);border:3px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:5px 5px 0 var(--line);margin-bottom:14px}
+.btn{display:block;width:100%;background:var(--yellow);border:3px solid var(--line);border-radius:14px;padding:14px;font-weight:800;font-size:16px;text-align:center;cursor:pointer;box-shadow:4px 4px 0 var(--line);color:var(--ink);font-family:Poppins,sans-serif;margin-top:10px}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.btn.pink{background:var(--pink);color:#fff}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.purple{background:var(--purple);color:#fff}
+.btn.ghost{background:var(--panel);opacity:.6;box-shadow:none;border-style:dashed}
+
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.qt{font-family:Bangers,cursive;font-size:22px}
+.pill{background:var(--panel2);border:2px solid var(--line);border-radius:999px;padding:4px 12px;font-weight:800;font-size:13px}
+.progress{height:10px;background:var(--panel2);border:2px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--pink);width:0%;transition:width .3s}
+.qcard{background:var(--panel2);border:3px solid var(--line);border-radius:16px;padding:22px 16px;text-align:center;font-weight:700;font-size:18px;margin-bottom:14px;min-height:70px;display:flex;align-items:center;justify-content:center}
+.opts{display:grid;gap:10px}
+.opt{background:var(--panel);border:3px solid var(--line);border-radius:14px;padding:13px;font-weight:700;cursor:pointer;text-align:left;box-shadow:3px 3px 0 var(--line)}
+.opt:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.opt.right{background:var(--green);color:#fff}
+.opt.wrong{background:var(--pink);color:#fff}
+.fb{text-align:center;font-weight:800;min-height:24px;margin-top:10px}
+.result{text-align:center;padding:20px 0}
+.bigscore{font-family:Bangers,cursive;font-size:52px;color:var(--pink-d)}
+.rmsg{font-weight:700;margin:8px 0;color:var(--muted)}
+
+/* draw generator */
+.promptbox{background:var(--panel2);border:3px dashed var(--line);border-radius:16px;padding:20px;text-align:center;font-weight:700;font-size:17px;line-height:1.5;margin-bottom:14px}
+.favlist{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.favitem{background:var(--panel2);border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;font-weight:600}
+
+/* jokes/shorts deck */
+.deck{background:var(--panel);border:3px solid var(--line);border-radius:20px;padding:28px 20px;text-align:center;font-weight:700;font-size:18px;min-height:140px;display:flex;align-items:center;justify-content:center;box-shadow:5px 5px 0 var(--line);margin-bottom:14px}
+.reactrow{display:flex;justify-content:center;gap:14px;margin-bottom:14px}
+.reactbtn{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:8px 14px;font-size:20px;cursor:pointer}
+.reactbtn:active{transform:scale(.9)}
+
+/* manga carousel */
+.manga{display:flex;flex-direction:column;gap:10px}
+.mcard{background:var(--panel);border:3px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;gap:12px;align-items:center;box-shadow:3px 3px 0 var(--line)}
+.mcard .me{font-size:30px}
+.mcard .mn{font-family:Bangers,cursive;font-size:16px}
+.mcard .mh{font-size:12px;color:var(--muted);font-weight:600}
+.mcard .mtag{font-size:11px;background:var(--yellow);border:1px solid var(--line);border-radius:8px;padding:1px 6px;display:inline-block;margin-top:3px;font-weight:700}
+.mcard .mstar{margin-left:auto;font-size:22px;cursor:pointer;background:none;border:none}
+
+/* memory game */
+.memhead{text-align:center;font-weight:800;margin-bottom:10px}
+.memgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mcell{aspect-ratio:1;background:var(--panel);border:3px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;box-shadow:2px 2px 0 var(--line)}
+.mcell.hidden{background:var(--purple);color:transparent}
+.mcell.match{background:var(--green);opacity:.6}
+
+/* badges */
+.badgegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.badge{background:var(--panel);border:3px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center;box-shadow:3px 3px 0 var(--line)}
+.badge.locked{opacity:.35;filter:grayscale(1)}
+.badge .be{font-size:28px}
+.badge .bn{font-size:11px;font-weight:800;margin-top:4px}
+.badge .bd{font-size:10px;color:var(--muted);font-weight:600}
+
+.sectlabel{font-weight:800;color:var(--muted);font-size:13px;margin:16px 0 8px;display:flex;align-items:center;gap:6px}
+.sectlabel::after{content:'';flex:1;height:2px;background:var(--line);opacity:.15}
+.note{text-align:center;font-size:12px;color:var(--muted);font-weight:600;margin-top:10px}
+.footlink{display:block;text-align:center;font-size:12px;color:var(--muted);margin-top:24px;opacity:.5;text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ===== HOME ===== -->
+<div id="home" class="screen on">
+ <div class="topbar"><span></span><div class="pts" id="pts-top">⭐ 0 pts</div></div>
+ <div class="title-block">
+  <h1>ZERYA'S WORLD 🌸</h1>
+  <p>Draw. Read. Play. Laugh. Repeat.</p>
+ </div>
+
+ <div class="cluster">
+  <h2>🎨 Creative Corner</h2>
+  <div class="grid">
+   <div class="card" onclick="show('drawgen');newPrompt()"><div class="ci">🎨</div><div class="ct">Draw Prompt</div><div class="cd">Random art challenge</div></div>
+   <div class="card" onclick="show('memes');newMeme()"><div class="ci">😂</div><div class="ct">Meme Deck</div><div class="cd">Swipe for laughs</div></div>
+  </div>
+ </div>
+
+ <div class="cluster">
+  <h2>🎌 Japan &amp; Manga</h2>
+  <div class="grid">
+   <div class="card" onclick="startQuiz('japan')"><div class="ci">🗾</div><div class="ct">Anime &amp; Japan Quiz</div><div class="cd">Trivia &amp; fun facts</div></div>
+   <div class="card" onclick="show('mangalist')"><div class="ci">📖</div><div class="ct">Manga Picks</div><div class="cd">Stuff worth reading</div></div>
+  </div>
+ </div>
+
+ <div class="cluster">
+  <h2>🧠 Brain Stuff</h2>
+  <div class="grid">
+   <div class="card" onclick="startQuiz('math')"><div class="ci">🧮</div><div class="ct">Easy Math</div><div class="cd">Quick brain warm-up</div></div>
+   <div class="card" onclick="startQuiz('english')"><div class="ci">🗣️</div><div class="ct">English (Hard)</div><div class="cd">Vocab &amp; grammar</div></div>
+   <div class="card" onclick="startQuiz('german')"><div class="ci">📝</div><div class="ct">Deutsch (Schwer)</div><div class="cd">Grammatik-Challenge</div></div>
+   <div class="card" onclick="startQuiz('avatar')"><div class="ci">🌊</div><div class="ct">Avatar Lore</div><div class="cd">Quotes &amp; trivia</div></div>
+  </div>
+ </div>
+
+ <div class="cluster">
+  <h2>🎮 Games &amp; Fun</h2>
+  <div class="grid">
+   <div class="card" onclick="show('memory');startMemory()"><div class="ci">🀄</div><div class="ct">Memory Match</div><div class="cd">Anime tile game</div></div>
+   <div class="card" onclick="show('shorts');newShort()"><div class="ci">📱</div><div class="ct">Zerya's Shorts</div><div class="cd">Tap for the next one</div></div>
+  </div>
+ </div>
+
+ <div class="cluster">
+  <h2>🏅 Badge Shelf</h2>
+  <div class="card wide" onclick="show('badges');renderBadges()"><div class="ci">🏅</div><div class="ct">View your badges</div><div class="cd" id="badge-preview">0 / 14 unlocked</div></div>
+ </div>
+
+ <a class="footlink" href="arena.html">☯ Family Arena</a>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="quiz" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt" id="q-title">Quiz</div><div class="pill" id="q-score">0 pts</div></div>
+ <div class="progress"><i id="q-bar"></i></div>
+ <div class="qcard" id="q-text"></div>
+ <div class="opts" id="q-opts"></div>
+ <div class="fb" id="q-fb"></div>
+</div>
+
+<div id="qresult" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="result">
+  <div class="bigscore" id="r-score">0/0</div>
+  <div class="rmsg" id="r-msg"></div>
+ </div>
+ <button class="btn pink" id="r-again">Play again</button>
+ <button class="btn ghost" onclick="show('home')">Back to hub</button>
+</div>
+
+<!-- ===== DRAW PROMPT ===== -->
+<div id="drawgen" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt">Draw Prompt 🎨</div></div>
+ <div class="promptbox" id="dg-text"></div>
+ <button class="btn pink" onclick="newPrompt()">🎲 New prompt</button>
+ <button class="btn ghost" onclick="saveFav()">♥ Save this one</button>
+ <div class="sectlabel" id="fav-label" style="display:none">♥ Saved prompts</div>
+ <div class="favlist" id="fav-list"></div>
+</div>
+
+<!-- ===== MEME DECK ===== -->
+<div id="memes" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt">Meme Deck 😂</div></div>
+ <div class="deck" id="meme-text"></div>
+ <div class="reactrow">
+  <button class="reactbtn" onclick="react()">😂</button>
+  <button class="reactbtn" onclick="react()">💀</button>
+  <button class="reactbtn" onclick="react()">🔥</button>
+ </div>
+ <button class="btn purple" onclick="newMeme()">Next meme ▶</button>
+</div>
+
+<!-- ===== MANGA LIST ===== -->
+<div id="mangalist" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt">Manga &amp; Anime Picks 📖</div></div>
+ <p class="note" style="margin-bottom:10px">Tap ☆ to save one to your list.</p>
+ <div class="manga" id="manga-grid"></div>
+</div>
+
+<!-- ===== SHORTS ===== -->
+<div id="shorts" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt">Zerya's Shorts 📱</div><div class="pill" id="shorts-count">0 seen</div></div>
+ <div class="deck" id="short-text" style="min-height:220px;font-size:20px"></div>
+ <button class="btn blue" onclick="newShort()">⬇️ Next</button>
+</div>
+
+<!-- ===== MEMORY GAME ===== -->
+<div id="memory" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt">Memory Match 🀄</div></div>
+ <div class="memhead" id="mem-head">Pairs: 0/12 · Tries: 0</div>
+ <div class="memgrid" id="mem-grid"></div>
+ <button class="btn purple" onclick="startMemory()">🔄 Shuffle again</button>
+</div>
+
+<!-- ===== BADGES ===== -->
+<div id="badges" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt">Badge Shelf 🏅</div></div>
+ <div class="badgegrid" id="badge-grid"></div>
+</div>
+
+</div>
+
+<script>
+/* ============ PERSISTENCE ============ */
+var SKEY='zeryaWorldV1';
+var DATA={points:0,quizDone:{},gamesWon:0,promptsGenerated:0,memesSeen:0,shortsSeen:0,mangaList:[],favPrompts:[],badgesUnlocked:[]};
+function loadData(){try{var s=JSON.parse(localStorage.getItem(SKEY));if(s)DATA=Object.assign(DATA,s);}catch(e){}}
+function saveData(){try{localStorage.setItem(SKEY,JSON.stringify(DATA));}catch(e){}}
+function updatePtsUI(){var el=document.getElementById('pts-top');if(el)el.textContent='⭐ '+DATA.points+' pts';var bp=document.getElementById('badge-preview');if(bp)bp.textContent=DATA.badgesUnlocked.length+' / '+BADGES.length+' unlocked';}
+function addPoints(n){DATA.points+=n;checkBadges();updatePtsUI();saveData();}
+
+/* ============ NAVIGATION ============ */
+function show(id){
+ document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on');});
+ document.getElementById(id).classList.add('on');
+ window.scrollTo(0,0);
+ if(id==='home'){checkBadges();updatePtsUI();saveData();}
+}
+
+/* ============ BADGES ============ */
+var BADGES=[
+ {id:'mathwhiz',e:'🧮',n:'Math Whiz',d:'Finish a Math quiz',check:function(){return !!DATA.quizDone.math;}},
+ {id:'wordsmith',e:'🗣️',n:'Wordsmith',d:'Finish an English quiz',check:function(){return !!DATA.quizDone.english;}},
+ {id:'sprachgenie',e:'📝',n:'Sprachgenie',d:'Finish a German quiz',check:function(){return !!DATA.quizDone.german;}},
+ {id:'avatarfan',e:'🌊',n:'Avatar Fan',d:'Finish an Avatar quiz',check:function(){return !!DATA.quizDone.avatar;}},
+ {id:'otaku',e:'🥷',n:'Otaku',d:'Finish a Japan & Anime quiz',check:function(){return !!DATA.quizDone.japan;}},
+ {id:'artist',e:'🎨',n:'Artist',d:'Generate 5 draw prompts',check:function(){return DATA.promptsGenerated>=5;}},
+ {id:'memelord',e:'😂',n:'Meme Lord',d:'See 15 memes',check:function(){return DATA.memesSeen>=15;}},
+ {id:'bookworm',e:'📚',n:'Bookworm',d:'Save 3 manga picks',check:function(){return DATA.mangaList.length>=3;}},
+ {id:'gamer',e:'🎮',n:'Gamer',d:'Win Memory Match once',check:function(){return DATA.gamesWon>=1;}},
+ {id:'bingewatcher',e:'🎬',n:'Shorts Binge',d:'Swipe 20 shorts',check:function(){return DATA.shortsSeen>=20;}},
+ {id:'bronze',e:'🥉',n:'Rising Star',d:'Earn 50 points',check:function(){return DATA.points>=50;}},
+ {id:'silver',e:'🥈',n:'Shining Star',d:'Earn 150 points',check:function(){return DATA.points>=150;}},
+ {id:'gold',e:'🥇',n:'Super Star',d:'Earn 300 points',check:function(){return DATA.points>=300;}},
+ {id:'diamond',e:'💎',n:'Legend',d:'Earn 500 points',check:function(){return DATA.points>=500;}}
+];
+function checkBadges(){
+ BADGES.forEach(function(b){
+  if(DATA.badgesUnlocked.indexOf(b.id)<0 && b.check()){DATA.badgesUnlocked.push(b.id);}
+ });
+}
+function renderBadges(){
+ var g=document.getElementById('badge-grid');g.innerHTML='';
+ BADGES.forEach(function(b){
+  var got=DATA.badgesUnlocked.indexOf(b.id)>=0;
+  var d=document.createElement('div');d.className='badge'+(got?'':' locked');
+  d.innerHTML='<div class="be">'+(got?b.e:'🔒')+'</div><div class="bn">'+b.n+'</div><div class="bd">'+b.d+'</div>';
+  g.appendChild(d);
+ });
+}
+
+/* ============ QUIZ ENGINE ============ */
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=rnd(0,i);var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+var QUIZBANKS={
+ math:{title:'Easy Math',emoji:'🧮'},
+ english:{title:'English (Hard)',emoji:'🗣️'},
+ german:{title:'Deutsch (Schwer)',emoji:'📝'},
+ avatar:{title:'Avatar Lore',emoji:'🌊'},
+ japan:{title:'Anime & Japan',emoji:'🗾'}
+};
+
+var Q={key:null,list:[],i:0,score:0,lock:false};
+
+function startQuiz(key){
+ var pool;
+ if(key==='math'){ pool=[]; for(var i=0;i<10;i++)pool.push(genMathEasy()); }
+ else { pool=shuffle(BANK[key]).slice(0,10); }
+ Q={key:key,list:pool,i:0,score:0,lock:false};
+ document.getElementById('q-title').textContent=QUIZBANKS[key].title;
+ show('quiz');
+ renderQ();
+}
+function renderQ(){
+ var cur=Q.list[Q.i];
+ document.getElementById('q-bar').style.width=Math.round(Q.i/Q.list.length*100)+'%';
+ document.getElementById('q-score').textContent=Q.score+' pts';
+ document.getElementById('q-text').textContent=cur.q;
+ document.getElementById('q-fb').textContent='';
+ var opts=shuffle(cur.o);
+ var g=document.getElementById('q-opts');g.innerHTML='';
+ opts.forEach(function(o){
+  var b=document.createElement('div');b.className='opt';b.textContent=o;
+  b.onclick=function(){answerQ(o,b,cur);};
+  g.appendChild(b);
+ });
+ Q.lock=false;
+}
+function answerQ(picked,btn,cur){
+ if(Q.lock)return;Q.lock=true;
+ var fb=document.getElementById('q-fb');
+ if(picked===cur.a){
+  btn.classList.add('right');Q.score+=2;fb.textContent='✅ Correct!';
+ }else{
+  btn.classList.add('wrong');fb.textContent='❌ Answer: '+cur.a;
+  [].forEach.call(document.querySelectorAll('#q-opts .opt'),function(o){if(o.textContent===cur.a)o.classList.add('right');});
+ }
+ setTimeout(nextQ,1100);
+}
+function nextQ(){
+ Q.i++;
+ if(Q.i>=Q.list.length)return finishQuiz();
+ renderQ();
+}
+function finishQuiz(){
+ var perfect=Q.score>=Q.list.length*2;
+ if(perfect)Q.score+=6;
+ DATA.quizDone[Q.key]=true;
+ addPoints(Q.score);
+ document.getElementById('r-score').textContent=Q.score+' pts';
+ document.getElementById('r-msg').textContent=perfect?'🎉 Perfect round! Bonus points added.':'Nice work — '+Math.round(Q.score/2)+' / '+Q.list.length+' correct.';
+ document.getElementById('r-again').onclick=function(){startQuiz(Q.key);};
+ show('qresult');
+}
+
+function genMathEasy(){
+ var type=rnd(0,7),q,ans;
+ if(type===0){var a=rnd(2,40),b=rnd(2,40);ans=a+b;q=a+' + '+b+' = ?';}
+ else if(type===1){var a1=rnd(10,60),b1=rnd(2,a1);ans=a1-b1;q=a1+' − '+b1+' = ?';}
+ else if(type===2){var a2=rnd(2,9),b2=rnd(2,9);ans=a2*b2;q=a2+' × '+b2+' = ?';}
+ else if(type===3){var b3=rnd(2,9),x3=rnd(2,9);ans=x3;q=(b3*x3)+' ÷ '+b3+' = ?';}
+ else if(type===4){var p=[10,20,25,50][rnd(0,3)];var base=[20,40,60,80,100][rnd(0,4)];ans=Math.round(base*p/100);q='What is '+p+'% of '+base+'?';}
+ else if(type===5){var dn=[2,3,4][rnd(0,2)];var mult=rnd(2,6);var whole=dn*mult;ans=mult;q='What is 1/'+dn+' of '+whole+'?';}
+ else if(type===6){var a6=rnd(2,9);ans=a6+9;q='9 + x = '+(a6+9)+'  →  x = ?';}
+ else{var a7=rnd(2,12);ans=a7*2;q='Double '+a7+' = ?';}
+ var set={};set[ans]=1;var guard=0;
+ while(Object.keys(set).length<4&&guard++<60){var d=ans+rnd(-6,6);if(d>=0)set[d]=1;}
+ return {q:q,a:String(ans),o:Object.keys(set).map(function(k){return String(k);})};
+}
+
+/* ============ DRAW PROMPT GENERATOR ============ */
+var DRAW_SUBJ=['your OC (original character)','a cat wearing samurai armor','your favorite manga villain redesigned','a tiny dragon','a robot with feelings','your best friend as an anime hero','a snack that came to life','a superhero version of yourself','a mysterious hooded stranger','a monster made of clouds','your pet as a spirit guardian','a school uniform redesign','a magical-girl transformation','two rivals shaking hands','a vending machine spirit','your OC\'s evil twin'];
+var DRAW_STYLE=['Studio Ghibli','chibi','black & white manga panel','cyberpunk neon','soft watercolor','retro 90s anime','sticker / emoji style','comic-book pop-art','minimalist line art','pastel dreamcore','woodblock print (ukiyo-e)'];
+var DRAW_TWIST=['but it\'s raining','set in space','it\'s their birthday','they just woke up','styled like a wanted poster','it\'s actually a plush toy','with really long sleeves','during a festival, lanterns everywhere','it\'s midnight and everything glows','with a tiny sidekick','wearing giant headphones','inside an actual comic panel with a speech bubble'];
+function newPrompt(){
+ var s=DRAW_SUBJ[rnd(0,DRAW_SUBJ.length-1)],st=DRAW_STYLE[rnd(0,DRAW_STYLE.length-1)],tw=DRAW_TWIST[rnd(0,DRAW_TWIST.length-1)];
+ var text='Draw '+s+', '+st+' style — '+tw+'.';
+ document.getElementById('dg-text').textContent=text;
+ document.getElementById('dg-text').dataset.txt=text;
+ DATA.promptsGenerated++;checkBadges();saveData();
+}
+function saveFav(){
+ var t=document.getElementById('dg-text').dataset.txt;
+ if(!t)return;
+ if(DATA.favPrompts.indexOf(t)<0)DATA.favPrompts.push(t);
+ saveData();renderFavs();
+}
+function renderFavs(){
+ var list=document.getElementById('fav-list'),label=document.getElementById('fav-label');
+ list.innerHTML='';
+ if(DATA.favPrompts.length===0){label.style.display='none';return;}
+ label.style.display='flex';
+ DATA.favPrompts.slice().reverse().forEach(function(t){
+  var d=document.createElement('div');d.className='favitem';d.textContent=t;list.appendChild(d);
+ });
+}
+
+/* ============ MEME DECK ============ */
+var JOKES=[
+ "Me: I'll watch just one episode. Also me, 6 hours later: *still watching*",
+ "POV: you said 'let me explain the plot real quick' 45 minutes ago",
+ "Homework: exists. My brain: 404 not found.",
+ "Nobody: ... Me at 1am: *reading chapter 800 of a manga*",
+ "My group chat has 400 unread messages and I refuse to open it",
+ "Studying for 5 minutes then suddenly remembering an anime opening",
+ "Me pretending I understood the plot twist: 😐👍",
+ "Teacher: the test isn't hard. The test:",
+ "When the wifi buffers during the best scene 💀",
+ "My villain arc keeps getting cancelled due to nap time",
+ "Currently loading motivation... 1%... please wait...",
+ "Me: I have so much to do today. Also me: *watches 12 shorts instead*",
+ "That one character everyone loves but does nothing wrong ever, sure",
+ "Plot armor is just a fashion choice at this point",
+ "Me explaining an anime to someone who didn't ask: 🎤📖",
+ "Filler episode? In THIS economy?",
+ "My sleep schedule said 'trust the process' and left",
+ "Drawing hands: 🙂 Drawing hands holding something: 💀",
+ "The math homework fears me. The math homework is correct to fear me.",
+ "When you finish a series and grieve like it was a real person",
+ "Me: I'll be productive today. Day: proceeds to be Tuesday.",
+ "Villain monologues instead of just attacking, couldn't be me... could be me actually",
+ "That awkward silence after you quote a meme and nobody laughs",
+ "Season finale cliffhangers should be illegal",
+ "My search history is just 'why does [character] do that'",
+ "POV: the good guy has 1 HP left but somehow still wins",
+ "Group project: I did 90%. The math: doesn't add up but ok.",
+ "Character development? In my favorite show? More likely than you think.",
+ "The way I gasped out loud reading that chapter, alone, in silence",
+ "My 'five more minutes of scrolling' was legally two hours",
+ "When the op finally drops and the whole room changes energy",
+ "Me choosing violence by rewatching the sad episode on purpose",
+ "Every group chat has one person who never texts back and it's an honor system",
+ "That specific anime sound effect lives in my head rent-free",
+ "Studying with anime playing in the background: peak productivity (lie)",
+ "My brain during class: what if the last boss was actually good all along",
+ "Redoing my art for the 4th time because 'it's not right' — the cycle continues",
+ "The way one scene can ruin and heal you in the same 10 seconds",
+ "Me acting normal after finishing a really good manga chapter: 🙂🔪",
+ "My 'quick nap' before homework became a whole side quest",
+ "Rating my own drawing: 2/10 until someone else says it's good, then 10/10"
+];
+function newMeme(){
+ var j=JOKES[rnd(0,JOKES.length-1)];
+ document.getElementById('meme-text').textContent=j;
+}
+function react(){
+ DATA.memesSeen++;checkBadges();saveData();updatePtsUI();
+}
+
+/* ============ SHORTS FEED ============ */
+var SHORTS=[
+ "🎌 Fun fact: Japan has over 6,800 islands — most people only ever hear about the big four.",
+ "📖 Manga is usually read right-to-left, back to front. Your brain will fight you for the first 5 pages, then it just clicks.",
+ "🍜 Ramen shops in Japan often have a vending machine at the door — you pick your bowl before you even sit down.",
+ "🎬 Studio Ghibli famously refuses to do traditional trailers that spoil the plot.",
+ "🥋 The word 'anime' in Japan just means 'animation' — ALL cartoons, not just the stuff we call anime abroad.",
+ "🌸 Cherry blossom season lasts only about 1-2 weeks — that's why it's such a big deal every year.",
+ "🎮 The first ever Pokémon games were originally just called 'Pocket Monsters.'",
+ "🖋️ Some famous manga artists draw over 20 pages a week, by hand, on a weekly deadline. Respect the grind.",
+ "📺 One Piece has been running since 1997 — that's longer than most of your favorite streamers have existed.",
+ "🎧 Anime openings are sometimes written before the anime is even finished, just to match the vibe.",
+ "🍡 Convenience stores in Japan (konbini) are basically a whole personality trait for tourists — the food really is that good.",
+ "🐉 The word 'kaiju' just means 'strange beast' — that's the giant monster genre's whole name.",
+ "🎨 A lot of professional manga backgrounds are hand-inked with actual rulers and screentone sheets, not digital.",
+ "📚 Some light novels get turned into anime after just 1-2 volumes if they're popular enough online.",
+ "🎏 Koinobori (carp-shaped flags) are flown for Children's Day in May — one fish per kid in the family.",
+ "🕹️ Speedrunning games is basically its own sport now, with world records tracked to the millisecond.",
+ "🍙 Onigiri (rice balls) were originally soldier food — easy to carry, easy to eat one-handed.",
+ "🎭 Kabuki theatre actors train for their entire lives, often starting as literal toddlers.",
+ "🐾 Studio Ghibli's mascot Totoro doesn't officially have a defined species — it's deliberately left mysterious.",
+ "📱 Webtoons are designed to scroll vertically because they're made for phones, unlike traditional manga panels.",
+ "🎮 Some of gaming's hardest bosses were originally made easier, then buffed back up after players complained it was too easy.",
+ "🍥 That pink swirl on ramen (narutomaki) is named after the whirlpools near Naruto City — yes, that Naruto.",
+ "🎬 A 90-second anime opening can take a whole animation team weeks just by itself.",
+ "🗾 Mount Fuji is actually considered a sacred, active volcano — its last eruption was in 1707.",
+ "🎨 Some artists use a mirror to check their drawings — flipped, mistakes in proportion suddenly jump out.",
+ "📖 The longest-running weekly manga magazine in Japan started in the 1950s and never stopped.",
+ "🎧 Vocaloid songs are sung by a synthesized voice, not a real singer — some still top the charts.",
+ "🍡 Dango (sweet rice dumplings on a stick) come in different colors depending on the season.",
+ "🎮 The first video game character to ever get a Guinness World Record for recognition? Mario.",
+ "🐉 In folklore, kitsune (fox spirits) are said to grow an extra tail every 100 years, up to nine.",
+ "📚 Some famous authors write their entire first draft by hand before ever touching a keyboard.",
+ "🎏 Origami cranes are folded as a symbol of hope and healing — 1000 of them is a whole tradition.",
+ "🎬 Frame rate in anime is often intentionally lower during calm scenes to save budget for action scenes.",
+ "🍜 Slurping noodles loudly in Japan is actually considered polite — it means you're enjoying the food.",
+ "🎮 Some indie games are made entirely by one single developer, art, code, music and all.",
+ "📱 A 'short' video format performs best around 15-30 seconds — attention spans are a whole science now.",
+ "🎨 Comic ink lines are traditionally drawn thicker on the outside edge, thinner on the inside — it's called line weight.",
+ "🥷 Ninjas historically wore dark blue, not black — black actually stands out more at night.",
+ "🎧 Some anime composers write the entire soundtrack before a single episode is animated.",
+ "📖 Reading manga backwards (western order) used to be common until fans pushed publishers to keep it authentic."
+];
+function newShort(){
+ var s=SHORTS[rnd(0,SHORTS.length-1)];
+ document.getElementById('short-text').textContent=s;
+ DATA.shortsSeen++;checkBadges();saveData();
+ document.getElementById('shorts-count').textContent=DATA.shortsSeen+' seen';
+}
+
+/* ============ MANGA & ANIME PICKS ============ */
+var MANGA_LIST=[
+ {e:'🏴‍☠️',n:'One Piece',h:'Pirates chasing the ultimate treasure, one island at a time.',tag:'Adventure'},
+ {e:'🥷',n:'Naruto',h:'An outcast ninja fights to be seen — and to protect everyone anyway.',tag:'Action'},
+ {e:'💥',n:'My Hero Academia',h:'A powerless kid in a world of superheroes refuses to give up.',tag:'Superhero'},
+ {e:'⚔️',n:'Demon Slayer',h:'Gorgeous animation, brutal fights, a lot of heart.',tag:'Action'},
+ {e:'🧟',n:'Attack on Titan',h:'Giant monsters, huge twists — not for the faint of heart.',tag:'Dark fantasy'},
+ {e:'🕵️',n:'Spy x Family',h:'A spy, an assassin, and a telepath accidentally become a family.',tag:'Comedy'},
+ {e:'👻',n:'Jujutsu Kaisen',h:'Cursed spirits, sharp humor, and one of the best fight scenes ever animated.',tag:'Supernatural'},
+ {e:'📓',n:'Death Note',h:'A notebook that kills — and the world\'s smartest cat-and-mouse game.',tag:'Thriller'},
+ {e:'⚗️',n:'Fullmetal Alchemist: Brotherhood',h:'Two brothers, one huge mistake, and a story that earns every tear.',tag:'Adventure'},
+ {e:'🏐',n:'Haikyuu!!',h:'Volleyball anime so good it makes non-sports fans cry.',tag:'Sports'},
+ {e:'🌙',n:'Sailor Moon',h:'The original magical-girl icon — still holds up.',tag:'Magical girl'},
+ {e:'🐉',n:'Dragon Ball',h:'The granddaddy of shonen action — martial arts and power-ups galore.',tag:'Classic'},
+ {e:'⚡',n:'Pokémon',h:'Catch, train, battle — comfort content since forever.',tag:'Adventure'},
+ {e:'🌲',n:'Studio Ghibli films',h:'Spirited Away, Totoro, Howl\'s Moving Castle — pure magic, every time.',tag:'Films'},
+ {e:'🪚',n:'Chainsaw Man',h:'Chaotic, unhinged, weirdly emotional. Not for everyone — you\'ll know fast.',tag:'Dark comedy'},
+ {e:'⚽',n:'Blue Lock',h:'Soccer as a psychological battle royale. Intense doesn\'t cover it.',tag:'Sports'},
+ {e:'🧠',n:'Mob Psycho 100',h:'A psychic kid who just wants a normal life — great art, great humor.',tag:'Comedy'},
+ {e:'🌠',n:'Your Name',h:'A body-swap romance movie that will absolutely wreck you (in a good way).',tag:'Film'}
+];
+function renderManga(){
+ var g=document.getElementById('manga-grid');g.innerHTML='';
+ MANGA_LIST.forEach(function(m){
+  var saved=DATA.mangaList.indexOf(m.n)>=0;
+  var d=document.createElement('div');d.className='mcard';
+  d.innerHTML='<div class="me">'+m.e+'</div><div><div class="mn">'+m.n+'</div><div class="mh">'+m.h+'</div><div class="mtag">'+m.tag+'</div></div><button class="mstar">'+(saved?'★':'☆')+'</button>';
+  d.querySelector('.mstar').onclick=function(ev){
+   ev.stopPropagation();
+   var idx=DATA.mangaList.indexOf(m.n);
+   if(idx>=0)DATA.mangaList.splice(idx,1);else DATA.mangaList.push(m.n);
+   checkBadges();saveData();renderManga();
+  };
+  g.appendChild(d);
+ });
+}
+
+/* ============ MEMORY GAME ============ */
+var MEM_ICONS=['🥷','🐉','🎌','🍥','⛩️','🍜','🌸','👘','🍙','📖','🎮','⭐'];
+var MEM={cards:[],flipped:[],matchedIdx:{},matched:0,tries:0,lock:false};
+function startMemory(){
+ var deck=shuffle(MEM_ICONS.concat(MEM_ICONS));
+ MEM={cards:deck,flipped:[],matchedIdx:{},matched:0,tries:0,lock:false};
+ renderMemory();
+}
+function renderMemory(){
+ document.getElementById('mem-head').textContent='Pairs: '+MEM.matched+'/'+MEM_ICONS.length+' · Tries: '+MEM.tries;
+ var g=document.getElementById('mem-grid');g.innerHTML='';
+ MEM.cards.forEach(function(icon,idx){
+  var isMatched=MEM.matchedIdx[idx];
+  var d=document.createElement('div');
+  d.className='mcell'+((MEM.flipped.indexOf(idx)>=0||isMatched)?'':' hidden')+(isMatched?' match':'');
+  d.textContent=(MEM.flipped.indexOf(idx)>=0||isMatched)?icon:'?';
+  d.onclick=function(){flipCard(idx);};
+  g.appendChild(d);
+ });
+}
+function flipCard(idx){
+ if(MEM.lock)return;
+ if(MEM.flipped.indexOf(idx)>=0||MEM.matchedIdx[idx])return;
+ MEM.flipped.push(idx);
+ renderMemory();
+ if(MEM.flipped.length===2){
+  MEM.lock=true;MEM.tries++;
+  var a=MEM.flipped[0],b=MEM.flipped[1];
+  setTimeout(function(){
+   if(MEM.cards[a]===MEM.cards[b]){
+    MEM.matchedIdx[a]=true;MEM.matchedIdx[b]=true;MEM.matched++;
+    if(MEM.matched===MEM_ICONS.length){DATA.gamesWon++;addPoints(10);}
+   }
+   MEM.flipped=[];MEM.lock=false;renderMemory();
+  },700);
+ }
+}
+
+/* ============ QUIZ CONTENT BANKS ============ */
+var BANK={
+english:[
+{q:"'Reluctant' most nearly means…",a:'unwilling',o:['unwilling','eager','tired','curious']},
+{q:"'Abundant' most nearly means…",a:'plentiful',o:['plentiful','rare','empty','tiny']},
+{q:"'Meticulous' describes someone who is…",a:'very careful and precise',o:['very careful and precise','lazy','forgetful','rude']},
+{q:"To 'alleviate' pain means to…",a:'ease it',o:['ease it','increase it','ignore it','cause it']},
+{q:"'Inevitable' means…",a:'unavoidable',o:['unavoidable','unlikely','invisible','optional']},
+{q:"'Ambiguous' means…",a:'open to more than one meaning',o:['open to more than one meaning','perfectly clear','very loud','extremely old']},
+{q:"A 'resilient' person is able to…",a:'recover quickly',o:['recover quickly','give up easily','sleep a lot','complain often']},
+{q:"If something 'deteriorates', it…",a:'gets worse',o:['gets worse','improves','disappears','freezes']},
+{q:"'Frugal' means…",a:'careful with money',o:['careful with money','wasteful','generous','wealthy']},
+{q:"'Tedious' work is…",a:'boring and tiring',o:['boring and tiring','exciting','dangerous','quick']},
+{q:"A 'candid' answer is…",a:'honest and direct',o:['honest and direct','a lie','a secret','a joke']},
+{q:"'Scarce' means…",a:'in short supply',o:['in short supply','everywhere','expensive','heavy']},
+{q:"To 'postpone' an event is to…",a:'delay it',o:['delay it','cancel it','attend it','enjoy it']},
+{q:"'Diligent' most nearly means…",a:'hard-working',o:['hard-working','careless','cheerful','wealthy']},
+{q:"A 'plausible' excuse is…",a:'believable',o:['believable','ridiculous','written','final']},
+{q:"'Eloquent' describes speech that is…",a:'fluent and persuasive',o:['fluent and persuasive','quiet','confusing','rude']},
+{q:"'Skeptical' means…",a:'doubtful',o:['doubtful','certain','excited','afraid']},
+{q:"'Persistent' means…",a:'not giving up',o:['not giving up','giving up fast','shy','careless']},
+{q:"'Adverse' conditions are…",a:'unfavorable',o:['unfavorable','perfect','average','pleasant']},
+{q:"To 'diminish' means to…",a:'become smaller',o:['become smaller','grow bigger','disappear instantly','explode']},
+{q:"'Genuine' means…",a:'real and authentic',o:['real and authentic','fake','expensive','old']},
+{q:"'Compelling' means…",a:'very convincing',o:['very convincing','boring','short','confusing']},
+{q:"'Reluctantly' means…",a:'unwillingly',o:['unwillingly','eagerly','quickly','loudly']},
+{q:"'Obsolete' means…",a:'no longer used',o:['no longer used','brand new','expensive','popular']},
+{q:"'Vivid' most nearly means…",a:'bright and clear',o:['bright and clear','dull','blurry','small']},
+{q:"'Rigid' means…",a:'stiff, not flexible',o:['stiff, not flexible','soft','loose','warm']},
+{q:"'Coincide' means to…",a:'happen at the same time',o:['happen at the same time','happen never','happen once a year','disagree']},
+{q:"'Notorious' means…",a:'famous for something bad',o:['famous for something bad','completely unknown','extremely kind','very rich']},
+{q:"'Substantial' means…",a:'large in amount',o:['large in amount','very small','average','pointless']},
+{q:"'Withdraw' can mean to…",a:'pull back or leave',o:['pull back or leave','attack suddenly','celebrate','agree']},
+{q:"If I ___ more time, I would travel the world. (2nd conditional)",a:'had',o:['had','have','will have','would have']},
+{q:"Reported speech: She said, 'I am tired.' → She said she ___ tired.",a:'was',o:['was','is','has been','will be']},
+{q:"Passive: 'They built the house in 1990.' → 'The house ___ in 1990.'",a:'was built',o:['was built','is built','built','has built']},
+{q:"3rd conditional: 'If she had studied, she ___ the exam.'",a:'would have passed',o:['would have passed','would pass','passed','will pass']},
+{q:"Relative pronoun: 'The man ___ car was stolen called the police.'",a:'whose',o:['whose','who','which','whom']},
+{q:"'I look forward to ___ you again soon.'",a:'seeing',o:['seeing','see','seen','to see']},
+{q:"'By next June, I ___ here for ten years.'",a:'will have worked',o:['will have worked','will work','have worked','worked']},
+{q:"'She's the girl ___ won the competition.'",a:'who',o:['who','whom','whose','which']},
+{q:"'I wish I ___ more free time.' (present wish)",a:'had',o:['had','have','will have','would have']},
+{q:"'He denied ___ the money.' (verb pattern)",a:'taking',o:['taking','to take','take','took']},
+{q:"'Hardly ___ I arrived when it started raining.' (inversion)",a:'had',o:['had','have','did','was']},
+{q:"'If only I ___ listened to you.' (regret about past)",a:'had',o:['had','have','would','did']},
+{q:"'This is the book ___ I told you about.'",a:'that',o:['that','who','whose','what']},
+{q:"'Not only ___ she smart, but also kind.' (inversion)",a:'is',o:['is','she is','was','does']},
+{q:"'They suggested ___ earlier next time.' (verb pattern)",a:'leaving',o:['leaving','to leave','leave','left']},
+{q:"'I'd rather you ___ that again.' (unreal preference)",a:"didn't do",o:["didn't do",'not do','don’t do','won’t do']},
+{q:"Passive: 'Someone is repairing the car.' → 'The car ___.'",a:'is being repaired',o:['is being repaired','is repaired','was repaired','repairs']},
+{q:"'It's high time we ___ home.' (unreal present)",a:'went',o:['went','go','will go','have gone']},
+{q:"'No sooner ___ he arrived than the phone rang.' (inversion)",a:'had',o:['had','has','did','was']},
+{q:"'She acts as if she ___ the boss.' (unreal present)",a:'were',o:['were','is','was','be']},
+{q:"'The meeting, ___ was postponed, will happen next week.' (non-defining clause)",a:'which',o:['which','that','who','whom']},
+{q:"Choose the correct phrasal verb: 'I need to ___ this form before Friday.'",a:'fill in',o:['fill in','fill up','fill on','fill off']},
+{q:"'She's used to ___ up early.' (gerund after used to)",a:'getting',o:['getting','get','got','to get']},
+{q:"'By the time we arrived, the film ___.' (past perfect)",a:'had already started',o:['had already started','already started','has already started','starts already']},
+{q:"'It's about time you ___ your homework.'",a:'did',o:['did','do','will do','have done']},
+{q:"Idiom: 'to hit the books' means to…",a:'study hard',o:['study hard','go to the gym','go shopping','take a nap']},
+{q:"Idiom: 'once in a blue moon' means…",a:'very rarely',o:['very rarely','every day','very often','never']},
+{q:"Idiom: 'to spill the beans' means to…",a:'reveal a secret',o:['reveal a secret','cook dinner','make a mess','clean the floor']},
+{q:"Idiom: 'costs an arm and a leg' means…",a:'very expensive',o:['very expensive','free','painful','cheap']},
+{q:"Idiom: 'to be on the fence' means…",a:'undecided',o:['undecided','angry','tired','confident']}
+],
+german:[
+{q:"Ich helfe ___ Mann. (Dativ)",a:'dem',o:['dem','den','der','des']},
+{q:"Wegen ___ Regens bleiben wir zu Hause. (Genitiv)",a:'des',o:['des','dem','den','der']},
+{q:"Konjunktiv II: 'Wenn ich reich ___, würde ich reisen.'",a:'wäre',o:['wäre','bin','war','sein']},
+{q:"Passiv: 'Das Auto ___ repariert.' (Präsens Passiv)",a:'wird',o:['wird','ist','hat','war']},
+{q:"'Trotz ___ Wetters gehen wir raus.' (Genitiv)",a:'des',o:['des','dem','den','der']},
+{q:"'Ich sehe ___ Hund.' (Akkusativ)",a:'den',o:['den','dem','der','des']},
+{q:"'Er gibt ___ Freundin ein Geschenk.' (Dativ)",a:'seiner',o:['seiner','seine','ihrer','ihre']},
+{q:"Konjunktiv II: 'Wenn ich Zeit ___, käme ich mit.'",a:'hätte',o:['hätte','habe','hatte','haben']},
+{q:"Perfekt: 'Ich ___ gestern ins Kino gegangen.'",a:'bin',o:['bin','habe','hatte','war']},
+{q:"Passiv: 'Die Aufgabe ___ gelöst.' (Präsens Passiv)",a:'wird',o:['wird','ist','hat','war']},
+{q:"'Statt ___ Autos nahmen wir den Bus.' (Genitiv)",a:'des',o:['des','dem','den','der']},
+{q:"'Das ist das Haus, ___ Dach rot ist.' (Relativpronomen Genitiv)",a:'dessen',o:['dessen','dem','das','deren']},
+{q:"Nebensatz: '___ es regnet, bleiben wir drinnen.' (kausal)",a:'Weil',o:['Weil','Obwohl','Damit','Dass']},
+{q:"Nebensatz: '___ er müde war, ging er nicht schlafen.' (konzessiv)",a:'Obwohl',o:['Obwohl','Weil','Damit','Wenn']},
+{q:"Finalsatz: 'Sie lernt viel, ___ sie die Prüfung besteht.'",a:'damit',o:['damit','weil','obwohl','dass']},
+{q:"'Ich glaube, ___ er recht hat.'",a:'dass',o:['dass','das','weil','ob']},
+{q:"Adjektivdeklination: 'Sie trägt ein rot___ Kleid.' (Akkusativ, Neutrum)",a:'es',o:['es','en','er','em']},
+{q:"'Der klein___ Junge spielt im Garten.' (Nominativ, bestimmter Artikel)",a:'e',o:['e','en','er','es']},
+{q:"'Ich schenke meiner Mutter ein___ schönen Blumenstrauß.' (Akkusativ)",a:'en',o:['en','e','er','es']},
+{q:"Präposition + Dativ: 'Ich fahre mit ___ Zug.'",a:'dem',o:['dem','den','der','des']},
+{q:"Präposition + Akkusativ: 'Das Geschenk ist für ___ Bruder.'",a:'den',o:['den','dem','der','des']},
+{q:"Wechselpräposition: 'Ich lege das Buch auf ___ Tisch.' (Akkusativ, Bewegung)",a:'den',o:['den','dem','der','das']},
+{q:"Wechselpräposition: 'Das Buch liegt auf ___ Tisch.' (Dativ, Ort)",a:'dem',o:['dem','den','der','das']},
+{q:"Futur I: 'Morgen ___ ich einkaufen gehen.'",a:'werde',o:['werde','wird','würde','habe']},
+{q:"Plusquamperfekt: 'Nachdem ich gegessen ___, ging ich spazieren.'",a:'hatte',o:['hatte','habe','war','bin']},
+{q:"Konjunktiv I (indirekte Rede): 'Er sagt, er ___ krank.'",a:'sei',o:['sei','ist','war','wäre']},
+{q:"Trennbares Verb: 'Ich ___ morgen früh ___.' (aufstehen)",a:'stehe / auf',o:['stehe / auf','auf / stehe','stand / auf','aufstehe / -']},
+{q:"'Er interessiert sich ___ Kunst.' (Präposition mit Verb)",a:'für',o:['für','an','auf','mit']},
+{q:"'Ich freue mich ___ das Wochenende.'",a:'auf',o:['auf','über','für','an']},
+{q:"'Sie kümmert sich ___ ihre kleine Schwester.'",a:'um',o:['um','für','über','an']},
+{q:"Komparativ: 'Mein Bruder ist ___ als ich.' (groß)",a:'größer',o:['größer','groß','am größten','großer']},
+{q:"Superlativ: 'Das ist der ___ Film des Jahres.' (gut)",a:'beste',o:['beste','besser','gut','gutste']},
+{q:"'Ich bin größer ___ mein Freund.'",a:'als',o:['als','wie','so','dann']},
+{q:"'Sie ist so groß ___ ihre Mutter.'",a:'wie',o:['wie','als','so','dann']},
+{q:"Reflexivpronomen: 'Ich freue ___ auf die Ferien.'",a:'mich',o:['mich','mir','mein','meins']},
+{q:"'Er wäscht ___ jeden Morgen.' (Reflexiv, Dativ vs Akkusativ)",a:'sich',o:['sich','ihn','ihm','ihn selbst']},
+{q:"Modalverb im Präteritum: 'Ich ___ gestern nicht kommen.' (können)",a:'konnte',o:['konnte','kann','könnte','gekonnt']},
+{q:"Konjunktiv II Vergangenheit: 'Ich ___ das gemacht, wenn ich Zeit gehabt hätte.'",a:'hätte',o:['hätte','habe','hatte','würde']},
+{q:"Genitiv-s: 'Das ist das Auto ___ Vaters.' (Name endet auf Konsonant)",a:'meines',o:['meines','mein','meiner','meinen']},
+{q:"'Der Chef, ___ Büro im 3. Stock ist, ist streng.' (Relativsatz Genitiv)",a:'dessen',o:['dessen','deren','dessen ihr','wessen']},
+{q:"Indirekte Frage: 'Ich weiß nicht, ___ er kommt.'",a:'ob',o:['ob','dass','weil','wann sein']},
+{q:"'Man muss aufpassen, ___ man die Straße überquert.'",a:'wenn',o:['wenn','als','wann','ob']},
+{q:"Unterschied 'wenn' vs 'als': 'Als ich klein war, ___ ich oft im Park.'",a:'spielte',o:['spielte','spiele','habe gespielt','spielen']},
+{q:"Passiv Präteritum: 'Das Schloss ___ im 16. Jahrhundert gebaut.'",a:'wurde',o:['wurde','wird','ist','war']},
+{q:"'Es ___ mir leid, dass ich zu spät bin.'",a:'tut',o:['tut','macht','ist','geht']},
+{q:"Redewendung: 'Da liegt der Hund begraben' bedeutet…",a:'das ist der eigentliche Grund',o:['das ist der eigentliche Grund','das Tier ist tot','wir haben ein Haustier','wir sind traurig']},
+{q:"Redewendung: 'Ich verstehe nur Bahnhof' bedeutet…",a:'ich verstehe gar nichts',o:['ich verstehe gar nichts','ich bin am Bahnhof','ich verstehe alles','ich fahre Zug']},
+{q:"Redewendung: 'Die Katze im Sack kaufen' bedeutet…",a:'etwas ungesehen kaufen/riskieren',o:['etwas ungesehen kaufen/riskieren','ein Haustier kaufen','sparsam sein','ehrlich sein']},
+{q:"Redewendung: 'Ins Fettnäpfchen treten' bedeutet…",a:'einen peinlichen Fehler machen',o:['einen peinlichen Fehler machen','sehr geschickt sein','kochen gehen','stolz sein']},
+{q:"'Die Schülerin, ___ Heft ich gefunden habe, war sehr dankbar.'",a:'deren',o:['deren','dessen','die','der']},
+{q:"Zeitform: 'Bevor du gehst, ___ bitte das Licht aus.' (Imperativ)",a:'mach',o:['mach','machst','machen','gemacht']},
+{q:"'Ich bin daran interessiert, Japanisch ___ lernen.'",a:'zu',o:['zu','für','um zu','damit']},
+{q:"Nomen-Verb-Verbindung: 'eine Entscheidung ___' (treffen)",a:'treffen',o:['treffen','machen','nehmen','geben']},
+{q:"'Er hat ___ entschieden, nach Japan zu ziehen.' (reflexiv + Präposition)",a:'sich dafür',o:['sich dafür','sich davon','sich damit','sich dagegen']},
+{q:"Konjunktiv II Höflichkeit: '___ Sie mir bitte helfen?'",a:'Könnten',o:['Könnten','Können','Konnten','Würden können']},
+{q:"'Je mehr ich übe, ___ besser werde ich.' (je... desto)",a:'desto',o:['desto','als','wie','so']},
+{q:"Partizip als Adjektiv: 'Das ___ Fenster ist kaputt.' (brechen, Partizip II)",a:'gebrochene',o:['gebrochene','brechende','gebrochen','brechen']}
+],
+avatar:[
+{q:"What is the name of Aang's flying bison?",a:'Appa',o:['Appa','Momo','Naga','Druk']},
+{q:'Toph invented a brand-new bending style. Which one?',a:'Metalbending',o:['Metalbending','Bloodbending','Lightning','Combustion']},
+{q:'Who teaches Aang waterbending at the start?',a:'Katara',o:['Katara','Pakku','Yue','Hama']},
+{q:"What is the name of Zuko's sister?",a:'Azula',o:['Azula','Mai','Ty Lee','Ursa']},
+{q:'Which Avatar lived right before Aang?',a:'Roku',o:['Roku','Kyoshi','Kuruk','Yangchen']},
+{q:'What kind of animal is Momo?',a:'Lemur',o:['Lemur','Cat','Fox','Bat']},
+{q:'Katara and Sokka come from which tribe?',a:'Southern Water Tribe',o:['Southern Water Tribe','Northern Water Tribe','Foggy Swamp','Sun Warriors']},
+{q:'Which element can ONLY the Avatar bend in all four forms?',a:'All four',o:['All four','Only fire','Only air','Energy']},
+{q:'What weapon does Sokka throw that comes back?',a:'Boomerang',o:['Boomerang','Sword','Spear','Net']},
+{q:'Who is the blind earthbending master of the group?',a:'Toph',o:['Toph','Suki','Jet','Haru']},
+{q:'What is the name of the giant library spirit?',a:'Wan Shi Tong',o:['Wan Shi Tong','Koh','Hei Bai','Tui']},
+{q:'Princess Yue becomes the spirit of the…?',a:'Moon',o:['Moon','Ocean','Sun','Forest']},
+{q:"Who loves tea and gives calm, wise advice?",a:'Iroh',o:['Iroh','Ozai','Pakku','Bumi']},
+{q:"'Life happens wherever you are, whether you make it or not.' — who said this?",a:'Iroh',o:['Iroh','Aang','Zuko','Katara']},
+{q:"'It is important to draw wisdom from many different places.' — who said this?",a:'Iroh',o:['Iroh','Aang','Sokka','Toph']},
+{q:"'I like to think of it as the divine order of the universe, or something.' — who said this?",a:'Sokka',o:['Sokka','Aang','Zuko','Toph']},
+{q:"'Pride is not the opposite of shame, but its source.' — who said this?",a:'Iroh',o:['Iroh','Zuko','Ozai','Pakku']},
+{q:"'I'm not the Blue Spirit anymore.' — who said this?",a:'Zuko',o:['Zuko','Aang','Jet','Iroh']},
+{q:"'You can't just leave a spork lying around.' — who said this?",a:'Sokka',o:['Sokka','Aang','Toph','Katara']},
+{q:"Which nation is Zuko originally from?",a:'Fire Nation',o:['Fire Nation','Earth Kingdom','Air Nomads','Water Tribe']},
+{q:"What is the name of Zuko's uncle?",a:'Iroh',o:['Iroh','Ozai','Zhao','Bumi']},
+{q:"Who is the mad king of Omashu?",a:'Bumi',o:['Bumi','Ozai','Zhao','Long Feng']},
+{q:"What is the Avatar's job, in one word?",a:'Balance',o:['Balance','War','Trade','Isolation']},
+{q:"Who kidnaps and mentors Toph's earthbending rival group, the Dai Li, work for?",a:'Long Feng',o:['Long Feng','Ozai','Zhao','Azula']},
+{q:"What is the name of Azula's two friends who join her?",a:'Mai and Ty Lee',o:['Mai and Ty Lee','Suki and Yue','Jet and Smellerbee','June and Song']},
+{q:"Which city is protected by giant walls and 'Ba Sing Se' means what?",a:'Impenetrable city',o:['Impenetrable city','Golden city','Sacred fire','Moon temple']},
+{q:"Who is the Avatar before Roku?",a:'Kyoshi',o:['Kyoshi','Kuruk','Yangchen','Szeto']},
+{q:"What technique lets a bender control others' bending?",a:'Bloodbending',o:['Bloodbending','Metalbending','Lightning redirection','Energybending']},
+{q:"Who first teaches Zuko about lightning redirection?",a:'Iroh',o:['Iroh','Ozai','Zhao','Aang']},
+{q:"What is the name of the comet that boosts firebending power?",a:"Sozin's Comet",o:["Sozin's Comet","Ozai's Star","Agni's Flame","Roku's Fire"]},
+{q:"Which sister nation is known for its acrobatics fighter, Ty Lee?",a:'Fire Nation',o:['Fire Nation','Earth Kingdom','Water Tribe','Air Nomads']},
+{q:"What color are the Kyoshi Warriors' face paint?",a:'White with red',o:['White with red','Blue with black','Green with gold','Yellow with brown']},
+{q:"Who is the leader of the Order of the White Lotus mentioned in the finale?",a:'Iroh',o:['Iroh','Bumi','Pakku','Piandao']},
+{q:"What is the spirit world creature that turns into a giant panda-like guardian?",a:'Hei Bai',o:['Hei Bai','Koh','Wan Shi Tong','Tui']},
+{q:"Which character can steal someone's face if they show emotion?",a:'Koh, the Face Stealer',o:['Koh, the Face Stealer','Hei Bai','Wan Shi Tong','Momo']},
+{q:"What is Sokka's sword master's name?",a:'Piandao',o:['Piandao','Iroh','Jeong Jeong','Bumi']},
+{q:"Who is the firebending master that teaches Aang and Zuko together?",a:'Jeong Jeong (and later, dragons)',o:['Jeong Jeong (and later, dragons)','Iroh only','Ozai','Zhao']},
+{q:"What are Aang, Zuko, Sokka, Toph and Katara collectively remembered as?",a:'Team Avatar',o:['Team Avatar','The White Lotus','The Gaang only in fandom slang','The Fire Squad']},
+{q:"Which spirit do Aang and Katara restore at the Northern Water Tribe?",a:'The Moon and Ocean Spirits (Tui and La)',o:['The Moon and Ocean Spirits (Tui and La)','Koh','Wan Shi Tong','Hei Bai']},
+{q:"What happens to Zuko's mother, driving much of his backstory?",a:'She disappears/is banished (mystery)',o:['She disappears/is banished (mystery)','She dies in battle','She becomes Fire Lord','She joins the Avatar']},
+{q:"Who ends up marrying Sokka in later material (comics/Legend of Korra references)?",a:'Suki (they date in the show)',o:['Suki (they date in the show)','Katara','Ty Lee','Yue']},
+{q:"What does the phrase 'Agni Kai' refer to?",a:'A formal firebending duel',o:['A formal firebending duel','A type of tea','A festival','A ship']},
+{q:"Which animal-guide leads Aang to the Sun Warriors?",a:'A red-orange dragon-like creature and a hidden temple',o:['A red-orange dragon-like creature and a hidden temple','Momo','Appa','A badgermole']},
+{q:"What are Toph's earthbending teachers, the ones who taught her before humans did?",a:'Badgermoles',o:['Badgermoles','Dragons','Sky bison','Turtle ducks']},
+{q:"Firebending was originally learned by humans from which creatures?",a:'Dragons',o:['Dragons','Badgermoles','Turtle ducks','Sky bison']}
+],
+japan:[
+{q:"What does 'anime' mean in Japan?",a:'Any animation, not just Japanese-style',o:['Any animation, not just Japanese-style','Only action cartoons','Only kids shows','Only movies']},
+{q:"Which direction do most manga read?",a:'Right to left',o:['Right to left','Left to right','Top to bottom only','Random order']},
+{q:"What is the capital of Japan?",a:'Tokyo',o:['Tokyo','Osaka','Kyoto','Nagoya']},
+{q:"What is 'sakura'?",a:'Cherry blossom',o:['Cherry blossom','Rice ball','A ninja','A type of tea']},
+{q:"What is a 'konbini'?",a:'A convenience store',o:['A convenience store','A shrine','A festival','A type of noodle']},
+{q:"Which mountain is a famous symbol of Japan?",a:'Mount Fuji',o:['Mount Fuji','Mount Aso','Mount Yari','Mount Haku']},
+{q:"What is 'onigiri'?",a:'A rice ball, often with filling',o:['A rice ball, often with filling','A noodle soup','A dumpling','A pancake']},
+{q:"What are traditional Japanese gates at shrine entrances called?",a:'Torii',o:['Torii','Dojo','Konbini','Futon']},
+{q:"What is the name for Japanese comics?",a:'Manga',o:['Manga','Anime','Kanji','Manwha']},
+{q:"What is 'kawaii'?",a:'Cute',o:['Cute','Scary','Delicious','Ancient']},
+{q:"What's a 'senpai'?",a:'A senior/upperclassman',o:['A senior/upperclassman','A teacher','A younger student','A stranger']},
+{q:"What does 'sensei' mean?",a:'Teacher/master',o:['Teacher/master','Friend','Student','Ninja']},
+{q:"What is a traditional Japanese sliding door called?",a:'Shoji',o:['Shoji','Futon','Tatami','Kimono']},
+{q:"What are the woven floor mats in traditional rooms called?",a:'Tatami',o:['Tatami','Shoji','Yukata','Obi']},
+{q:"What is a 'yukata'?",a:'A casual summer kimono',o:['A casual summer kimono','A type of shoe','A rice dish','A sword']},
+{q:"What is the Japanese New Year celebration called?",a:'Oshogatsu',o:['Oshogatsu','Obon','Tanabata','Hanami']},
+{q:"'Hanami' is the tradition of…?",a:'Viewing cherry blossoms',o:['Viewing cherry blossoms','Making sushi','Flying kites','Writing poems']},
+{q:"What sport is Sumo?",a:'Traditional Japanese wrestling',o:['Traditional Japanese wrestling','A card game','A martial art with swords','A racing sport']},
+{q:"What is a 'dojo'?",a:'A martial arts training hall',o:['A martial arts training hall','A restaurant','A school subject','A type of shoe']},
+{q:"What does 'kaiju' mean?",a:'Strange/giant beast',o:['Strange/giant beast','Small creature','Robot','Ghost']},
+{q:"Studio Ghibli's mascot character is from which film?",a:'My Neighbor Totoro',o:['My Neighbor Totoro','Spirited Away','Princess Mononoke','Ponyo']},
+{q:"In 'Spirited Away', what is Chihiro forced to do to survive?",a:'Work at a bathhouse for spirits',o:['Work at a bathhouse for spirits','Become a ninja','Win a tournament','Sail the seas']},
+{q:"Which anime features ninjas from hidden villages?",a:'Naruto',o:['Naruto','One Piece','Death Note','Attack on Titan']},
+{q:"In 'One Piece', what is the treasure everyone seeks called?",a:'One Piece',o:['One Piece','The Grand Line','Devil Fruit','Poneglyph']},
+{q:"What special ability do 'Devil Fruits' give in One Piece?",a:'A unique superpower, but you can’t swim',o:['A unique superpower, but you can’t swim','Immortality','Flight only','Nothing, they’re just food']},
+{q:"In 'Death Note', what happens if you write someone's name in the notebook?",a:'They die',o:['They die','They fall asleep','They disappear','They become invisible']},
+{q:"'My Hero Academia' calls superpowers by what name?",a:'Quirks',o:['Quirks','Nen','Chakra','Curses']},
+{q:"In 'Demon Slayer', what does the main character Tanjiro become a slayer to save?",a:'His sister, turned into a demon',o:['His sister, turned into a demon','His village','His teacher','His dog']},
+{q:"What is 'Jujutsu Kaisen' mainly about?",a:'Exorcists fighting cursed spirits',o:['Exorcists fighting cursed spirits','Pirates searching for treasure','Ninjas at war','Robots battling']},
+{q:"In 'Attack on Titan', what threat lives outside the walls?",a:'Giant humanoid Titans',o:['Giant humanoid Titans','Dragons','Zombies','Robots']},
+{q:"In 'Spy x Family', what are the three main characters hiding from each other?",a:'That they’re a spy, an assassin, and a telepath',o:['That they’re a spy, an assassin, and a telepath','That they’re royalty','That they’re ghosts','That they’re robots']},
+{q:"What is the fictional currency/power system in Dragon Ball called when characters power up their aura?",a:'Ki (energy)',o:['Ki (energy)','Chakra','Nen','Haki']},
+{q:"In Pokémon, what is the very first step to becoming a trainer?",a:'Choosing a starter Pokémon',o:['Choosing a starter Pokémon','Winning a gym badge','Catching a Legendary','Building a Pokéball']},
+{q:"What genre is 'Sailor Moon' best known for pioneering?",a:'Magical girl',o:['Magical girl','Mecha','Isekai','Slice of life']},
+{q:"What does 'isekai' mean as an anime genre?",a:'A story where someone is transported to another world',o:['A story where someone is transported to another world','A romance story','A cooking show','A war story']},
+{q:"What does 'shonen' generally describe?",a:'Anime/manga aimed at young male audiences (action-focused)',o:['Anime/manga aimed at young male audiences (action-focused)','Anime for adults only','A type of Japanese food','A martial art']},
+{q:"What does 'shojo' generally describe?",a:'Anime/manga aimed at young female audiences (often romance-focused)',o:['Anime/manga aimed at young female audiences (often romance-focused)','Horror anime only','Sports anime only','Cooking shows']},
+{q:"What is a 'webtoon'?",a:'A digital comic made to scroll vertically on phones',o:['A digital comic made to scroll vertically on phones','A type of anime opening','A Japanese snack','A martial art']},
+{q:"What is 'ramen' traditionally served in?",a:'A hot broth with noodles',o:['A hot broth with noodles','A cold salad','A rice bowl','A sandwich']},
+{q:"What is 'sushi' traditionally made with?",a:'Vinegared rice, often with fish',o:['Vinegared rice, often with fish','Only raw fish, no rice','Fried noodles','Sweet rice cake']},
+{q:"What does 'kitsune' mean in Japanese folklore?",a:'Fox spirit',o:['Fox spirit','Dragon god','Thunder spirit','Water ghost']},
+{q:"What is 'origami'?",a:'The art of paper folding',o:['The art of paper folding','A sword-fighting style','A tea ceremony','A style of painting']},
+{q:"What is a traditional Japanese tea ceremony called?",a:'Sado (or chado)',o:['Sado (or chado)','Ikebana','Bonsai','Sumo']},
+{q:"What is 'ikebana'?",a:'The art of flower arranging',o:['The art of flower arranging','A martial art','A style of poetry','A board game']},
+{q:"What is a 'bento'?",a:'A single-portion boxed meal',o:['A single-portion boxed meal','A rice cooker','A type of chopsticks','A festival']},
+{q:"What is Akihabara in Tokyo famous for?",a:'Anime, manga and electronics shopping',o:['Anime, manga and electronics shopping','Ancient temples','Beaches','Mountain hiking']},
+{q:"What does 'chibi' style refer to in art?",a:'A cute, small, exaggerated art style',o:['A cute, small, exaggerated art style','A horror art style','Realistic portraits','Black and white only']},
+{q:"What is 'Vocaloid'?",a:'Singing voice synthesizer software',o:['Singing voice synthesizer software','A martial art','A festival','A type of manga']},
+{q:"What does 'OP' commonly mean when talking about anime episodes?",a:'Opening theme song',o:['Opening theme song','Overpowered character only','Original plot','Old panel']},
+{q:"What is a 'light novel'?",a:'A short, illustrated Japanese novel, often adapted into anime',o:['A short, illustrated Japanese novel, often adapted into anime','A comic strip','A children’s picture book','A textbook']},
+{q:"What does 'senpai/kohai' describe?",a:'A senior/junior relationship',o:['A senior/junior relationship','A married couple','Best friends only','Rivals only']},
+{q:"What is Mount Koya (Koyasan) known for?",a:'A sacred Buddhist mountain temple town',o:['A sacred Buddhist mountain temple town','A ski resort','A beach town','A robotics lab']},
+{q:"What does 'ganbatte' mean, often shouted in sports anime?",a:'Do your best / good luck',o:['Do your best / good luck','Goodbye','I’m sorry','Thank you']},
+{q:"What is 'Golden Week' in Japan?",a:'A string of national holidays in late April/early May',o:['A string of national holidays in late April/early May','A shopping sale season','A school exam period','A rainy season festival']}
+]
+};
+
+/* ============ INIT ============ */
+loadData();
+updatePtsUI();
+renderFavs();
+renderManga();
+document.getElementById('shorts-count').textContent=DATA.shortsSeen+' seen';
+</script>
+</body>
+</html>
