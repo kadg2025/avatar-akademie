@@ -1707,10 +1707,10 @@ function startPlus10Practice(){
 function newPlus10Q(){
  p10.lock=false;
  document.getElementById('p10-prog').textContent='Übung: '+p10.correct+'/'+p10.need+' ⭐';
- const a=rnd(6,9),b=rnd(11,19);
+ const a=rnd(6,9),b=rnd(20-a,19);
  const need=10-a,restB=b-need,sum=a+b;
  p10.cur={a:a,b:b,need:need,restB:restB,sum:sum};
- document.getElementById('p10-story').innerHTML='Nutz den Zeh·ner-Trick!';
+ document.getElementById('p10-story').innerHTML='Die '+a+' braucht noch <b>'+need+'</b> mehr, um 10 zu wer·den!';
  document.getElementById('p10-visual').innerHTML=tenFrameHTML(a,true)+'<div class="tfcaption">'+a+' + '+b+'</div>';
  document.getElementById('p10-q').textContent=a+' + '+b+' = ?';
  const opts=new Set([sum]);while(opts.size<4){const x=sum+rnd(-3,3);if(x>0&&x!==sum)opts.add(x);}
@@ -1720,9 +1720,26 @@ function newPlus10Q(){
  document.getElementById('p10-fb').textContent='';
 }
 function showPlus10Tip(){
- const c=p10.cur;if(!c)return;
- const fb=document.getElementById('p10-fb');
- fb.innerHTML='🍵 Nimm dir '+c.need+' von der '+c.b+', dann hast du 10 + '+c.restB+'!';fb.className='feedbk';
+ const c=p10.cur;if(!c||p10.tipBusy)return;p10.tipBusy=true;
+ const tipBtn=document.getElementById('p10-tip-btn');tipBtn.disabled=true;
+ const seq=[
+  {filled:c.a,hint:true,cap:c.a+' + '+c.b,story:'Die '+c.a+' braucht noch <b>'+c.need+'</b> mehr, um 10 zu wer·den!'},
+  {filled:10,hint:false,cap:'10 + '+c.restB,story:'Wir lei·hen uns '+c.need+' von der '+c.b+' — jetzt ist sie nur noch <b>'+c.restB+'</b>!'},
+  {filled:10,hint:false,cap:'10 + '+c.restB,story:'10 + '+c.restB+' = <b>'+c.sum+'</b> 🎉'}
+ ];
+ let i=0;
+ (function step(){
+  const s=seq[i];
+  document.getElementById('p10-visual').innerHTML=tenFrameHTML(s.filled,s.hint)+'<div class="tfcaption">'+s.cap+'</div>';
+  document.getElementById('p10-story').innerHTML=s.story;
+  i++;
+  if(i<seq.length)setTimeout(step,1700);
+  else setTimeout(function(){
+   document.getElementById('p10-visual').innerHTML=tenFrameHTML(c.a,true)+'<div class="tfcaption">'+c.a+' + '+c.b+'</div>';
+   document.getElementById('p10-story').innerHTML='Die '+c.a+' braucht noch <b>'+c.need+'</b> mehr, um 10 zu wer·den!';
+   p10.tipBusy=false;tipBtn.disabled=false;
+  },1700);
+ })();
 }
 function plus10Answer(o,btn){
  if(p10.lock)return;p10.lock=true;const c=p10.cur;const fb=document.getElementById('p10-fb');
@@ -1779,7 +1796,7 @@ function newMinus10Q(){
  const a=rnd(6,9),b=rnd(11,a+10);
  const a1=b-10,a2=a-a1,diff=b-a;
  m10.cur={a:a,b:b,a1:a1,a2:a2,diff:diff};
- document.getElementById('m10-story').innerHTML='Nutz den Zeh·ner-Trick!';
+ document.getElementById('m10-story').innerHTML=b+' sind 10 und '+(b-10)+'. Zieh erst <b>'+a1+'</b> weg (dann bist du bei 10), dann noch <b>'+a2+'</b> von den 10!';
  document.getElementById('m10-visual').innerHTML=tenFrameHTML(10)+tfExtraHTML(b-10)+'<div class="tfcaption">'+b+' − '+a+'</div>';
  document.getElementById('m10-q').textContent=b+' − '+a+' = ?';
  const opts=new Set([diff]);while(opts.size<4){const x=diff+rnd(-3,3);if(x>=0&&x!==diff)opts.add(x);}
@@ -1789,9 +1806,27 @@ function newMinus10Q(){
  document.getElementById('m10-fb').textContent='';
 }
 function showMinus10Tip(){
- const c=m10.cur;if(!c)return;
- const fb=document.getElementById('m10-fb');
- fb.innerHTML='🍵 Zieh erst '+c.a1+' weg (dann bist du bei 10), dann noch '+c.a2+' von den 10!';fb.className='feedbk';
+ const c=m10.cur;if(!c||m10.tipBusy)return;m10.tipBusy=true;
+ const tipBtn=document.getElementById('m10-tip-btn');tipBtn.disabled=true;
+ const seq=[
+  {filled:10,extra:c.b-10,story:c.b+' sind ein·fach 10 und '+(c.b-10)+'.'},
+  {filled:10,extra:0,story:'Zieh erst die '+(c.b-10)+' weg — von der '+c.a+' blei·ben dann noch <b>'+c.a2+'</b> üb·rig.'},
+  {filled:c.diff,extra:0,story:'Jetzt sind wir ge·nau bei 10. Zieh noch die rest·li·chen '+c.a2+' weg:'},
+  {filled:c.diff,extra:0,story:c.b+' − '+c.a+' = <b>'+c.diff+'</b> 🎉'}
+ ];
+ let i=0;
+ (function step(){
+  const s=seq[i];
+  document.getElementById('m10-visual').innerHTML=tenFrameHTML(s.filled)+tfExtraHTML(s.extra);
+  document.getElementById('m10-story').innerHTML=s.story;
+  i++;
+  if(i<seq.length)setTimeout(step,1700);
+  else setTimeout(function(){
+   document.getElementById('m10-visual').innerHTML=tenFrameHTML(10)+tfExtraHTML(c.b-10);
+   document.getElementById('m10-story').innerHTML=c.b+' sind 10 und '+(c.b-10)+'. Zieh erst <b>'+c.a1+'</b> weg (dann bist du bei 10), dann noch <b>'+c.a2+'</b> von den 10!';
+   m10.tipBusy=false;tipBtn.disabled=false;
+  },1700);
+ })();
 }
 function minus10Answer(o,btn){
  if(m10.lock)return;m10.lock=true;const c=m10.cur;const fb=document.getElementById('m10-fb');
