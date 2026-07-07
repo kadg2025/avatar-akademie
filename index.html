@@ -685,16 +685,13 @@ body.calm .questcard{box-shadow:none}
   <div class="gt">Der Zehner-Trick ➕</div>
   <div class="gs">Clever ad·die·ren mit Iroh</div>
  </div>
- <div class="progress-mini"><span id="p10-prog">Übung: 0/6 ⭐</span><span>➕ Zehner·übergang</span></div>
+ <div class="progress-mini"><span id="p10-prog">Bei·spiel 1/4</span><span>➕ Zehner·übergang</span></div>
  <div class="qpanel">
-  <div style="font-size:15px;font-weight:800;color:var(--muted);line-height:1.5" id="p10-story"></div>
+  <div style="font-size:16px;font-weight:800;color:var(--muted);line-height:1.6" id="p10-story"></div>
   <div id="p10-visual"></div>
   <div class="qbig" id="p10-q" style="font-size:26px"></div>
-  <div class="qopts" id="p10-opts"></div>
-  <button class="btn bgray" id="p10-tip-btn" style="margin-top:10px;font-size:13px;padding:8px;display:none" onclick="showPlus10Tip()">🍵 Irohs Tipp</button>
  </div>
- <div class="feedbk" id="p10-fb"></div>
- <button class="btn bgold" id="p10-next-btn" onclick="plus10IntroNext()">Weiter ▶</button>
+ <button class="btn bgold" id="p10-next-btn" onclick="plus10Next()">Weiter ▶</button>
 </div>
 
 <div id="s-plus10-win" class="sc">
@@ -711,16 +708,13 @@ body.calm .questcard{box-shadow:none}
   <div class="gt">Der Zehner-Trick ➖</div>
   <div class="gs">Clever ab·zie·hen mit Iroh</div>
  </div>
- <div class="progress-mini"><span id="m10-prog">Übung: 0/6 ⭐</span><span>➖ Zehner·übergang</span></div>
+ <div class="progress-mini"><span id="m10-prog">Bei·spiel 1/4</span><span>➖ Zehner·übergang</span></div>
  <div class="qpanel">
-  <div style="font-size:15px;font-weight:800;color:var(--muted);line-height:1.5" id="m10-story"></div>
+  <div style="font-size:16px;font-weight:800;color:var(--muted);line-height:1.6" id="m10-story"></div>
   <div id="m10-visual"></div>
   <div class="qbig" id="m10-q" style="font-size:26px"></div>
-  <div class="qopts" id="m10-opts"></div>
-  <button class="btn bgray" id="m10-tip-btn" style="margin-top:10px;font-size:13px;padding:8px;display:none" onclick="showMinus10Tip()">🍵 Irohs Tipp</button>
  </div>
- <div class="feedbk" id="m10-fb"></div>
- <button class="btn bgold" id="m10-next-btn" onclick="minus10IntroNext()">Weiter ▶</button>
+ <button class="btn bgold" id="m10-next-btn" onclick="minus10Next()">Weiter ▶</button>
 </div>
 
 <div id="s-minus10-win" class="sc">
@@ -1671,178 +1665,82 @@ function tfExtraHTML(n){
  return '<div class="tfextra">'+s+'</div>';
 }
 
-// ════ ZEHNER-TRICK PLUS ════
-const PLUS10_INTRO=[
- {story:'On·kel Iroh zeigt dir den Zeh·ner-Trick! Schau dir <b>9 + 15</b> an.',filled:9,hint:false,cap:'9 + 15'},
- {story:'Die 9 braucht nur noch <b>1 mehr</b>, um 10 zu wer·den!',filled:9,hint:true,cap:'9 + 15'},
- {story:'Wir lei·hen uns die 1 von der 15 aus — jetzt ist sie nur noch <b>14</b>!',filled:10,hint:false,cap:'10 + 14'},
- {story:'Jetzt ist es ganz ein·fach:',filled:10,hint:false,cap:'10 + 14',eq:'10 + 14 = 24'}
-];
+// ════ ZEHNER-TRICK PLUS — reine Erklärung, keine Fragen ════
+function plus10Steps(a,b){
+ const need=10-a,restB=b-need,sum=a+b;
+ return [
+  {filled:a,hint:false,cap:a+' + '+b,story:'Schau: '+a+' + '+b+'.'},
+  {filled:a,hint:true,cap:a+' + '+b,story:'Die '+a+' will noch <b>'+need+'</b> mehr sein.'},
+  {filled:10,hint:false,cap:'10 + '+restB,story:'Die '+b+' gibt '+need+' ab. Jetzt sind es nur noch <b>'+restB+'</b>.'},
+  {filled:10,hint:false,cap:'10 + '+restB,story:'10 und '+restB+' sind zu·sam·men <b>'+sum+'</b>.'},
+  {filled:10,hint:false,cap:'10 + '+restB,story:a+' + '+b+' = <b>'+sum+'</b> 🎉'}
+ ];
+}
+const PLUS10_EXAMPLES=[[9,15],[6,14],[8,17],[7,16]];
 let p10=null;
 function startPlus10(){
- ensureAudio();p10={phase:'intro',introStep:0,correct:0,need:6,lock:false,cur:null};
- go('s-plus10');renderPlus10Intro();
+ ensureAudio();p10={ex:0,step:0};
+ go('s-plus10');renderPlus10();
 }
-function renderPlus10Intro(){
- const st=PLUS10_INTRO[p10.introStep];
+function renderPlus10(){
+ const pair=PLUS10_EXAMPLES[p10.ex];
+ const steps=plus10Steps(pair[0],pair[1]);
+ const st=steps[p10.step];
+ document.getElementById('p10-prog').textContent='Bei·spiel '+(p10.ex+1)+'/'+PLUS10_EXAMPLES.length;
  document.getElementById('p10-story').innerHTML=st.story;
  document.getElementById('p10-visual').innerHTML=tenFrameHTML(st.filled,st.hint)+'<div class="tfcaption">'+st.cap+'</div>';
- document.getElementById('p10-q').textContent=st.eq||'';
- document.getElementById('p10-opts').innerHTML='';
- document.getElementById('p10-fb').textContent='';
- document.getElementById('p10-tip-btn').style.display='none';
- const nb=document.getElementById('p10-next-btn');nb.style.display='block';
- nb.textContent=(p10.introStep>=PLUS10_INTRO.length-1)?'🚀 Los geht\'s!':'Weiter ▶';
+ document.getElementById('p10-q').textContent='';
+ const isLastStepOfLastEx=(p10.step>=steps.length-1)&&(p10.ex>=PLUS10_EXAMPLES.length-1);
+ const isLastStepOfEx=(p10.step>=steps.length-1);
+ document.getElementById('p10-next-btn').textContent=isLastStepOfLastEx?'🎉 Fer·tig!':(isLastStepOfEx?'Nächs·tes Bei·spiel ▶':'Weiter ▶');
 }
-function plus10IntroNext(){
- if(p10.introStep>=PLUS10_INTRO.length-1){startPlus10Practice();return;}
- p10.introStep++;renderPlus10Intro();
+function plus10Next(){
+ const pair=PLUS10_EXAMPLES[p10.ex];
+ const steps=plus10Steps(pair[0],pair[1]);
+ if(p10.step<steps.length-1){p10.step++;renderPlus10();return;}
+ if(p10.ex<PLUS10_EXAMPLES.length-1){p10.ex++;p10.step=0;renderPlus10();return;}
+ plus10Win();
 }
-function startPlus10Practice(){
- p10.phase='practice';
- document.getElementById('p10-next-btn').style.display='none';
- document.getElementById('p10-tip-btn').style.display='block';
- newPlus10Q();
-}
-function newPlus10Q(){
- p10.lock=false;
- document.getElementById('p10-prog').textContent='Übung: '+p10.correct+'/'+p10.need+' ⭐';
- const a=rnd(6,9),b=rnd(20-a,19);
- const need=10-a,restB=b-need,sum=a+b;
- p10.cur={a:a,b:b,need:need,restB:restB,sum:sum};
- document.getElementById('p10-story').innerHTML='Die '+a+' braucht noch <b>'+need+'</b> mehr, um 10 zu wer·den!';
- document.getElementById('p10-visual').innerHTML=tenFrameHTML(a,true)+'<div class="tfcaption">'+a+' + '+b+'</div>';
- document.getElementById('p10-q').textContent=a+' + '+b+' = ?';
- const opts=new Set([sum]);while(opts.size<4){const x=sum+rnd(-3,3);if(x>0&&x!==sum)opts.add(x);}
- const arr=[...opts].sort(()=>Math.random()-.5);
- const g=document.getElementById('p10-opts');g.innerHTML='';
- arr.forEach(o=>{const btn=document.createElement('button');btn.className='qopt';btn.textContent=o;btn.onclick=()=>plus10Answer(o,btn);g.appendChild(btn);});
- document.getElementById('p10-fb').textContent='';
-}
-function showPlus10Tip(){
- const c=p10.cur;if(!c||p10.tipBusy)return;p10.tipBusy=true;
- const tipBtn=document.getElementById('p10-tip-btn');tipBtn.disabled=true;
- const seq=[
-  {filled:c.a,hint:true,cap:c.a+' + '+c.b,story:'Die '+c.a+' braucht noch <b>'+c.need+'</b> mehr, um 10 zu wer·den!'},
-  {filled:10,hint:false,cap:'10 + '+c.restB,story:'Wir lei·hen uns '+c.need+' von der '+c.b+' — jetzt ist sie nur noch <b>'+c.restB+'</b>!'},
-  {filled:10,hint:false,cap:'10 + '+c.restB,story:'10 + '+c.restB+' = <b>'+c.sum+'</b> 🎉'}
- ];
- let i=0;
- (function step(){
-  const s=seq[i];
-  document.getElementById('p10-visual').innerHTML=tenFrameHTML(s.filled,s.hint)+'<div class="tfcaption">'+s.cap+'</div>';
-  document.getElementById('p10-story').innerHTML=s.story;
-  i++;
-  if(i<seq.length)setTimeout(step,1700);
-  else setTimeout(function(){
-   document.getElementById('p10-visual').innerHTML=tenFrameHTML(c.a,true)+'<div class="tfcaption">'+c.a+' + '+c.b+'</div>';
-   document.getElementById('p10-story').innerHTML='Die '+c.a+' braucht noch <b>'+c.need+'</b> mehr, um 10 zu wer·den!';
-   p10.tipBusy=false;tipBtn.disabled=false;
-  },1700);
- })();
-}
-function plus10Answer(o,btn){
- if(p10.lock)return;p10.lock=true;const c=p10.cur;const fb=document.getElementById('p10-fb');
- if(o===c.sum){
-  btn.classList.add('right');sfxRight();p10.correct++;adaptTrack(true);
-  fb.innerHTML='✅ Rich·tig! 10 + '+c.restB+' = '+c.sum;fb.className='feedbk ok';
- }else{
-  btn.classList.add('wrong');sfxWrong();adaptTrack(false);
-  [...document.querySelectorAll('#p10-opts .qopt')].forEach(b=>{if(+b.textContent===c.sum)b.classList.add('right');});
-  fb.innerHTML='❌ Rich·tig wä·re '+c.sum+'. Tipp: 10 + '+c.restB+'!';fb.className='feedbk no';
- }
- document.getElementById('p10-prog').textContent='Übung: '+p10.correct+'/'+p10.need+' ⭐';
- if(p10.correct>=p10.need)return setTimeout(plus10Win,1000);
- setTimeout(newPlus10Q,1300);
-}
-function plus10Win(){award(2);document.getElementById('p10w-msg').innerHTML='🎉 Du kannst jetzt den Zeh·ner-Trick! Im·mer erst zum Zeh·ner er·gän·zen, dann ganz ein·fach wei·ter·rech·nen. 🧮';sfxWin();fireConfetti();maybeBreak();go('s-plus10-win');}
+function plus10Win(){award(3);document.getElementById('p10w-msg').innerHTML='🎉 Su·per, Ro·za·rin! Du hast den Zeh·ner-Trick jetzt 4-mal ge·se·hen. 🧮';sfxWin();fireConfetti();maybeBreak();go('s-plus10-win');}
 
-// ════ ZEHNER-TRICK MINUS ════
-const MINUS10_INTRO=[
- {story:'On·kel Iroh zeigt dir den Zeh·ner-Trick für Mi·nus! Schau dir <b>14 − 9</b> an.',filled:10,extra:4},
- {story:'14 sind ein·fach 10 und 4. Zieh erst die 4 weg — von der 9 blei·ben dann noch <b>5</b> üb·rig.',filled:10,extra:0},
- {story:'Jetzt sind wir ge·nau bei 10. Zieh noch die rest·li·chen 5 weg:',filled:5,extra:0},
- {story:'Fer·tig! Das ist der Zeh·ner-Trick:',filled:5,extra:0,eq:'14 − 9 = 5'}
-];
+// ════ ZEHNER-TRICK MINUS — reine Erklärung, keine Fragen ════
+function minus10Steps(a,b){
+ const a1=b-10,a2=a-a1,diff=b-a;
+ return [
+  {filled:10,extra:b-10,story:'Schau: '+b+' − '+a+'.'},
+  {filled:10,extra:b-10,story:b+' sind 10 und '+(b-10)+'.'},
+  {filled:10,extra:0,story:'Zieh zu·erst die '+a1+' weg. Jetzt bist du bei 10.'},
+  {filled:10,extra:0,story:'Von der '+a+' blei·ben noch <b>'+a2+'</b> üb·rig.'},
+  {filled:diff,extra:0,story:'Zieh die '+a2+' auch noch weg.'},
+  {filled:diff,extra:0,story:b+' − '+a+' = <b>'+diff+'</b> 🎉'}
+ ];
+}
+const MINUS10_EXAMPLES=[[9,14],[8,13],[7,12],[9,16]];
 let m10=null;
 function startMinus10(){
- ensureAudio();m10={phase:'intro',introStep:0,correct:0,need:6,lock:false,cur:null};
- go('s-minus10');renderMinus10Intro();
+ ensureAudio();m10={ex:0,step:0};
+ go('s-minus10');renderMinus10();
 }
-function renderMinus10Intro(){
- const st=MINUS10_INTRO[m10.introStep];
+function renderMinus10(){
+ const pair=MINUS10_EXAMPLES[m10.ex];
+ const steps=minus10Steps(pair[0],pair[1]);
+ const st=steps[m10.step];
+ document.getElementById('m10-prog').textContent='Bei·spiel '+(m10.ex+1)+'/'+MINUS10_EXAMPLES.length;
  document.getElementById('m10-story').innerHTML=st.story;
  document.getElementById('m10-visual').innerHTML=tenFrameHTML(st.filled)+tfExtraHTML(st.extra);
- document.getElementById('m10-q').textContent=st.eq||'';
- document.getElementById('m10-opts').innerHTML='';
- document.getElementById('m10-fb').textContent='';
- document.getElementById('m10-tip-btn').style.display='none';
- const nb=document.getElementById('m10-next-btn');nb.style.display='block';
- nb.textContent=(m10.introStep>=MINUS10_INTRO.length-1)?'🚀 Los geht\'s!':'Weiter ▶';
+ document.getElementById('m10-q').textContent='';
+ const isLastStepOfLastEx=(m10.step>=steps.length-1)&&(m10.ex>=MINUS10_EXAMPLES.length-1);
+ const isLastStepOfEx=(m10.step>=steps.length-1);
+ document.getElementById('m10-next-btn').textContent=isLastStepOfLastEx?'🎉 Fer·tig!':(isLastStepOfEx?'Nächs·tes Bei·spiel ▶':'Weiter ▶');
 }
-function minus10IntroNext(){
- if(m10.introStep>=MINUS10_INTRO.length-1){startMinus10Practice();return;}
- m10.introStep++;renderMinus10Intro();
+function minus10Next(){
+ const pair=MINUS10_EXAMPLES[m10.ex];
+ const steps=minus10Steps(pair[0],pair[1]);
+ if(m10.step<steps.length-1){m10.step++;renderMinus10();return;}
+ if(m10.ex<MINUS10_EXAMPLES.length-1){m10.ex++;m10.step=0;renderMinus10();return;}
+ minus10Win();
 }
-function startMinus10Practice(){
- m10.phase='practice';
- document.getElementById('m10-next-btn').style.display='none';
- document.getElementById('m10-tip-btn').style.display='block';
- newMinus10Q();
-}
-function newMinus10Q(){
- m10.lock=false;
- document.getElementById('m10-prog').textContent='Übung: '+m10.correct+'/'+m10.need+' ⭐';
- const a=rnd(6,9),b=rnd(11,a+10);
- const a1=b-10,a2=a-a1,diff=b-a;
- m10.cur={a:a,b:b,a1:a1,a2:a2,diff:diff};
- document.getElementById('m10-story').innerHTML=b+' sind 10 und '+(b-10)+'. Zieh erst <b>'+a1+'</b> weg (dann bist du bei 10), dann noch <b>'+a2+'</b> von den 10!';
- document.getElementById('m10-visual').innerHTML=tenFrameHTML(10)+tfExtraHTML(b-10)+'<div class="tfcaption">'+b+' − '+a+'</div>';
- document.getElementById('m10-q').textContent=b+' − '+a+' = ?';
- const opts=new Set([diff]);while(opts.size<4){const x=diff+rnd(-3,3);if(x>=0&&x!==diff)opts.add(x);}
- const arr=[...opts].sort(()=>Math.random()-.5);
- const g=document.getElementById('m10-opts');g.innerHTML='';
- arr.forEach(o=>{const btn=document.createElement('button');btn.className='qopt';btn.textContent=o;btn.onclick=()=>minus10Answer(o,btn);g.appendChild(btn);});
- document.getElementById('m10-fb').textContent='';
-}
-function showMinus10Tip(){
- const c=m10.cur;if(!c||m10.tipBusy)return;m10.tipBusy=true;
- const tipBtn=document.getElementById('m10-tip-btn');tipBtn.disabled=true;
- const seq=[
-  {filled:10,extra:c.b-10,story:c.b+' sind ein·fach 10 und '+(c.b-10)+'.'},
-  {filled:10,extra:0,story:'Zieh erst die '+(c.b-10)+' weg — von der '+c.a+' blei·ben dann noch <b>'+c.a2+'</b> üb·rig.'},
-  {filled:c.diff,extra:0,story:'Jetzt sind wir ge·nau bei 10. Zieh noch die rest·li·chen '+c.a2+' weg:'},
-  {filled:c.diff,extra:0,story:c.b+' − '+c.a+' = <b>'+c.diff+'</b> 🎉'}
- ];
- let i=0;
- (function step(){
-  const s=seq[i];
-  document.getElementById('m10-visual').innerHTML=tenFrameHTML(s.filled)+tfExtraHTML(s.extra);
-  document.getElementById('m10-story').innerHTML=s.story;
-  i++;
-  if(i<seq.length)setTimeout(step,1700);
-  else setTimeout(function(){
-   document.getElementById('m10-visual').innerHTML=tenFrameHTML(10)+tfExtraHTML(c.b-10);
-   document.getElementById('m10-story').innerHTML=c.b+' sind 10 und '+(c.b-10)+'. Zieh erst <b>'+c.a1+'</b> weg (dann bist du bei 10), dann noch <b>'+c.a2+'</b> von den 10!';
-   m10.tipBusy=false;tipBtn.disabled=false;
-  },1700);
- })();
-}
-function minus10Answer(o,btn){
- if(m10.lock)return;m10.lock=true;const c=m10.cur;const fb=document.getElementById('m10-fb');
- if(o===c.diff){
-  btn.classList.add('right');sfxRight();m10.correct++;adaptTrack(true);
-  fb.innerHTML='✅ Rich·tig! 10 − '+c.a2+' = '+c.diff;fb.className='feedbk ok';
- }else{
-  btn.classList.add('wrong');sfxWrong();adaptTrack(false);
-  [...document.querySelectorAll('#m10-opts .qopt')].forEach(b=>{if(+b.textContent===c.diff)b.classList.add('right');});
-  fb.innerHTML='❌ Rich·tig wä·re '+c.diff+'. Tipp: erst '+c.a1+', dann '+c.a2+' weg!';fb.className='feedbk no';
- }
- document.getElementById('m10-prog').textContent='Übung: '+m10.correct+'/'+m10.need+' ⭐';
- if(m10.correct>=m10.need)return setTimeout(minus10Win,1000);
- setTimeout(newMinus10Q,1300);
-}
-function minus10Win(){award(2);document.getElementById('m10w-msg').innerHTML='🎉 Du kannst jetzt den Zeh·ner-Trick für Mi·nus! Erst zum Zeh·ner, dann ganz ein·fach wei·ter. 🧮';sfxWin();fireConfetti();maybeBreak();go('s-minus10-win');}
+function minus10Win(){award(3);document.getElementById('m10w-msg').innerHTML='🎉 Su·per, Ro·za·rin! Du hast den Zeh·ner-Trick für Mi·nus jetzt 4-mal ge·se·hen. 🧮';sfxWin();fireConfetti();maybeBreak();go('s-minus10-win');}
 
 const NATIONS=[
  {key:'luft',name:'Luftnomaden',emoji:'🏔️',cls:'el',math:'plus',
