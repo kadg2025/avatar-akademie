@@ -1681,9 +1681,9 @@ function renderPlus10(){
  const need=10-a,restB=b-need,sum=a+b;
  p10.cur={a:a,b:b,need:need,restB:restB,sum:sum};
  const vis=document.getElementById('p10-visual');vis.className='abacus';vis.innerHTML='';
- abLabel(vis,3,String(a));
+ p10.labelA=abLabel(vis,3,String(a));
  p10.rowA=abRow(vis,0,10,a);
- abLabel(vis,58,String(b));
+ p10.labelB=abLabel(vis,58,String(b));
  p10.rowB1=abRow(vis,55,10,10);
  p10.rowB2=abRow(vis,90,b-10,b-10);
  document.getElementById('p10-prog').textContent='Bei·spiel '+(p10.ex+1)+'/'+PLUS10_EXAMPLES.length;
@@ -1705,6 +1705,8 @@ function plus10Next(){
     const dest=p10.rowA[c.a+k];
     src.classList.add('moving');
     src.style.left=dest.style.left;src.style.top=dest.style.top;
+    p10.labelA.textContent=String(c.a+k+1);
+    p10.labelB.textContent=String(c.b-k-1);
     setTimeout(function(){src.classList.remove('moving');},700);
    },k*550);
   })(k);}
@@ -1721,7 +1723,7 @@ function plus10Next(){
 }
 function plus10Win(){award(3);document.getElementById('p10w-msg').innerHTML='🎉 Su·per, Ro·za·rin! Du hast den Zeh·ner-Trick jetzt 4-mal ge·se·hen. 🧮';sfxWin();fireConfetti();maybeBreak();go('s-plus10-win');}
 
-// ════ ZEHNER-TRICK MINUS — Perlen verschwinden in zwei Schritten ════
+// ════ ZEHNER-TRICK MINUS — beide Zahlen als eigene Reihen, schrumpfen gemeinsam ════
 const MINUS10_EXAMPLES=[[9,14],[8,13],[7,12],[9,16]];
 let m10=null;
 function startMinus10(){
@@ -1733,11 +1735,13 @@ function renderMinus10(){
  const a1=b-10,a2=a-a1,diff=b-a;
  m10.cur={a:a,b:b,a1:a1,a2:a2,diff:diff};
  const vis=document.getElementById('m10-visual');vis.className='abacus';vis.innerHTML='';
- abLabel(vis,3,String(b));
+ m10.labelB=abLabel(vis,3,String(b));
  m10.rowB1=abRow(vis,0,10,10);
  m10.rowB2=abRow(vis,35,a1,a1);
+ m10.labelA=abLabel(vis,78,String(a));
+ m10.rowA=abRow(vis,75,a,a);
  document.getElementById('m10-prog').textContent='Bei·spiel '+(m10.ex+1)+'/'+MINUS10_EXAMPLES.length;
- document.getElementById('m10-story').innerHTML='Schau: <b>'+b+' − '+a+'</b>. Die '+b+' ist 10 und '+a1+'.';
+ document.getElementById('m10-story').innerHTML='Schau: <b>'+b+' − '+a+'</b>. Oben die '+b+', un·ten die '+a+', die wir weg·neh·men.';
  document.getElementById('m10-q').textContent='';
  document.getElementById('m10-next-btn').textContent='Weg·neh·men ▶';
  m10.phase=0;m10.busy=false;
@@ -1747,16 +1751,28 @@ function minus10Next(){
  const c=m10.cur;
  if(m10.phase===0){
   m10.busy=true;
-  document.getElementById('m10-story').innerHTML='Zieh zu·erst die '+c.a1+' weg — dann bist du bei 10.';
+  document.getElementById('m10-story').innerHTML='Die '+c.a1+' Per·len oben und '+c.a1+' Per·len un·ten neh·men sich ge·gen·sei·tig weg.';
   document.getElementById('m10-next-btn').textContent='…';
-  m10.rowB2.forEach(function(d,i){setTimeout(function(){d.classList.add('gone');},i*250);});
-  const afterFirst=c.a1*250+700;
+  for(let k=0;k<c.a1;k++){(function(k){
+   setTimeout(function(){
+    m10.rowB2[m10.rowB2.length-1-k].classList.add('gone');
+    m10.rowA[m10.rowA.length-1-k].classList.add('gone');
+    m10.labelB.textContent=String(c.b-k-1);
+    m10.labelA.textContent=String(c.a-k-1);
+   },k*350);
+  })(k);}
+  const afterFirst=c.a1*350+700;
   setTimeout(function(){
-   document.getElementById('m10-story').innerHTML='Von der '+c.a+' blei·ben noch <b>'+c.a2+'</b> üb·rig — die zie·hen wir auch noch weg.';
+   document.getElementById('m10-story').innerHTML='Jetzt sind es 10 oben und noch <b>'+c.a2+'</b> un·ten — die neh·men sich auch weg.';
    for(let k=0;k<c.a2;k++){(function(k){
-    setTimeout(function(){m10.rowB1[m10.rowB1.length-1-k].classList.add('gone');},k*250);
+    setTimeout(function(){
+     m10.rowB1[m10.rowB1.length-1-k].classList.add('gone');
+     m10.rowA[c.a2-1-k].classList.add('gone');
+     m10.labelB.textContent=String(10-k-1);
+     m10.labelA.textContent=String(c.a2-k-1);
+    },k*350);
    })(k);}
-   const afterSecond=c.a2*250+700;
+   const afterSecond=c.a2*350+700;
    setTimeout(function(){
     document.getElementById('m10-story').innerHTML=c.b+' − '+c.a+' = <b>'+c.diff+'</b> 🎉';
     document.getElementById('m10-q').textContent=c.b+' − '+c.a+' = '+c.diff;
