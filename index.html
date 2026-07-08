@@ -1120,10 +1120,13 @@ body.calm .questcard{box-shadow:none}
 <!-- SPRACHE DER FAMILIE: HUB -->
 <div id="s-family-hub" class="sc">
  <button class="btn bgray" onclick="go('s-hub')">← Zurück</button>
- <div class="gh"><div class="gt" style="font-size:26px">🏔️ Sprache der Familie</div><div class="gs">Zazaki — mit echten Stimmen aus dei·ner Fa·mi·lie</div></div>
- <div class="story" style="text-align:center">Tipp auf ein Bild und hör zu, wie es auf Za·za·ki klingt. 🎙️</div>
+ <div class="gh"><div class="gt" style="font-size:26px">🏔️ Sprache der Familie</div><div class="gs" id="fam-sub">mit echten Stimmen aus dei·ner Fa·mi·lie</div></div>
+ <div class="langrow" id="fam-langrow" style="display:flex;gap:10px;margin:10px 0"></div>
+ <div class="story" style="text-align:center" id="fam-intro">Tipp auf ein Bild und hör zu. 🎙️</div>
  <div class="menu" id="fam-grid"></div>
  <button class="btn bgold" style="margin-top:6px" onclick="go('s-family-theater')">🎭 Kleines Gespräch spielen</button>
+ <div class="gh" style="margin-top:16px"><div class="gt" style="font-size:19px">Wörter entdecken</div></div>
+ <div class="menu" id="fam-vocab-grid"></div>
 </div>
 
 <!-- SPRACHE DER FAMILIE: THEATER -->
@@ -1812,67 +1815,154 @@ function minus10Next(){
 }
 function minus10Win(){award(3);document.getElementById('m10w-msg').innerHTML='🎉 Su·per, Ro·za·rin! Du hast den Zeh·ner-Trick für Mi·nus jetzt 4-mal ge·se·hen. 🧮';sfxWin();fireConfetti();maybeBreak();go('s-minus10-win');}
 
-// ════ SPRACHE DER FAMILIE (Zazaki, echte Stimmen) ════
-const FAM_PHRASES=[
- {id:'mabexer',emoji:'👋',de:'Hallo!'},
- {id:'xerbeselamet',emoji:'🙋🏿',de:'Hallo zurück!'},
- {id:'ticituriya',emoji:'🤗',de:'Wie geht’s dir?'},
- {id:'ezrindune',emoji:'😊',de:'Mir geht’s gut.'},
- {id:'nametociko',emoji:'🗣️',de:'Wie heißt du?'},
- {id:'namemiberfina',emoji:'👧🏿',de:'Ich heiße Berfîn.'},
- {id:'namemibarano',emoji:'👦🏿',de:'Ich heiße Baran.'},
- {id:'kotira',emoji:'🧭',de:'Woher kommst du?'},
- {id:'ezpilemuriyerawune',emoji:'🏔️',de:'Ich komme aus Pilemurîye.'},
- {id:'xatirbeto',emoji:'👋',de:'Tschüss!'},
- {id:'oxirbo',emoji:'🌙',de:'Tschüss zurück!'},
-];
-const FAM_SEGS={
- mabexer:[5.24,6.22],xerbeselamet:[6.42,7.48],ticituriya:[7.58,8.34],ezrindune:[8.48,10.26],
- nametociko:[13.56,14.72],namemiberfina:[15.12,16.42],namemibarano:[18.34,19.68],
- kotira:[20.12,21.12],ezpilemuriyerawune:[25.12,26.24],xatirbeto:[26.76,28.22],oxirbo:[28.36,29.88]
+// ════ SPRACHE DER FAMILIE (Zazaki & Türkçe, echte Stimmen) ════
+const FAM_DATA={
+ zazaki:{label:'🏔️ Zazaki',
+  dialogue:[
+   {id:'mabexer',emoji:'👋',de:'Hallo!'},
+   {id:'xerbeselamet',emoji:'🙋🏿',de:'Hallo zurück!'},
+   {id:'ticituriya',emoji:'🤗',de:'Wie geht’s dir?'},
+   {id:'ezrindune',emoji:'😊',de:'Mir geht’s gut.'},
+   {id:'nametociko',emoji:'🗣️',de:'Wie heißt du?'},
+   {id:'namemiberfina',emoji:'👧🏿',de:'Ich heiße Berfîn.'},
+   {id:'namemibarano',emoji:'👦🏿',de:'Ich heiße Baran.'},
+   {id:'tikotirawa',emoji:'🗺️',de:'Woher kommst du?'},
+   {id:'ezpilemuriyerawune',emoji:'🏔️',de:'Ich komme aus Pilemurîye.'},
+   {id:'xatirbeto',emoji:'👋',de:'Tschüss!'},
+   {id:'oxirbo',emoji:'🌙',de:'Tschüss zurück!'},
+  ],
+  vocab:[
+   {id:'ez',emoji:'🙋🏿‍♀️',de:'ich'},
+   {id:'rind',emoji:'👍',de:'gut'},
+   {id:'ci',emoji:'❔',de:'was'},
+   {id:'cituri',emoji:'❓',de:'wie'},
+   {id:'koti',emoji:'📍',de:'wo'},
+   {id:'kotira',emoji:'🧭',de:'woher'},
+   {id:'nameto',emoji:'🏷️',de:'dein Name'},
+   {id:'namemi',emoji:'💬',de:'mein Name'},
+  ]},
+ tuerkisch:{label:'🇹🇷 Türkçe',
+  dialogue:[
+   {id:'merhaba',emoji:'👋',de:'Hallo!'},
+   {id:'selam',emoji:'🙋🏿',de:'Hallo zurück!'},
+   {id:'naslsn',emoji:'🤗',de:'Wie geht’s dir?'},
+   {id:'iyiyimtesekkuerler',emoji:'😊',de:'Mir geht’s gut, danke.'},
+   {id:'adnne',emoji:'🗣️',de:'Wie heißt du?'},
+   {id:'benimadmberfin',emoji:'👧🏿',de:'Ich heiße Berfîn.'},
+   {id:'benimadmbaran',emoji:'👦🏿',de:'Ich heiße Baran.'},
+   {id:'nerelisin',emoji:'🗺️',de:'Woher kommst du?'},
+   {id:'pueluemuerdenim',emoji:'🏔️',de:'Ich komme aus Pülümür.'},
+   {id:'hoscakal',emoji:'👋',de:'Tschüss!'},
+   {id:'gueleguele',emoji:'🌙',de:'Tschüss zurück!'},
+  ],
+  vocab:[
+   {id:'sen',emoji:'🫵',de:'du'},
+   {id:'ben',emoji:'🙋🏿‍♀️',de:'ich'},
+   {id:'iyi',emoji:'👍',de:'gut'},
+   {id:'ne',emoji:'❔',de:'was'},
+   {id:'nasl',emoji:'❓',de:'wie'},
+   {id:'nere',emoji:'📍',de:'wo'},
+   {id:'nereden',emoji:'🧭',de:'woher'},
+   {id:'isim',emoji:'📛',de:'der Name'},
+   {id:'seninadn',emoji:'🏷️',de:'dein Name'},
+   {id:'benimadm',emoji:'💬',de:'mein Name'},
+   {id:'anne',emoji:'👩🏿',de:'Mutter'},
+   {id:'baba',emoji:'👨🏿',de:'Vater'},
+   {id:'dede',emoji:'👴🏿',de:'Opa'},
+   {id:'abla',emoji:'👧🏿',de:'große Schwester'},
+   {id:'abi',emoji:'👦🏿',de:'großer Bruder'},
+   {id:'koepek',emoji:'🐕',de:'Hund'},
+   {id:'kedi',emoji:'🐈',de:'Katze'},
+   {id:'kus',emoji:'🐦',de:'Vogel'},
+   {id:'at',emoji:'🐎',de:'Pferd'},
+   {id:'balk',emoji:'🐟',de:'Fisch'},
+   {id:'ekmek',emoji:'🍞',de:'Brot'},
+   {id:'su',emoji:'💧',de:'Wasser'},
+   {id:'suet',emoji:'🥛',de:'Milch'},
+   {id:'elma',emoji:'🍎',de:'Apfel'},
+   {id:'cay',emoji:'🍵',de:'Tee'},
+   {id:'bal',emoji:'🍯',de:'Honig'},
+   {id:'ev',emoji:'🏠',de:'Haus'},
+   {id:'guenes',emoji:'☀️',de:'Sonne'},
+   {id:'ay',emoji:'🌙',de:'Mond'},
+   {id:'yldz',emoji:'⭐',de:'Stern'},
+   {id:'agac',emoji:'🌳',de:'Baum'},
+   {id:'cicek',emoji:'🌸',de:'Blume'},
+   {id:'kalp',emoji:'❤️',de:'Herz'},
+   {id:'el',emoji:'✋',de:'Hand'},
+   {id:'goez',emoji:'👁️',de:'Auge'},
+   {id:'guelmek',emoji:'😀',de:'Lachen'},
+   {id:'bir',emoji:'1️⃣',de:'Eins'},
+   {id:'iki',emoji:'2️⃣',de:'Zwei'},
+   {id:'uec',emoji:'3️⃣',de:'Drei'},
+   {id:'doert',emoji:'4️⃣',de:'Vier'},
+   {id:'bes',emoji:'5️⃣',de:'Fünf'},
+   {id:'krmz',emoji:'🔴',de:'Rot'},
+   {id:'mavi',emoji:'🔵',de:'Blau'},
+   {id:'yesil',emoji:'🟢',de:'Grün'},
+   {id:'sar',emoji:'🟡',de:'Gelb'},
+  ]}
 };
-let famBuf=null,famLoading=null,famSrc=null;
-function famLoad(){
- if(famBuf)return Promise.resolve(famBuf);
- if(famLoading)return famLoading;
- famLoading=fetch('audio/zazaki.m4a').then(r=>r.arrayBuffer()).then(ab=>{ensureAudio();return actx.decodeAudioData(ab);}).then(buf=>{famBuf=buf;return buf;}).catch(()=>{famLoading=null;return null;});
- return famLoading;
-}
+const FAM_SCENE_BY_LANG={
+ zazaki:[
+  {say:'mabexer',prompt:'Iroh winkt dir zu und sagt „Ma bexêr!“',opts:[{id:'xerbeselamet',emoji:'🙋🏿',de:'Hallo zurück!'}]},
+  {say:'ticituriya',prompt:'Iroh fragt dich etwas.',opts:[{id:'ezrindune',emoji:'😊',de:'Mir geht’s gut.'}]},
+  {say:'nametociko',prompt:'Iroh fragt dich etwas.',opts:[{id:'namemiberfina',emoji:'👧🏿',de:'Ich heiße Berfîn.'},{id:'namemibarano',emoji:'👦🏿',de:'Ich heiße Baran.'}]},
+  {say:'tikotirawa',prompt:'Iroh fragt dich etwas.',opts:[{id:'ezpilemuriyerawune',emoji:'🏔️',de:'Ich komme aus Pilemurîye.'}]},
+  {say:'xatirbeto',prompt:'Iroh sagt etwas zum Abschied.',opts:[{id:'oxirbo',emoji:'🌙',de:'Tschüss zurück!'}]},
+ ],
+ tuerkisch:[
+  {say:'merhaba',prompt:'Iroh winkt dir zu und sagt „Merhaba!“',opts:[{id:'selam',emoji:'🙋🏿',de:'Hallo zurück!'}]},
+  {say:'naslsn',prompt:'Iroh fragt dich etwas.',opts:[{id:'iyiyimtesekkuerler',emoji:'😊',de:'Mir geht’s gut.'}]},
+  {say:'adnne',prompt:'Iroh fragt dich etwas.',opts:[{id:'benimadmberfin',emoji:'👧🏿',de:'Ich heiße Berfîn.'},{id:'benimadmbaran',emoji:'👦🏿',de:'Ich heiße Baran.'}]},
+  {say:'nerelisin',prompt:'Iroh fragt dich etwas.',opts:[{id:'pueluemuerdenim',emoji:'🏔️',de:'Ich komme aus Pülümür.'}]},
+  {say:'hoscakal',prompt:'Iroh sagt etwas zum Abschied.',opts:[{id:'gueleguele',emoji:'🌙',de:'Tschüss zurück!'}]},
+ ]
+};
+let famLang='zazaki',famAudioEl=null;
 function famPlay(id,onend){
- ensureAudio();
- const seg=FAM_SEGS[id];if(!seg)return;
- famLoad().then(buf=>{
-  if(!buf)return;
-  if(famSrc){try{famSrc.stop();}catch(e){}}
-  const src=actx.createBufferSource();src.buffer=buf;src.connect(actx.destination);
-  src.start(0,seg[0],seg[1]-seg[0]);
-  famSrc=src;
-  if(onend)src.onended=onend;
- });
+ if(famAudioEl){try{famAudioEl.pause();}catch(e){}}
+ const a=new Audio('audio/'+famLang+'_'+id+'.m4a');
+ famAudioEl=a;
+ if(onend)a.onended=onend;
+ a.play().catch(()=>{});
+}
+function famSetLang(l){
+ famLang=l;
+ document.getElementById('fam-sub').textContent=(l==='zazaki'?'Zazaki':'Türkçe')+' — mit echten Stimmen aus dei·ner Fa·mi·lie';
+ buildFamilyHub();
 }
 function buildFamilyHub(){
- famLoad();
- const g=document.getElementById('fam-grid');if(!g)return;g.innerHTML='';
- FAM_PHRASES.forEach(p=>{
-  const d=document.createElement('div');d.className='mcard';d.style.background='var(--wasserbg)';d.style.color='var(--wasserd)';
-  d.innerHTML=`<div style="font-size:38px">${p.emoji}</div><div class="mtitle" style="font-size:13px">${p.de}</div>`;
-  d.onclick=()=>famPlay(p.id);
-  g.appendChild(d);
- });
+ const lr=document.getElementById('fam-langrow');
+ if(lr){lr.innerHTML='';Object.keys(FAM_DATA).forEach(l=>{
+  const b=document.createElement('button');b.className='diffpill'+(l===famLang?' on':'');b.textContent=FAM_DATA[l].label;
+  b.onclick=()=>famSetLang(l);lr.appendChild(b);
+ });}
+ const data=FAM_DATA[famLang];
+ const g=document.getElementById('fam-grid');if(g){g.innerHTML='';
+  data.dialogue.forEach(p=>{
+   const d=document.createElement('div');d.className='mcard';d.style.background='var(--wasserbg)';d.style.color='var(--wasserd)';
+   d.innerHTML=`<div style="font-size:38px">${p.emoji}</div><div class="mtitle" style="font-size:13px">${p.de}</div>`;
+   d.onclick=()=>famPlay(p.id);
+   g.appendChild(d);
+  });
+ }
+ const vg=document.getElementById('fam-vocab-grid');if(vg){vg.innerHTML='';
+  data.vocab.forEach(p=>{
+   const d=document.createElement('div');d.className='mcard';d.style.background='var(--erdebg)';d.style.color='var(--erded)';
+   d.innerHTML=`<div style="font-size:32px">${p.emoji}</div><div class="mtitle" style="font-size:12px">${p.de}</div>`;
+   d.onclick=()=>famPlay(p.id);
+   vg.appendChild(d);
+  });
+ }
 }
-const FAM_SCENE=[
- {say:'mabexer',prompt:'Iroh winkt dir zu und sagt „Ma bexêr!“',opts:[{id:'xerbeselamet',emoji:'🙋🏿',de:'Hallo zurück!'}]},
- {say:'ticituriya',prompt:'Iroh fragt dich etwas.',opts:[{id:'ezrindune',emoji:'😊',de:'Mir geht’s gut.'}]},
- {say:'nametociko',prompt:'Iroh fragt dich etwas.',opts:[{id:'namemiberfina',emoji:'👧🏿',de:'Ich heiße Berfîn.'},{id:'namemibarano',emoji:'👦🏿',de:'Ich heiße Baran.'}]},
- {say:'kotira',prompt:'Iroh fragt dich etwas.',opts:[{id:'ezpilemuriyerawune',emoji:'🏔️',de:'Ich komme aus Pilemurîye.'}]},
- {say:'xatirbeto',prompt:'Iroh sagt etwas zum Abschied.',opts:[{id:'oxirbo',emoji:'🌙',de:'Tschüss zurück!'}]},
-];
 let ftStep=0,ftBusy=false;
 function startFamTheater(){ftStep=0;renderFamTheater();}
-function famTheaterStop(){if(famSrc){try{famSrc.stop();}catch(e){}}}
+function famTheaterStop(){if(famAudioEl){try{famAudioEl.pause();}catch(e){}}}
 function renderFamTheater(){
- if(ftStep>=FAM_SCENE.length){famTheaterWin();return;}
- const st=FAM_SCENE[ftStep];ftBusy=false;
+ const scene=FAM_SCENE_BY_LANG[famLang];
+ if(ftStep>=scene.length){famTheaterWin();return;}
+ const st=scene[ftStep];ftBusy=false;
  document.getElementById('ft-scene').textContent='🍵';
  document.getElementById('ft-say').textContent=st.prompt+' Tipp zum Hören ▶';
  document.getElementById('ft-fb').textContent='';
@@ -1889,7 +1979,7 @@ function renderFamTheater(){
 }
 function famTheaterWin(){
  document.getElementById('ft-scene').textContent='🎉';
- document.getElementById('ft-say').textContent='Toll gemacht! Du hast das ganze Gespräch auf Zazaki gespielt!';
+ document.getElementById('ft-say').textContent='Toll gemacht! Du hast das ganze Gespräch gespielt!';
  document.getElementById('ft-opts').innerHTML='';
  document.getElementById('ft-fb').innerHTML='<button class="btn bblue" onclick="startFamTheater()">🔄 Nochmal</button>';
  sfxWin();fireConfetti();award(3);
