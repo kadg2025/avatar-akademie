@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aufnahme zuordnen – Sprache der Familie</title>
+<style>
+ :root{--blau:#1E5E82;--gold:#C9A24B;--gruen:#3C7A2E;--rot:#C0341F;--bg:#FBF4E6;--card:#FFFDF8;--muted:#8A7A66}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{font-family:system-ui,sans-serif;background:var(--bg);color:#3A2E20;min-height:100vh;padding:16px}
+ .wrap{max-width:640px;margin:0 auto}
+ h1{font-size:22px;text-align:center;margin:8px 0 2px;color:var(--blau)}
+ .sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:14px;line-height:1.5}
+ .card{background:var(--card);border-radius:16px;padding:12px 14px;box-shadow:0 2px 10px rgba(120,90,40,.10);margin-bottom:10px}
+ .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+ .num{font-weight:800;color:var(--muted);width:26px;text-align:right}
+ button{border:0;border-radius:12px;cursor:pointer;font-weight:800}
+ .bplay{background:var(--blau);color:#fff;font-size:18px;padding:10px 16px}
+ .bplay.playing{background:var(--gold)}
+ select{flex:1;min-width:200px;font-size:15px;padding:9px;border-radius:10px;border:2px solid #E2D4B4;background:#fff;font-weight:700}
+ select.zu{border-color:var(--gruen)}
+ input[type=number]{width:74px;font-size:14px;padding:8px 4px;border-radius:10px;border:1px solid #D8C9A8;text-align:center}
+ .lbl{font-size:11px;color:var(--muted);text-align:center}
+ .bexport{background:var(--gruen);color:#fff;font-size:18px;padding:14px;width:100%;border-radius:16px;margin:10px 0}
+ .baction{background:#B09B78;color:#fff;font-size:14px;padding:9px 12px}
+ .status{text-align:center;font-weight:700;min-height:24px;margin:6px 0;font-size:15px}
+ .kopf{position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:5}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="kopf">
+  <h1>🧩 Aufnahme zuordnen</h1>
+  <div class="sub">Ich habe deine Aufnahme an den Pausen zerschnitten.<br>Höre jeden Schnipsel an (▶) und wähle, welcher Satz es ist.<br>Falsch geschnitten? Start/Ende in Sekunden anpassen und nochmal anhören.</div>
+ </div>
+ <div class="status" id="status">Lade Aufnahme …</div>
+ <div id="rows"></div>
+ <div class="row" style="justify-content:center;margin:8px 0">
+  <button class="baction" onclick="addRow()">➕ Schnipsel hinzufügen</button>
+ </div>
+ <button class="bexport" onclick="exportMap()">💾 Fertig — Zuordnung speichern</button>
+ <div class="sub">Die Datei <b>zazaki_map.json</b> landet im Download-Ordner.<br>Kopiere sie in den <b>audio/</b>-Ordner (neben zazaki.m4a).</div>
+</div>
+
+<script>
+const AUDIO_URL='audio/zazaki.m4a';
+const PHRASEN=[
+ {id:'mabexer',t:'👋 Ma bexêr! (Hallo!)'},
+ {id:'xerbeselamet',t:'🙋 Xêr be selamet! (Hallo zurück!)'},
+ {id:'ticituriya',t:'🤗 Ti çiturî ya? (Wie geht’s dir?)'},
+ {id:'ezrindune',t:'😊 Ez rind une (Mir geht’s gut.)'},
+ {id:'nametociko',t:'🗣️ Namê to çik o? (Wie heißt du?)'},
+ {id:'namemiberfina',t:'👧 Namê mi Berfîn a. (Ich heiße Berfîn.)'},
+ {id:'namemibarano',t:'👦 Namê mi Baran o. (Ich heiße Baran.)'},
+ {id:'tikotirawa',t:'🗺️ Ti kotî ra wa? (Woher kommst du?)'},
+ {id:'ezpilemuriyerawune',t:'🏔️ Ez Pilemurîye ra wune (Ich komme aus Pilemurîye.)'},
+ {id:'xatirbeto',t:'👋 Xatir be to! (Tschüss!)'},
+ {id:'oxirbo',t:'🌙 Oẍir bo! (Tschüss zurück!)'},
+ {id:'ti',t:'🫵 ti (du)'},
+ {id:'ez',t:'🙋‍♀️ ez (ich)'},
+ {id:'rind',t:'👍 rind (gut)'},
+ {id:'ci',t:'❔ çi (was)'},
+ {id:'cituri',t:'❓ çiturî (wie)'},
+ {id:'koti',t:'📍 kotî (wo)'},
+ {id:'kotira',t:'🧭 kotî ra (woher)'},
+ {id:'name',t:'📛 name (der Name)'},
+ {id:'nameto',t:'🏷️ namê to (dein Name)'},
+ {id:'namemi',t:'💬 namê mi (mein Name)'},
+ {id:'ki',t:'➕ kî (auch)'},
+];
+let audioBuf=null,ctx=null,rows=[],playingSrc=null,playingBtn=null;
+
+async function init(){
+ try{
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const buf=await fetch(AUDIO_URL).then(r=>{if(!r.ok)throw new Error(r.status);return r.arrayBuffer();});
+  audioBuf=await ctx.decodeAudioData(buf);
+  const saved=localStorage.getItem('zz_map_rows');
+  if(saved){try{rows=JSON.parse(saved);}catch(e){rows=null;}}
+  if(!rows||!rows.length)rows=detect();
+  document.getElementById('status').textContent='Aufnahme geladen: '+audioBuf.duration.toFixed(1)+' Sekunden, '+rows.length+' Schnipsel.';
+  render();
+ }catch(e){
+  document.getElementById('status').textContent='⚠️ Konnte audio/zazaki.m4a nicht laden ('+e.message+').';
+ }
+}
+function detect(){
+ const ch=audioBuf.getChannelData(0),sr=audioBuf.sampleRate,win=Math.floor(sr*0.02),env=[];
+ for(let i=0;i<ch.length;i+=win){let s=0;for(let j=i;j<Math.min(i+win,ch.length);j++)s+=ch[j]*ch[j];env.push(Math.sqrt(s/win));}
+ const thr=Math.max(...env)*0.06;
+ let segs=[],inSeg=false,start=0,sil=0;
+ for(let i=0;i<env.length;i++){
+  if(env[i]>thr){if(!inSeg){inSeg=true;start=i;}sil=0;}
+  else if(inSeg){sil++;if(sil>=18){segs.push([start*0.02,(i-sil)*0.02+0.02]);inSeg=false;}}
+ }
+ if(inSeg)segs.push([start*0.02,env.length*0.02]);
+ return segs.filter(s=>s[1]-s[0]>0.25)
+  .map((s,i)=>({start:Math.max(0,+(s[0]-0.12).toFixed(2)),end:Math.min(audioBuf.duration,+(s[1]+0.18).toFixed(2)),id:PHRASEN[i]?PHRASEN[i].id:''}));
+}
+function save(){try{localStorage.setItem('zz_map_rows',JSON.stringify(rows));}catch(e){}}
+function render(){
+ const host=document.getElementById('rows');host.innerHTML='';
+ rows.forEach((r,i)=>{
+  const c=document.createElement('div');c.className='card';
+  const opts='<option value="">— noch zuordnen —</option>'+PHRASEN.map(p=>'<option value="'+p.id+'"'+(r.id===p.id?' selected':'')+'>'+p.t+'</option>').join('')+'<option value="_skip"'+(r.id==='_skip'?' selected':'')+'>🗑️ überspringen (nicht benutzen)</option>';
+  c.innerHTML='<div class="row">'
+   +'<span class="num">'+(i+1)+'</span>'
+   +'<button class="bplay" id="p'+i+'">▶</button>'
+   +'<span><input type="number" step="0.1" min="0" value="'+r.start+'" id="s'+i+'"><div class="lbl">Start</div></span>'
+   +'<span><input type="number" step="0.1" min="0" value="'+r.end+'" id="e'+i+'"><div class="lbl">Ende</div></span>'
+   +'<select id="w'+i+'" class="'+(r.id&&r.id!=='_skip'?'zu':'')+'">'+opts+'</select>'
+  +'</div>';
+  host.appendChild(c);
+  document.getElementById('p'+i).onclick=()=>playSeg(i);
+  document.getElementById('s'+i).onchange=ev=>{rows[i].start=+ev.target.value;save();};
+  document.getElementById('e'+i).onchange=ev=>{rows[i].end=+ev.target.value;save();};
+  document.getElementById('w'+i).onchange=ev=>{rows[i].id=ev.target.value;save();render();};
+ });
+}
+function playSeg(i){
+ if(playingSrc){try{playingSrc.stop();}catch(e){} playingSrc=null;if(playingBtn){playingBtn.classList.remove('playing');playingBtn.textContent='▶';}}
+ const r=rows[i];if(!(r.end>r.start))return;
+ if(ctx.state==='suspended')ctx.resume();
+ const src=ctx.createBufferSource();src.buffer=audioBuf;src.connect(ctx.destination);
+ src.start(0,r.start,r.end-r.start);
+ playingSrc=src;playingBtn=document.getElementById('p'+i);
+ playingBtn.classList.add('playing');playingBtn.textContent='🔊';
+ src.onended=()=>{if(playingBtn){playingBtn.classList.remove('playing');playingBtn.textContent='▶';}playingSrc=null;};
+}
+function addRow(){rows.push({start:0,end:1,id:''});save();render();}
+function exportMap(){
+ const segs=rows.filter(r=>r.id&&r.id!=='_skip'&&r.end>r.start).map(r=>({id:r.id,start:r.start,end:r.end}));
+ const offen=rows.filter(r=>!r.id).length;
+ if(!segs.length){document.getElementById('status').textContent='⚠️ Noch nichts zugeordnet.';return;}
+ const data={file:'zazaki.m4a',sprache:'zazaki',segments:segs};
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,1)],{type:'application/json'}));
+ a.download='zazaki_map.json';document.body.appendChild(a);a.click();a.remove();
+ document.getElementById('status').textContent='💾 zazaki_map.json gespeichert ('+segs.length+' Sätze'+(offen?', '+offen+' noch offen':'')+') — in den audio/-Ordner kopieren!';
+}
+init();
+</script>
+</body>
+</html>
