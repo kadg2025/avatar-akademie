@@ -1919,13 +1919,18 @@ const FAM_SCENE_BY_LANG={
   {say:'hoscakal',prompt:'Iroh sagt etwas zum Abschied.',opts:[{id:'gueleguele',emoji:'🌙',de:'Tschüss zurück!'}]},
  ]
 };
-let famLang='zazaki',famAudioEl=null;
+let famLang='zazaki',famSrc=null,famCache={};
 function famPlay(id,onend){
- if(famAudioEl){try{famAudioEl.pause();}catch(e){}}
- const a=new Audio('audio/'+famLang+'_'+id+'.m4a');
- famAudioEl=a;
- if(onend)a.onended=onend;
- a.play().catch(()=>{});
+ ensureAudio();
+ const key=famLang+'_'+id;
+ const play=buf=>{
+  if(famSrc){try{famSrc.stop();}catch(e){}}
+  const src=actx.createBufferSource();src.buffer=buf;src.connect(actx.destination);
+  src.start(0);famSrc=src;
+  if(onend)src.onended=onend;
+ };
+ if(famCache[key]){play(famCache[key]);return;}
+ fetch('audio/'+key+'.m4a').then(r=>r.arrayBuffer()).then(ab=>actx.decodeAudioData(ab)).then(buf=>{famCache[key]=buf;play(buf);}).catch(()=>{});
 }
 function famSetLang(l){
  famLang=l;
@@ -1958,7 +1963,7 @@ function buildFamilyHub(){
 }
 let ftStep=0,ftBusy=false;
 function startFamTheater(){ftStep=0;renderFamTheater();}
-function famTheaterStop(){if(famAudioEl){try{famAudioEl.pause();}catch(e){}}}
+function famTheaterStop(){if(famSrc){try{famSrc.stop();}catch(e){}}}
 function renderFamTheater(){
  const scene=FAM_SCENE_BY_LANG[famLang];
  if(ftStep>=scene.length){famTheaterWin();return;}
