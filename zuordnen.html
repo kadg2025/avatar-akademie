@@ -23,6 +23,7 @@
  .lbl{font-size:11px;color:var(--muted);text-align:center}
  .bexport{background:var(--gruen);color:#fff;font-size:18px;padding:14px;width:100%;border-radius:16px;margin:10px 0}
  .baction{background:#B09B78;color:#fff;font-size:14px;padding:9px 12px}
+ .baction.on{background:var(--gold);box-shadow:0 0 0 3px #F0D48A inset}
  .status{text-align:center;font-weight:700;min-height:24px;margin:6px 0;font-size:15px}
  .kopf{position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:5}
 </style>
@@ -32,6 +33,10 @@
  <div class="kopf">
   <h1>🧩 Aufnahme zuordnen</h1>
   <div class="sub">Ich habe deine Aufnahme an den Pausen zerschnitten.<br>Höre jeden Schnipsel an (▶) und wähle, welcher Satz es ist.<br>Falsch geschnitten? Start/Ende in Sekunden anpassen und nochmal anhören.</div>
+  <div class="row" style="justify-content:center;gap:10px;margin:10px 0">
+   <button class="baction" id="lb-zazaki" onclick="setLang('zazaki')" style="font-size:15px;padding:10px 16px">🏔️ Zazaki</button>
+   <button class="baction" id="lb-tuerkisch" onclick="setLang('tuerkisch')" style="font-size:15px;padding:10px 16px">🇹🇷 Türkçe</button>
+  </div>
  </div>
  <div class="status" id="status">Lade Aufnahme …</div>
  <div id="rows"></div>
@@ -39,49 +44,88 @@
   <button class="baction" onclick="addRow()">➕ Schnipsel hinzufügen</button>
  </div>
  <button class="bexport" onclick="exportMap()">💾 Fertig — Zuordnung speichern</button>
- <div class="sub">Die Datei <b>zazaki_map.json</b> landet im Download-Ordner.<br>Kopiere sie in den <b>audio/</b>-Ordner (neben zazaki.m4a).</div>
+ <div class="sub">Die Datei <b id="export-name">zazaki_map.json</b> landet im Download-Ordner.<br>Kopiere sie in den <b>audio/</b>-Ordner (neben der Audio-Datei).</div>
 </div>
 
 <script>
-const AUDIO_URL='audio/zazaki.m4a';
-const PHRASEN=[
- {id:'mabexer',t:'👋 Ma bexêr! (Hallo!)'},
- {id:'xerbeselamet',t:'🙋 Xêr be selamet! (Hallo zurück!)'},
- {id:'ticituriya',t:'🤗 Ti çiturî ya? (Wie geht’s dir?)'},
- {id:'ezrindune',t:'😊 Ez rind une (Mir geht’s gut.)'},
- {id:'nametociko',t:'🗣️ Namê to çik o? (Wie heißt du?)'},
- {id:'namemiberfina',t:'👧 Namê mi Berfîn a. (Ich heiße Berfîn.)'},
- {id:'namemibarano',t:'👦 Namê mi Baran o. (Ich heiße Baran.)'},
- {id:'tikotirawa',t:'🗺️ Ti kotî ra wa? (Woher kommst du?)'},
- {id:'ezpilemuriyerawune',t:'🏔️ Ez Pilemurîye ra wune (Ich komme aus Pilemurîye.)'},
- {id:'xatirbeto',t:'👋 Xatir be to! (Tschüss!)'},
- {id:'oxirbo',t:'🌙 Oẍir bo! (Tschüss zurück!)'},
- {id:'ti',t:'🫵 ti (du)'},
- {id:'ez',t:'🙋‍♀️ ez (ich)'},
- {id:'rind',t:'👍 rind (gut)'},
- {id:'ci',t:'❔ çi (was)'},
- {id:'cituri',t:'❓ çiturî (wie)'},
- {id:'koti',t:'📍 kotî (wo)'},
- {id:'kotira',t:'🧭 kotî ra (woher)'},
- {id:'name',t:'📛 name (der Name)'},
- {id:'nameto',t:'🏷️ namê to (dein Name)'},
- {id:'namemi',t:'💬 namê mi (mein Name)'},
- {id:'ki',t:'➕ kî (auch)'},
-];
+const PHRASEN_BY_LANG={
+ zazaki:[
+  {id:'mabexer',t:'👋 Ma bexêr! (Hallo!)'},
+  {id:'xerbeselamet',t:'🙋 Xêr be selamet! (Hallo zurück!)'},
+  {id:'ticituriya',t:'🤗 Ti çiturî ya? (Wie geht’s dir?)'},
+  {id:'ezrindune',t:'😊 Ez rind une (Mir geht’s gut.)'},
+  {id:'nametociko',t:'🗣️ Namê to çik o? (Wie heißt du?)'},
+  {id:'namemiberfina',t:'👧 Namê mi Berfîn a. (Ich heiße Berfîn.)'},
+  {id:'namemibarano',t:'👦 Namê mi Baran o. (Ich heiße Baran.)'},
+  {id:'tikotirawa',t:'🗺️ Ti kotî ra wa? (Woher kommst du?)'},
+  {id:'ezpilemuriyerawune',t:'🏔️ Ez Pilemurîye ra wune (Ich komme aus Pilemurîye.)'},
+  {id:'xatirbeto',t:'👋 Xatir be to! (Tschüss!)'},
+  {id:'oxirbo',t:'🌙 Oẍir bo! (Tschüss zurück!)'},
+  {id:'ti',t:'🫵 ti (du)'},
+  {id:'ez',t:'🙋‍♀️ ez (ich)'},
+  {id:'rind',t:'👍 rind (gut)'},
+  {id:'ci',t:'❔ çi (was)'},
+  {id:'cituri',t:'❓ çiturî (wie)'},
+  {id:'koti',t:'📍 kotî (wo)'},
+  {id:'kotira',t:'🧭 kotî ra (woher)'},
+  {id:'name',t:'📛 name (der Name)'},
+  {id:'nameto',t:'🏷️ namê to (dein Name)'},
+  {id:'namemi',t:'💬 namê mi (mein Name)'},
+  {id:'ki',t:'➕ kî (auch)'},
+ ],
+ tuerkisch:[
+  {id:'merhaba',t:'👋 Merhaba! (Hallo!)'},
+  {id:'selam',t:'🙋 Selam! (Hallo zurück!)'},
+  {id:'nasilsin',t:'🤗 Nasılsın? (Wie geht’s dir?)'},
+  {id:'iyiyim',t:'😊 İyiyim, teşekkürler. (Mir geht’s gut.)'},
+  {id:'adinne',t:'🗣️ Adın ne? (Wie heißt du?)'},
+  {id:'adimberfin',t:'👧 Benim adım Berfin. (Ich heiße Berfîn.)'},
+  {id:'adimbaran',t:'👦 Benim adım Baran. (Ich heiße Baran.)'},
+  {id:'nerelisin',t:'🗺️ Nerelisin? (Woher kommst du?)'},
+  {id:'pulumurdenim',t:'🏔️ Pülümür’denim. (Ich komme aus Pülümür.)'},
+  {id:'hoscakal',t:'👋 Hoşça kal! (Tschüss!)'},
+  {id:'gulegule',t:'🌙 Güle güle! (Tschüss zurück!)'},
+  {id:'sen',t:'🫵 sen (du)'},
+  {id:'ben',t:'🙋‍♀️ ben (ich)'},
+  {id:'iyi',t:'👍 iyi (gut)'},
+  {id:'ne',t:'❔ ne (was)'},
+  {id:'nasil',t:'❓ nasıl (wie)'},
+  {id:'nere',t:'📍 nere (wo)'},
+  {id:'nereden',t:'🧭 nereden (woher)'},
+  {id:'isim',t:'📛 isim (der Name)'},
+  {id:'seninadin',t:'🏷️ senin adın (dein Name)'},
+  {id:'benimadim',t:'💬 benim adım (mein Name)'},
+  {id:'de',t:'➕ de (auch)'},
+ ]
+};
+const AUDIO_FILE={zazaki:'zazaki.m4a',tuerkisch:'turkce.m4a'};
+let lang='zazaki';
+let PHRASEN=PHRASEN_BY_LANG[lang];
 let audioBuf=null,ctx=null,rows=[],playingSrc=null,playingBtn=null;
 
+function setLang(l){
+ lang=l;PHRASEN=PHRASEN_BY_LANG[l];
+ document.getElementById('lb-zazaki').classList.toggle('on',l==='zazaki');
+ document.getElementById('lb-tuerkisch').classList.toggle('on',l==='tuerkisch');
+ document.getElementById('export-name').textContent=l+'_map.json';
+ if(playingSrc){try{playingSrc.stop();}catch(e){}playingSrc=null;}
+ init();
+}
 async function init(){
  try{
-  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
+  document.getElementById('status').textContent='Lade Aufnahme …';
+  const AUDIO_URL='audio/'+AUDIO_FILE[lang];
   const buf=await fetch(AUDIO_URL).then(r=>{if(!r.ok)throw new Error(r.status);return r.arrayBuffer();});
   audioBuf=await ctx.decodeAudioData(buf);
-  const saved=localStorage.getItem('zz_map_rows');
+  const saved=localStorage.getItem('zz_map_rows_'+lang);
   if(saved){try{rows=JSON.parse(saved);}catch(e){rows=null;}}
   if(!rows||!rows.length)rows=detect();
   document.getElementById('status').textContent='Aufnahme geladen: '+audioBuf.duration.toFixed(1)+' Sekunden, '+rows.length+' Schnipsel.';
   render();
  }catch(e){
-  document.getElementById('status').textContent='⚠️ Konnte audio/zazaki.m4a nicht laden ('+e.message+').';
+  document.getElementById('status').textContent='⚠️ Konnte audio/'+AUDIO_FILE[lang]+' nicht laden ('+e.message+'). Noch nicht hochgeladen?';
+  rows=[];render();
  }
 }
 function detect(){
@@ -97,7 +141,7 @@ function detect(){
  return segs.filter(s=>s[1]-s[0]>0.25)
   .map((s,i)=>({start:Math.max(0,+(s[0]-0.12).toFixed(2)),end:Math.min(audioBuf.duration,+(s[1]+0.18).toFixed(2)),id:PHRASEN[i]?PHRASEN[i].id:''}));
 }
-function save(){try{localStorage.setItem('zz_map_rows',JSON.stringify(rows));}catch(e){}}
+function save(){try{localStorage.setItem('zz_map_rows_'+lang,JSON.stringify(rows));}catch(e){}}
 function render(){
  const host=document.getElementById('rows');host.innerHTML='';
  rows.forEach((r,i)=>{
@@ -132,12 +176,13 @@ function exportMap(){
  const segs=rows.filter(r=>r.id&&r.id!=='_skip'&&r.end>r.start).map(r=>({id:r.id,start:r.start,end:r.end}));
  const offen=rows.filter(r=>!r.id).length;
  if(!segs.length){document.getElementById('status').textContent='⚠️ Noch nichts zugeordnet.';return;}
- const data={file:'zazaki.m4a',sprache:'zazaki',segments:segs};
+ const data={file:AUDIO_FILE[lang],sprache:lang,segments:segs};
  const a=document.createElement('a');
  a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,1)],{type:'application/json'}));
- a.download='zazaki_map.json';document.body.appendChild(a);a.click();a.remove();
- document.getElementById('status').textContent='💾 zazaki_map.json gespeichert ('+segs.length+' Sätze'+(offen?', '+offen+' noch offen':'')+') — in den audio/-Ordner kopieren!';
+ a.download=lang+'_map.json';document.body.appendChild(a);a.click();a.remove();
+ document.getElementById('status').textContent='💾 '+lang+'_map.json gespeichert ('+segs.length+' Sätze'+(offen?', '+offen+' noch offen':'')+') — in den audio/-Ordner kopieren!';
 }
+document.getElementById('lb-zazaki').classList.add('on');
 init();
 </script>
 </body>

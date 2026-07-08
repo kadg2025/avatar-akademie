@@ -68,7 +68,7 @@
   <div class="done-list" id="done-list">Noch nichts — leg los! Die Dateien landen in deinem Download-Ordner.</div>
   <details>
    <summary>Wortliste bearbeiten</summary>
-   <div style="font-size:13px;color:var(--muted);margin-top:6px">Eine Zeile pro Wort. Format: <b>Emoji | Deutsch | Kirmanckî-Satz</b> (dritter Teil optional — ohne ihn übersetzt du selbst beim Sprechen).</div>
+   <div style="font-size:13px;color:var(--muted);margin-top:6px">Eine Zeile pro Wort. Format: <b>Emoji | Deutsch | Satz zum Vorlesen</b> (dritter Teil optional — ohne ihn übersetzt du selbst beim Sprechen). Jede Sprache hat ihre eigene Liste.</div>
    <textarea id="wl" spellcheck="false"></textarea>
    <button class="b bnav" style="width:100%;margin-top:8px" onclick="applyList()">Liste übernehmen</button>
   </details>
@@ -81,22 +81,22 @@
 </div>
 
 <script>
-// Format: 'Emoji | Deutsch | Kirmanckî-Text zum Vorlesen (optional)'
-// Mit drittem Feld: fester Zazaki-Satz, wird groß angezeigt. Ohne: du übersetzt selbst (Zazaki oder Türkçe).
-const DEFAULT_WORDS=[
+// Format: 'Emoji | Deutsch | Satz/Wort zum Vorlesen (optional)'
+// Mit drittem Feld: fester Satz in der Zielsprache, wird groß angezeigt. Ohne: du übersetzt selbst.
+const WORDS_ZAZAKI=[
  '👋 | Hallo! | Ma bexêr!',
  '🙋 | Hallo zurück! | Xêr be selamet!',
  '🤗 | Wie geht’s dir? | Ti çiturî ya?',
  '😊 | Mir geht’s gut. | Ez rind une',
  '🗣️ | Wie heißt du? | Namê to çik o?',
- '👧 | Ich heiße Berfîn. | Namê mi Berfîn a.',
- '👦 | Ich heiße Baran. | Namê mi Baran o.',
+ '👧🏿 | Ich heiße Berfîn. | Namê mi Berfîn a.',
+ '👦🏿 | Ich heiße Baran. | Namê mi Baran o.',
  '🗺️ | Woher kommst du? | Ti kotî ra wa?',
  '🏔️ | Ich komme aus Pilemurîye. | Ez Pilemurîye ra wune',
  '👋 | Tschüss! | Xatir be to!',
  '🌙 | Tschüss zurück! | Oẍir bo!',
  '🫵 | du | ti',
- '🙋‍♀️ | ich | ez',
+ '🙋🏿‍♀️ | ich | ez',
  '👍 | gut | rind',
  '❔ | was | çi',
  '❓ | wie | çiturî',
@@ -106,7 +106,7 @@ const DEFAULT_WORDS=[
  '🏷️ | dein Name | namê to',
  '💬 | mein Name | namê mi',
  '➕ | auch, ebenfalls | kî',
- '👩 Mama','👨 Papa','👵 Oma','👴 Opa','👧 Schwester','👦 Bruder',
+ '👩🏿 Mama','👨🏿 Papa','👵🏿 Oma','👴🏿 Opa','👧🏿 Schwester','👦🏿 Bruder',
  '🐕 Hund','🐈 Katze','🐦 Vogel','🐎 Pferd','🐟 Fisch',
  '🍞 Brot','💧 Wasser','🥛 Milch','🍎 Apfel','🍵 Tee','🍯 Honig',
  '🏠 Haus','☀️ Sonne','🌙 Mond','⭐ Stern','🌳 Baum','🌸 Blume',
@@ -114,9 +114,73 @@ const DEFAULT_WORDS=[
  '1️⃣ Eins','2️⃣ Zwei','3️⃣ Drei','4️⃣ Vier','5️⃣ Fünf',
  '🔴 Rot','🔵 Blau','🟢 Grün','🟡 Gelb'
 ];
-let WORDS=[];
-try{WORDS=JSON.parse(localStorage.getItem('rec_words_v2')||'null')||DEFAULT_WORDS.slice();}catch(e){WORDS=DEFAULT_WORDS.slice();}
+// Türkçe: alle Übersetzungen schon eingetragen — einfach ablesen und aufnehmen.
+const WORDS_TUERKISCH=[
+ '👋 | Hallo! | Merhaba!',
+ '🙋 | Hallo zurück! | Selam!',
+ '🤗 | Wie geht’s dir? | Nasılsın?',
+ '😊 | Mir geht’s gut, danke. | İyiyim, teşekkürler.',
+ '🗣️ | Wie heißt du? | Adın ne?',
+ '👧🏿 | Ich heiße Berfîn. | Benim adım Berfin.',
+ '👦🏿 | Ich heiße Baran. | Benim adım Baran.',
+ '🗺️ | Woher kommst du? | Nerelisin?',
+ '🏔️ | Ich komme aus Pülümür. | Pülümür’denim.',
+ '👋 | Tschüss! | Hoşça kal!',
+ '🌙 | Tschüss zurück! | Güle güle!',
+ '🫵 | du | sen',
+ '🙋🏿‍♀️ | ich | ben',
+ '👍 | gut | iyi',
+ '❔ | was | ne',
+ '❓ | wie | nasıl',
+ '📍 | wo | nere',
+ '🧭 | woher | nereden',
+ '📛 | der Name | isim',
+ '🏷️ | dein Name | senin adın',
+ '💬 | mein Name | benim adım',
+ '➕ | auch, ebenfalls | de',
+ '👩🏿 | Mutter | anne',
+ '👨🏿 | Vater | baba',
+ '👵🏿 | Oma (mütterlicherseits) | anneanne',
+ '👴🏿 | Opa | dede',
+ '👧🏿 | große Schwester | abla',
+ '👦🏿 | großer Bruder | abi',
+ '🐕 | Hund | köpek',
+ '🐈 | Katze | kedi',
+ '🐦 | Vogel | kuş',
+ '🐎 | Pferd | at',
+ '🐟 | Fisch | balık',
+ '🍞 | Brot | ekmek',
+ '💧 | Wasser | su',
+ '🥛 | Milch | süt',
+ '🍎 | Apfel | elma',
+ '🍵 | Tee | çay',
+ '🍯 | Honig | bal',
+ '🏠 | Haus | ev',
+ '☀️ | Sonne | güneş',
+ '🌙 | Mond | ay',
+ '⭐ | Stern | yıldız',
+ '🌳 | Baum | ağaç',
+ '🌸 | Blume | çiçek',
+ '❤️ | Herz | kalp',
+ '✋ | Hand | el',
+ '👁️ | Auge | göz',
+ '😀 | Lachen | gülmek',
+ '1️⃣ | Eins | bir',
+ '2️⃣ | Zwei | iki',
+ '3️⃣ | Drei | üç',
+ '4️⃣ | Vier | dört',
+ '5️⃣ | Fünf | beş',
+ '🔴 | Rot | kırmızı',
+ '🔵 | Blau | mavi',
+ '🟢 | Grün | yeşil',
+ '🟡 | Gelb | sarı'
+];
+const LISTS={zazaki:WORDS_ZAZAKI,tuerkisch:WORDS_TUERKISCH};
 let lang='zazaki',idx=0,rec=null,chunks=[],blob=null,audioURL=null,doneFiles=[];
+function loadWordsFor(l){
+ try{return JSON.parse(localStorage.getItem('rec_words_'+l)||'null')||LISTS[l].slice();}catch(e){return LISTS[l].slice();}
+}
+let WORDS=loadWordsFor('zazaki');
 try{doneFiles=JSON.parse(localStorage.getItem('rec_done')||'[]');}catch(e){}
 
 const MIME=(window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported('audio/mp4'))?'audio/mp4'
@@ -135,22 +199,24 @@ function parse(entry){
  if(parts.length===2)return {emoji:parts[0],wort:parts[1],fest:null};
  const m=entry.trim().match(/^(\S+)\s+(.+)$/);return m?{emoji:m[1],wort:m[2],fest:null}:{emoji:'❓',wort:entry.trim(),fest:null};
 }
-function fileName(){const w=parse(WORDS[idx]);const l=w.fest?'zazaki':lang;return l+'_'+slug(w.fest||w.wort)+'.'+EXT;}
+function fileName(){const w=parse(WORDS[idx]);return lang+'_'+slug(w.fest||w.wort)+'.'+EXT;}
 
 function setLang(l){lang=l;
  document.getElementById('lb-zazaki').classList.toggle('on',l==='zazaki');
  document.getElementById('lb-tuerkisch').classList.toggle('on',l==='tuerkisch');
+ WORDS=loadWordsFor(l);idx=0;
  resetTake();render();}
 function render(){
  const w=parse(WORDS[idx]);
  document.getElementById('prog').textContent='Wort '+(idx+1)+' von '+WORDS.length;
  document.getElementById('emoji').textContent=w.emoji;
+ const langName=lang==='zazaki'?'Kirmanckî 🏔️':'Türkçe 🇹🇷';
  if(w.fest){
   document.getElementById('wort').textContent=w.fest;
-  document.getElementById('hinweis').textContent='Lies laut vor (heißt: „'+w.wort+'") — Kirmanckî 🏔️';
+  document.getElementById('hinweis').textContent='Lies laut vor (heißt: „'+w.wort+'") — '+langName;
  }else{
   document.getElementById('wort').textContent=w.wort;
-  document.getElementById('hinweis').textContent='Sprich „'+w.wort+'" auf '+(lang==='zazaki'?'Zazaki':'Türkisch')+':';
+  document.getElementById('hinweis').textContent='Sprich „'+w.wort+'" auf '+langName+':';
  }
  const st=document.getElementById('status');
  if(doneFiles.includes(fileName())){st.textContent='✅ schon gespeichert — du kannst es überschreiben';st.className='status';}
@@ -201,7 +267,7 @@ function nextWord(){if(idx<WORDS.length-1){idx++;resetTake();render();}else{cons
 function prevWord(){if(idx>0){idx--;resetTake();render();}}
 function applyList(){
  const lines=document.getElementById('wl').value.split('\n').map(s=>s.trim()).filter(Boolean);
- if(lines.length){WORDS=lines;idx=0;try{localStorage.setItem('rec_words_v2',JSON.stringify(WORDS));}catch(e){}resetTake();render();}
+ if(lines.length){WORDS=lines;idx=0;try{localStorage.setItem('rec_words_'+lang,JSON.stringify(WORDS));}catch(e){}resetTake();render();}
 }
 render();
 </script>
