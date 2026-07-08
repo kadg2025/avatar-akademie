@@ -1117,6 +1117,27 @@ body.calm .questcard{box-shadow:none}
  <div class="progress-mini"><span id="cook-prog">Zu·tat 1/3</span><span>🍳 Koch·zeit!</span></div>
 </div>
 
+<!-- SPRACHE DER FAMILIE: HUB -->
+<div id="s-family-hub" class="sc">
+ <button class="btn bgray" onclick="go('s-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:26px">🏔️ Sprache der Familie</div><div class="gs">Zazaki — mit Mamas &amp; Papas Stimme</div></div>
+ <div class="story" style="text-align:center">Tipp auf ein Bild und hör zu, wie es auf Za·za·ki klingt. 🎙️</div>
+ <div class="menu" id="fam-grid"></div>
+ <button class="btn bgold" style="margin-top:6px" onclick="go('s-family-theater')">🎭 Kleines Gespräch spielen</button>
+</div>
+
+<!-- SPRACHE DER FAMILIE: THEATER -->
+<div id="s-family-theater" class="sc">
+ <button class="btn bgray" onclick="famTheaterStop();go('s-family-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:24px">🎭 Ein kleines Gespräch</div><div class="gs">Tipp auf die Sprech·bla·se und ant·wor·te!</div></div>
+ <div class="story" style="text-align:center;padding:16px 12px">
+  <div id="ft-scene" style="font-size:64px;margin-bottom:6px"></div>
+  <div id="ft-say" style="font-size:17px;font-weight:800;color:var(--muted);min-height:26px"></div>
+ </div>
+ <div id="ft-opts" class="opgrid"></div>
+ <div class="feedbk ok" id="ft-fb" style="min-height:24px"></div>
+</div>
+
 <!-- IROHS KÜCHE GEWINN -->
 <div id="s-cooking-win" class="sc">
  <div class="gh">
@@ -1307,6 +1328,7 @@ if(id==='s-stories-nation'){/* already built by openStoriesNation */}
  if(id==='s-2p-setup')build2PSetup();if(id==='s-german-house')buildGermanHouse();if(id==='s-word-flight')startWordFlight();
  if(id==='s-fairy-hub')buildFairyHub();if(id==='s-trace')startTrace();if(id==='s-dots')startDots();if(id==='s-percept')startPercept();
  if(id==='s-shop')buildShop();
+ if(id==='s-family-hub')buildFamilyHub();if(id==='s-family-theater')startFamTheater();
 }
 
 function buildHub(){
@@ -1790,6 +1812,89 @@ function minus10Next(){
 }
 function minus10Win(){award(3);document.getElementById('m10w-msg').innerHTML='🎉 Su·per, Ro·za·rin! Du hast den Zeh·ner-Trick für Mi·nus jetzt 4-mal ge·se·hen. 🧮';sfxWin();fireConfetti();maybeBreak();go('s-minus10-win');}
 
+// ════ SPRACHE DER FAMILIE (Zazaki, echte Stimmen) ════
+const FAM_PHRASES=[
+ {id:'mabexer',emoji:'👋',de:'Hallo!'},
+ {id:'xerbeselamet',emoji:'🙋',de:'Hallo zurück!'},
+ {id:'ticituriya',emoji:'🤗',de:'Wie geht’s dir?'},
+ {id:'ezrindune',emoji:'😊',de:'Mir geht’s gut.'},
+ {id:'nametociko',emoji:'🗣️',de:'Wie heißt du?'},
+ {id:'namemiberfina',emoji:'👧',de:'Ich heiße Berfîn.'},
+ {id:'namemibarano',emoji:'👦',de:'Ich heiße Baran.'},
+ {id:'kotira',emoji:'🧭',de:'Woher kommst du?'},
+ {id:'ezpilemuriyerawune',emoji:'🏔️',de:'Ich komme aus Pilemurîye.'},
+ {id:'xatirbeto',emoji:'👋',de:'Tschüss!'},
+ {id:'oxirbo',emoji:'🌙',de:'Tschüss zurück!'},
+];
+const FAM_SEGS={
+ mabexer:[5.24,6.22],xerbeselamet:[6.42,7.48],ticituriya:[7.58,8.34],ezrindune:[8.48,10.26],
+ nametociko:[13.56,14.72],namemiberfina:[15.12,16.42],namemibarano:[18.34,19.68],
+ kotira:[20.12,21.12],ezpilemuriyerawune:[25.12,26.24],xatirbeto:[26.76,28.22],oxirbo:[28.36,29.88]
+};
+let famBuf=null,famLoading=null,famSrc=null;
+function famLoad(){
+ if(famBuf)return Promise.resolve(famBuf);
+ if(famLoading)return famLoading;
+ famLoading=fetch('audio/zazaki.m4a').then(r=>r.arrayBuffer()).then(ab=>{ensureAudio();return actx.decodeAudioData(ab);}).then(buf=>{famBuf=buf;return buf;}).catch(()=>{famLoading=null;return null;});
+ return famLoading;
+}
+function famPlay(id,onend){
+ ensureAudio();
+ const seg=FAM_SEGS[id];if(!seg)return;
+ famLoad().then(buf=>{
+  if(!buf)return;
+  if(famSrc){try{famSrc.stop();}catch(e){}}
+  const src=actx.createBufferSource();src.buffer=buf;src.connect(actx.destination);
+  src.start(0,seg[0],seg[1]-seg[0]);
+  famSrc=src;
+  if(onend)src.onended=onend;
+ });
+}
+function buildFamilyHub(){
+ famLoad();
+ const g=document.getElementById('fam-grid');if(!g)return;g.innerHTML='';
+ FAM_PHRASES.forEach(p=>{
+  const d=document.createElement('div');d.className='mcard';d.style.background='var(--wasserbg)';d.style.color='var(--wasserd)';
+  d.innerHTML=`<div style="font-size:38px">${p.emoji}</div><div class="mtitle" style="font-size:13px">${p.de}</div>`;
+  d.onclick=()=>famPlay(p.id);
+  g.appendChild(d);
+ });
+}
+const FAM_SCENE=[
+ {say:'mabexer',prompt:'Iroh winkt dir zu und sagt „Ma bexêr!“',opts:[{id:'xerbeselamet',emoji:'🙋',de:'Hallo zurück!'}]},
+ {say:'ticituriya',prompt:'Iroh fragt dich etwas.',opts:[{id:'ezrindune',emoji:'😊',de:'Mir geht’s gut.'}]},
+ {say:'nametociko',prompt:'Iroh fragt dich etwas.',opts:[{id:'namemiberfina',emoji:'👧',de:'Ich heiße Berfîn.'},{id:'namemibarano',emoji:'👦',de:'Ich heiße Baran.'}]},
+ {say:'kotira',prompt:'Iroh fragt dich etwas.',opts:[{id:'ezpilemuriyerawune',emoji:'🏔️',de:'Ich komme aus Pilemurîye.'}]},
+ {say:'xatirbeto',prompt:'Iroh sagt etwas zum Abschied.',opts:[{id:'oxirbo',emoji:'🌙',de:'Tschüss zurück!'}]},
+];
+let ftStep=0,ftBusy=false;
+function startFamTheater(){ftStep=0;renderFamTheater();}
+function famTheaterStop(){if(famSrc){try{famSrc.stop();}catch(e){}}}
+function renderFamTheater(){
+ if(ftStep>=FAM_SCENE.length){famTheaterWin();return;}
+ const st=FAM_SCENE[ftStep];ftBusy=false;
+ document.getElementById('ft-scene').textContent='🍵';
+ document.getElementById('ft-say').textContent=st.prompt+' Tipp zum Hören ▶';
+ document.getElementById('ft-fb').textContent='';
+ const og=document.getElementById('ft-opts');og.innerHTML='';
+ const hearBtn=document.createElement('div');hearBtn.className='qopt';hearBtn.style.gridColumn='1/-1';hearBtn.innerHTML='🔊 Iroh anhören';
+ hearBtn.onclick=()=>famPlay(st.say);
+ og.appendChild(hearBtn);
+ st.opts.forEach(o=>{
+  const b=document.createElement('div');b.className='qopt';b.innerHTML=`<div style="font-size:30px">${o.emoji}</div><div style="font-size:13px">${o.de}</div>`;
+  b.onclick=()=>{if(ftBusy)return;ftBusy=true;document.getElementById('ft-fb').textContent='';famPlay(o.id,()=>{setTimeout(()=>{ftStep++;renderFamTheater();},400);});};
+  og.appendChild(b);
+ });
+ famPlay(st.say);
+}
+function famTheaterWin(){
+ document.getElementById('ft-scene').textContent='🎉';
+ document.getElementById('ft-say').textContent='Toll gemacht! Du hast das ganze Gespräch auf Zazaki gespielt!';
+ document.getElementById('ft-opts').innerHTML='';
+ document.getElementById('ft-fb').innerHTML='<button class="btn bblue" onclick="startFamTheater()">🔄 Nochmal</button>';
+ sfxWin();fireConfetti();award(3);
+}
+
 const NATIONS=[
  {key:'luft',name:'Luftnomaden',emoji:'🏔️',cls:'el',math:'plus',
   real:'Ti·bet & Ne·pal',flag:'🇳🇵',
@@ -1948,6 +2053,7 @@ const NATIONHUBS={
    {t:'Schriftrollen-Werkstatt',d:'Wör·ter hö·ren & schrei·ben',e:'📜',go:"startSpell()"},
    {t:'Sprache der Reisenden',d:'Eng·lisch ler·nen 🇬🇧',e:'🗺️',go:"startEnglish()"},
    {t:'Irohs Teehaus',d:'Deutsch: Wör·ter & Le·sen',e:'🍵',go:"go('s-german-house')"},
+   {t:'Sprache der Familie',d:'Za·za·ki mit Mama & Papa 🏔️',e:'🏔️',go:"go('s-family-hub')"},
    {t:'Spiegel-Erinnerung',d:'Gro·ßes Memory',e:'🌊',go:"go('s-memory')"}
   ]},
  erde:{name:'Erdkönigreich',emoji:'🪨',sub:'Markt, Formen & Rechen-Tricks',bg:'#EAF7E6',fg:'#2C6B2C',
