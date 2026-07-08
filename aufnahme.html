@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wörter aufnehmen – Sprache der Familie</title>
+<style>
+ :root{--blau:#1E5E82;--gold:#C9A24B;--gruen:#3C7A2E;--rot:#C0341F;--bg:#FBF4E6;--card:#FFFDF8;--muted:#8A7A66}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{font-family:system-ui,sans-serif;background:var(--bg);color:#3A2E20;min-height:100vh;padding:16px}
+ .wrap{max-width:520px;margin:0 auto}
+ h1{font-size:24px;text-align:center;margin:10px 0 2px;color:var(--blau)}
+ .sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:14px}
+ .card{background:var(--card);border-radius:20px;padding:18px;box-shadow:0 3px 14px rgba(120,90,40,.12);margin-bottom:14px}
+ .langrow{display:flex;gap:10px;margin-bottom:14px}
+ .langbtn{flex:1;padding:14px 8px;font-size:17px;font-weight:800;border:3px solid transparent;border-radius:16px;background:#EFE6D2;cursor:pointer}
+ .langbtn.on{border-color:var(--gold);background:#FFF3D6}
+ .emoji{font-size:88px;text-align:center;margin:6px 0}
+ .wort{font-size:30px;font-weight:800;text-align:center}
+ .hinweis{text-align:center;color:var(--muted);font-size:15px;margin:6px 0 12px}
+ .prog{text-align:center;font-weight:700;color:var(--muted);font-size:14px;margin-bottom:6px}
+ .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ button.b{padding:15px 8px;font-size:17px;font-weight:800;border:0;border-radius:16px;color:#fff;cursor:pointer}
+ button.b:disabled{opacity:.35;cursor:default}
+ .brec{background:var(--rot)}.bstop{background:#5A4A52}.bplay{background:var(--blau)}.bsave{background:var(--gruen)}
+ .bnav{background:#B09B78}.bwide{grid-column:1/3}
+ .status{min-height:26px;text-align:center;font-weight:700;font-size:16px;margin:10px 0 2px}
+ .status.rec{color:var(--rot);animation:blink 1s infinite}
+ @keyframes blink{50%{opacity:.4}}
+ .done-list{font-size:14px;line-height:1.8}
+ .done-list b{color:var(--gruen)}
+ details{margin-top:6px}
+ summary{cursor:pointer;font-weight:700;color:var(--muted);font-size:14px}
+ textarea{width:100%;height:180px;margin-top:8px;font-size:14px;padding:8px;border-radius:10px;border:1px solid #D8C9A8}
+ .navrow{display:flex;gap:10px;margin-top:10px}
+ .navrow button{flex:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <h1>🎙️ Wörter aufnehmen</h1>
+ <div class="sub">Für Rozas „Sprache der Familie" — sprich jedes Wort einmal, die Datei wird automatisch richtig benannt und heruntergeladen.</div>
+
+ <div class="card">
+  <div class="langrow">
+   <button class="langbtn on" id="lb-zazaki" onclick="setLang('zazaki')">🏔️ Zazaki</button>
+   <button class="langbtn" id="lb-tuerkisch" onclick="setLang('tuerkisch')">🇹🇷 Türkçe</button>
+  </div>
+  <div class="prog" id="prog"></div>
+  <div class="emoji" id="emoji"></div>
+  <div class="wort" id="wort"></div>
+  <div class="hinweis" id="hinweis"></div>
+  <div class="status" id="status"></div>
+  <div class="btns">
+   <button class="b brec" id="b-rec" onclick="startRec()">🔴 Aufnehmen</button>
+   <button class="b bstop" id="b-stop" onclick="stopRec()" disabled>⏹ Stopp</button>
+   <button class="b bplay" id="b-play" onclick="playRec()" disabled>▶ Anhören</button>
+   <button class="b bsave" id="b-save" onclick="saveRec()" disabled>💾 Speichern</button>
+  </div>
+  <div class="navrow">
+   <button class="b bnav" onclick="prevWord()">◀ Zurück</button>
+   <button class="b bnav" onclick="nextWord()">Weiter ▶</button>
+  </div>
+ </div>
+
+ <div class="card">
+  <div style="font-weight:800;margin-bottom:6px">✅ Schon aufgenommen (<span id="done-count">0</span>)</div>
+  <div class="done-list" id="done-list">Noch nichts — leg los! Die Dateien landen in deinem Download-Ordner.</div>
+  <details>
+   <summary>Wortliste bearbeiten</summary>
+   <textarea id="wl" spellcheck="false"></textarea>
+   <button class="b bnav" style="width:100%;margin-top:8px" onclick="applyList()">Liste übernehmen</button>
+  </details>
+ </div>
+
+ <div class="card" style="font-size:14px;color:var(--muted);line-height:1.6">
+  <b>So geht's:</b> Sprache wählen → 🔴 Aufnehmen → Wort deutlich sprechen (gern 2×) → ⏹ Stopp → ▶ Anhören → 💾 Speichern → Weiter.
+  Am Ende einfach alle Dateien aus dem Download-Ordner weitergeben. Format: <span id="fmt-info"></span>
+ </div>
+</div>
+
+<script>
+const DEFAULT_WORDS=[
+ '👩 Mama','👨 Papa','👵 Oma','👴 Opa','👧 Schwester','👦 Bruder',
+ '🐕 Hund','🐈 Katze','🐦 Vogel','🐎 Pferd','🐟 Fisch',
+ '🍞 Brot','💧 Wasser','🥛 Milch','🍎 Apfel','🍵 Tee','🍯 Honig',
+ '🏠 Haus','☀️ Sonne','🌙 Mond','⭐ Stern','🌳 Baum','🌸 Blume',
+ '❤️ Herz','✋ Hand','👁️ Auge','😀 Lachen',
+ '1️⃣ Eins','2️⃣ Zwei','3️⃣ Drei','4️⃣ Vier','5️⃣ Fünf',
+ '🔴 Rot','🔵 Blau','🟢 Grün','🟡 Gelb'
+];
+let WORDS=[];
+try{WORDS=JSON.parse(localStorage.getItem('rec_words')||'null')||DEFAULT_WORDS.slice();}catch(e){WORDS=DEFAULT_WORDS.slice();}
+let lang='zazaki',idx=0,rec=null,chunks=[],blob=null,audioURL=null,doneFiles=[];
+try{doneFiles=JSON.parse(localStorage.getItem('rec_done')||'[]');}catch(e){}
+
+const MIME=(window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported('audio/mp4'))?'audio/mp4'
+          :(window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported('audio/webm;codecs=opus'))?'audio/webm;codecs=opus'
+          :'audio/webm';
+const EXT=MIME.startsWith('audio/mp4')?'m4a':'webm';
+document.getElementById('fmt-info').textContent='.'+EXT;
+
+function slug(w){return w.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]/g,'');}
+function parse(entry){const m=entry.trim().match(/^(\S+)\s+(.+)$/);return m?{emoji:m[1],wort:m[2]}:{emoji:'❓',wort:entry.trim()};}
+function fileName(){return lang+'_'+slug(parse(WORDS[idx]).wort)+'.'+EXT;}
+
+function setLang(l){lang=l;
+ document.getElementById('lb-zazaki').classList.toggle('on',l==='zazaki');
+ document.getElementById('lb-tuerkisch').classList.toggle('on',l==='tuerkisch');
+ resetTake();render();}
+function render(){
+ const w=parse(WORDS[idx]);
+ document.getElementById('prog').textContent='Wort '+(idx+1)+' von '+WORDS.length;
+ document.getElementById('emoji').textContent=w.emoji;
+ document.getElementById('wort').textContent=w.wort;
+ document.getElementById('hinweis').textContent='Sprich „'+w.wort+'" auf '+(lang==='zazaki'?'Zazaki':'Türkisch')+':';
+ const st=document.getElementById('status');
+ if(doneFiles.includes(fileName())){st.textContent='✅ schon gespeichert — du kannst es überschreiben';st.className='status';}
+ else{st.textContent='';st.className='status';}
+ renderDone();
+ const ta=document.getElementById('wl');if(document.activeElement!==ta)ta.value=WORDS.join('\n');
+}
+function renderDone(){
+ document.getElementById('done-count').textContent=doneFiles.length;
+ const el=document.getElementById('done-list');
+ el.innerHTML=doneFiles.length?doneFiles.map(f=>'<b>✓</b> '+f).join('<br>'):'Noch nichts — leg los! Die Dateien landen in deinem Download-Ordner.';
+}
+function resetTake(){blob=null;if(audioURL){URL.revokeObjectURL(audioURL);audioURL=null;}
+ document.getElementById('b-play').disabled=true;document.getElementById('b-save').disabled=true;
+ document.getElementById('b-rec').disabled=false;document.getElementById('b-stop').disabled=true;}
+async function startRec(){
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  chunks=[];rec=new MediaRecorder(stream,{mimeType:MIME});
+  rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+  rec.onstop=()=>{blob=new Blob(chunks,{type:MIME});
+   if(audioURL)URL.revokeObjectURL(audioURL);audioURL=URL.createObjectURL(blob);
+   stream.getTracks().forEach(t=>t.stop());
+   document.getElementById('b-play').disabled=false;document.getElementById('b-save').disabled=false;
+   const st=document.getElementById('status');st.textContent='⏹ Aufnahme fertig — erst anhören!';st.className='status';};
+  rec.start();
+  document.getElementById('b-rec').disabled=true;document.getElementById('b-stop').disabled=false;
+  document.getElementById('b-play').disabled=true;document.getElementById('b-save').disabled=true;
+  const st=document.getElementById('status');st.textContent='🔴 Aufnahme läuft … sprich jetzt!';st.className='status rec';
+ }catch(e){
+  const st=document.getElementById('status');st.className='status';
+  st.textContent='⚠️ Kein Mikrofon-Zugriff. Bitte im Browser erlauben.';
+ }
+}
+function stopRec(){if(rec&&rec.state!=='inactive')rec.stop();
+ document.getElementById('b-rec').disabled=false;document.getElementById('b-stop').disabled=true;}
+function playRec(){if(audioURL)new Audio(audioURL).play();}
+function saveRec(){
+ if(!blob)return;
+ const a=document.createElement('a');a.href=audioURL;a.download=fileName();document.body.appendChild(a);a.click();a.remove();
+ if(!doneFiles.includes(fileName()))doneFiles.push(fileName());
+ try{localStorage.setItem('rec_done',JSON.stringify(doneFiles));}catch(e){}
+ const st=document.getElementById('status');st.className='status';st.textContent='💾 Gespeichert als '+fileName();
+ renderDone();
+ setTimeout(nextWord,800);
+}
+function nextWord(){if(idx<WORDS.length-1){idx++;resetTake();render();}else{const st=document.getElementById('status');st.className='status';st.textContent='🎉 Alle Wörter dieser Sprache durch!';}}
+function prevWord(){if(idx>0){idx--;resetTake();render();}}
+function applyList(){
+ const lines=document.getElementById('wl').value.split('\n').map(s=>s.trim()).filter(Boolean);
+ if(lines.length){WORDS=lines;idx=0;try{localStorage.setItem('rec_words',JSON.stringify(WORDS));}catch(e){}resetTake();render();}
+}
+render();
+</script>
+</body>
+</html>
