@@ -140,7 +140,7 @@ h1,h2,.disp{font-family:Bangers,cursive;letter-spacing:.5px}
  <div class="cluster">
   <h2>🧠 Brain Stuff</h2>
   <div class="grid">
-   <div class="card" onclick="startQuiz('math')"><div class="ci">🧮</div><div class="ct">Easy Math</div><div class="cd">Quick brain warm-up</div></div>
+   <div class="card" onclick="startQuiz('math')"><div class="ci">🧮</div><div class="ct">Algebra</div><div class="cd">Terme, Gleichungen &amp; Variablen</div></div>
    <div class="card" onclick="startQuiz('english')"><div class="ci">🗣️</div><div class="ct">English (Hard)</div><div class="cd">Vocab &amp; grammar</div></div>
    <div class="card" onclick="startQuiz('german')"><div class="ci">📝</div><div class="ct">Deutsch (Schwer)</div><div class="cd">Grammatik-Challenge</div></div>
    <div class="card" onclick="startQuiz('avatar')"><div class="ci">🌊</div><div class="ct">Avatar Lore</div><div class="cd">Quotes &amp; trivia</div></div>
@@ -295,7 +295,7 @@ function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=rnd(0,i);var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
 var QUIZBANKS={
- math:{title:'Easy Math',emoji:'🧮'},
+ math:{title:'Algebra',emoji:'🧮'},
  english:{title:'English (Hard)',emoji:'🗣️'},
  german:{title:'Deutsch (Schwer)',emoji:'📝'},
  avatar:{title:'Avatar Lore',emoji:'🌊'},
@@ -306,7 +306,7 @@ var Q={key:null,list:[],i:0,score:0,lock:false};
 
 function startQuiz(key){
  var pool;
- if(key==='math'){ pool=[]; for(var i=0;i<10;i++)pool.push(genMathEasy()); }
+ if(key==='math'){ pool=[]; for(var i=0;i<10;i++)pool.push(genMathAlgebra()); }
  else { pool=shuffle(BANK[key]).slice(0,10); }
  Q={key:key,list:pool,i:0,score:0,lock:false};
  document.getElementById('q-title').textContent=QUIZBANKS[key].title;
@@ -355,19 +355,83 @@ function finishQuiz(){
  show('qresult');
 }
 
-function genMathEasy(){
- var type=rnd(0,7),q,ans;
- if(type===0){var a=rnd(2,40),b=rnd(2,40);ans=a+b;q=a+' + '+b+' = ?';}
- else if(type===1){var a1=rnd(10,60),b1=rnd(2,a1);ans=a1-b1;q=a1+' − '+b1+' = ?';}
- else if(type===2){var a2=rnd(2,9),b2=rnd(2,9);ans=a2*b2;q=a2+' × '+b2+' = ?';}
- else if(type===3){var b3=rnd(2,9),x3=rnd(2,9);ans=x3;q=(b3*x3)+' ÷ '+b3+' = ?';}
- else if(type===4){var p=[10,20,25,50][rnd(0,3)];var base=[20,40,60,80,100][rnd(0,4)];ans=Math.round(base*p/100);q='What is '+p+'% of '+base+'?';}
- else if(type===5){var dn=[2,3,4][rnd(0,2)];var mult=rnd(2,6);var whole=dn*mult;ans=mult;q='What is 1/'+dn+' of '+whole+'?';}
- else if(type===6){var a6=rnd(2,9);ans=a6+9;q='9 + x = '+(a6+9)+'  →  x = ?';}
- else{var a7=rnd(2,12);ans=a7*2;q='Double '+a7+' = ?';}
- var set={};set[ans]=1;var guard=0;
- while(Object.keys(set).length<4&&guard++<60){var d=ans+rnd(-6,6);if(d>=0)set[d]=1;}
- return {q:q,a:String(ans),o:Object.keys(set).map(function(k){return String(k);})};
+function fmtTerm(c,v){ if(c===0) return '0'; if(c===1) return v; if(c===-1) return '−'+v; return c+v; }
+function fmtPosCoef(c,v){ return c===1?v:c+v; }
+function numOpts(ans){
+ var set={}; set[ans]=1;
+ var pool=[ans+1,ans-1,ans+2,ans-2,-ans,ans+3,ans-3,ans+4,ans-4];
+ for(var i=0;i<pool.length && Object.keys(set).length<4;i++){ set[pool[i]]=1; }
+ var guard=0;
+ while(Object.keys(set).length<4 && guard++<40){ set[ans+rnd(-8,8)]=1; }
+ return Object.keys(set).map(function(k){return String(Number(k));});
+}
+function genMathAlgebra(){
+ var type=rnd(0,8),q,ans,opts;
+ if(type===0){
+  var v=['x','y','a','n'][rnd(0,3)]; var k1=rnd(2,9), k2=rnd(1,9), k3=rnd(1,9);
+  var sumc=k1+k2-k3;
+  q='Vereinfache: '+fmtPosCoef(k1,v)+' + '+fmtPosCoef(k2,v)+' − '+fmtPosCoef(k3,v);
+  ans=fmtTerm(sumc,v);
+  var coefs={}; coefs[sumc]=1;
+  [sumc+1,sumc-1,k1+k2+k3,-sumc,sumc+2,sumc-2].forEach(function(c){ coefs[c]=1; });
+  var guard=0; while(Object.keys(coefs).length<4 && guard++<30){ coefs[sumc+rnd(-4,4)]=1; }
+  opts=Object.keys(coefs).map(function(c){return fmtTerm(Number(c),v);});
+  return {q:q,a:ans,o:opts.slice(0,4)};
+ }
+ else if(type===1){
+  var a1=rnd(2,6), b1=rnd(1,9), x1=rnd(-9,9), op1=rnd(0,1)===0?'+':'−';
+  var b1s=op1==='+'?b1:-b1; var c1=a1*(x1+b1s);
+  q=a1+'·(x '+op1+' '+b1+') = '+c1+'  →  x = ?';
+  ans=x1; opts=numOpts(ans);
+ }
+ else if(type===2){
+  var a2=rnd(2,20), x2=rnd(-9,9); var c2=a2+x2;
+  q=a2+' + x = '+c2+'  →  x = ?';
+  ans=x2; opts=numOpts(ans);
+ }
+ else if(type===3){
+  var a3=rnd(2,7), x3=rnd(-9,9), b3=rnd(1,9), op3=rnd(0,1)===0?'+':'−';
+  var b3s=op3==='+'?b3:-b3; var c3=a3*x3+b3s;
+  q=a3+'x '+op3+' '+b3+' = '+c3+'  →  x = ?';
+  ans=x3; opts=numOpts(ans);
+ }
+ else if(type===4){
+  var a4=rnd(2,7), c4=rnd(2,7); while(c4===a4)c4=rnd(2,7);
+  var x4=rnd(-9,9), b4=rnd(1,9);
+  var d4=a4*x4+b4-c4*x4;
+  if(d4===0){ b4++; d4=a4*x4+b4-c4*x4; }
+  var dPart4=d4>=0?('+ '+d4):('− '+(-d4));
+  q=a4+'x + '+b4+' = '+c4+'x '+dPart4+'  →  x = ?';
+  ans=x4; opts=numOpts(ans);
+ }
+ else if(type===5){
+  var a5=rnd(2,6), c5=rnd(2,6); while(c5===a5)c5=rnd(2,6);
+  var x5=rnd(-8,8), b5=rnd(1,7);
+  var d5=x5*(a5-c5)-a5*b5;
+  var dPart5=d5>=0?('+ '+d5):('− '+(-d5));
+  q=a5+'·(x − '+b5+') = '+c5+'x '+dPart5+'  →  x = ?';
+  ans=x5; opts=numOpts(ans);
+ }
+ else if(type===6){
+  var c6=rnd(2,5), d6=rnd(1,6), val6=rnd(-6,6);
+  q='Berechne: '+fmtPosCoef(c6,'x²')+' − '+fmtPosCoef(d6,'x')+'   für x = '+val6;
+  ans=c6*val6*val6-d6*val6; opts=numOpts(ans);
+ }
+ else if(type===7){
+  var n7=rnd(2,6), k7=rnd(-6,6), b7=rnd(1,9);
+  var x7=n7*k7, c7=k7+b7;
+  q='x/'+n7+' + '+b7+' = '+c7+'  →  x = ?';
+  ans=x7; opts=numOpts(ans);
+ }
+ else{
+  var qbaseList=[20,40,60,80,100]; var qbase8=qbaseList[rnd(0,4)];
+  var percentList=[5,10,15,20,25,30,35,40,45,50,55,60,65,70,75];
+  var percent8=percentList[rnd(0,percentList.length-1)];
+  var p8=qbase8*percent8/100;
+  q='Wieviel % sind '+p8+' von '+qbase8+'?';
+  ans=percent8; opts=numOpts(ans);
+ }
+ return {q:q,a:String(ans),o:opts};
 }
 
 /* ============ DRAW PROMPT GENERATOR ============ */
