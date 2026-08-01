@@ -3056,7 +3056,7 @@ function renderCookRecipe(){
 }
 function renderCookStep(){
  const d=cook.dish,f=cook.factor,g=d.ings[cook.ii];const target=g.n*f;
- cook.placed=0;cook.calcOK=false;cook.washed=false;cook.cut=false;
+ cook.placed=0;cook.calcOK=false;
  document.getElementById('cook-prog').textContent='Zu·tat '+(cook.ii+1)+'/'+d.ings.length;
  document.getElementById('cook-fb').textContent='';
  document.getElementById('cook-step').innerHTML=g.emoji+' <b>'+g.name+'</b>: für 1 Per·son '+g.n+' → für '+f+' Per·so·nen?';
@@ -3065,19 +3065,35 @@ function renderCookStep(){
  renderCookPrep(g);
 }
 function renderCookPrep(g){
+ const info=COOK_PREP_ACTIONS[g.name];
+ cook.needActions=info.actions.slice();
+ cook.doneActions=[];
+ cook.prepTip=info.tip;
  document.getElementById('cook-calc').innerHTML=
   '<div style="font-size:13px;font-weight:800;color:var(--muted);margin-bottom:8px">Erst vor·be·rei·ten, '+g.emoji+' '+g.name+':</div>'
-  +'<div style="display:flex;gap:10px;justify-content:center">'
-  +'<button class="btn bgray" id="cook-wash-btn" style="flex:1;max-width:150px" onclick="cookPrepStep(\'washed\')">🧼 Wasch es!</button>'
-  +'<button class="btn bgray" id="cook-cut-btn" style="flex:1;max-width:150px" onclick="cookPrepStep(\'cut\')">🔪 Schnei·de es!</button>'
+  +'<div id="cook-prep-row" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">'
+  +COOK_ACTIONS.map(function(a){
+   return '<button class="qopt" id="cook-act-'+a.key+'" style="padding:10px 6px;font-size:14px;min-width:100px;flex:1 1 40%" onclick="cookPrepStep(\''+a.key+'\')">'+a.emoji+'<br>'+a.label+'</button>';
+  }).join('')
   +'</div>';
 }
 function cookPrepStep(key){
- if(cook[key])return;
- cook[key]=true;sfxStep();
- const btn=document.getElementById(key==='washed'?'cook-wash-btn':'cook-cut-btn');
- if(btn){btn.disabled=true;btn.style.opacity='.4';btn.textContent=(key==='washed'?'🧼 Ge·wa·schen ✓':'🔪 Ge·schnit·ten ✓');}
- if(cook.washed&&cook.cut)renderCookCalc();
+ if(cook.doneActions.indexOf(key)>=0)return;
+ const btn=document.getElementById('cook-act-'+key);
+ if(cook.needActions.indexOf(key)<0){
+  sfxWrong();
+  if(btn){btn.classList.add('wrong');setTimeout(function(){btn.classList.remove('wrong');},500);}
+  setFb('cook-fb','Fast! Das passt hier nicht — pro·bier’s noch·mal 🍵',false);
+  return;
+ }
+ cook.doneActions.push(key);sfxStep();
+ document.getElementById('cook-fb').textContent='';
+ if(btn){btn.disabled=true;btn.style.opacity='.4';btn.classList.add('right');}
+ if(cook.doneActions.length>=cook.needActions.length){
+  const row=document.getElementById('cook-prep-row');
+  if(row)row.insertAdjacentHTML('afterend','<div style="margin-top:10px;font-size:13px;font-weight:800;color:var(--muted);background:#fff6ea;border-radius:12px;padding:8px">🍵 '+cook.prepTip+'</div>');
+  setTimeout(renderCookCalc,1400);
+ }
 }
 function renderCookCalc(){
  const d=cook.dish,f=cook.factor,g=d.ings[cook.ii];const target=g.n*f;
