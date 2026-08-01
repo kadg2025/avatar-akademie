@@ -2993,6 +2993,37 @@ const DISHES=[
  {name:'Tee·haus-Bre·zel',emoji:'🥨',nation:'Tee·haus',col:'#B6772B',ings:[{emoji:'🌾',name:'Mehl',n:3},{emoji:'🧈',name:'But·ter',n:1},{emoji:'🧂',name:'Salz',n:2}]}
 ];
 const COOK_DISTRACT=[{emoji:'🍋',name:'Zi·tro·ne'},{emoji:'🍅',name:'To·ma·te'},{emoji:'🧅',name:'Zwie·bel'},{emoji:'🍇',name:'Trau·be'},{emoji:'🧀',name:'Kä·se'},{emoji:'🥔',name:'Kar·tof·fel'},{emoji:'🍄',name:'Pilz'},{emoji:'🥕',name:'Möh·re'}];
+const COOK_ACTIONS=[
+ {key:'wash',emoji:'🧼',label:'Wa·schen'},
+ {key:'cut',emoji:'🔪',label:'Schnei·den'},
+ {key:'crack',emoji:'🥚',label:'Auf·schla·gen'},
+ {key:'measure',emoji:'🥄',label:'Ab·mes·sen'}
+];
+const COOK_PREP_ACTIONS={
+ 'Ei':{actions:['crack'],tip:'Ei·er schlägt man auf, nie schnei·den — vor·sich·tig mit der Scha·le!'},
+ 'Mehl':{actions:['measure'],tip:'Mehl wird ab·ge·mes·sen, nicht ge·wa·schen — sonst wird’s kle·brig!'},
+ 'Ho·nig':{actions:['measure'],tip:'Ho·nig ein·fach ab·mes·sen — er ist schon süß und sau·ber ge·nug.'},
+ 'Salz':{actions:['measure'],tip:'Nur ei·ne klei·ne Pri·se ab·mes·sen, Salz braucht kein Was·ser.'},
+ 'But·ter':{actions:['measure'],tip:'But·ter wird ab·ge·mes·sen, nicht ge·schnit·ten — sie schmilzt gleich im Topf.'},
+ 'Nu·deln':{actions:['measure'],tip:'Tro·cke·ne Nu·deln misst man ein·fach ab, be·vor sie ins Was·ser kom·men.'},
+ 'Reis':{actions:['wash'],tip:'Reis wäscht man kurz ab, dann wird er schön lo·cker.'},
+ 'See·tang':{actions:['wash'],tip:'See·tang kommt frisch aus dem Meer — kurz ab·wa·schen reicht.'},
+ 'Jas·min':{actions:['wash'],tip:'Zar·te Jas·min·blü·ten nur sanft ab·spü·len, nicht schnei·den.'},
+ 'Gar·ne·le':{actions:['wash'],tip:'Gar·ne·len kurz ab·wa·schen, dann sind sie be·reit für den Topf.'},
+ 'Erd·bee·re':{actions:['wash'],tip:'Erd·bee·ren nur ab·wa·schen — sie sind schon per·fekt so wie sie sind.'},
+ 'Trau·be':{actions:['wash'],tip:'Trau·ben ein·fach ab·wa·schen und di·rekt ge·nie·ßen.'},
+ 'Ba·na·ne':{actions:['wash'],tip:'Ba·na·ne ab·wa·schen reicht — ge·schält wird sie so·wie·so.'},
+ 'Sa·lat':{actions:['wash'],tip:'Fri·scher Sa·lat wird ge·wa·schen, be·vor er in die Schüs·sel kommt.'},
+ 'Mais':{actions:['wash','cut'],tip:'Mais wa·schen und in Stü·cke schnei·den — so wird er schön kna·ckig.'},
+ 'Möh·re':{actions:['wash','cut'],tip:'Möh·ren erst ab·wa·schen, dann in Schei·ben schnei·den.'},
+ 'To·ma·te':{actions:['wash','cut'],tip:'To·ma·ten wa·schen und klein schnei·den — für den bes·ten Ge·schmack.'},
+ 'Pilz':{actions:['wash','cut'],tip:'Pil·ze vor·sich·tig ab·wa·schen und in Schei·ben schnei·den.'},
+ 'Pfir·sich':{actions:['wash','cut'],tip:'Pfir·sich wa·schen und schnei·den — so süß und saf·tig!'},
+ 'Chi·li':{actions:['wash','cut'],tip:'Chi·li wa·schen und fein schnei·den — Vor·sicht, der ist scharf!'},
+ 'Fisch':{actions:['wash','cut'],tip:'Fisch wird ge·wa·schen und fi·le·tiert, be·vor er in den Topf kommt.'},
+ 'A·vo·ca·do':{actions:['cut'],tip:'A·vo·ca·do ein·fach auf·schnei·den und den Kern ent·fer·nen.'},
+ 'Kä·se':{actions:['cut'],tip:'Kä·se wird in Stü·cke ge·schnit·ten — per·fekt zum Über·ba·cken.'}
+};
 let cook=null;
 function startCooking(){
  ensureAudio();go('s-cooking');
