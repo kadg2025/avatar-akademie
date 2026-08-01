@@ -3165,6 +3165,21 @@ function attachCookDrag(tile,t){
  });
  tile.addEventListener('pointercancel',function(){if(drag){drag.ghost.remove();drag=null;}});
 }
+function cookSteamPulse(count){
+ const pot=document.getElementById('cook-pot');
+ if(!pot)return;
+ pot.style.borderColor=cook.dish.col;
+ pot.classList.remove('pot-cooked');void pot.offsetWidth;pot.classList.add('pot-cooked');
+ const n=count||3;
+ for(let i=0;i<n;i++){
+  const s=document.createElement('div');
+  s.className='steam-puff';s.textContent='💨';
+  s.style.left=(24+i*(52/Math.max(n-1,1)))+'%';
+  s.style.animationDelay=(i*0.12)+'s';
+  pot.appendChild(s);
+  setTimeout(function(){s.remove();},900);
+ }
+}
 function cookDrop(t){
  const g=cook.dish.ings[cook.ii];const target=g.n*cook.factor;
  if(!cook.calcOK){setFb('cook-fb','Erst rech·nen: '+g.n+' × '+cook.factor+' = ? 👆',false);sfxWrong();return;}
@@ -3173,6 +3188,7 @@ function cookDrop(t){
  cook.placed++;sfxStep();
  renderCookPot(target);
  if(cook.placed>=target){
+  cookSteamPulse();
   sfxRight();maybeCheer();
   setFb('cook-fb','✅ '+target+'× '+g.name+' im Topf! 🍲',true);
   setTimeout(function(){cook.ii++;if(cook.ii>=cook.dish.ings.length)cookingWin();else{renderCookRecipe();renderCookStep();}},900);
@@ -3181,6 +3197,7 @@ function cookDrop(t){
  }
 }
 function cookingWin(){
+ cookSteamPulse(6);
  award(2);sfxWin();fireConfetti();
  document.getElementById('cook-win-score').innerHTML='<b>'+cook.dish.name+'</b> für '+cook.factor+' Per·so·nen ist fer·tig! +2 📜';
  go('s-cooking-win');
