@@ -320,6 +320,11 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
 .sakura-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
 .sakura-petal{position:absolute;top:-10px;border-radius:50%;opacity:0;animation:sakuraFall linear infinite;filter:blur(0.3px)}
 @keyframes sakuraFall{0%{opacity:0;transform:translateY(0) rotate(0deg) translateX(0)}5%{opacity:.65}85%{opacity:.50}100%{opacity:0;transform:translateY(110vh) rotate(720deg) translateX(45px)}}
+/* ── Irohs Küche: Topf-Animation ── */
+@keyframes potCookPulse{0%{transform:scale(1)}30%{transform:scale(1.04)}60%{transform:scale(.99)}100%{transform:scale(1)}}
+@keyframes steamPuff{0%{opacity:0;transform:translate(-50%,0) scale(.6)}25%{opacity:.85}100%{opacity:0;transform:translate(-50%,-42px) scale(1.4)}}
+.pot-cooked{animation:potCookPulse .7s ease}
+.steam-puff{position:absolute;bottom:60%;font-size:22px;pointer-events:none;animation:steamPuff .8s ease forwards}
 /* ── Tagesquest ── */
 .questcard{background:linear-gradient(135deg,#FFF6E8,#FFEFD8);border:2px solid #F0C060;border-radius:var(--r);padding:12px 14px;margin:10px 0;box-shadow:var(--sh)}
 .questcard.done{background:linear-gradient(135deg,#EFF8EC,#E2F2DC);border-color:var(--erde)}
