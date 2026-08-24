@@ -534,6 +534,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .natportal.wasser{background:linear-gradient(150deg,#4A96A8,#0D5060)}
 .natportal.erde{background:linear-gradient(150deg,#6EA86E,#2E6228)}
 .natportal.feuer{background:linear-gradient(150deg,#E8789A,#A83058)}
+.natportal.weisheit{background:linear-gradient(150deg,#B48CE0,#5B2A9A)}
 .seclabel{font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px;color:var(--muted);margin:20px 4px 8px;text-align:left;display:flex;align-items:center;gap:7px}
 .seclabel::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,rgba(0,0,0,.12),transparent);border-radius:2px}
 /* ── Ruhe-Modus ── */
@@ -572,6 +573,45 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
 .spletter{width:48px;height:48px;border-radius:12px;border:2px solid #DDC;background:var(--bg);font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;cursor:pointer;color:var(--text);transition:transform .1s,border-color .12s}
 .spletter:hover{transform:scale(1.08);border-color:var(--gold)}
 .spletter.used{opacity:.22;pointer-events:none}
+#ensp-slots{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0}
+#ensp-letters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.enumgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.enumcard{background:var(--card);border-radius:14px;padding:9px 3px 7px;text-align:center;cursor:pointer;box-shadow:var(--sh);transition:transform .15s}
+.enumcard:active{transform:scale(.92)}
+.enumcard .en-n{font-family:'Fredoka',sans-serif;font-weight:700;font-size:22px;color:#5B2A9A}
+.enumcard .en-w{font-size:10.5px;font-weight:700;color:var(--muted);margin-top:3px}
+.enumcard .en-emoji{font-size:28px;line-height:1.15}
+.enumcard .en-de{font-size:9px;font-weight:600;color:var(--muted);opacity:.7;margin-top:1px}
+.endotrow{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin:2px 0}
+.endot{width:5px;height:5px;border-radius:50%;background:#B48CE0;flex:none}
+.mirwrap{position:relative;width:100%;max-width:260px;height:220px;margin:14px auto;background:#FBF6FF;border:2px solid #E5D4F5;border-radius:20px;overflow:hidden;touch-action:none}
+.mirobj{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;user-select:none}
+.mirobj svg{width:110px;height:110px}
+.mirghost{opacity:.32;pointer-events:none;transition:opacity .15s}
+.mirghost.locked{opacity:.85}
+.miraxis{position:absolute;top:0;bottom:0;left:50%;width:0;border-left:3px dashed #9C6ADE;pointer-events:none;transition:border-color .15s}
+.miraxis.locked{border-left:3px solid #E8A93A;filter:drop-shadow(0 0 4px rgba(232,169,58,.7))}
+.mirsparkle{position:absolute;top:6px;left:50%;transform:translateX(-50%);font-size:26px;animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
+.mirpicker{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.mirpickitem{background:var(--card);border-radius:14px;padding:10px 4px;text-align:center;cursor:pointer;box-shadow:var(--sh);font-size:34px;border:3px solid transparent;transition:transform .12s}
+.mirpickitem svg{width:34px;height:34px;display:block;margin:0 auto}
+.mirpickitem.sel{border-color:#9C6ADE}
+.mirpickitem:active{transform:scale(.92)}
+.mirpickitem .mp-n{font-size:12px;font-weight:700;color:var(--muted);margin-top:2px}
+.symgridwrap{position:relative;max-width:320px;margin:14px auto}
+.symgridwrap.demo{max-width:220px;opacity:.9}
+.symaxisline{position:absolute;top:-4px;bottom:-4px;left:50%;width:5px;background:#E0342F;transform:translateX(-50%);border-radius:3px;z-index:3;box-shadow:0 0 8px rgba(224,52,47,.65);pointer-events:none}
+.symaxisline::before,.symaxisline::after{content:'▾';position:absolute;left:50%;transform:translateX(-50%);color:#E0342F;font-size:15px;line-height:1}
+.symaxisline::before{top:-16px}
+.symaxisline::after{content:'▴';bottom:-16px}
+.symgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;width:100%}
+.symgrid-demo{grid-template-columns:repeat(6,1fr)}
+.symcell{aspect-ratio:1;border-radius:5px;background:#EDE3F7;cursor:pointer;transition:transform .1s,background .15s,box-shadow .15s}
+.symcell.left{cursor:default;background:#9C6ADE}
+.symcell.filled{background:#9C6ADE;animation:pop .25s cubic-bezier(.34,1.56,.64,1)}
+.symcell.hint{box-shadow:inset 0 0 0 2px #C9A8E8}
+.symcell.pulse{box-shadow:0 0 0 4px rgba(224,52,47,.55);transform:scale(1.15);position:relative;z-index:2}
+.symcell:active{transform:scale(.88)}
 @keyframes shakeX{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .shakeit{animation:shakeX .4s}
 /* ── Kirschblüten ── */
@@ -653,6 +693,7 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
   <div class="natportal wasser" onclick="openNationHub('wasser')"><div class="np-sym">🌊</div><div class="np-name">Wasserstamm</div><div class="np-sub">Wörter &amp; Sprachen</div></div>
   <div class="natportal erde" onclick="openNationHub('erde')"><div class="np-sym">🪨</div><div class="np-name">Erdkönigreich</div><div class="np-sub">Markt &amp; Formen</div></div>
   <div class="natportal feuer" onclick="openNationHub('feuer')"><div class="np-sym">🔥</div><div class="np-name">Feuernation</div><div class="np-sub">Rechnen &amp; Tempo</div></div>
+  <div class="natportal weisheit" style="grid-column:1/-1" onclick="openNationHub('weisheit')"><div class="np-sym">🏛️</div><div class="np-name">Weisheits-Tempel</div><div class="np-sub">Übungen für die Schule: Englisch &amp; Mathe</div></div>
  </div>
 
  <div class="seclabel">Für alle Nationen 🌏</div>
@@ -1317,6 +1358,79 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
  <button class="btn bgray" onclick="go('s-hub')">← Haupt·me·nü</button>
 </div>
 
+<!-- WEISHEITS-TEMPEL: SCHULE -->
+<!-- ENGLISCH: ZAHLEN 1-20 -->
+<div id="s-en-numbers" class="sc">
+ <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:26px">🔢 Zahlen-Werkstatt</div><div class="gs">Eng·lisch: 1 bis 20</div></div>
+ <div style="display:flex;gap:8px;margin:10px 0">
+  <button class="btn bgold" id="en-mode-a" style="flex:1;margin:0;padding:11px;font-size:14px" onclick="enSetMode('hear')">🔊 Hö·ren &amp; Ver·ste·hen</button>
+  <button class="btn bgray" id="en-mode-b" style="flex:1;margin:0;padding:11px;font-size:14px" onclick="enSetMode('write')">✏️ Schrei·ben ü·ben</button>
+ </div>
+ <button class="btn bblue" style="margin:0 0 12px" onclick="startEnListen()">🎧 Hö·ren &amp; Ra·ten — wel·che Zahl war das?</button>
+ <div id="en-hear">
+  <div class="enumgrid" id="en-grid"></div>
+ </div>
+ <div id="en-write" style="display:none">
+  <div class="progress-mini"><span id="ensp-prog"></span><span>Mit On·kel I·roh ☕</span></div>
+  <div class="qpanel" style="text-align:center;background-color:#F3E9FB;padding:20px">
+   <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:52px;color:#5B2A9A" id="ensp-num"></div>
+   <div id="ensp-dots" style="margin:2px 0 10px"></div>
+   <button class="btn bblue" style="max-width:240px;margin:8px auto;font-size:17px;padding:12px" onclick="enSpellSay()">🔊 Wort an·hö·ren</button>
+   <div id="ensp-slots"></div>
+   <div id="ensp-letters"></div>
+   <button class="btn bgray" style="max-width:170px;margin:4px auto" onclick="enSpBack()">⌫ Lö·schen</button>
+   <div class="feedbk" id="ensp-fb"></div>
+  </div>
+ </div>
+</div>
+
+<!-- ENGLISCH: SCHULWÖRTER -->
+<div id="s-en-words" class="sc">
+ <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:26px">🎒 Schulwörter</div><div class="gs">Eng·lisch: Din·ge in der Schu·le</div></div>
+ <div class="story" style="text-align:center;font-size:15px">Tip·pe auf ein Bild, um das Wort auf Eng·lisch zu hö·ren! 🔊</div>
+ <div class="enumgrid" id="en-words-grid"></div>
+</div>
+
+<!-- MATHE: SPIEGELACHSE -->
+<div id="s-mirror" class="sc">
+ <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:26px">🪞 Spiegel-Garten</div><div class="gs">Fin·de die Spie·gel·ach·se</div></div>
+ <div class="story" id="mir-intro" style="text-align:center;font-size:16px">Vie·le Din·ge sind links und rechts ganz gleich! Die Li·nie in der Mit·te heißt <b>Spie·gel·ach·se</b>. Schau dir die klei·ne De·mo an: 🦋</div>
+ <div class="mirwrap" id="mir-demo-wrap">
+  <div class="mirobj" id="mir-demo-obj">🦋</div>
+  <div class="mirobj mirghost" id="mir-demo-ghost" style="opacity:0">🦋</div>
+  <div class="miraxis" id="mir-demo-axis"></div>
+ </div>
+ <div class="seclabel">Wäh·le ein Bild 🖼️</div>
+ <div class="mirpicker" id="mir-picker"></div>
+ <div id="mir-play" style="display:none">
+  <div class="mirwrap" id="mir-wrap">
+   <div class="mirobj" id="mir-obj"></div>
+   <div class="mirobj mirghost" id="mir-ghost"></div>
+   <div class="miraxis" id="mir-axis"></div>
+   <div class="mirsparkle" id="mir-sparkle" style="display:none">✨</div>
+  </div>
+  <div class="story" id="mir-caption" style="text-align:center;font-size:15px"></div>
+  <button class="btn bgold" onclick="mirShowMe()">👉 Zeig mir!</button>
+ </div>
+</div>
+
+<!-- MATHE: SYMMETRIE -->
+<div id="s-symmetry" class="sc">
+ <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:26px">✨ Muster-Werkstatt</div><div class="gs">Sym·me·trie üben</div></div>
+ <div class="story" style="text-align:center;font-size:16px">Links ist schon ein Mus·ter ge·malt. Tip·pe rechts auf die Käst·chen, um das <b>glei·che</b> Mus·ter ge·spie·gelt zu bau·en! Die <b style="color:#E0342F">ro·te Li·nie</b> ist die Spie·gel·ach·se. Schau erst die klei·ne De·mo an: ✨</div>
+ <div class="symgridwrap demo"><div class="symaxisline"></div><div class="symgrid symgrid-demo" id="sym-demo-grid"></div></div>
+ <div class="symgridwrap" style="margin-top:20px"><div class="symaxisline"></div><div class="symgrid" id="sym-grid"></div></div>
+ <div style="display:flex;gap:8px;margin:10px 0">
+  <button class="btn bgray" style="flex:1;margin:0;padding:11px;font-size:14px" id="sym-hint-btn" onclick="symToggleHint()">💡 Hin·wei·se aus</button>
+  <button class="btn bgray" style="flex:1;margin:0;padding:11px;font-size:14px" onclick="buildSymmetry()">🔄 Neu·es Mus·ter</button>
+ </div>
+ <div class="feedbk" id="sym-fb"></div>
+</div>
+
 </div>
 
 <script>
@@ -1487,6 +1601,7 @@ function go(id){
 if(id==='s-stories-nation'){/* already built by openStoriesNation */}
  if(id==='s-journey')buildJourney();if(id==='s-map')buildMap();
  if(id==='s-2p-setup')build2PSetup();if(id==='s-german-house')buildGermanHouse();if(id==='s-word-flight')startWordFlight();
+ if(id==='s-en-numbers')buildEnNumbers();if(id==='s-en-words')buildEnWords();if(id==='s-mirror')buildMirror();if(id==='s-symmetry')buildSymmetry();
  if(id==='s-fairy-hub')buildFairyHub();if(id==='s-trace')startTrace();if(id==='s-dots')startDots();if(id==='s-percept')startPercept();
  if(id==='s-shop')buildShop();
 }
@@ -2006,6 +2121,14 @@ const NATIONHUBS={
    {t:'Sonnen-Uhr',d:'Uhr·zeit le·sen',e:'☀️',go:"startClock()"},
    {t:'Irohs Vorräte',d:'Ge·recht tei·len',e:'🫖',go:"startDivide()"},
    {t:'Agni-Kai-Duell',d:'Ma·the-Duell',e:'⚔️',go:"go('s-duel-intro')"}
+  ]},
+ weisheit:{name:'Weisheits-Tempel',emoji:'🏛️',sub:'Übungen für die Schule',bg:'#F3E9FB',fg:'#5B2A9A',
+  intro:'Im Weis·heits-Tem·pel übst du für die Schu·le. Hier lernst du Eng·lisch und Ma·the — ganz in Ru·he und oh·ne Zeit·druck. 🏛️',
+  games:[
+   {t:'Zahlen-Werkstatt',d:'Eng·lisch: 1 bis 20',e:'🔢',go:"go('s-en-numbers')"},
+   {t:'Schulwörter',d:'Eng·lisch: Wör·ter in der Schu·le',e:'🎒',go:"go('s-en-words')"},
+   {t:'Spiegel-Garten',d:'Spie·gel·ach·se ent·de·cken',e:'🪞',go:"go('s-mirror')"},
+   {t:'Muster-Werkstatt',d:'Sym·me·trie üben',e:'✨',go:"go('s-symmetry')"}
   ]}
 };
 function openNationHub(key){buildNationHub(key);go('s-nation-hub');}
@@ -2847,6 +2970,311 @@ function checkSpell(){const cur=sp.list[sp.i];const made=sp.built.map(p=>p.ch).j
  if(made===cur.w){sp.score++;setFb('sp-fb','✅ Rich·tig ge·schrie·ben!',true);sfxRight();maybeCheer();speak('Richtig! '+cur.w);setTimeout(()=>{sp.i++;if(sp.i>=sp.list.length)spellWin();else renderSpell();},1150);}
  else{setFb('sp-fb','Fast! Hör noch·mal und ver·such es wie·der. 💙',false);sfxWrong();const sl=document.getElementById('sp-slots');sl.classList.add('shakeit');setTimeout(()=>{sl.classList.remove('shakeit');sp.built.forEach(p=>p.used=false);sp.built=[];renderSpellSlots();renderSpellLetters();spellSay();},950);}}
 function spellWin(){award(2);document.getElementById('gw-emoji').textContent='✏️';document.getElementById('gw-msg').innerHTML='Toll! Du hast <b>'+sp.score+' von '+sp.list.length+'</b> Wör·ter rich·tig ge·schrie·ben! +4 📜';document.getElementById('gw-again').onclick=startSpell;sfxWin();fireConfetti();maybeBreak();go('s-gwin');}
+
+// ════ WEISHEITS-TEMPEL: ENGLISCH ZAHLEN 1-20 ════
+const EN_NUM=[
+ {n:1,w:'one'},{n:2,w:'two'},{n:3,w:'three'},{n:4,w:'four'},{n:5,w:'five'},
+ {n:6,w:'six'},{n:7,w:'seven'},{n:8,w:'eight'},{n:9,w:'nine'},{n:10,w:'ten'},
+ {n:11,w:'eleven'},{n:12,w:'twelve'},{n:13,w:'thirteen'},{n:14,w:'fourteen'},{n:15,w:'fifteen'},
+ {n:16,w:'sixteen'},{n:17,w:'seventeen'},{n:18,w:'eighteen'},{n:19,w:'nineteen'},{n:20,w:'twenty'}
+];
+function enDots(n,size){
+ size=size||5;const rows=[];let rest=n;
+ while(rest>0){const c=Math.min(10,rest);rows.push(c);rest-=c;}
+ return rows.map(c=>'<div class="endotrow">'+Array(c).fill(0).map(()=>'<div class="endot" style="width:'+size+'px;height:'+size+'px"></div>').join('')+'</div>').join('');
+}
+let enMode='hear';
+function enSetMode(m){
+ enMode=m;
+ document.getElementById('en-mode-a').className='btn '+(m==='hear'?'bgold':'bgray');
+ document.getElementById('en-mode-b').className='btn '+(m==='write'?'bgold':'bgray');
+ document.getElementById('en-hear').style.display=m==='hear'?'block':'none';
+ document.getElementById('en-write').style.display=m==='write'?'block':'none';
+ if(m==='write'&&(!enSp||enSp.i>=EN_NUM.length))startEnWrite();
+}
+function buildEnNumbers(){
+ enSetMode('hear');
+ const g=document.getElementById('en-grid');g.innerHTML='';
+ EN_NUM.forEach(x=>{
+  const d=document.createElement('div');d.className='enumcard';
+  d.innerHTML='<div class="en-n">'+x.n+'</div>'+enDots(x.n,5)+'<div class="en-w">'+x.w+'</div>';
+  d.onclick=()=>{d.style.transform='scale(1.12)';speakL(x.w,'en-US');setTimeout(()=>{d.style.transform='';},260);};
+  g.appendChild(d);
+ });
+}
+const EN_SCHOOL=[
+ {en:'teacher',de:'Leh·rer/in',emoji:'🧑‍🏫'},
+ {en:'boy',de:'Jun·ge',emoji:'👦'},
+ {en:'girl',de:'Mäd·chen',emoji:'👧'},
+ {en:'chalk',de:'Krei·de',emoji:'⬜'},
+ {en:'ruler',de:'Li·ne·al',emoji:'📏'},
+ {en:'pencil',de:'Blei·stift',emoji:'✏️'},
+ {en:'pencil case',de:'Fe·der·mäpp·chen',emoji:'👝'},
+ {en:'pen',de:'Ku·gel·schrei·ber',emoji:'🖊️'},
+ {en:'sharpener',de:'Spit·zer',emoji:'⚙️'},
+ {en:'rubber',de:'Ra·dier·gum·mi',emoji:'🧼'},
+ {en:'book',de:'Buch',emoji:'📖'},
+ {en:'schoolbag',de:'Schul·ta·sche',emoji:'🎒'},
+ {en:'classroom',de:'Klas·sen·zim·mer',emoji:'🏫'},
+ {en:'chair',de:'Stuhl',emoji:'🪑'},
+ {en:'desk',de:'Pult',emoji:'🗄️'},
+ {en:'door',de:'Tür',emoji:'🚪'},
+ {en:'window',de:'Fens·ter',emoji:'🪟'},
+ {en:'blackboard',de:'Ta·fel',emoji:'⬛'},
+ {en:'wastepaper basket',de:'Pa·pier·korb',emoji:'🗑️'}
+];
+function buildEnWords(){
+ const g=document.getElementById('en-words-grid');g.innerHTML='';
+ EN_SCHOOL.forEach(x=>{
+  const d=document.createElement('div');d.className='enumcard';
+  d.innerHTML='<div class="en-emoji">'+x.emoji+'</div><div class="en-w" style="margin-top:4px">'+x.en+'</div><div class="en-de">'+x.de+'</div>';
+  d.onclick=()=>{d.style.transform='scale(1.12)';speakL(x.en,'en-US');setTimeout(()=>{d.style.transform='';},260);};
+  g.appendChild(d);
+ });
+}
+let enSp=null;
+function startEnWrite(){enSp={i:0,built:[],pool:[]};renderEnWrite();}
+function renderEnWrite(){
+ const cur=EN_NUM[enSp.i];enSp.built=[];
+ document.getElementById('ensp-num').textContent=cur.n;
+ document.getElementById('ensp-dots').innerHTML=enDots(cur.n,9);
+ document.getElementById('ensp-prog').textContent=(enSp.i+1)+'/'+EN_NUM.length;
+ document.getElementById('ensp-fb').textContent='';
+ let letters=cur.w.toUpperCase().split('').sort(()=>Math.random()-.5);
+ enSp.pool=letters.map(ch=>({ch,used:false}));
+ renderEnSlots();renderEnLetters();
+ setTimeout(enSpellSay,450);
+}
+function renderEnSlots(){const cur=EN_NUM[enSp.i];const g=document.getElementById('ensp-slots');g.innerHTML='';for(let i=0;i<cur.w.length;i++){const d=document.createElement('div');const ch=enSp.built[i];d.className='spslot'+(ch?' filled':'');d.textContent=ch?ch.ch:'';g.appendChild(d);}}
+function renderEnLetters(){const g=document.getElementById('ensp-letters');g.innerHTML='';enSp.pool.forEach((p,idx)=>{const b=document.createElement('button');b.className='spletter'+(p.used?' used':'');b.textContent=p.ch;b.onclick=()=>enTapLetter(idx);g.appendChild(b);});}
+function enTapLetter(idx){const cur=EN_NUM[enSp.i];if(enSp.built.length>=cur.w.length)return;const p=enSp.pool[idx];if(p.used)return;p.used=true;enSp.built.push(p);sfxStep();renderEnSlots();renderEnLetters();if(enSp.built.length===cur.w.length)setTimeout(checkEnWord,250);}
+function enSpBack(){if(!enSp||enSp.built.length===0)return;const p=enSp.built.pop();p.used=false;renderEnSlots();renderEnLetters();}
+function enSpellSay(){const cur=enSp&&EN_NUM[enSp.i];if(cur)speakL(cur.w,'en-US');}
+function checkEnWord(){
+ const cur=EN_NUM[enSp.i];const made=enSp.built.map(p=>p.ch).join('').toLowerCase();
+ if(made===cur.w){
+  setFb('ensp-fb','✅ Rich·tig ge·schrie·ben!',true);sfxRight();maybeCheer();speakL(cur.w,'en-US');
+  setTimeout(()=>{enSp.i++;if(enSp.i>=EN_NUM.length)enWriteWin();else renderEnWrite();},1150);
+ }else{
+  setFb('ensp-fb','Fast! Hör noch·mal und ver·such es wie·der. 💙',false);sfxWrong();
+  const sl=document.getElementById('ensp-slots');sl.classList.add('shakeit');
+  setTimeout(()=>{sl.classList.remove('shakeit');enSp.built.forEach(p=>p.used=false);enSp.built=[];renderEnSlots();renderEnLetters();enSpellSay();},950);
+ }
+}
+function enWriteWin(){
+ award(2);document.getElementById('gw-emoji').textContent='🔢';
+ document.getElementById('gw-msg').innerHTML='Fan·tas·tisch! Du kannst jetzt al·le Zah·len von <b>1 bis 20</b> auf Eng·lisch schrei·ben! +4 📜';
+ document.getElementById('gw-again').onclick=startEnWrite;sfxWin();fireConfetti();maybeBreak();go('s-gwin');
+}
+function genEnNumberListen(){
+ const w=EN_NUM[rnd(0,EN_NUM.length-1)];
+ const set=new Set([w.n]);
+ while(set.size<4){set.add(EN_NUM[rnd(0,EN_NUM.length-1)].n);}
+ const opts=[...set].sort(()=>Math.random()-.5);
+ return {visual:'<div style="font-size:50px;text-align:center;margin:6px 0">🔊</div>',q:'Wel·che Zahl hast du ge·hört?',ans:w.n,opts,say:w.w,sayWin:w.w,lang:'en-US'};
+}
+function startEnListen(){startQuiz({title:'Zah·len hö·ren 🔊',sub:'Listen and guess! 🇬🇧',count:8,emoji:'🔢',again:startEnListen,gen:genEnNumberListen,winMsg:s=>'Su·per! <b>'+s+' von 8</b> Zah·len rich·tig er·kannt! +4 📜'});}
+
+// ════ WEISHEITS-TEMPEL: SPIEGELACHSE ════
+const MIR_OBJS=[
+ {key:'mensch',name:'Mensch',
+  svg:'<svg viewBox="0 0 100 100"><circle cx="50" cy="22" r="14" fill="#F0B98D"/><rect x="38" y="36" width="24" height="34" rx="8" fill="#5C9CE0"/><line x1="38" y1="42" x2="18" y2="60" stroke="#F0B98D" stroke-width="7" stroke-linecap="round"/><line x1="62" y1="42" x2="82" y2="60" stroke="#F0B98D" stroke-width="7" stroke-linecap="round"/><line x1="44" y1="70" x2="34" y2="96" stroke="#3a2a1a" stroke-width="8" stroke-linecap="round"/><line x1="56" y1="70" x2="66" y2="96" stroke="#3a2a1a" stroke-width="8" stroke-linecap="round"/></svg>',
+  caption:'Ein Mensch hat links und rechts fast das Glei·che: zwei Ar·me, zwei Bei·ne, zwei Au·gen!'},
+ {key:'gesicht',name:'Gesicht',
+  svg:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="#F0B98D"/><circle cx="34" cy="42" r="7" fill="#3a2a1a"/><circle cx="66" cy="42" r="7" fill="#3a2a1a"/><path d="M50,50 L46,64 L54,64 Z" fill="#D48A5A"/><path d="M32,76 Q50,88 68,76" stroke="#A8305A" stroke-width="5" fill="none" stroke-linecap="round"/></svg>',
+  caption:'Bei ei·nem Ge·sicht sind bei·de Au·gen gleich weit von der Na·se ent·fernt!'},
+ {key:'krone',name:'Krone',emoji:'👑',
+  caption:'Ei·ne Kro·ne hat in der Mit·te ei·ne Spit·ze — links und rechts da·von ist sie gleich!'},
+ {key:'schneeflocke',name:'Schneeflocke',emoji:'❄️',
+  caption:'Ei·ne Schnee·flo·cke hat so·gar ganz vie·le Spie·gel·ach·sen!'},
+ {key:'hase',name:'Hase',
+  svg:'<svg viewBox="0 0 100 100"><ellipse cx="35" cy="25" rx="10" ry="22" fill="#F5D9C8" transform="rotate(-12 35 25)"/><ellipse cx="65" cy="25" rx="10" ry="22" fill="#F5D9C8" transform="rotate(12 65 25)"/><ellipse cx="35" cy="27" rx="5" ry="15" fill="#F2A9C0" transform="rotate(-12 35 27)"/><ellipse cx="65" cy="27" rx="5" ry="15" fill="#F2A9C0" transform="rotate(12 65 27)"/><circle cx="50" cy="60" r="28" fill="#F5D9C8"/><circle cx="40" cy="55" r="4" fill="#3a2a1a"/><circle cx="60" cy="55" r="4" fill="#3a2a1a"/><ellipse cx="50" cy="64" rx="5" ry="3.5" fill="#E8899E"/><path d="M50,67 Q46,74 40,73" stroke="#3a2a1a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M50,67 Q54,74 60,73" stroke="#3a2a1a" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  caption:'Ein Ha·se hat zwei Oh·ren, die ge·nau gleich aus·se·hen — links und rechts!'},
+ {key:'knopf',name:'Knopf',
+  svg:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="#F2C6DA" stroke="#A8305A" stroke-width="4"/><circle cx="38" cy="38" r="6" fill="#7A1C38"/><circle cx="62" cy="38" r="6" fill="#7A1C38"/><circle cx="38" cy="62" r="6" fill="#7A1C38"/><circle cx="62" cy="62" r="6" fill="#7A1C38"/></svg>',
+  caption:'Ein Knopf mit vier Lö·chern ist auf bei·den Sei·ten ge·nau gleich!'},
+ {key:'tennis',name:'Tennisschläger',
+  svg:'<svg viewBox="0 0 100 100"><ellipse cx="50" cy="32" rx="26" ry="30" fill="none" stroke="#3a2a1a" stroke-width="5"/><g stroke="#E8C86A" stroke-width="1.6"><line x1="50" y1="6" x2="50" y2="58"/><line x1="34" y1="8" x2="34" y2="56"/><line x1="66" y1="8" x2="66" y2="56"/><line x1="26" y1="16" x2="26" y2="48"/><line x1="74" y1="16" x2="74" y2="48"/><line x1="26" y1="14" x2="74" y2="14"/><line x1="24" y1="24" x2="76" y2="24"/><line x1="24" y1="34" x2="76" y2="34"/><line x1="24" y1="44" x2="76" y2="44"/><line x1="26" y1="50" x2="74" y2="50"/></g><rect x="46" y="58" width="8" height="34" rx="3" fill="#7A5A38"/><rect x="43" y="88" width="14" height="8" rx="2" fill="#3a2a1a"/></svg>',
+  caption:'Ein Ten·nis·schlä·ger ist in der Mit·te ge·teilt — bei·de Sei·ten sind gleich!'},
+ {key:'bikini',name:'Bikini',emoji:'👙',
+  caption:'Ein Bi·ki·ni hat zwei glei·che Tei·le — links und rechts pas·sen zu·sam·men!'},
+ {key:'hemd',name:'Hemd',emoji:'👕',
+  caption:'Ein Hemd hat zwei Är·mel, die ge·nau gleich lang sind!'},
+ {key:'korb',name:'Korb',emoji:'🧺',
+  caption:'Ein Korb ist auf bei·den Sei·ten ge·nau gleich rund!'},
+ {key:'astronaut',name:'Astronaut',emoji:'🧑‍🚀',
+  caption:'Ein As·tro·naut hat zwei Ar·me und zwei Bei·ne — schön sym·me·trisch im Welt·all!'}
+];
+function mirIcon(o){return o.svg||('<span>'+o.emoji+'</span>');}
+let mirCur=null,mirPct=50,mirWasLocked=false,mirDragging=false;
+function buildMirror(){
+ mirCur=null;mirWasLocked=false;
+ document.getElementById('mir-play').style.display='none';
+ const p=document.getElementById('mir-picker');p.innerHTML='';
+ MIR_OBJS.forEach(o=>{
+  const d=document.createElement('div');d.className='mirpickitem';
+  d.innerHTML=mirIcon(o)+'<div class="mp-n">'+o.name+'</div>';
+  d.onclick=()=>{[...p.children].forEach(c=>c.classList.remove('sel'));d.classList.add('sel');mirOpen(o);};
+  p.appendChild(d);
+ });
+ mirBindDrag();
+ mirRunDemo();
+}
+function mirBindDrag(){
+ const wrap=document.getElementById('mir-wrap');
+ function pctFromEvent(e){
+  const r=wrap.getBoundingClientRect();
+  const x=(e.clientX!==undefined?e.clientX:e.touches[0].clientX)-r.left;
+  return Math.max(4,Math.min(96,(x/r.width)*100));
+ }
+ wrap.onpointerdown=(e)=>{if(!mirCur)return;mirDragging=true;mirSetPct(pctFromEvent(e));};
+ wrap.onpointermove=(e)=>{if(!mirDragging)return;mirSetPct(pctFromEvent(e));};
+ wrap.onpointerup=()=>{mirDragging=false;};
+ wrap.onpointercancel=()=>{mirDragging=false;};
+}
+function mirOpen(o){
+ mirCur=o;mirWasLocked=false;
+ document.getElementById('mir-play').style.display='block';
+ document.getElementById('mir-obj').innerHTML=mirIcon(o);
+ document.getElementById('mir-ghost').innerHTML=mirIcon(o);
+ document.getElementById('mir-caption').textContent=o.caption;
+ mirSetPct(28);
+}
+function mirSetPct(pct){
+ mirPct=pct;
+ const axis=document.getElementById('mir-axis');
+ const ghost=document.getElementById('mir-ghost');
+ axis.style.left=pct+'%';
+ ghost.style.transformOrigin=pct+'% 50%';
+ ghost.style.transform='scaleX(-1)';
+ const locked=Math.abs(pct-50)<3;
+ ghost.style.opacity=locked?0.85:0.32;
+ axis.classList.toggle('locked',locked);
+ if(locked&&!mirWasLocked){
+  const sp=document.getElementById('mir-sparkle');
+  sp.style.display='block';sfxRight();
+  setTimeout(()=>{sp.style.display='none';},900);
+ }
+ mirWasLocked=locked;
+}
+function mirAnimateTo(target,dur){
+ const start=mirPct,t0=performance.now();
+ function step(t){
+  const f=Math.min(1,(t-t0)/dur);
+  const eased=1-Math.pow(1-f,3);
+  mirSetPct(start+(target-start)*eased);
+  if(f<1)requestAnimationFrame(step);
+ }
+ requestAnimationFrame(step);
+}
+function mirShowMe(){if(mirCur)mirAnimateTo(50,700);}
+function mirRunDemo(){
+ const axis=document.getElementById('mir-demo-axis');
+ const ghost=document.getElementById('mir-demo-ghost');
+ axis.style.left='20%';ghost.style.opacity=0;
+ ghost.style.transformOrigin='20% 50%';ghost.style.transform='scaleX(-1)';
+ axis.classList.remove('locked');ghost.classList.remove('locked');
+ setTimeout(()=>{
+  ghost.style.opacity=0.35;
+  const t0=performance.now();
+  function step(t){
+   const f=Math.min(1,(t-t0)/1100);
+   const eased=1-Math.pow(1-f,3);
+   const cur=20+(50-20)*eased;
+   axis.style.left=cur+'%';ghost.style.transformOrigin=cur+'% 50%';
+   if(f<1)requestAnimationFrame(step);
+   else{ghost.style.opacity=0.85;axis.classList.add('locked');ghost.classList.add('locked');}
+  }
+  requestAnimationFrame(step);
+ },700);
+}
+
+// ════ WEISHEITS-TEMPEL: SYMMETRIE ════
+const SYM_ROWS=6,SYM_COLS=8;
+const SYM_PATTERNS=[
+ {name:'Rechteck',cells:[[1,2],[1,3],[2,2],[2,3],[3,2],[3,3],[4,2],[4,3]]},
+ {name:'Treppe',cells:[[0,3],[1,2],[1,3],[2,1],[2,2],[2,3],[3,0],[3,1],[3,2],[3,3]]},
+ {name:'Kreuz',cells:[[0,3],[1,3],[2,0],[2,1],[2,2],[2,3],[3,0],[3,1],[3,2],[3,3],[4,3],[5,3]]}
+];
+let symState={patternIdx:0,filled:new Set(),hint:true};
+function buildSymmetry(){
+ symState={patternIdx:rnd(0,SYM_PATTERNS.length-1),filled:new Set(),hint:true};
+ document.getElementById('sym-hint-btn').textContent='💡 Hin·wei·se aus';
+ document.getElementById('sym-fb').textContent='';
+ symRenderGrid();
+ symRunDemo();
+}
+function symRenderGrid(){
+ const pat=SYM_PATTERNS[symState.patternIdx];
+ const leftSet=new Set(pat.cells.map(rc=>rc[0]+','+rc[1]));
+ const targetSet=new Set(pat.cells.map(rc=>rc[0]+','+(SYM_COLS-1-rc[1])));
+ const g=document.getElementById('sym-grid');g.innerHTML='';
+ for(let r=0;r<SYM_ROWS;r++){
+  for(let c=0;c<SYM_COLS;c++){
+   const d=document.createElement('div');
+   const key=r+','+c;
+   if(c<SYM_COLS/2){
+    d.className='symcell'+(leftSet.has(key)?' left':'');
+   }else{
+    let cls='symcell';
+    if(symState.filled.has(key))cls+=' filled';
+    if(symState.hint&&targetSet.has(key)&&!symState.filled.has(key))cls+=' hint';
+    d.className=cls;
+    d.onclick=()=>symTap(key,targetSet);
+   }
+   g.appendChild(d);
+  }
+ }
+}
+function symTap(key,targetSet){
+ if(symState.filled.has(key))symState.filled.delete(key);else symState.filled.add(key);
+ symRenderGrid();
+ symCheckWin(targetSet);
+}
+function symCheckWin(targetSet){
+ if(symState.filled.size!==targetSet.size)return;
+ for(const k of targetSet){if(!symState.filled.has(k))return;}
+ setFb('sym-fb','✨ Per·fekt ge·spie·gelt! ✨',true);
+ sfxWin();fireConfetti();maybeCheer();
+ setTimeout(()=>{
+  symState.patternIdx=(symState.patternIdx+1)%SYM_PATTERNS.length;
+  symState.filled=new Set();
+  symRenderGrid();
+  const fb=document.getElementById('sym-fb');if(fb)fb.textContent='';
+ },1600);
+}
+function symToggleHint(){
+ symState.hint=!symState.hint;
+ document.getElementById('sym-hint-btn').textContent=symState.hint?'💡 Hin·wei·se aus':'💡 Hin·wei·se an';
+ symRenderGrid();
+}
+function symRunDemo(){
+ const rows=4,cols=6;
+ const cells=[[1,1],[1,2],[2,1],[2,2]];
+ const leftSet=new Set(cells.map(rc=>rc[0]+','+rc[1]));
+ const g=document.getElementById('sym-demo-grid');g.innerHTML='';
+ const cellEls={};
+ for(let r=0;r<rows;r++){
+  for(let c=0;c<cols;c++){
+   const d=document.createElement('div');
+   const key=r+','+c;
+   d.className='symcell'+(leftSet.has(key)?' left':'');
+   g.appendChild(d);cellEls[key]=d;
+  }
+ }
+ const step=650;
+ cells.forEach((rc,i)=>{
+  const srcKey=rc[0]+','+rc[1];
+  const tgtKey=rc[0]+','+(cols-1-rc[1]);
+  setTimeout(()=>{
+   const src=cellEls[srcKey];
+   if(src){src.classList.add('pulse');setTimeout(()=>src.classList.remove('pulse'),420);}
+  },600+i*step);
+  setTimeout(()=>{
+   const el=cellEls[tgtKey];if(el)el.className='symcell filled';
+  },600+i*step+320);
+ });
+}
 
 // ════ KONZENTRATIONS-MEMORY XL (Reihenfolge) ════
 const MXPADS=[{k:'Luft',c:'#5C9CE0'},{k:'Wasser',c:'#2E8FA8'},{k:'Erde',c:'#6FA53C'},{k:'Feuer',c:'#E0552B'}];

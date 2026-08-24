@@ -83,6 +83,7 @@ h1,h2,.disp{font-family:Bangers,cursive;letter-spacing:.5px}
 /* manga carousel */
 .manga{display:flex;flex-direction:column;gap:10px}
 .mcard{background:var(--panel);border:3px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;gap:12px;align-items:center;box-shadow:3px 3px 0 var(--line)}
+.mcard.polcard{cursor:pointer}
 .mcard .me{font-size:30px}
 .mcard .mn{font-family:Bangers,cursive;font-size:16px}
 .mcard .mh{font-size:12px;color:var(--muted);font-weight:600}
@@ -146,6 +147,11 @@ h1,h2,.disp{font-family:Bangers,cursive;letter-spacing:.5px}
    <div class="card" onclick="startQuiz('german')"><div class="ci">📝</div><div class="ct">Deutsch (Schwer)</div><div class="cd">Grammatik-Challenge</div></div>
    <div class="card" onclick="startQuiz('avatar')"><div class="ci">🌊</div><div class="ct">Avatar Lore</div><div class="cd">Quotes &amp; trivia</div></div>
   </div>
+ </div>
+
+ <div class="cluster">
+  <h2>🌍 Politik &amp; Welt</h2>
+  <div class="card wide" onclick="show('politics');renderPolitics()"><div class="ci">🌍</div><div class="ct">Politik &amp; Welt</div><div class="cd">Wichtige Begriffe &amp; Ereignisse zum Nachlesen</div></div>
  </div>
 
  <div class="cluster">
@@ -216,6 +222,21 @@ h1,h2,.disp{font-family:Bangers,cursive;letter-spacing:.5px}
  <div class="manga" id="manga-grid"></div>
 </div>
 
+<!-- ===== POLITICS LIST ===== -->
+<div id="politics" class="screen">
+ <button class="back" onclick="show('home')">← Back</button>
+ <div class="qhead"><div class="qt">Politik &amp; Welt 🌍</div></div>
+ <p class="note" style="margin-bottom:10px">Tippe ein Thema an zum Lesen.</p>
+ <div class="manga" id="politics-grid"></div>
+</div>
+
+<!-- ===== POLITICS DETAIL ===== -->
+<div id="politics-detail" class="screen">
+ <button class="back" onclick="show('politics')">← Back</button>
+ <div class="qhead"><div class="qt" id="pol-title"></div></div>
+ <div class="panel" id="pol-text"></div>
+</div>
+
 <!-- ===== SHORTS ===== -->
 <div id="shorts" class="screen">
  <button class="back" onclick="show('home')">← Back</button>
@@ -245,7 +266,7 @@ h1,h2,.disp{font-family:Bangers,cursive;letter-spacing:.5px}
 <script>
 /* ============ PERSISTENCE ============ */
 var SKEY='zeryaWorldV1';
-var DATA={points:0,quizDone:{},gamesWon:0,promptsGenerated:0,memesSeen:0,shortsSeen:0,mangaList:[],favPrompts:[],badgesUnlocked:[]};
+var DATA={points:0,quizDone:{},gamesWon:0,promptsGenerated:0,memesSeen:0,shortsSeen:0,mangaList:[],favPrompts:[],badgesUnlocked:[],politicsRead:[]};
 function loadData(){try{var s=JSON.parse(localStorage.getItem(SKEY));if(s)DATA=Object.assign(DATA,s);}catch(e){}}
 function saveData(){try{localStorage.setItem(SKEY,JSON.stringify(DATA));}catch(e){}}
 function updatePtsUI(){var el=document.getElementById('pts-top');if(el)el.textContent='⭐ '+DATA.points+' pts';var bp=document.getElementById('badge-preview');if(bp)bp.textContent=DATA.badgesUnlocked.length+' / '+BADGES.length+' unlocked';}
@@ -271,6 +292,7 @@ var BADGES=[
  {id:'bookworm',e:'📚',n:'Bookworm',d:'Save 3 manga picks',check:function(){return DATA.mangaList.length>=3;}},
  {id:'gamer',e:'🎮',n:'Gamer',d:'Win Memory Match once',check:function(){return DATA.gamesWon>=1;}},
  {id:'bingewatcher',e:'🎬',n:'Shorts Binge',d:'Swipe 20 shorts',check:function(){return DATA.shortsSeen>=20;}},
+ {id:'weltoffen',e:'🌍',n:'Weltoffen',d:'Alle Politik-Themen gelesen',check:function(){return DATA.politicsRead.length>=POLITICS.length;}},
  {id:'bronze',e:'🥉',n:'Rising Star',d:'Earn 50 points',check:function(){return DATA.points>=50;}},
  {id:'silver',e:'🥈',n:'Shining Star',d:'Earn 150 points',check:function(){return DATA.points>=150;}},
  {id:'gold',e:'🥇',n:'Super Star',d:'Earn 300 points',check:function(){return DATA.points>=300;}},
@@ -602,6 +624,44 @@ function renderManga(){
  });
 }
 
+/* ============ POLITIK & WELT ============ */
+var POLITICS=[
+ {id:'demokratie',e:'🗳️',n:'Demokratie',teaser:'Das Volk bestimmt mit – direkt oder über gewählte Vertreter.',text:'In einer Demokratie entscheidet nicht eine einzelne Person allein, sondern das Volk – entweder direkt durch Abstimmungen oder über gewählte Vertreter:innen im Parlament. Wichtige Grundpfeiler sind freie Wahlen, Meinungsfreiheit und der Schutz von Minderheiten. Die Schweiz gilt als besonders demokratisch, weil die Bevölkerung auch über einzelne Gesetze direkt abstimmen kann.'},
+ {id:'diktatur',e:'⛓️',n:'Diktatur',teaser:'Eine Person oder kleine Gruppe hat die Macht – ohne freie Wahlen.',text:'In einer Diktatur liegt die gesamte Macht bei einer einzelnen Person oder einer kleinen Gruppe, die sich nicht durch freie Wahlen kontrollieren lässt. Kritik an der Regierung wird oft unterdrückt, und Medien sind meist nicht frei. Diktaturen gibt es auch heute noch in verschiedenen Teilen der Welt, auch wenn sie sich manchmal „demokratisch" nennen.'},
+ {id:'gewaltenteilung',e:'⚖️',n:'Gewaltenteilung',teaser:'Macht wird auf drei unabhängige Bereiche verteilt.',text:'Damit niemand zu viel Macht bekommt, wird sie in vielen Staaten aufgeteilt: Die Legislative macht Gesetze (Parlament), die Exekutive setzt sie um (Regierung), und die Judikative prüft, ob sie eingehalten werden (Gerichte). Diese drei Bereiche kontrollieren sich gegenseitig. Das Prinzip nennt man Gewaltenteilung, und es soll Machtmissbrauch verhindern.'},
+ {id:'menschenrechte',e:'🕊️',n:'Menschenrechte',teaser:'Rechte, die jedem Menschen einfach zustehen.',text:'Menschenrechte sind Rechte, die jeder Mensch besitzt – unabhängig von Herkunft, Geschlecht oder Religion. Dazu gehören zum Beispiel das Recht auf Leben, freie Meinungsäusserung und Bildung. 1948 wurden sie in der Allgemeinen Erklärung der Menschenrechte der UNO weltweit festgehalten. Trotzdem werden sie bis heute in vielen Ländern verletzt.'},
+ {id:'wahlen-parteien',e:'🗳️',n:'Wahlen & Parteien',teaser:'Wie Bürger:innen ihre Stimme abgeben und wer sie vertritt.',text:'Bei Wahlen bestimmen Bürger:innen, wer sie im Parlament oder in der Regierung vertritt. Parteien sind Gruppen von Menschen mit ähnlichen politischen Ideen, die um Stimmen konkurrieren. In der Schweiz gibt es viele verschiedene Parteien, die von links bis rechts das ganze politische Spektrum abdecken. Wer eine Partei wählt, wählt also auch eine bestimmte Richtung für die Zukunft.'},
+ {id:'verfassung',e:'📜',n:'Verfassung',teaser:'Die Grundregeln eines Staates – das oberste Gesetz.',text:'Eine Verfassung legt die wichtigsten Regeln eines Staates fest: wie die Regierung funktioniert, welche Rechte Bürger:innen haben und wie Gesetze entstehen. Sie steht über allen anderen Gesetzen – nichts darf ihr widersprechen. Die Schweizer Bundesverfassung kann nur geändert werden, wenn Volk und Stände in einer Abstimmung zustimmen.'},
+ {id:'direkte-demokratie-ch',e:'🇨🇭',n:'Direkte Demokratie Schweiz',teaser:'In der Schweiz stimmt das Volk oft direkt über Gesetze ab.',text:'Die Schweiz hat ein besonderes System: Neben den gewählten Politiker:innen kann das Volk auch direkt über einzelne Gesetze abstimmen. Mit einer Volksinitiative können Bürger:innen sogar eine neue Verfassungsänderung vorschlagen, wenn sie genug Unterschriften sammeln. Mit einem Referendum kann ein vom Parlament beschlossenes Gesetz nochmals dem Volk zur Abstimmung vorgelegt werden. Deshalb wird in der Schweiz oft mehrmals im Jahr abgestimmt – über sehr unterschiedliche Themen.'},
+ {id:'bundesrat-parlament',e:'🏛️',n:'Bundesrat & Parlament',teaser:'Wer die Schweiz regiert – und wer die Gesetze macht.',text:'Das Schweizer Parlament besteht aus zwei Kammern: dem Nationalrat (Volk) und dem Ständerat (Kantone). Zusammen wählen sie den Bundesrat – die Regierung der Schweiz mit sieben Mitgliedern, die gemeinsam entscheiden. Es gibt in der Schweiz also keine einzelne Präsidentin oder einen einzelnen Präsidenten mit grosser Macht, wie in vielen anderen Ländern. Der Bundespräsident wechselt jährlich und ist vor allem repräsentativ.'},
+ {id:'uno',e:'🌐',n:'UNO',teaser:'Die Vereinten Nationen – fast alle Staaten der Welt an einem Tisch.',text:'Die UNO (Vereinte Nationen) wurde 1945 nach dem Zweiten Weltkrieg gegründet, um Kriege zu verhindern und die Zusammenarbeit zwischen Staaten zu fördern. Fast alle Länder der Welt sind Mitglied. Die UNO kümmert sich unter anderem um Frieden, Menschenrechte, Klimaschutz und Nothilfe bei Katastrophen. Der Sitz der UNO in Europa liegt übrigens in Genf, in der Schweiz.'},
+ {id:'eu',e:'🇪🇺',n:'Die EU',teaser:'27 Länder Europas, die eng zusammenarbeiten.',text:'Die Europäische Union (EU) ist ein Zusammenschluss von 27 europäischen Ländern, die in vielen Bereichen eng zusammenarbeiten – etwa bei Handel, Reisen oder Umweltschutz. In vielen Mitgliedsländern gibt es eine gemeinsame Währung, den Euro. Die Schweiz ist kein EU-Mitglied, arbeitet aber über spezielle Verträge eng mit der EU zusammen.'},
+ {id:'nato',e:'🛡️',n:'NATO',teaser:'Ein Verteidigungsbündnis mehrerer Staaten.',text:'Die NATO ist ein Militärbündnis, dem heute über 30 Länder angehören, vor allem aus Europa und Nordamerika. Der Grundgedanke: Wird ein Mitgliedsland angegriffen, gilt das als Angriff auf alle. Die NATO wurde während des Kalten Krieges gegründet, existiert aber bis heute weiter. Die Schweiz ist als neutrales Land kein NATO-Mitglied.'},
+ {id:'mauerfall',e:'🧱',n:'Fall der Berliner Mauer',teaser:'1989: Das Ende der Teilung Deutschlands begann.',text:'Von 1961 bis 1989 teilte die Berliner Mauer die Stadt Berlin – und symbolisch die Welt – in Ost und West. Am 9. November 1989 wurde die Grenze überraschend geöffnet, und Menschen aus Ost- und Westberlin feierten gemeinsam an der Mauer. Ein Jahr später, 1990, wurden Ost- und Westdeutschland offiziell wiedervereinigt. Der Mauerfall gilt bis heute als eines der wichtigsten Symbole für das Ende des Kalten Krieges.'},
+ {id:'kalter-krieg',e:'☭',n:'Kalter Krieg',teaser:'Jahrzehnte der Spannung zwischen Ost und West.',text:'Nach dem Zweiten Weltkrieg standen sich zwei Machtblöcke gegenüber: die USA und ihre Verbündeten auf der einen, die Sowjetunion und ihre Verbündeten auf der anderen Seite. Es kam nie zu einem direkten Krieg zwischen den beiden Supermächten, aber zu vielen Stellvertreterkonflikten und einem Wettrüsten mit Atomwaffen. Der Kalte Krieg endete Anfang der 1990er-Jahre mit dem Zusammenbruch der Sowjetunion. Viele heutige politische Spannungen haben ihre Wurzeln in dieser Zeit.'},
+ {id:'klimapolitik',e:'🌡️',n:'Klimapolitik & Paris-Abkommen',teaser:'Wie Staaten gemeinsam gegen die Erderwärmung vorgehen.',text:'Im Pariser Klimaabkommen von 2015 einigten sich fast alle Staaten der Welt darauf, die Erderwärmung möglichst auf 1,5 bis 2 Grad zu begrenzen. Dafür müssen Länder ihren CO2-Ausstoss senken, zum Beispiel durch erneuerbare Energien statt Kohle und Öl. Die Umsetzung ist allerdings freiwillig, weshalb Kritiker:innen das Abkommen als zu zahnlos bezeichnen. Klimapolitik ist heute eines der wichtigsten Themen in fast jedem Land.'},
+ {id:'ukraine-krieg',e:'🇺🇦',n:'Krieg in der Ukraine',teaser:'Seit 2022 ein grosser bewaffneter Konflikt in Europa.',text:'Im Februar 2022 begann Russland eine grossangelegte Invasion der Ukraine, nachdem es bereits 2014 die Krim annektiert hatte. Der Krieg hat Millionen Menschen zur Flucht gezwungen und gilt als einer der grössten bewaffneten Konflikte in Europa seit dem Zweiten Weltkrieg. International wurde Russland für den Angriff von den meisten Staaten scharf verurteilt und mit Sanktionen belegt. Viele Länder unterstützen die Ukraine seither mit humanitärer Hilfe, Geld oder Waffen.'},
+ {id:'migration-asyl',e:'🧳',n:'Migration & Asyl',teaser:'Warum Menschen ihre Heimat verlassen – und was Asyl bedeutet.',text:'Menschen verlassen ihre Heimat aus ganz unterschiedlichen Gründen: Krieg, Verfolgung, Armut oder Naturkatastrophen. Wer in einem anderen Land Asyl beantragt, bittet um Schutz, weil er oder sie in der Heimat verfolgt wird oder in Gefahr ist. Migration ist eines der meistdiskutierten politischen Themen unserer Zeit, mit sehr unterschiedlichen Meinungen dazu. Die Schweiz hat ein eigenes Asylverfahren, das genau prüft, wer Schutz erhält.'}
+];
+function renderPolitics(){
+ var g=document.getElementById('politics-grid');g.innerHTML='';
+ POLITICS.forEach(function(p){
+  var read=DATA.politicsRead.indexOf(p.id)>=0;
+  var d=document.createElement('div');d.className='mcard polcard';
+  d.innerHTML='<div class="me">'+p.e+'</div><div><div class="mn">'+p.n+'</div><div class="mh">'+p.teaser+'</div>'+(read?'<div class="mtag">✓ Gelesen</div>':'')+'</div>';
+  d.onclick=function(){openPolitic(p.id);};
+  g.appendChild(d);
+ });
+}
+function openPolitic(id){
+ var p=POLITICS.filter(function(x){return x.id===id;})[0];
+ if(!p)return;
+ document.getElementById('pol-title').textContent=p.e+' '+p.n;
+ document.getElementById('pol-text').textContent=p.text;
+ if(DATA.politicsRead.indexOf(id)<0){DATA.politicsRead.push(id);checkBadges();saveData();}
+ show('politics-detail');
+}
+
 /* ============ MEMORY GAME ============ */
 var MEM_ICONS=['🥷','🐉','🎌','🍥','⛩️','🍜','🌸','👘','🍙','📖','🎮','⭐'];
 var MEM={cards:[],flipped:[],matchedIdx:{},matched:0,tries:0,lock:false};
@@ -912,6 +972,7 @@ loadData();
 updatePtsUI();
 renderFavs();
 renderManga();
+renderPolitics();
 document.getElementById('shorts-count').textContent=DATA.shortsSeen+' seen';
 </script>
 </body>
