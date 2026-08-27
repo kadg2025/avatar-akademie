@@ -1439,7 +1439,7 @@ function go(id){
  if('speechSynthesis' in window)speechSynthesis.cancel();
  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
  document.getElementById(id).classList.add('on');window.scrollTo(0,0);
- if(id==='s-hub'){buildHub();setScrolls(scrolls);}
+ if(id==='s-hub'){buildHub();setScrolls(scrolls);if(location.hash)history.replaceState(null,'',location.pathname+location.search);}
  if(id==='s-race-pick')buildRacePicker();
  if(id==='s-maze')startMaze();
  if(id==='s-duel-intro')buildDuelPick();
@@ -2387,7 +2387,7 @@ const NATIONHUBS={
    {t:'Muster-Werkstatt',d:'Sym·me·trie üben',e:'✨',go:"go('s-symmetry')"}
   ]}
 };
-function openNationHub(key){buildNationHub(key);go('s-nation-hub');}
+function openNationHub(key){buildNationHub(key);go('s-nation-hub');history.replaceState(null,'','#'+key);}
 function buildNationHub(key){
  const n=NATIONHUBS[key];if(!n)return;
  document.getElementById('nh-title').textContent=n.emoji+' '+n.name;
@@ -2656,6 +2656,7 @@ function importSave(inp){
 }
 
 loadSave();if(calm)document.body.classList.add('calm');buildHub();setScrolls(scrolls);
+{const _h=location.hash.slice(1);if(_h&&NATIONHUBS[_h])openNationHub(_h);}
 // ════ ADHS ERMUTIGUNGEN ════
 const CHEERS=['Ro·za·rin, du bist mu·tig! 💪','Su·per ge·macht! 🌟','Aang wä·re stolz auf dich! 🌬️','Du wirst im·mer bes·ser! ⭐','Toll ge·rech·net! 🎉','Du schaffst das! 💙','Wei·ter so! 🏆','Du bist klas·se! ✨'];
 function cheer(){if(calm)return;const el=document.createElement('div');el.className='cheer';el.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];document.body.appendChild(el);setTimeout(()=>el.remove(),2200);}
