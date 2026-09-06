@@ -4029,5 +4029,5 @@ function aqFinish(){award(2);const s=AQ.score,t=AQ.q.length;
 
 </script>
 
-<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');</script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{reg.addEventListener('updatefound',()=>{const nw=reg.installing;nw&&nw.addEventListener('statechange',()=>{if(nw.state==='activated')location.reload();});});setInterval(()=>reg.update(),60000);});</script>
 </body></html>

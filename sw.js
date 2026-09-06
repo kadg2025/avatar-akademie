@@ -1,4 +1,4 @@
-const CACHE = 'akademie-v1';
+const CACHE = 'akademie-v2';
 const ASSETS = ['./', './index.html', './arena.html', './zerya.html', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', e => {
@@ -16,9 +16,9 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (url.origin === location.origin) {
-    // Eigene Seiten: erst Netz (damit Updates ankommen), sonst Cache (offline)
+    // Eigene Seiten: immer frisch vom Netz (no-store umgeht den Browser-HTTP-Cache), sonst Cache (offline)
     e.respondWith(
-      fetch(e.request)
+      fetch(e.request, { cache: 'no-store' })
         .then(res => {
           const copy = res.clone();
           caches.open(CACHE).then(c => c.put(e.request, copy));
