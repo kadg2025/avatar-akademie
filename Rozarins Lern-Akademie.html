@@ -584,6 +584,11 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
 .enumcard .en-de{font-size:9px;font-weight:600;color:var(--muted);opacity:.7;margin-top:1px}
 .endotrow{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin:2px 0}
 .endot{width:5px;height:5px;border-radius:50%;background:#B48CE0;flex:none}
+.famsentcard{background:var(--card);border-radius:14px;padding:12px 14px;margin:8px 0;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:var(--sh);transition:transform .15s}
+.famsentcard:active{transform:scale(.97)}
+.famsent-emoji{font-size:34px;flex:none}
+.famsent-en{font-weight:700;font-size:16px;color:var(--text)}
+.famsent-de{font-size:12.5px;font-weight:600;color:var(--muted);margin-top:2px}
 .mirwrap{position:relative;width:100%;max-width:260px;height:220px;margin:14px auto;background:#FBF6FF;border:2px solid #E5D4F5;border-radius:20px;overflow:hidden;touch-action:none}
 .mirobj{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;user-select:none}
 .mirobj svg{width:110px;height:110px}
@@ -1393,6 +1398,37 @@ body.calm .night-star{animation:starTwinkle var(--dur,3s) ease-in-out infinite!i
  <div class="enumgrid" id="en-words-grid"></div>
 </div>
 
+<!-- ENGLISCH: MEINE FAMILIE & SÄTZE -->
+<div id="s-en-family" class="sc">
+ <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:26px">👨🏿‍👩🏿‍👧🏿‍👦🏿 Meine Familie</div><div class="gs">Eng·lisch: Fa·mi·lie & Sät·ze</div></div>
+ <div style="display:flex;gap:8px;margin:10px 0;flex-wrap:wrap">
+  <button class="btn bgold" id="fam-mode-a" style="flex:1;min-width:100px;margin:0;padding:11px;font-size:13px" onclick="famSetMode('hear')">🔊 Wör·ter</button>
+  <button class="btn bgray" id="fam-mode-b" style="flex:1;min-width:100px;margin:0;padding:11px;font-size:13px" onclick="famSetMode('sent')">💬 Sät·ze</button>
+  <button class="btn bgray" id="fam-mode-c" style="flex:1;min-width:100px;margin:0;padding:11px;font-size:13px" onclick="famSetMode('write')">✏️ Schrei·ben</button>
+ </div>
+ <div id="fam-hear">
+  <div class="story" style="text-align:center;font-size:15px">Tip·pe auf ein Bild, um das Wort auf Eng·lisch zu hö·ren! 🔊</div>
+  <div class="enumgrid" id="fam-words-grid"></div>
+ </div>
+ <div id="fam-sent" style="display:none">
+  <div class="story" style="text-align:center;font-size:15px">Tip·pe auf ei·nen Satz, um ihn zu hö·ren! 🔊</div>
+  <div id="fam-sent-list"></div>
+ </div>
+ <div id="fam-write" style="display:none">
+  <div class="progress-mini"><span id="famsp-prog"></span><span>Mit On·kel I·roh ☕</span></div>
+  <div class="qpanel" style="text-align:center;background-color:#F3E9FB;padding:20px">
+   <div style="font-size:52px" id="famsp-emoji"></div>
+   <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:18px;color:#5B2A9A;margin:4px 0" id="famsp-de"></div>
+   <button class="btn bblue" style="max-width:240px;margin:8px auto;font-size:17px;padding:12px" onclick="famSpellSay()">🔊 Wort an·hö·ren</button>
+   <div id="famsp-slots"></div>
+   <div id="famsp-letters"></div>
+   <button class="btn bgray" style="max-width:170px;margin:4px auto" onclick="famSpBack()">⌫ Lö·schen</button>
+   <div class="feedbk" id="famsp-fb"></div>
+  </div>
+ </div>
+</div>
+
 <!-- MATHE: SPIEGELACHSE -->
 <div id="s-mirror" class="sc">
  <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
@@ -1601,7 +1637,7 @@ function go(id){
 if(id==='s-stories-nation'){/* already built by openStoriesNation */}
  if(id==='s-journey')buildJourney();if(id==='s-map')buildMap();
  if(id==='s-2p-setup')build2PSetup();if(id==='s-german-house')buildGermanHouse();if(id==='s-word-flight')startWordFlight();
- if(id==='s-en-numbers')buildEnNumbers();if(id==='s-en-words')buildEnWords();if(id==='s-mirror')buildMirror();if(id==='s-symmetry')buildSymmetry();
+ if(id==='s-en-numbers')buildEnNumbers();if(id==='s-en-words')buildEnWords();if(id==='s-en-family')buildEnFamily();if(id==='s-mirror')buildMirror();if(id==='s-symmetry')buildSymmetry();
  if(id==='s-fairy-hub')buildFairyHub();if(id==='s-trace')startTrace();if(id==='s-dots')startDots();if(id==='s-percept')startPercept();
  if(id==='s-shop')buildShop();
 }
@@ -2127,6 +2163,7 @@ const NATIONHUBS={
   games:[
    {t:'Zahlen-Werkstatt',d:'Eng·lisch: 1 bis 20',e:'🔢',go:"go('s-en-numbers')"},
    {t:'Schulwörter',d:'Eng·lisch: Wör·ter in der Schu·le',e:'🎒',go:"go('s-en-words')"},
+   {t:'Meine Familie',d:'Eng·lisch: Fa·mi·lie & Sät·ze',e:'👨🏿‍👩🏿‍👧🏿‍👦🏿',go:"go('s-en-family')"},
    {t:'Spiegel-Garten',d:'Spie·gel·ach·se ent·de·cken',e:'🪞',go:"go('s-mirror')"},
    {t:'Muster-Werkstatt',d:'Sym·me·trie üben',e:'✨',go:"go('s-symmetry')"}
   ]}
@@ -3074,6 +3111,107 @@ function genEnNumberListen(){
  return {visual:'<div style="font-size:50px;text-align:center;margin:6px 0">🔊</div>',q:'Wel·che Zahl hast du ge·hört?',ans:w.n,opts,say:w.w,sayWin:w.w,lang:'en-US'};
 }
 function startEnListen(){startQuiz({title:'Zah·len hö·ren 🔊',sub:'Listen and guess! 🇬🇧',count:8,emoji:'🔢',again:startEnListen,gen:genEnNumberListen,winMsg:s=>'Su·per! <b>'+s+' von 8</b> Zah·len rich·tig er·kannt! +4 📜'});}
+
+// ════ WEISHEITS-TEMPEL: MEINE FAMILIE & SÄTZE ════
+const FAM_WORDS=[
+ {en:'family',de:'Fa·mi·lie',emoji:'👨🏿‍👩🏿‍👧🏿‍👦🏿'},
+ {en:'mother',de:'Mut·ter',emoji:'👩🏿'},
+ {en:'father',de:'Va·ter',emoji:'👨🏿'},
+ {en:'sister',de:'Schwes·ter',emoji:'👧🏿'},
+ {en:'brother',de:'Bru·der',emoji:'👦🏿'},
+ {en:'grandmother',de:'Gross·mut·ter',emoji:'👵🏿'},
+ {en:'grandfather',de:'Gross·va·ter',emoji:'👴🏿'},
+ {en:'aunt',de:'Tan·te',emoji:'👩🏿'},
+ {en:'uncle',de:'On·kel',emoji:'👨🏿'},
+ {en:'cousin',de:'Cou·sin',emoji:'🧑🏿'},
+ {en:'baby',de:'Ba·by',emoji:'👶🏿'},
+ {en:'cat',de:'Kat·ze',emoji:'🐱'},
+ {en:'dog',de:'Hund',emoji:'🐶'},
+ {en:'language',de:'Spra·che',emoji:'🗣️'},
+ {en:'map',de:'Land·kar·te',emoji:'🗺️'},
+ {en:'flag',de:'Fah·ne',emoji:'🏳️'},
+ {en:'Switzerland',de:'Schweiz',emoji:'🇨🇭'}
+];
+const FAM_SENT=[
+ {en:'Hello!',de:'Hal·lo!',emoji:'👋🏿'},
+ {en:'My name is Roza.',de:'Mein Na·me ist Ro·za.',emoji:'🙋🏿‍♀️'},
+ {en:'What is your name?',de:'Wie heisst du?',emoji:'❓'},
+ {en:'His name is Iroh.',de:'Er heisst I·roh.',emoji:'👨🏿'},
+ {en:'This is my uncle.',de:'Das ist mein On·kel.',emoji:'👨🏿'},
+ {en:'This is my grandmother.',de:'Das ist mei·ne Gross·mut·ter.',emoji:'👵🏿'},
+ {en:'He is my best friend.',de:'Er ist mein bes·ter Freund.',emoji:'🤗🏿'},
+ {en:'She lives with her grandmother.',de:'Sie wohnt bei ih·rer Gross·mut·ter.',emoji:'🏠'},
+ {en:'I live in Switzerland.',de:'Ich woh·ne in der Schweiz.',emoji:'🇨🇭'},
+ {en:'I am from Switzerland.',de:'Ich kom·me aus der Schweiz.',emoji:'🗺️'},
+ {en:'Where are you from?',de:'Wo·her kommst du?',emoji:'🌍'},
+ {en:'I speak German.',de:'Ich spre·che Deutsch.',emoji:'🇩🇪'},
+ {en:'I speak Italian.',de:'Ich spre·che I·ta·lie·nisch.',emoji:'🇮🇹'},
+ {en:'I speak French.',de:'Ich spre·che Fran·zö·sisch.',emoji:'🇫🇷'},
+ {en:'Do you speak English?',de:'Sprichst du Eng·lisch?',emoji:'🇬🇧'},
+ {en:'She speaks English.',de:'Sie spricht Eng·lisch.',emoji:'🇬🇧'}
+];
+let famMode='hear';
+function famSetMode(m){
+ famMode=m;
+ document.getElementById('fam-mode-a').className='btn '+(m==='hear'?'bgold':'bgray');
+ document.getElementById('fam-mode-b').className='btn '+(m==='sent'?'bgold':'bgray');
+ document.getElementById('fam-mode-c').className='btn '+(m==='write'?'bgold':'bgray');
+ document.getElementById('fam-hear').style.display=m==='hear'?'block':'none';
+ document.getElementById('fam-sent').style.display=m==='sent'?'block':'none';
+ document.getElementById('fam-write').style.display=m==='write'?'block':'none';
+ if(m==='write'&&(!famSp||famSp.i>=FAM_WORDS.length))startFamWrite();
+}
+function buildEnFamily(){
+ famSetMode('hear');
+ const g=document.getElementById('fam-words-grid');g.innerHTML='';
+ FAM_WORDS.forEach(x=>{
+  const d=document.createElement('div');d.className='enumcard';
+  d.innerHTML='<div class="en-emoji">'+x.emoji+'</div><div class="en-w" style="margin-top:4px">'+x.en+'</div><div class="en-de">'+x.de+'</div>';
+  d.onclick=()=>{d.style.transform='scale(1.12)';speakL(x.en,'en-US');setTimeout(()=>{d.style.transform='';},260);};
+  g.appendChild(d);
+ });
+ const sl=document.getElementById('fam-sent-list');sl.innerHTML='';
+ FAM_SENT.forEach(x=>{
+  const d=document.createElement('div');d.className='famsentcard';
+  d.innerHTML='<div class="famsent-emoji">'+x.emoji+'</div><div><div class="famsent-en">'+x.en+'</div><div class="famsent-de">'+x.de+'</div></div>';
+  d.onclick=()=>{d.style.transform='scale(1.03)';speakL(x.en,'en-US');setTimeout(()=>{d.style.transform='';},260);};
+  sl.appendChild(d);
+ });
+}
+let famSp=null;
+function startFamWrite(){famSp={i:0,built:[],pool:[]};renderFamWrite();}
+function renderFamWrite(){
+ const cur=FAM_WORDS[famSp.i];famSp.built=[];
+ document.getElementById('famsp-emoji').textContent=cur.emoji;
+ document.getElementById('famsp-de').textContent=cur.de.replace(/·/g,'');
+ document.getElementById('famsp-prog').textContent=(famSp.i+1)+'/'+FAM_WORDS.length;
+ document.getElementById('famsp-fb').textContent='';
+ let letters=cur.en.toUpperCase().split('').sort(()=>Math.random()-.5);
+ famSp.pool=letters.map(ch=>({ch,used:false}));
+ renderFamSlots();renderFamLetters();
+ setTimeout(famSpellSay,450);
+}
+function renderFamSlots(){const cur=FAM_WORDS[famSp.i];const g=document.getElementById('famsp-slots');g.innerHTML='';for(let i=0;i<cur.en.length;i++){const d=document.createElement('div');const ch=famSp.built[i];d.className='spslot'+(ch?' filled':'');d.textContent=ch?ch.ch:'';g.appendChild(d);}}
+function renderFamLetters(){const g=document.getElementById('famsp-letters');g.innerHTML='';famSp.pool.forEach((p,idx)=>{const b=document.createElement('button');b.className='spletter'+(p.used?' used':'');b.textContent=p.ch;b.onclick=()=>famTapLetter(idx);g.appendChild(b);});}
+function famTapLetter(idx){const cur=FAM_WORDS[famSp.i];if(famSp.built.length>=cur.en.length)return;const p=famSp.pool[idx];if(p.used)return;p.used=true;famSp.built.push(p);sfxStep();renderFamSlots();renderFamLetters();if(famSp.built.length===cur.en.length)setTimeout(checkFamWord,250);}
+function famSpBack(){if(!famSp||famSp.built.length===0)return;const p=famSp.built.pop();p.used=false;renderFamSlots();renderFamLetters();}
+function famSpellSay(){const cur=famSp&&FAM_WORDS[famSp.i];if(cur)speakL(cur.en,'en-US');}
+function checkFamWord(){
+ const cur=FAM_WORDS[famSp.i];const made=famSp.built.map(p=>p.ch).join('').toLowerCase();
+ if(made===cur.en){
+  setFb('famsp-fb','✅ Rich·tig ge·schrie·ben!',true);sfxRight();maybeCheer();speakL(cur.en,'en-US');
+  setTimeout(()=>{famSp.i++;if(famSp.i>=FAM_WORDS.length)famWriteWin();else renderFamWrite();},1150);
+ }else{
+  setFb('famsp-fb','Fast! Hör noch·mal und ver·such es wie·der. 💙',false);sfxWrong();
+  const sl=document.getElementById('famsp-slots');sl.classList.add('shakeit');
+  setTimeout(()=>{sl.classList.remove('shakeit');famSp.built.forEach(p=>p.used=false);famSp.built=[];renderFamSlots();renderFamLetters();famSpellSay();},950);
+ }
+}
+function famWriteWin(){
+ award(2);document.getElementById('gw-emoji').textContent='👨🏿‍👩🏿‍👧🏿‍👦🏿';
+ document.getElementById('gw-msg').innerHTML='Fan·tas·tisch! Du kannst jetzt vie·le Fa·mi·li·en·wör·ter auf Eng·lisch schrei·ben! +4 📜';
+ document.getElementById('gw-again').onclick=startFamWrite;sfxWin();fireConfetti();maybeBreak();go('s-gwin');
+}
 
 // ════ WEISHEITS-TEMPEL: SPIEGELACHSE ════
 const MIR_OBJS=[
