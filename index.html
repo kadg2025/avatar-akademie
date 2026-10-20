@@ -136,6 +136,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .cheer{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:80;font-family:"Fredoka",sans-serif;font-size:32px;font-weight:700;color:#fff;background:linear-gradient(135deg,#C84068,#F09AB4);padding:18px 32px;border-radius:20px;box-shadow:0 10px 30px rgba(180,80,110,.3);animation:cheerPop 2.2s forwards;pointer-events:none;text-align:center;max-width:90vw;line-height:1.4}
 @keyframes cheerPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}80%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-60%) scale(.9)}}
 .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99}
+.confetti.fade{opacity:0;transition:opacity 1.1s ease}
+.gt .emo{-webkit-text-fill-color:initial;background:none}
+/* ════ GEBURTSTAG ════ */
+#bday-balloons{position:fixed;inset:0;pointer-events:none;z-index:98;overflow:hidden}
+.bballoon{position:absolute;bottom:-170px;width:46px;height:57px;opacity:.62;border-radius:50% 50% 48% 48%/58% 58% 42% 42%;animation-name:brise,bsway;animation-timing-function:linear,ease-in-out;animation-iteration-count:1,infinite;animation-fill-mode:forwards,none;animation-direction:normal,alternate}
+.bballoon::after{content:'';position:absolute;top:100%;left:50%;width:1px;height:46px;background:linear-gradient(180deg,rgba(120,60,80,.35),transparent)}
+@keyframes brise{from{transform:translateY(0)}to{transform:translateY(-125vh)}}
+@keyframes bsway{from{margin-left:-15px}to{margin-left:15px}}
+@media (prefers-reduced-motion:reduce){#bday-balloons{display:none}.bballoon{animation:none}}
 .coinbar{position:absolute;top:8px;right:14px;font-size:14px;font-weight:800;color:var(--gold2);background:rgba(255,255,255,.8);padding:3px 11px;border-radius:12px;z-index:5}
 .musicbtn{position:absolute;top:8px;left:14px;font-size:18px;background:rgba(255,255,255,.8);border:none;padding:3px 10px;border-radius:12px;cursor:pointer;z-index:5}
 .songbtn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
@@ -1499,6 +1508,7 @@ function buildHub(){
  setIco('hi-div',AVA.Sokka());setIco('hi-fairy',AVA.Aang());
  buildDiffBar();
  buildQuestCard();
+ bdayHero();
  const cb=document.getElementById('calmbtn');if(cb)cb.textContent=calm?'🌙':'🌤️';
  if(calm){const banner=document.getElementById('calm-banner');if(banner&&banner.style.display==='none')banner.style.display='block';}
 }
@@ -2520,7 +2530,56 @@ function tpEnd(winner){
  sfxWin();fireConfetti();maybeBreak();go('s-2p-end');
 }
 
-function fireConfetti(){if(calm)return;const cv=document.createElement('canvas');cv.className='confetti';cv.width=innerWidth;cv.height=innerHeight;document.body.appendChild(cv);const ctx=cv.getContext('2d');const cols=['#E0552B','#FFC107','#2E8FA8','#6FA53C','#5C9CE0'];let parts=Array.from({length:90},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height/2,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,s:6+Math.random()*6,c:cols[Math.floor(Math.random()*cols.length)],a:Math.random()*Math.PI}));let t=0;(function anim(){ctx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=.1;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);ctx.restore();});t++;if(t<150)requestAnimationFrame(anim);else cv.remove();})();}
+// opts: count, frames, ms (statt frames), cols, loop (Partikel oben neu starten), fade (sanft ausblenden)
+function fireConfetti(opts){if(calm)return;const o=opts||{};
+ const count=o.count||90,frames=o.frames||150,until=o.ms?Date.now()+o.ms:0;
+ const cv=document.createElement('canvas');cv.className='confetti';cv.width=innerWidth;cv.height=innerHeight;document.body.appendChild(cv);const ctx=cv.getContext('2d');const cols=o.cols||['#E0552B','#FFC107','#2E8FA8','#6FA53C','#5C9CE0'];let parts=Array.from({length:count},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height/2,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,s:6+Math.random()*6,c:cols[Math.floor(Math.random()*cols.length)],a:Math.random()*Math.PI}));let t=0;(function anim(){ctx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=.1;if(o.loop&&p.y>cv.height+30){p.y=-20;p.x=Math.random()*cv.width;}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);ctx.restore();});t++;
+ const done=until?Date.now()>=until:t>=frames;
+ if(!done)requestAnimationFrame(anim);
+ else if(o.fade){cv.classList.add('fade');setTimeout(()=>cv.remove(),1200);}
+ else cv.remove();})();}
+
+// ════ GEBURTSTAG ════
+const BIRTHDAY='10-20';            // Monat-Tag
+function isBirthday(){
+ try{if(/[?&]bday=1(&|$)/.test(location.search))return true;}catch(e){}
+ const d=new Date();
+ return String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')===BIRTHDAY;
+}
+function reducedMotion(){try{return matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){return false;}}
+function bdayCols(){const cs=getComputedStyle(document.documentElement);
+ return ['--luft','--wasser','--erde','--feuer','--gold'].map(v=>(cs.getPropertyValue(v)||'').trim()).filter(Boolean).concat(['#FFFFFF']);}
+// Originaltext bleibt im HTML, wird nur hier ueberschrieben
+function bdayHero(){
+ if(!isBirthday())return;
+ const gh=document.querySelector('#s-hub .gh');if(!gh)return;
+ const gt=gh.querySelector('.gt');if(gt)gt.innerHTML='Happy Birthday Rozarin <span class="emo">🎂</span>';
+ let gs=gh.querySelector('.gs');
+ if(!gs){gs=document.createElement('div');gs.className='gs';gh.appendChild(gs);}
+ gs.textContent='Heu·te ist dein Tag — die gan·ze A·ka·de·mie fei·ert mit dir! 🎉';
+}
+function bdayBalloons(){
+ if(calm||reducedMotion())return;
+ const cols=bdayCols(),wrap=document.createElement('div');wrap.id='bday-balloons';
+ for(let i=0;i<7;i++){
+  const b=document.createElement('div');b.className='bballoon';
+  b.style.left=(4+Math.random()*86).toFixed(1)+'%';
+  b.style.background=`radial-gradient(circle at 32% 26%,rgba(255,255,255,.75),${cols[i%cols.length]} 62%)`;
+  b.style.animationDuration=`${(9+Math.random()*3).toFixed(1)}s, ${(2.2+Math.random()*1.5).toFixed(1)}s`;
+  b.style.animationDelay=`${(Math.random()*3).toFixed(1)}s, 0s`;
+  wrap.appendChild(b);
+ }
+ document.body.appendChild(wrap);
+ setTimeout(()=>wrap.remove(),16000);
+}
+function initBirthday(){
+ if(!isBirthday())return;
+ document.body.classList.add('bday');
+ bdayHero();
+ if(reducedMotion())return;
+ fireConfetti({count:120,ms:6000,loop:true,fade:true,cols:bdayCols()});
+ bdayBalloons();
+}
 // ════ AUTO-SCHWIERIGKEIT (passt sich an) ════
 let ADAPT=true,adaptRight=0,adaptWrong=0;
 const DIFF_ORDER=['leicht','normal','schwer'];
@@ -2692,7 +2751,7 @@ function importSave(inp){
  rd.readAsText(f);
 }
 
-loadSave();if(calm)document.body.classList.add('calm');buildHub();setScrolls(scrolls);
+loadSave();if(calm)document.body.classList.add('calm');buildHub();setScrolls(scrolls);initBirthday();
 {const _h=location.hash.slice(1);if(_h&&NATIONHUBS[_h])openNationHub(_h);}
 // ════ ADHS ERMUTIGUNGEN ════
 const CHEERS=['Ro·za·rin, du bist mu·tig! 💪','Su·per ge·macht! 🌟','Aang wä·re stolz auf dich! 🌬️','Du wirst im·mer bes·ser! ⭐','Toll ge·rech·net! 🎉','Du schaffst das! 💙','Wei·ter so! 🏆','Du bist klas·se! ✨'];
