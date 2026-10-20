@@ -170,6 +170,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .bday-relight{background:none;border:none;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:8px;opacity:.55}
 .bday-relight:hover{opacity:.9}
 @media (prefers-reduced-motion:reduce){.candle .flame,.candle.puff .flame,.smoke,.bday-wish{animation:none}}
+/* Geburtstagslied */
+.songcard{max-width:460px;margin:12px auto 2px;padding:12px;border:2px solid #F1DDD1;border-radius:var(--r);background:linear-gradient(180deg,#FFFDFB,#FFF6F0);box-shadow:var(--sh);animation:letterIn .5s ease both}
+.songcard-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.songcard-title{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;color:var(--gold2)}
+.songclose{background:none;border:2px solid #E9D6CA;border-radius:999px;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;padding:5px 13px;cursor:pointer}
+.songclose:hover{color:var(--text);border-color:#DCC4B5}
+.songframe{position:relative;width:100%;padding-top:56.25%;border-radius:var(--rs);overflow:hidden;background:#000}
+.songframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.songhint{font-size:13.5px;font-weight:700;color:var(--muted);margin-top:9px;text-align:center}
+@media (prefers-reduced-motion:reduce){.songcard{animation:none}}
 /* Brief */
 .letter{max-width:540px;margin:10px auto 26px;padding:30px 26px 34px;border:2px solid #F1DDD1;border-radius:var(--r);background:linear-gradient(180deg,#FFFDFB,#FFF6F0);box-shadow:var(--sh2)}
 .letter-head{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;text-align:center;color:var(--gold2);margin-bottom:22px}
@@ -498,6 +508,7 @@ body.calm .questcard{box-shadow:none}
   <div class="gt">Avatar Lern-Akademie</div>
  </div>
  <div id="bday-box" class="bday-box" style="display:none"></div>
+ <div id="bday-song" class="songcard" style="display:none"></div>
  <div id="calm-banner" style="display:none"></div>
  <div id="hub-quest"></div>
  <div class="diffbar" id="diffbar"></div>
@@ -2647,7 +2658,8 @@ function buildBdayCake(){
   '<div class="cake-plate"></div>'+
   '<div class="bday-count" id="bday-count"></div><div id="bday-wish"></div>'+
   '<button class="bday-relight" id="bday-relight" onclick="relightCandles()">nochmal anzünden</button>'+
-  '<button class="btn bgold" style="max-width:420px;margin:14px auto 2px" onclick="go(\'s-bday-letter\')">Eine Nachricht für dich 💌</button>';
+  '<button class="btn bgold" style="max-width:420px;margin:14px auto 2px" onclick="go(\'s-bday-letter\')">Eine Nachricht für dich 💌</button>'+
+  '<button class="btn bblue" style="max-width:420px;margin:8px auto 2px" onclick="openBdaySong()">🎵 Dein Geburtstagslied</button>';
  const row=document.getElementById('bday-candles');
  for(let i=0;i<CANDLES;i++){
   const c=document.createElement('div');c.className='candle';
@@ -2682,6 +2694,25 @@ function bdayCheer(){
  ensureAudio();[523,659,784,1047,1319].forEach((f,i)=>tone(f,0.32,'triangle',0.13,i*0.11));
 }
 function relightCandles(){bdayState.candlesBlown=[];persist();buildBdayCake();}
+
+// ════ GEBURTSTAGSLIED ════
+// Karte liegt ausserhalb von #bday-box, damit buildBdayCake() den laufenden Player nicht neu aufbaut
+function openBdaySong(){
+ const box=document.getElementById('bday-song');if(!box)return;
+ // Ruhe-Modus: kein Autostart, Roza tippt selbst auf Play
+ const src='https://www.youtube-nocookie.com/embed/XaKPbXXbtWY?'+(calm?'rel=0':'autoplay=1&rel=0');
+ box.innerHTML='<div class="songcard-top"><div class="songcard-title">🎵 Dein Geburtstagslied</div>'+
+  '<button class="songclose" onclick="closeBdaySong()">✕ Schliessen</button></div>'+
+  '<div class="songframe"><iframe src="'+src+'" title="Dein Geburtstagslied" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>'+
+  (calm?'<div class="songhint">Ruhe-Modus: tippe auf ▶, wenn du das Lied hören möchtest.</div>':'');
+ box.style.display='block';
+ try{box.scrollIntoView({behavior:reducedMotion()?'auto':'smooth',block:'center'});}catch(e){}
+}
+// iframe aus dem DOM nehmen stoppt die Wiedergabe
+function closeBdaySong(){
+ const box=document.getElementById('bday-song');if(!box)return;
+ box.innerHTML='';box.style.display='none';
+}
 // ════ AUTO-SCHWIERIGKEIT (passt sich an) ════
 let ADAPT=true,adaptRight=0,adaptWrong=0;
 const DIFF_ORDER=['leicht','normal','schwer'];
