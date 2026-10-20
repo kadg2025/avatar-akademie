@@ -2697,19 +2697,25 @@ function relightCandles(){bdayState.candlesBlown=[];persist();buildBdayCake();}
 
 // ════ GEBURTSTAGSLIED ════
 // Karte liegt ausserhalb von #bday-box, damit buildBdayCake() den laufenden Player nicht neu aufbaut
+let bdaySongTimer=null;
 function openBdaySong(){
  const box=document.getElementById('bday-song');if(!box)return;
  // Ruhe-Modus: kein Autostart, Roza tippt selbst auf Play
- const src='https://www.youtube-nocookie.com/embed/XaKPbXXbtWY?'+(calm?'rel=0':'autoplay=1&rel=0');
+ const src='https://www.youtube-nocookie.com/embed/XaKPbXXbtWY?'+(calm?'rel=0':'autoplay=1&rel=0')+'&end=90';
  box.innerHTML='<div class="songcard-top"><div class="songcard-title">🎵 Dein Geburtstagslied</div>'+
   '<button class="songclose" onclick="closeBdaySong()">✕ Schliessen</button></div>'+
   '<div class="songframe"><iframe src="'+src+'" title="Dein Geburtstagslied" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>'+
   (calm?'<div class="songhint">Ruhe-Modus: tippe auf ▶, wenn du das Lied hören möchtest.</div>':'');
  box.style.display='block';
+ // end=90 stoppt den Ton, der Timer raeumt die Karte hinterher weg.
+ // Im Ruhe-Modus laeuft kein Timer, weil ohne Autostart unklar ist, wann das Lied beginnt.
+ clearTimeout(bdaySongTimer);bdaySongTimer=null;
+ if(!calm)bdaySongTimer=setTimeout(closeBdaySong,92000);
  try{box.scrollIntoView({behavior:reducedMotion()?'auto':'smooth',block:'center'});}catch(e){}
 }
 // iframe aus dem DOM nehmen stoppt die Wiedergabe
 function closeBdaySong(){
+ clearTimeout(bdaySongTimer);bdaySongTimer=null;
  const box=document.getElementById('bday-song');if(!box)return;
  box.innerHTML='';box.style.display='none';
 }
