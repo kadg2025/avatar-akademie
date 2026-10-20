@@ -180,6 +180,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .songframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .songhint{font-size:13.5px;font-weight:700;color:var(--muted);margin-top:9px;text-align:center}
 @media (prefers-reduced-motion:reduce){.songcard{animation:none}}
+/* Gute-Nacht-Geschichte */
+.bnight{background:linear-gradient(135deg,#33488C,#101C46);color:#fff}
+body.night{background:linear-gradient(180deg,#0A1233,#17295A 55%,#22376D)}
+body.night::before{opacity:0}
+body.night .btn.bgray{color:#C3D0EE;border-color:rgba(255,255,255,.22)}
+#bday-stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.nstar{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 5px rgba(255,255,255,.75);animation-name:twinkle;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+@keyframes twinkle{from{opacity:.2;transform:scale(.75)}to{opacity:1;transform:scale(1.2)}}
+.bstory{max-width:560px;margin:12px auto 26px;padding:26px 24px 30px;border-radius:var(--r);background:rgba(10,20,54,.55);border:1px solid rgba(255,255,255,.14);box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.bstory-head{font-family:'Fredoka',sans-serif;font-weight:700;font-size:28px;line-height:1.2;text-align:center;color:#FFE4A3;margin-bottom:22px}
+.bstory p{font-size:21px;line-height:1.9;font-weight:600;color:#E7EDFF;margin:0 0 20px;border-radius:8px;transition:background .3s ease,box-shadow .3s ease}
+.bstory p:last-child{margin-bottom:0;text-align:center;color:#FFE4A3;font-family:'Fredoka',sans-serif;font-weight:600;font-size:23px}
+.bstory p.reading{background:rgba(255,228,163,.16);box-shadow:0 0 0 7px rgba(255,228,163,.16)}
+.bstory>*{animation:letterIn .8s ease both}
+@media (prefers-reduced-motion:reduce){.bstory>*,.nstar{animation:none}.bstory p{transition:none}}
 /* Brief */
 .letter{max-width:540px;margin:10px auto 26px;padding:30px 26px 34px;border:2px solid #F1DDD1;border-radius:var(--r);background:linear-gradient(180deg,#FFFDFB,#FFF6F0);box-shadow:var(--sh2)}
 .letter-head{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;text-align:center;color:var(--gold2);margin-bottom:22px}
@@ -1376,6 +1391,30 @@ body.calm .questcard{box-shadow:none}
  <div class="feedbk" id="sym-fb"></div>
 </div>
 
+<!-- GEBURTSTAG: GUTE-NACHT-GESCHICHTE -->
+<div id="s-bday-story" class="sc">
+ <div style="display:flex;gap:8px;max-width:560px;margin:0 auto">
+  <button class="btn bgray" style="flex:1" onclick="go('s-hub')">← Zurück</button>
+  <button class="btn bnight" style="flex:1.3" id="bstory-say" onclick="bstorySay()">🔊 Vorlesen</button>
+ </div>
+ <div class="bstory">
+  <div class="bstory-head">Roza und die Sternenkarte</div>
+  <p>Roza liebte Fragen. Warum leuchten Sterne? Wohin zieht der Wind? Und was ist hinter dem höchsten Berg?</p>
+  <p>Eines Abends fand sie in ihrem Zimmer eine alte Karte. Sie war leer, nur ein kleiner Stern leuchtete in der Ecke. Darunter stand: «Zeichne den Weg selbst.»</p>
+  <p>Andere hätten vielleicht gewartet. Roza nicht. Sie nahm einen Stift, öffnete das Fenster und kletterte auf eine Wolke, die gerade vorbeischwebte.</p>
+  <p>«Wohin?», fragte die Wolke.</p>
+  <p>«Ich weiss es noch nicht», sagte Roza. «Aber ich finde es heraus.»</p>
+  <p>Sie flog über Berge und Meere. Bei jedem neuen Ort zeichnete sie etwas auf die Karte: einen Fluss, eine Höhle, eine Insel. Manchmal war der Weg schwierig, und sie verlief sich. Dann blieb sie stehen, atmete tief durch und sagte: «Das ist okay. Ich probiere etwas anderes.»</p>
+  <p>Und jedes Mal fand sie einen neuen, besseren Weg.</p>
+  <p>Als die Sonne aufging, war die Karte voll. Der kleine Stern in der Ecke leuchtete heller als je zuvor.</p>
+  <p>«Weisst du», sagte die Wolke, «die Karte hat nur auf dich gewartet. Du hast keine Angst vor Fragen, und das ist deine Stärke.»</p>
+  <p>Roza lächelte. «Ich habe noch ganz viele Fragen.»</p>
+  <p>«Gut so», sagte die Wolke. «Morgen geht es weiter.»</p>
+  <p>Roza kletterte zurück ins Fenster, legte die Karte unter ihr Kopfkissen und schlief ein. Sie träumte von all den Wegen, die noch auf sie warteten.</p>
+  <p>Gute Nacht, Roza. 🌙</p>
+ </div>
+</div>
+
 <!-- GEBURTSTAG: BRIEF -->
 <div id="s-bday-letter" class="sc">
  <button class="btn bgray" onclick="go('s-hub')">← Zurück</button>
@@ -1555,6 +1594,7 @@ function go(id){
  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
  document.getElementById(id).classList.add('on');window.scrollTo(0,0);
  if(id==='s-hub'){buildHub();setScrolls(scrolls);if(location.hash)history.replaceState(null,'',location.pathname+location.search);}
+ if(id==='s-bday-story')openNightMode();else closeNightMode();
  if(id==='s-race-pick')buildRacePicker();
  if(id==='s-maze')startMaze();
  if(id==='s-duel-intro')buildDuelPick();
@@ -2530,13 +2570,16 @@ function showResetConfirm(){var old=document.querySelector('.storyconfirm');if(o
 function resetAll(){try{localStorage.removeItem(SAVE_KEY);}catch(e){}location.reload();}
 function confirmUnlock(id){var s=STORIES.find(function(x){return x.id===id;});if(!s)return;if(scrolls<s.cost){closeStoryConfirm();return;}setScrolls(scrolls-s.cost);if(storyUnlocked.indexOf(id)<0)storyUnlocked.push(id);persist();closeStoryConfirm();if(typeof sfxTea==='function')sfxTea();openStory(id);}
 function openStory(id){var s=STORIES.find(function(x){return x.id===id;});if(!s)return;SR={story:s,page:0};renderStoryPage();go('s-story-read');}
-function renderStoryPage(){var s=SR.story;if(!s)return;var pg=s.pages[SR.page];document.getElementById('sr-title').textContent=s.emoji+' '+s.title;var sc=document.getElementById('sr-scene');sc.style.background=pg.bg||s.bg;document.getElementById('sr-art').textContent=(pg.art||[]).join(' ');document.getElementById('sr-text').innerHTML=srSplit(pg.text).map(function(p,i){return '<span class="sr-sent" data-i="'+i+'">'+p+'</span>';}).join('');var dots='';for(var i=0;i<s.pages.length;i++){dots+='<div class="storydot'+(i===SR.page?' on':'')+'"></div>';}document.getElementById('sr-dots').innerHTML=dots;var last=SR.page>=s.pages.length-1;document.getElementById('sr-prev').style.visibility=SR.page===0?'hidden':'visible';document.getElementById('sr-next').textContent=last?'Fertig 🎉':'Weiter ▶';try{window.scrollTo(0,0);}catch(e){}srStop();srBtn();setTimeout(srStart,360);}
+function renderStoryPage(){var s=SR.story;if(!s)return;var pg=s.pages[SR.page];document.getElementById('sr-title').textContent=s.emoji+' '+s.title;var sc=document.getElementById('sr-scene');sc.style.background=pg.bg||s.bg;document.getElementById('sr-art').textContent=(pg.art||[]).join(' ');document.getElementById('sr-text').innerHTML=srSplit(pg.text).map(function(p,i){return '<span class="sr-sent" data-i="'+i+'">'+p+'</span>';}).join('');var dots='';for(var i=0;i<s.pages.length;i++){dots+='<div class="storydot'+(i===SR.page?' on':'')+'"></div>';}document.getElementById('sr-dots').innerHTML=dots;var last=SR.page>=s.pages.length-1;document.getElementById('sr-prev').style.visibility=SR.page===0?'hidden':'visible';document.getElementById('sr-next').textContent=last?'Fertig 🎉':'Weiter ▶';try{window.scrollTo(0,0);}catch(e){}srStop();srUseStory();srBtn();setTimeout(srStart,360);}
 function storyPrev(){if(SR.page>0){SR.page--;renderStoryPage();}}
 function storyNext(){var s=SR.story;if(!s)return;if(SR.page>=s.pages.length-1){finishStory();}else{SR.page++;renderStoryPage();}}
 /* ---- Vorlesen: satzweise, mit Hervorhebung und Play/Pause ---- */
-var SRS={parts:[],i:0,on:false,paused:false,gen:0};
+// parts: [{t:'Satz',h:Index des hervorzuhebenden Elements}]; sel/btn/lab je nach Screen
+var SRS={parts:[],i:0,on:false,paused:false,gen:0,sel:'#sr-text .sr-sent',btn:'sr-say',
+ lab:['\ud83d\udd0a Vor\u00b7le\u00b7sen','\u23f8 Pau\u00b7se','\u25b6 Wei\u00b7ter\u00b7h\u00f6\u00b7ren'],begin:null};
+function srUse(sel,btn,lab,begin){SRS.sel=sel;SRS.btn=btn;SRS.lab=lab;SRS.begin=begin;}
 function srAvailable(){return ('speechSynthesis' in window)&&(typeof SpeechSynthesisUtterance!=='undefined');}
-function srSplit(t){return String(t).replace(/<[^>]+>/g,' ').match(/[^.!?\u2026]+[.!?\u2026]*\s*/g)||[String(t)];}
+function srSplit(t){return String(t).replace(/<[^>]+>/g,' ').match(/[^.!?\u2026]+[.!?\u2026]*[\u00bb"']*\s*/g)||[String(t)];}
 function srClean(t){return String(t).replace(/[\u00b7\u00ad]/g,'').replace(/Iroh/g,'Ihro').replace(/Ty\s*Lee/g,'Tee Li');}
 // beste deutsche Stimme; nicht cachen solange noch keine geladen ist
 function srVoice(){
@@ -2553,32 +2596,51 @@ function srVoice(){
  return srVoice._v;
 }
 if('speechSynthesis' in window){try{speechSynthesis.onvoiceschanged=function(){srVoice._v=null;};}catch(e){}}
-function srMark(i){
- var els=document.querySelectorAll('#sr-text .sr-sent');
- for(var k=0;k<els.length;k++)els[k].classList.toggle('reading',k===i);
+function srMark(h){
+ var els=document.querySelectorAll(SRS.sel);
+ for(var k=0;k<els.length;k++)els[k].classList.toggle('reading',k===h);
 }
 function srBtn(){
- var b=document.getElementById('sr-say');if(!b)return;
+ var b=document.getElementById(SRS.btn);if(!b)return;
  b.style.display=srAvailable()?'':'none';
- b.textContent=SRS.on?(SRS.paused?'\u25b6 Wei\u00b7ter\u00b7h\u00f6\u00b7ren':'\u23f8 Pau\u00b7se'):'\ud83d\udd0a Vor\u00b7le\u00b7sen';
+ b.textContent=SRS.on?(SRS.paused?SRS.lab[2]:SRS.lab[1]):SRS.lab[0];
 }
 function srStep(g){
  if(g!==SRS.gen||!SRS.on)return;
  if(SRS.i>=SRS.parts.length){srStop();return;}
- srMark(SRS.i);
- var u=new SpeechSynthesisUtterance(srClean(SRS.parts[SRS.i]));
+ srMark(SRS.parts[SRS.i].h);
+ var u=new SpeechSynthesisUtterance(srClean(SRS.parts[SRS.i].t));
  u.lang='de-DE';u.rate=0.85;u.pitch=1.05;
  var v=srVoice();if(v)u.voice=v;
  u.onend=function(){if(g!==SRS.gen||!SRS.on)return;SRS.i++;srStep(g);};
  u.onerror=function(){if(g!==SRS.gen)return;srStop();};
  speechSynthesis.speak(u);
 }
-function srStart(){
- var s=SR.story;if(!s||!srAvailable())return;
+function srBegin(parts){
+ if(!srAvailable())return;
  speechSynthesis.cancel();
- SRS.gen++;SRS.parts=srSplit(s.pages[SR.page].text);SRS.i=0;SRS.on=true;SRS.paused=false;
+ SRS.gen++;SRS.parts=parts;SRS.i=0;SRS.on=true;SRS.paused=false;
  srStep(SRS.gen);srBtn();
 }
+// Geschichten-Screen: jeder Satz ist eine eigene Hervorhebung
+function srUseStory(){srUse('#sr-text .sr-sent','sr-say',['🔊 Vor·le·sen','⏸ Pau·se','▶ Wei·ter·hö·ren'],srStart);}
+function srStart(){
+ var s=SR.story;if(!s)return;
+ srUseStory();
+ srBegin(srSplit(s.pages[SR.page].text).map(function(t,i){return {t:t,h:i};}));
+}
+// Gute-Nacht-Geschichte: satzweise gesprochen, hervorgehoben wird der ganze Absatz
+function srUseNight(){srUse('#s-bday-story .bstory p','bstory-say',['🔊 Vorlesen','⏸ Pause','▶ Weiterhören'],bstoryStart);}
+function bstoryStart(){
+ var ps=document.querySelectorAll('#s-bday-story .bstory p'),parts=[];
+ for(var i=0;i<ps.length;i++){
+  var h=i;
+  srSplit(ps[i].textContent).forEach(function(t){parts.push({t:t,h:h});});
+ }
+ srUseNight();
+ srBegin(parts);
+}
+function bstorySay(){if(!SRS.on)srUseNight();srToggle();}
 function srStop(){
  SRS.on=false;SRS.paused=false;SRS.gen++;
  if('speechSynthesis' in window)speechSynthesis.cancel();
@@ -2586,7 +2648,8 @@ function srStop(){
 }
 // Chrome ignoriert pause() bei Netzwerk-Stimmen (z.B. Google Deutsch).
 // Dann brechen wir ab und beginnen den angefangenen Satz beim Weitermachen neu.
-function storySay(){
+function storySay(){if(!SRS.on)srUseStory();srToggle();}
+function srToggle(){
  if(!srAvailable())return;
  if(SRS.on&&!SRS.paused){
   SRS.paused=true;speechSynthesis.pause();
@@ -2599,7 +2662,7 @@ function storySay(){
   else{SRS.gen++;srStep(SRS.gen);}
   srBtn();return;
  }
- srStart();
+ if(SRS.begin)SRS.begin();
 }
 function finishStory(){var s=SR.story;if(!s)return;var first=storiesDone.indexOf(s.id)<0;questStoryCheck(s.id);var msg='';if(first){storiesDone.push(s.id);msg='💛 Schön, dass du »'+s.title+'« zu En·de ge·le·sen hast!';if(s.unlock&&!unlocked[s.unlock]){unlocked[s.unlock]=true;msg+=' Und '+(getChar(s.unlock)?getChar(s.unlock).n:s.unlock)+' ist jetzt dein Freund! 🤝';}persist();fireConfetti();sfxWin();}else{msg='📖 Schön, sie noch·mal zu le·sen!';}buildStories();go('s-stories');var m=document.getElementById('stories-msg');if(m)m.innerHTML=msg;}
 
@@ -2730,7 +2793,8 @@ function buildBdayCake(){
   '<div class="bday-count" id="bday-count"></div><div id="bday-wish"></div>'+
   '<button class="bday-relight" id="bday-relight" onclick="relightCandles()">nochmal anzünden</button>'+
   '<button class="btn bgold" style="max-width:420px;margin:14px auto 2px" onclick="go(\'s-bday-letter\')">Eine Nachricht für dich 💌</button>'+
-  '<button class="btn bblue" style="max-width:420px;margin:8px auto 2px" onclick="openBdaySong()">🎵 Dein Geburtstagslied</button>';
+  '<button class="btn bblue" style="max-width:420px;margin:8px auto 2px" onclick="openBdaySong()">🎵 Dein Geburtstagslied</button>'+
+  '<button class="btn bnight" style="max-width:420px;margin:8px auto 2px" onclick="go(\'s-bday-story\')">🌙 Gute-Nacht-Geschichte</button>';
  const row=document.getElementById('bday-candles');
  for(let i=0;i<CANDLES;i++){
   const c=document.createElement('div');c.className='candle';
@@ -2765,6 +2829,32 @@ function bdayCheer(){
  ensureAudio();[523,659,784,1047,1319].forEach((f,i)=>tone(f,0.32,'triangle',0.13,i*0.11));
 }
 function relightCandles(){bdayState.candlesBlown=[];persist();buildBdayCake();}
+
+// ════ GUTE-NACHT-GESCHICHTE ════
+function openNightMode(){
+ document.body.classList.add('night');
+ if(!document.getElementById('bday-stars')){
+  const w=document.createElement('div');w.id='bday-stars';
+  for(let i=0;i<46;i++){
+   const s=document.createElement('div');s.className='nstar';
+   const sz=(1+Math.random()*2.4).toFixed(1);
+   s.style.width=sz+'px';s.style.height=sz+'px';
+   s.style.left=(Math.random()*100).toFixed(1)+'%';
+   s.style.top=(Math.random()*100).toFixed(1)+'%';
+   s.style.animationDuration=(1.6+Math.random()*2.6).toFixed(1)+'s';
+   s.style.animationDelay=(Math.random()*2.5).toFixed(1)+'s';
+   w.appendChild(s);
+  }
+  document.body.appendChild(w);
+ }
+ const els=document.querySelectorAll('#s-bday-story .bstory > *');
+ for(let k=0;k<els.length;k++)els[k].style.animationDelay=(0.05+k*0.18).toFixed(2)+'s';
+ srUseNight();srBtn();
+}
+function closeNightMode(){
+ document.body.classList.remove('night');
+ const w=document.getElementById('bday-stars');if(w)w.remove();
+}
 
 // ════ GEBURTSTAGSLIED ════
 // Karte liegt ausserhalb von #bday-box, damit buildBdayCake() den laufenden Player nicht neu aufbaut
