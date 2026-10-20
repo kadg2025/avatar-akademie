@@ -145,6 +145,45 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes brise{from{transform:translateY(0)}to{transform:translateY(-125vh)}}
 @keyframes bsway{from{margin-left:-15px}to{margin-left:15px}}
 @media (prefers-reduced-motion:reduce){#bday-balloons{display:none}.bballoon{animation:none}}
+/* Torte */
+.bday-box{text-align:center;margin:34px 0 2px}
+.cake{position:relative;width:200px;margin:0 auto}
+.candles{display:flex;justify-content:center;align-items:flex-end;gap:10px;height:34px}
+.candle{position:relative;width:8px;height:30px;border-radius:3px;cursor:pointer;background:repeating-linear-gradient(135deg,#FFF6FA 0 4px,#F2A8C2 4px 8px);box-shadow:0 1px 2px rgba(120,60,80,.2)}
+.candle .wick{position:absolute;top:-4px;left:50%;margin-left:-1px;width:2px;height:5px;background:#6B5543;border-radius:1px}
+.candle .flame{position:absolute;top:-21px;left:50%;margin-left:-6px;width:12px;height:18px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;transform-origin:50% 100%;background:radial-gradient(circle at 50% 72%,#FFF6C4,#FFC24A 46%,#F57C1F 82%);box-shadow:0 0 14px 4px rgba(255,170,60,.5);animation:flicker .45s ease-in-out infinite alternate}
+@keyframes flicker{from{transform:scale(1) rotate(-2deg);filter:brightness(1)}to{transform:scale(1.14,1.22) rotate(2deg);filter:brightness(1.3)}}
+.candle.puff .flame{animation:puff .5s ease-out forwards}
+@keyframes puff{0%{opacity:1;transform:scale(1)}55%{opacity:.5;transform:scale(1.6,1.9) translateY(-9px)}100%{opacity:0;transform:scale(.4,2.4) translateY(-22px)}}
+.candle.out .flame{display:none}
+.candle.out{opacity:.85}
+.smoke{position:absolute;top:-15px;left:50%;margin-left:-2px;width:4px;height:4px;border-radius:50%;background:rgba(140,138,150,.5);pointer-events:none;animation:smokeup 1.6s ease-out forwards}
+@keyframes smokeup{0%{opacity:.55;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-40px) scale(2.4)}}
+.cake-top{position:relative;height:26px;border-radius:14px 14px 5px 5px;background:linear-gradient(180deg,#FFF3F7,#FBD7E3)}
+.cake-top::after{content:'';position:absolute;left:0;right:0;top:100%;margin-top:-1px;height:13px;background:radial-gradient(circle at 10px 0,#FBD7E3 9px,transparent 9.5px) repeat-x;background-size:28px 13px}
+.cake-mid{height:30px;background:linear-gradient(180deg,#E7AEC4,#D78FA7)}
+.cake-bot{height:34px;border-radius:0 0 10px 10px;background:linear-gradient(180deg,#CE91AB,#B3708C);box-shadow:inset 0 2px 0 rgba(255,255,255,.4)}
+.cake-plate{width:238px;height:11px;margin:0 auto;border-radius:0 0 999px 999px;background:linear-gradient(180deg,#F0E4DA,#D8C5B6);box-shadow:0 5px 12px rgba(120,60,80,.18)}
+.bday-count{font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;color:var(--muted);margin-top:14px;min-height:22px}
+.bday-wish{font-family:'Fredoka',sans-serif;font-weight:700;font-size:27px;line-height:1.2;margin-top:8px;background:linear-gradient(120deg,#C8628F,#E8A4BC 55%,#6AAAC8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:wishIn .9s cubic-bezier(.34,1.56,.64,1)}
+@keyframes wishIn{from{opacity:0;transform:scale(.8) translateY(10px)}to{opacity:1;transform:none}}
+.bday-relight{background:none;border:none;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:8px;opacity:.55}
+.bday-relight:hover{opacity:.9}
+@media (prefers-reduced-motion:reduce){.candle .flame,.candle.puff .flame,.smoke,.bday-wish{animation:none}}
+/* Brief */
+.letter{max-width:540px;margin:10px auto 26px;padding:30px 26px 34px;border:2px solid #F1DDD1;border-radius:var(--r);background:linear-gradient(180deg,#FFFDFB,#FFF6F0);box-shadow:var(--sh2)}
+.letter-head{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;text-align:center;color:var(--gold2);margin-bottom:22px}
+.letter p{font-size:21px;line-height:1.85;font-weight:600;color:var(--text);margin:0 0 20px}
+.letter-sign{font-family:'Fredoka',sans-serif;font-weight:600;font-size:23px;text-align:right;color:var(--gold2);margin-top:26px}
+.letter>*{animation:letterIn .85s ease both}
+.letter>*:nth-child(1){animation-delay:.05s}
+.letter>*:nth-child(2){animation-delay:.35s}
+.letter>*:nth-child(3){animation-delay:.65s}
+.letter>*:nth-child(4){animation-delay:.95s}
+.letter>*:nth-child(5){animation-delay:1.25s}
+.letter>*:nth-child(6){animation-delay:1.55s}
+@keyframes letterIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.letter>*{animation:none}}
 .coinbar{position:absolute;top:8px;right:14px;font-size:14px;font-weight:800;color:var(--gold2);background:rgba(255,255,255,.8);padding:3px 11px;border-radius:12px;z-index:5}
 .musicbtn{position:absolute;top:8px;left:14px;font-size:18px;background:rgba(255,255,255,.8);border:none;padding:3px 10px;border-radius:12px;cursor:pointer;z-index:5}
 .songbtn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
@@ -458,6 +497,7 @@ body.calm .questcard{box-shadow:none}
  <div class="gh">
   <div class="gt">Avatar Lern-Akademie</div>
  </div>
+ <div id="bday-box" class="bday-box" style="display:none"></div>
  <div id="calm-banner" style="display:none"></div>
  <div id="hub-quest"></div>
  <div class="diffbar" id="diffbar"></div>
@@ -1322,6 +1362,19 @@ body.calm .questcard{box-shadow:none}
  <div class="feedbk" id="sym-fb"></div>
 </div>
 
+<!-- GEBURTSTAG: BRIEF -->
+<div id="s-bday-letter" class="sc">
+ <button class="btn bgray" onclick="go('s-hub')">← Zurück</button>
+ <div class="letter">
+  <div class="letter-head">Für dich, Roza</div>
+  <p>Ich liebe es, wenn du zur Tür hereinkommst. Dein Lachen ist schon da, bevor du etwas sagst. Dann wird alles hell und fröhlich. Du bist mein Sonnenschein, jeden Tag.</p>
+  <p>Ich bin so stolz auf dich. Du bist klug, neugierig und hast deinen eigenen Kopf. Du musst nichts beweisen. Ich habe dich genau so lieb, wie du bist.</p>
+  <p>Ich wünsche dir für dein neues Lebensjahr viel Mut, viel Freude und ganz viele Momente zum Lachen. Egal was passiert: Ich bin immer für dich da.</p>
+  <p>Danke, dass du meine Tochter bist.</p>
+  <div class="letter-sign">Dein Papa ❤️</div>
+ </div>
+</div>
+
 </div>
 
 <script>
@@ -1402,6 +1455,7 @@ const SAVE_KEY='roza_akademie_v1';
 const DAY_GOAL=3;
 let daily={day:'',count:0,streak:0,last:''};
 let treasures=[];
+let bdayState={candlesBlown:[]};
 function todayStr(){return new Date().toISOString().slice(0,10);}
 function loadSave(){
  try{const s=JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');
@@ -1419,10 +1473,11 @@ function loadSave(){
   if(Array.isArray(s.storiesDone))s.storiesDone.forEach(function(id){if(storyUnlocked.indexOf(id)<0)storyUnlocked.push(id);});
   if(typeof s.diff==='string'&&DIFFCFG[s.diff])DIFF=s.diff;
   if(typeof s.adapt==='boolean')ADAPT=s.adapt;
+  if(s.bday&&Array.isArray(s.bday.candlesBlown))bdayState.candlesBlown=s.bday.candlesBlown;
  }catch(e){}
  const t=todayStr();if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;daily.qg='';daily.qgDone=false;daily.qsDone=false;daily.qBonus=false;}
 }
-function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({scrolls,unlocked,achievements,journeyDone,jAppaAt,daily,treasures,calm,storiesDone,companion,storyUnlocked,diff:DIFF,adapt:ADAPT}));}catch(e){}}
+function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({scrolls,unlocked,achievements,journeyDone,jAppaAt,daily,treasures,calm,storiesDone,companion,storyUnlocked,diff:DIFF,adapt:ADAPT,bday:bdayState}));}catch(e){}}
 function recordActivity(){
  const t=todayStr();
  if(daily.day!==t){daily.day=t;daily.count=0;daily.earned=0;daily.teamDone=false;daily.qg='';daily.qgDone=false;daily.qsDone=false;daily.qBonus=false;}
@@ -1508,7 +1563,7 @@ function buildHub(){
  setIco('hi-div',AVA.Sokka());setIco('hi-fairy',AVA.Aang());
  buildDiffBar();
  buildQuestCard();
- bdayHero();
+ bdayHero();buildBdayCake();
  const cb=document.getElementById('calmbtn');if(cb)cb.textContent=calm?'🌙':'🌤️';
  if(calm){const banner=document.getElementById('calm-banner');if(banner&&banner.style.display==='none')banner.style.display='block';}
 }
@@ -2580,6 +2635,53 @@ function initBirthday(){
  fireConfetti({count:120,ms:6000,loop:true,fade:true,cols:bdayCols()});
  bdayBalloons();
 }
+
+// ════ GEBURTSTAGSTORTE ════
+const CANDLES=10;
+function buildBdayCake(){
+ const box=document.getElementById('bday-box');
+ if(!box||!isBirthday())return;
+ box.style.display='block';
+ box.innerHTML='<div class="cake"><div class="candles" id="bday-candles"></div>'+
+  '<div class="cake-top"></div><div class="cake-mid"></div><div class="cake-bot"></div></div>'+
+  '<div class="cake-plate"></div>'+
+  '<div class="bday-count" id="bday-count"></div><div id="bday-wish"></div>'+
+  '<button class="bday-relight" id="bday-relight" onclick="relightCandles()">nochmal anzünden</button>'+
+  '<button class="btn bgold" style="max-width:420px;margin:14px auto 2px" onclick="go(\'s-bday-letter\')">Eine Nachricht für dich 💌</button>';
+ const row=document.getElementById('bday-candles');
+ for(let i=0;i<CANDLES;i++){
+  const c=document.createElement('div');c.className='candle';
+  c.innerHTML='<div class="flame"></div><div class="wick"></div>';
+  if(bdayState.candlesBlown.indexOf(i)>=0)c.classList.add('out');
+  c.onclick=()=>blowCandle(i,c);
+  row.appendChild(c);
+ }
+ renderBdayCount();
+}
+function blowCandle(i,el){
+ if(bdayState.candlesBlown.indexOf(i)>=0)return;   // schon aus, reagiert nicht mehr
+ bdayState.candlesBlown.push(i);persist();
+ el.classList.add('puff');
+ const sm=document.createElement('div');sm.className='smoke';el.appendChild(sm);
+ setTimeout(()=>{el.classList.remove('puff');el.classList.add('out');},500);
+ setTimeout(()=>sm.remove(),1700);
+ renderBdayCount();
+ if(bdayState.candlesBlown.length>=CANDLES)bdayCheer();
+}
+function renderBdayCount(){
+ const n=CANDLES-bdayState.candlesBlown.length;
+ const el=document.getElementById('bday-count');
+ if(el)el.textContent=n===0?'':(n===1?'Noch 1 Kerze':'Noch '+n+' Kerzen');
+ const w=document.getElementById('bday-wish');
+ if(w&&(n===0)!==!!w.firstChild)w.innerHTML=n===0?'<div class="bday-wish">Wunsch dir was, Rozarin! ✨</div>':'';
+ const rl=document.getElementById('bday-relight');
+ if(rl)rl.style.display=bdayState.candlesBlown.length?'inline-block':'none';
+}
+function bdayCheer(){
+ fireConfetti({count:220,ms:3000,fade:true,cols:bdayCols()});   // dichterer zweiter Burst
+ ensureAudio();[523,659,784,1047,1319].forEach((f,i)=>tone(f,0.32,'triangle',0.13,i*0.11));
+}
+function relightCandles(){bdayState.candlesBlown=[];persist();buildBdayCake();}
 // ════ AUTO-SCHWIERIGKEIT (passt sich an) ════
 let ADAPT=true,adaptRight=0,adaptWrong=0;
 const DIFF_ORDER=['leicht','normal','schwer'];
