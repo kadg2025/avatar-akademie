@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#6EA86E">
+<title>Einmaleins-Dojo – Avatar Lern-Akademie</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#E8A4BC;--gold2:#C8628F;--luftd:#1E5E82;--erde:#6EA86E;--erded:#2E6228;--erdebg:#EDF5EC;--feuer:#D45878;--card:#FDFBF8;--bg:#F5EDE6;--text:#3D2817;--muted:#8B7355;--r:20px;--rs:12px;--sh:0 4px 16px rgba(120,60,80,.08);--sh2:0 10px 30px rgba(120,60,80,.15);--A:#4A96A8;--B:#E58A4B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(110,168,110,.12),transparent 50%),radial-gradient(ellipse at 85% 100%,rgba(232,164,188,.12),transparent 50%);pointer-events:none}
+#app{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:0 14px 50px}
+.sc{display:none}.sc.on{display:block;animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.gh{text-align:center;padding:18px 10px 6px}
+.gt{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;line-height:1.15;color:var(--erded)}
+.gs{font-size:16px;color:var(--muted);font-weight:700;margin-top:4px}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin:12px 0}
+.lead{font-size:18px;line-height:1.55;font-weight:700}
+.btn{display:block;width:100%;padding:15px 16px;font-size:19px;font-weight:800;border:none;border-radius:var(--rs);cursor:pointer;transition:transform .12s,box-shadow .12s;font-family:'Nunito',sans-serif;margin:9px 0;text-align:left;line-height:1.25}
+.btn small{display:block;font-size:14px;font-weight:700;opacity:.9;margin-top:3px}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--sh2)}.btn:active{transform:scale(.98)}
+.bgreen{background:linear-gradient(135deg,#6EA86E,#2E6228);color:#fff}
+.bfire{background:linear-gradient(135deg,#E8806A,#B8381F);color:#fff}
+.bblue{background:linear-gradient(135deg,#6AAAC8,#1E5E82);color:#fff}
+.bpink{background:linear-gradient(135deg,#E8A4BC,#A8305A);color:#fff}
+.bgold{background:linear-gradient(135deg,#E8C26A,#A8801E);color:#fff}
+.bgray{background:transparent;color:var(--muted);border:2px solid #DDD;font-size:15px;padding:10px 14px;width:auto;display:inline-block;margin:10px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.chip{border:2px solid #DDD0BE;background:#fff;color:var(--text);font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;padding:8px 14px;border-radius:999px;cursor:pointer;min-width:46px}
+.chip.on{background:var(--erde);border-color:var(--erded);color:#fff}
+.bar{height:14px;background:#E8DFD2;border-radius:99px;overflow:hidden;margin:8px 0}
+.bar>div{height:100%;background:linear-gradient(90deg,#6EA86E,#E8C26A);border-radius:99px;transition:width .4s}
+.kn{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.kn span{font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;padding:6px 12px;border-radius:99px;color:#fff;cursor:pointer}
+.arr{display:block;margin:8px auto;height:auto;width:100%}
+.ca{color:var(--A);font-weight:900}.cb{color:var(--B);font-weight:900}
+.chain{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:10px 0}
+.bub{font-family:'Fredoka',sans-serif;font-weight:700;font-size:26px;background:#fff;border:3px solid var(--A);border-radius:50%;min-width:56px;height:56px;display:inline-flex;align-items:center;justify-content:center;opacity:0;animation:fadein .5s forwards}
+.bub.last{background:var(--erde);border-color:var(--erded);color:#fff}
+.opx{font-weight:900;color:var(--muted);font-size:15px;opacity:0;animation:fadein .5s forwards}
+@keyframes fadein{to{opacity:1}}
+.steps{list-style:none;margin:8px 0}
+.steps li{font-size:18px;font-weight:700;padding:6px 0 6px 4px;border-bottom:1px dashed #E5D9C6}
+.hook{background:#FFF5D6;border-radius:var(--rs);padding:10px 12px;font-weight:800;font-size:16px;margin-top:10px}
+/* Reihe */
+.rline{display:flex;justify-content:space-between;align-items:center;font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;background:#fff;border-radius:var(--rs);padding:9px 16px;margin:6px 0;cursor:pointer;border:2px solid transparent}
+.rline.hl{border-color:var(--erde);background:var(--erdebg)}
+.rline .res{min-width:60px;text-align:right;color:var(--erded)}
+.rline.hide .res{color:#C9BFB2}
+/* Play */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ptitle{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;color:var(--muted)}
+.pbar{height:10px;background:#E8DFD2;border-radius:99px;overflow:hidden}
+.pbar>div{height:100%;width:0;background:var(--erde);transition:width .3s}
+.tbar{height:10px;background:#F3D9D0;border-radius:99px;overflow:hidden;margin-top:6px}
+.tbar>div{height:100%;width:100%;background:var(--feuer)}
+.qpanel{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;text-align:center;margin:12px 0}
+.qbig{font-family:'Fredoka',sans-serif;font-weight:700;font-size:54px;line-height:1.1;margin:4px 0 8px}
+.ans{font-family:'Fredoka',sans-serif;font-weight:700;font-size:44px;min-height:70px;line-height:62px;border:3px solid #DDD0BE;border-radius:var(--rs);background:#fff;color:var(--erded);width:60%;margin:0 auto}
+.ans.empty{color:#CCC}
+.ans.shake{animation:shake .4s;border-color:var(--feuer)}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.fb{min-height:30px;font-weight:900;font-size:20px;margin-top:8px}
+.fb.good{color:var(--erded)}.fb.bad{color:var(--feuer)}
+.hintbox{background:#FFF5D6;border-radius:var(--r);padding:14px;margin:10px 0;font-weight:700;font-size:17px;line-height:1.5}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.pad button{height:64px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:30px;border:none;border-radius:var(--rs);background:#fff;color:var(--text);box-shadow:var(--sh);cursor:pointer}
+.pad button:active{transform:scale(.94);background:var(--erdebg)}
+.pad .ok{background:var(--erde);color:#fff}.pad .del{background:#F0E6D8}
+.big{font-family:'Fredoka',sans-serif;font-weight:700;font-size:54px;color:var(--erded);text-align:center}
+/* Map */
+.map{display:grid;grid-template-columns:30px repeat(8,1fr);gap:4px;margin:10px 0}
+.map div{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;color:#fff}
+.map .h{background:none;color:var(--muted);font-size:17px}
+.map .c{cursor:pointer}
+.b-1{background:#D8CFC2}.b0{background:#E06A5A}.b1{background:#E8985A}.b2{background:#E8C26A;color:#5B4A1E}.b3{background:#9CCB7A}.b4{background:#4E9A52}
+.legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;font-size:13px;font-weight:800;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:4px}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(40,25,10,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:14px}
+.modal.on{display:flex}
+.mbox{background:var(--card);border-radius:var(--r);padding:18px;max-width:460px;width:100%;max-height:90vh;overflow:auto}
+.mhead{font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;text-align:center}
+.mname{text-align:center;color:var(--erded);font-weight:900;font-size:17px;margin-bottom:6px}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sgrid .btn{text-align:center;margin:0;padding:14px 8px;font-size:17px}
+.sgrid .btn span{font-size:30px;display:block}
+a.link{color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;text-decoration:underline}
+</style></head>
+<body>
+<div id="app">
+
+<!-- HOME -->
+<div class="sc on" id="s-home">
+ <button class="btn bgray" onclick="location.href='index.html#weisheit'">← Weisheits-Tempel</button>
+ <div class="gh"><div class="gt">✖️ Tophs Einmaleins-Dojo</div><div class="gs" id="h-quote"></div></div>
+ <div class="card">
+  <div class="lead">🪨 Dein Steinturm: <span id="h-m">0</span> von 36 Aufgaben sitzen</div>
+  <div class="bar"><div id="h-bar" style="width:0%"></div></div>
+  <div style="font-weight:800;color:var(--muted);font-size:15px;margin-top:6px">Meine Knacknüsse (tippen für den Trick):</div>
+  <div class="kn" id="h-kn"></div>
+ </div>
+ <button class="btn bfire" onclick="startKnack()">🔥 Knacknüsse knacken<small>Die schwierigen Aufgaben (6er bis 9er) – mit Tipps</small></button>
+ <button class="btn bgreen" onclick="openStrat()">🧠 Tricks &amp; Strategien<small>Bilder und Merk-Tricks für 9er, 8er, 7er, 6er</small></button>
+ <button class="btn bblue" onclick="openRows()">📖 Eine Reihe lernen<small>2er bis 9er: ansehen, aufsagen, verdecken</small></button>
+ <button class="btn bpink" onclick="startMix()">🎲 Alles gemischt üben<small>Das ganze Einmaleins – ohne Zeitdruck</small></button>
+ <button class="btn bgold" onclick="go('s-testsetup')">📝 Test-Simulation<small>20 Aufgaben wie im echten Test</small></button>
+ <button class="btn bgray" style="display:block;width:100%;text-align:center;background:#fff" onclick="go('s-map')">🗺️ Mein Einmaleins-Plan ansehen</button>
+ <div style="text-align:center;margin-top:8px">
+  <label style="font-weight:800;color:var(--muted);font-size:15px"><input type="checkbox" id="h-edge" onchange="toggleEdge()"> auch 1er und 10er dazunehmen</label><br>
+  <a class="link" onclick="resetAll()">Fortschritt zurücksetzen</a>
+ </div>
+</div>
+
+<!-- STRATEGIEN -->
+<div class="sc" id="s-strat">
+ <button class="btn bgray" onclick="stratBack()" id="st-back">← Zurück</button>
+ <div class="gh"><div class="gt" id="st-title">🧠 Tricks &amp; Strategien</div><div class="gs" id="st-sub">Tippe auf einen Trick</div></div>
+ <div id="st-body"></div>
+</div>
+
+<!-- REIHEN -->
+<div class="sc" id="s-rows">
+ <button class="btn bgray" onclick="go('s-home')">← Zurück</button>
+ <div class="gh"><div class="gt">📖 Eine Reihe lernen</div><div class="gs">Wähle eine Reihe</div></div>
+ <div class="chips" id="r-chips"></div>
+ <div id="r-body"></div>
+</div>
+
+<!-- TEST SETUP -->
+<div class="sc" id="s-testsetup">
+ <button class="btn bgray" onclick="go('s-home')">← Zurück</button>
+ <div class="gh"><div class="gt">📝 Test-Simulation</div><div class="gs">20 Aufgaben – wie in der Schule</div></div>
+ <div class="card lead">Ich sage dir erst am Ende, was richtig war. So fühlt es sich an wie ein echter Test. Wie viel Zeit möchtest du pro Aufgabe?</div>
+ <button class="btn bgreen" onclick="startTest(0)">😌 Ohne Zeit<small>Ganz in Ruhe nachdenken</small></button>
+ <button class="btn bgold" onclick="startTest(10)">⏱️ 10 Sekunden<small>Wie im Test</small></button>
+ <button class="btn bfire" onclick="startTest(5)">⚡ 5 Sekunden<small>Blitz – für Profis</small></button>
+</div>
+
+<!-- PLAY -->
+<div class="sc" id="s-play">
+ <div class="topbar"><button class="btn bgray" onclick="go('s-home')">← Aufhören</button><div class="ptitle" id="p-title"></div></div>
+ <div class="pbar"><div id="p-fill"></div></div>
+ <div class="tbar" id="p-timer" style="display:none"><div id="p-tfill"></div></div>
+ <div class="qpanel">
+  <div class="qbig" id="p-q"></div>
+  <div class="ans empty" id="p-ans">…</div>
+  <div class="fb" id="p-fb"></div>
+ </div>
+ <div class="hintbox" id="p-hint" style="display:none"></div>
+ <div class="pad" id="pad"></div>
+</div>
+
+<!-- RESULT -->
+<div class="sc" id="s-result">
+ <div class="gh"><div class="gt" id="rs-title"></div></div>
+ <div class="card"><div class="big" id="rs-score"></div><div class="lead" id="rs-info" style="text-align:center"></div></div>
+ <div id="rs-wrong"></div>
+ <div id="rs-btns"></div>
+</div>
+
+<!-- MAP -->
+<div class="sc" id="s-map">
+ <button class="btn bgray" onclick="go('s-home')">← Zurück</button>
+ <div class="gh"><div class="gt">🗺️ Mein Einmaleins-Plan</div><div class="gs">Jedes Feld ist ein Stein – tippe für den Trick</div></div>
+ <div class="card"><div class="map" id="map"></div>
+  <div class="legend"><span><i class="b-1"></i>neu</span><span><i class="b0"></i>üben</span><span><i class="b1"></i>fast</span><span><i class="b2"></i>gut</span><span><i class="b3"></i>sitzt</span><span><i class="b4"></i>Meister</span></div>
+  <div style="text-align:center;font-weight:700;color:var(--muted);font-size:14px;margin-top:8px">Die Zahl erscheint, wenn der Stein „sitzt“.</div>
+ </div>
+</div>
+
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="mbox" id="mbox"></div></div>
+
+<script>
+const KEY='roza_einmaleins_v1',APPKEY='roza_akademie_v1';
+let ST={facts:{},sessions:0,edge:false};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.facts)ST=Object.assign(ST,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
+const $=id=>document.getElementById(id);
+const norm=(a,b)=>a<=b?a+'x'+b:b+'x'+a;
+function F(k){return ST.facts[k]||(ST.facts[k]={b:0,n:0,w:0});}
+const rng=n=>Math.floor(Math.random()*n);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rng(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+const SEED=['7x9','7x8','6x9'];
+function allFacts(lo,hi){const r=[];for(let a=lo;a<=hi;a++)for(let b=a;b<=hi;b++)r.push([a,b]);return r;}
+function poolFacts(){return ST.edge?allFacts(1,10):allFacts(2,9);}
+const WBOX=[6,4,2,1,.4];
+function weight(k){const f=F(k);let w=WBOX[Math.min(4,f.b)];if(SEED.includes(k)&&f.b<3)w*=2.5;if(f.w>0&&f.b<2)w*=1.3;return w;}
+function wpick(list,n){const out=[],rest=list.slice();
+ while(out.length<n&&rest.length){let tot=0;const ws=rest.map(p=>{const w=weight(norm(p[0],p[1]));tot+=w;return w;});
+  let r=Math.random()*tot,i=0;for(;i<rest.length;i++){r-=ws[i];if(r<=0)break;}if(i>=rest.length)i=rest.length-1;out.push(rest.splice(i,1)[0]);}
+ return out;}
+const mk=p=>Math.random()<.5?{a:p[1],b:p[0]}:{a:p[0],b:p[1]};
+const qs=p=>String(p).split('').reduce((s,d)=>s+ +d,0);
+function mastered(){return allFacts(2,9).filter(p=>F(norm(p[0],p[1])).b>=3).length;}
+
+let S=null;const CH={stop:false};
+function stopAll(){if(S){clearTimeout(S.tm);clearTimeout(S.nx);}CH.stop=true;try{speechSynthesis.cancel();}catch(e){}}
+function go(id){stopAll();document.querySelectorAll('.sc').forEach(e=>e.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);
+ if(id==='s-home')renderHome();if(id==='s-map')renderMap();}
+function say(t,cb){if(!('speechSynthesis' in window)){if(cb)setTimeout(cb,900);return;}
+ try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);const vs=speechSynthesis.getVoices();
+  const v=vs.find(v=>/^de[-_]CH/i.test(v.lang))||vs.find(v=>/^de/i.test(v.lang));
+  if(v){u.voice=v;u.lang=v.lang;}else u.lang='de-DE';u.rate=.85;
+  u.onend=()=>{if(cb)cb();};u.onerror=()=>{if(cb)cb();};speechSynthesis.speak(u);}catch(e){if(cb)setTimeout(cb,900);}}
+function sayEq(a,b){say(a+' mal '+b+' ist '+a*b);}
+
+/* ---------- Visuals ---------- */
+function arr(rows,cols,o){o=o||{};const cs=Math.max(12,Math.min(26,Math.floor(300/cols)));const r=cs*.36,W=cols*cs,H=rows*cs;
+ let s=`<svg viewBox="0 0 ${W} ${H}" class="arr" style="max-width:${Math.min(W,300)}px" aria-hidden="true">`;
+ for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){let c='#4A96A8',x=0;if(o.split&&j>=o.split)c='#E58A4B';
+  if(o.cross&&j>=cols-o.cross){c='#D8CFC2';x=1;}
+  const cx=j*cs+cs/2,cy=i*cs+cs/2;s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${c}"/>`;
+  if(x)s+=`<path d="M${cx-r*.7} ${cy-r*.7}L${cx+r*.7} ${cy+r*.7}M${cx+r*.7} ${cy-r*.7}L${cx-r*.7} ${cy+r*.7}" stroke="#B0413E" stroke-width="2" stroke-linecap="round"/>`;}
+ return s+'</svg>';}
+function chain(vals,ops){let h='<div class="chain">',d=0;vals.forEach((v,i)=>{h+=`<span class="bub${i===vals.length-1?' last':''}" style="animation-delay:${d}s">${v}</span>`;d+=.5;
+  if(i<ops.length){h+=`<span class="opx" style="animation-delay:${d}s">${ops[i]} ➜</span>`;d+=.4;}});return h+'</div>';}
+function mkChips(id,items,cur,lab,pick){const el=$(id);el.innerHTML='';items.forEach(it=>{const b=document.createElement('button');b.className='chip'+(cur(it)?' on':'');b.textContent=lab(it);b.onclick=()=>pick(it);el.appendChild(b);});}
+
+/* ---------- Tipps pro Aufgabe ---------- */
+const ORDER=[10,1,2,5,9,4,3,6,8,7];
+const HOOKS={'7x8':'🧠 Merk-Reihe: <b>5 · 6 · 7 · 8</b> → 56 = 7 × 8','6x9':'🧠 54: 5 + 4 = 9 → das passt zur 9er-Reihe!','7x9':'🧠 63: 6 + 3 = 9 → das passt zur 9er-Reihe!',
+ '6x8':'🧠 Sprich es laut: „sechs mal acht – achtundvierzig“','8x8':'🧠 64 – so viele Felder hat ein Schachbrett ♟️','9x9':'🧠 81 – das letzte Ergebnis der 9er-Reihe',
+ '6x7':'🧠 6 × 7 = 42: 6 × 6 = 36 und noch eine 6 dazu','7x7':'🧠 49 – knapp unter 50','6x6':'🧠 36 – 6 × 6 ist das „Quadrat“ der 6'};
+function tipFor(a,b){const p=a*b,s=ORDER.find(n=>a===n||b===n),o=(a===s)?b:a;let name,hint,steps,vis;
+ switch(s){
+  case 10:name='10er: Null anhängen';hint=`Häng eine 0 an die ${o}.`;steps=[`${o} × 10 → hänge eine 0 an: <b>${p}</b>`];vis=arr(o,10);break;
+  case 1:name='1er: bleibt gleich';hint='Mal 1 ändert nichts.';steps=[`${o} × 1 = <b>${p}</b>`];vis=arr(o,1);break;
+  case 2:name='2er: das Doppelte';hint=`Verdopple die ${o}.`;steps=[`${o} + ${o} = <b>${p}</b>`];vis=arr(o,2);break;
+  case 5:name='5er: halber 10er';hint=`Rechne 10 × ${o} und nimm die Hälfte.`;steps=[`10 × ${o} = ${10*o}`,`Die Hälfte davon: <b>${p}</b>`];vis=arr(o,5);break;
+  case 9:name='9er: 10er minus eins';hint=`Rechne 10 × ${o} und ziehe ${o} ab.`;steps=[`10 × ${o} = ${10*o}`,`− ${o} (eine ${o} zu viel!) = <b>${p}</b>`,`Probe: Quersumme von ${p} ist ${qs(p)} ✓`];vis=arr(o,10,{cross:1});break;
+  case 4:name='4er: doppelt, doppelt';hint=`Verdopple ${o} und dann nochmal.`;steps=[`${o} → ${2*o}`,`${2*o} → <b>${p}</b>`];vis=chain([o,2*o,p],['×2','×2']);break;
+  case 3:name='3er: doppelt + einmal dazu';hint=`Rechne 2 × ${o} und noch ${o} dazu.`;steps=[`2 × ${o} = ${2*o}`,`${2*o} + ${o} = <b>${p}</b>`];vis=arr(o,3,{split:2});break;
+  case 6:name='6er: 5 + 1';hint=`Rechne 5 × ${o} und noch ${o} dazu.`;steps=[`5 × ${o} = ${5*o}`,`+ 1 × ${o} = ${o}`,`${5*o} + ${o} = <b>${p}</b>`];vis=arr(o,6,{split:5});break;
+  case 8:name='8er: dreimal verdoppeln';hint=`Verdopple ${o} – und das dreimal.`;steps=[`${o} → ${2*o}`,`→ ${4*o}`,`→ <b>${p}</b>`];vis=chain([o,2*o,4*o,p],['×2','×2','×2']);break;
+  default:name='7er: 5 + 2';hint=`Rechne 5 × ${o} plus 2 × ${o}.`;steps=[`5 × ${o} = ${5*o}`,`2 × ${o} = ${2*o}`,`${5*o} + ${2*o} = <b>${p}</b>`];vis=arr(o,7,{split:5});}
+ return {name,hint,steps,vis,hook:HOOKS[norm(a,b)]||'',p};}
+function showTip(a,b){const t=tipFor(a,b);
+ $('mbox').innerHTML=`<div class="mhead">${a} × ${b} = ${t.p}</div><div class="mname">${t.name}</div>${t.vis}<ul class="steps">${t.steps.map(s=>`<li>${s}</li>`).join('')}</ul>${t.hook?`<div class="hook">${t.hook}</div>`:''}
+ <div style="display:flex;gap:10px;margin-top:12px"><button class="btn bblue" style="margin:0;text-align:center" onclick="sayEq(${a},${b})">🔊 Anhören</button><button class="btn bgreen" style="margin:0;text-align:center" onclick="closeModal()">OK</button></div>`;
+ $('modal').classList.add('on');}
+function closeModal(){$('modal').classList.remove('on');try{speechSynthesis.cancel();}catch(e){}}
+
+/* ---------- Home ---------- */
+const QUOTES=['Toph sagt: Fest stehen, ruhig atmen – dann kommt die Antwort.','Fehler sind Steine auf dem Weg. Jeder macht dich stärker. 🪨','Erst der Trick, dann das Tempo!','Ein Erdbändiger übt jeden Tag ein bisschen.'];
+function boxCls(k){const f=ST.facts[k];return f&&f.n>0?'b'+f.b:'b-1';}
+function renderHome(){const m=mastered();$('h-m').textContent=m;$('h-bar').style.width=(m/36*100)+'%';$('h-quote').textContent=QUOTES[rng(QUOTES.length)];
+ $('h-edge').checked=!!ST.edge;
+ const col={ 'b-1':'#A99C8A','b0':'#E06A5A','b1':'#E8985A','b2':'#C9A23E','b3':'#6FAE4E','b4':'#3E8A44'};
+ $('h-kn').innerHTML=[[9,7],[7,8],[6,9]].map(p=>`<span style="background:${col[boxCls(norm(p[0],p[1]))]}" onclick="showTip(${p[0]},${p[1]})">${p[0]} × ${p[1]}</span>`).join('');}
+function toggleEdge(){ST.edge=$('h-edge').checked;save();}
+function resetAll(){if(confirm('Fortschritt wirklich zurücksetzen?')){ST={facts:{},sessions:0,edge:false};save();renderHome();}}
+
+/* ---------- Plan ---------- */
+function renderMap(){let h='<div class="h"></div>';for(let b=2;b<=9;b++)h+=`<div class="h">${b}</div>`;
+ for(let a=2;a<=9;a++){h+=`<div class="h">${a}</div>`;for(let b=2;b<=9;b++){const k=norm(a,b),c=boxCls(k),f=ST.facts[k];h+=`<div class="c ${c}" onclick="showTip(${a},${b})">${f&&f.b>=3?a*b:''}</div>`;}}
+ $('map').innerHTML=h;}
+
+/* ---------- Reihe lernen ---------- */
+let curRow=7,rowHide=false;
+const ROWPAT={2:'Immer das Doppelte. Die Einer: 2 · 4 · 6 · 8 · 0 – dann wieder von vorn.',3:'3er = 2er plus einmal dazu. Spring in 3er-Schritten.',4:'4er = doppelt, doppelt. Alle Ergebnisse sind gerade.',5:'Endet immer auf 5 oder 0. Es ist die Hälfte vom 10er!',
+ 6:'6er = 5er plus einmal dazu. Die Einer: 6 · 2 · 8 · 4 · 0 – dann wieder von vorn.',7:'7er = 5er plus 2er. Knacknüsse: 6×7, 7×7, 7×8, 7×9.',8:'8er = dreimal verdoppeln. Die Einer: 8 · 6 · 4 · 2 · 0 – rückwärts!',9:'Die Zehner gehen hoch, die Einer runter: 09 · 18 · 27 · 36 … Die Quersumme ist immer 9!'};
+function openRows(){go('s-rows');showRow(curRow);}
+function showRow(r){curRow=r;mkChips('r-chips',[2,3,4,5,6,7,8,9],x=>x===r,x=>x+'er',x=>{rowHide=false;showRow(x);});
+ let h=`<div class="card"><div class="lead">💡 ${ROWPAT[r]}</div></div>`;
+ for(let m=1;m<=10;m++){const hot=(r>=6&&m>=6&&m<=9)?' 🔥':'';h+=`<div class="rline${rowHide?' hide':''}" id="rl${m}" onclick="tapLine(${r},${m})"><span>${m} × ${r}${hot}</span><span class="res" data-v="${m*r}">${rowHide?'?':'= '+m*r}</span></div>`;}
+ h+=`<button class="btn bblue" onclick="chant(${r})">🔊 Reihe vorlesen</button><button class="btn bgold" onclick="rowHide=!rowHide;showRow(${r})">${rowHide?'👁️ Ergebnisse zeigen':'🙈 Ergebnisse verdecken'}<small>Erst im Kopf rechnen, dann antippen</small></button><button class="btn bgreen" onclick="startRow(${r})">🎯 Diese Reihe üben</button>`;
+ $('r-body').innerHTML=h;}
+function tapLine(r,m){const el=document.querySelector('#rl'+m+' .res');if(el&&rowHide){el.textContent='= '+el.dataset.v;}say(m+' mal '+r+' ist '+m*r);}
+function chant(r){CH.stop=false;let m=1;const next=()=>{document.querySelectorAll('.rline').forEach(e=>e.classList.remove('hl'));if(CH.stop||m>10)return;
+  const el=$('rl'+m);if(el)el.classList.add('hl');const mm=m;say(mm+' mal '+r+' ist '+mm*r,()=>{m++;setTimeout(next,200);});};next();}
+
+/* ---------- Strategien ---------- */
+let stratCur=null;
+const STRATS=[
+ {id:'finger',e:'🖐️',t:'9er-Finger-Trick',fn:lFinger,pr:()=>pairsOf(p=>p.includes(9),true)},
+ {id:'minus',e:'➖',t:'9er = 10er minus 1',fn:lMinus,pr:()=>pairsOf(p=>p.includes(9),true)},
+ {id:'split',e:'✂️',t:'Zerlege: 5 + Rest',fn:lSplit,pr:()=>pairsOf(p=>p.includes(6)||p.includes(7))},
+ {id:'dbl',e:'✖️',t:'8er: 3× verdoppeln',fn:lDouble,pr:()=>pairsOf(p=>p.includes(8))},
+ {id:'swap',e:'🔄',t:'Tauschen!',fn:lSwap,pr:null},
+ {id:'hooks',e:'🧠',t:'Merk-Sprüche',fn:lHooks,pr:null}];
+function pairsOf(f,edge){const l=allFacts(2,9).filter(f);if(edge)l.push([9,10]);return l;}
+function openStrat(){go('s-strat');stratCur=null;renderStratList();}
+function renderStratList(){stratCur=null;$('st-title').textContent='🧠 Tricks & Strategien';$('st-sub').textContent='Tippe auf einen Trick';
+ $('st-body').innerHTML='<div class="sgrid">'+STRATS.map(s=>`<button class="btn bgreen" onclick="openLesson('${s.id}')"><span>${s.e}</span>${s.t}</button>`).join('')+'</div>';}
+function stratBack(){if(stratCur)renderStratList();else go('s-home');}
+function openLesson(id){const s=STRATS.find(x=>x.id===id);stratCur=s;$('st-title').textContent=s.e+' '+s.t;$('st-sub').textContent='';
+ $('st-body').innerHTML='<div id="l-body"></div>'+`<button class="btn bfire" onclick="${s.pr?`startList('${s.t}',STRATS.find(x=>x.id==='${id}').pr())`:'startKnack()'}">🎯 Jetzt üben<small>Mit diesem Trick</small></button>`;
+ s.fn($('l-body'));window.scrollTo(0,0);}
+
+let fgN=7;
+function lFinger(el){el.innerHTML=`<div class="card lead">Streck beide Hände aus und zähl die Finger von links nach rechts: 1 bis 10.<br>Für <b>9 × n</b> klappst du den <b>n-ten</b> Finger um.<br><span class="ca">Links davon = Zehner</span>, <span class="cb">rechts davon = Einer</span>!</div><div class="chips" id="fg-ch"></div><div class="card"><div id="fg-svg"></div><div id="fg-txt" class="lead" style="text-align:center"></div></div>`;drawFing(fgN);}
+function drawFing(n){fgN=n;mkChips('fg-ch',[1,2,3,4,5,6,7,8,9,10],x=>x===n,x=>'9×'+x,drawFing);
+ const H=[56,72,80,72,44,44,72,80,72,56];let s='<svg viewBox="0 0 350 130" class="arr" style="max-width:380px">';
+ for(let i=0;i<10;i++){const k=i+1,w=26,x=10+i*32+(i>=5?18:0),f=k===n,h=f?18:H[i],c=f?'#D8CFC2':(k<n?'#4A96A8':'#E58A4B');
+  s+=`<rect x="${x}" y="${108-h}" width="${w}" height="${h}" rx="12" fill="${c}"/><text x="${x+13}" y="124" text-anchor="middle" font-size="12" fill="#8B7355" font-weight="800">${k}</text>`;}
+ $('fg-svg').innerHTML=s+'</svg>';
+ $('fg-txt').innerHTML=`Finger ${n} ist unten.<br><span class="ca">${n-1} links</span> und <span class="cb">${10-n} rechts</span><br>9 × ${n} = <b style="font-size:26px"><span class="ca">${n-1}</span><span class="cb">${10-n}</span> = ${9*n}</b>`;}
+
+let mnO=7;
+function lMinus(el){el.innerHTML=`<div class="card lead">9 ist fast 10! Rechne erst mit <b>10</b> und nimm dann <b>einmal</b> die Zahl weg.</div><div class="chips" id="mn-ch"></div><div class="card"><div id="mn-vis"></div><div id="mn-txt" class="lead" style="text-align:center"></div></div>`;drawMinus(mnO);}
+function drawMinus(o){mnO=o;mkChips('mn-ch',[2,3,4,5,6,7,8,9],x=>x===o,x=>'9×'+x,drawMinus);
+ $('mn-vis').innerHTML=arr(o,10,{cross:1});
+ $('mn-txt').innerHTML=`10 × ${o} = ${10*o}<br>− ${o} (die durchgestrichene Spalte)<br><b style="font-size:26px">9 × ${o} = ${9*o}</b><br><span style="color:var(--muted);font-size:16px">Probe: ${String(9*o).split('').join(' + ')} = ${qs(9*o)} ✓</span>`;}
+
+let spA=7,spB=8;
+function lSplit(el){el.innerHTML=`<div class="card lead">Die 6 und die 7 sind schwer – aber <b>5er</b> kannst du! Zerlege: <span class="ca">5</span> + <span class="cb">Rest</span>.</div><div class="chips" id="sp-a"></div><div class="chips" id="sp-b"></div><div class="card"><div id="sp-vis"></div><div id="sp-txt" class="lead" style="text-align:center"></div></div>`;drawSplit();}
+function drawSplit(){mkChips('sp-a',[6,7,8,9],x=>x===spA,x=>x+' ×',x=>{spA=x;drawSplit();});mkChips('sp-b',[3,4,5,6,7,8,9],x=>x===spB,x=>x+'',x=>{spB=x;drawSplit();});
+ const a=spA,b=spB,r=a-5;$('sp-vis').innerHTML=arr(b,a,{split:5});
+ $('sp-txt').innerHTML=`<span class="ca">5 × ${b} = ${5*b}</span><br><span class="cb">${r} × ${b} = ${r*b}</span><br><b style="font-size:26px">${a} × ${b} = ${5*b} + ${r*b} = ${a*b}</b>`;}
+
+let dbO=7;
+function lDouble(el){el.innerHTML=`<div class="card lead">8 = 2 × 2 × 2. Also: Zahl <b>dreimal verdoppeln</b>! Verdoppeln kannst du schon.</div><div class="chips" id="db-ch"></div><div class="card"><div id="db-vis"></div><div id="db-txt" class="lead" style="text-align:center"></div></div>`;drawDouble(dbO);}
+function drawDouble(o){dbO=o;mkChips('db-ch',[2,3,4,5,6,7,8,9],x=>x===o,x=>'8×'+x,drawDouble);
+ $('db-vis').innerHTML=chain([o,2*o,4*o,8*o],['×2','×2','×2']);$('db-txt').innerHTML=`8 × ${o} = <b style="font-size:26px">${8*o}</b>`;}
+
+let swP=[7,9];
+function lSwap(el){el.innerHTML=`<div class="card lead">Dreh das Punktefeld – es bleibt gleich viel! <b>7 × 9 = 9 × 7</b>. Darum musst du nur die <b>Hälfte</b> lernen: nur 36 statt 64 Aufgaben.</div><div class="chips" id="sw-ch"></div><div class="card"><div style="display:flex;align-items:center;justify-content:center;gap:8px"><div style="flex:1" id="sw-a"></div><div style="font-size:28px;font-weight:900">=</div><div style="flex:1" id="sw-b"></div></div><div id="sw-txt" class="lead" style="text-align:center"></div></div>`;drawSwap(swP);}
+function drawSwap(p){swP=p;const [a,b]=p;mkChips('sw-ch',[[7,9],[6,9],[7,8],[6,8],[8,9],[6,7]],x=>x[0]===a&&x[1]===b,x=>x[0]+'×'+x[1],drawSwap);
+ $('sw-a').innerHTML=arr(a,b);$('sw-b').innerHTML=arr(b,a);
+ $('sw-txt').innerHTML=`${a} × ${b} = ${b} × ${a} = <b style="font-size:26px">${a*b}</b><br><span style="font-size:16px;color:var(--muted)">Kennst du die eine, kennst du auch die andere!</span>`;}
+
+function lHooks(el){const keys=['7x8','6x9','7x9','6x8','6x7','7x7','8x8','9x9','6x6'];
+ el.innerHTML=keys.map(k=>{const [a,b]=k.split('x').map(Number);return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><div class="mhead" style="font-size:28px">${a} × ${b} = ${a*b}</div><button class="chip" onclick="sayEq(${a},${b})">🔊</button></div><div class="hook">${HOOKS[k]}</div></div>`;}).join('');}
+
+/* ---------- Üben ---------- */
+const PRAISE=['Richtig! ✨','Super! 💪','Stark! 🪨','Genau! 🌟','Klasse! 🔥'];
+function buildPad(){const p=$('pad');p.innerHTML='';[1,2,3,4,5,6,7,8,9,'b',0,'ok'].forEach(k=>{const b=document.createElement('button');
+  b.textContent=k==='b'?'⌫':k==='ok'?'✓':k;if(k==='b')b.className='del';if(k==='ok')b.className='ok';b.onclick=()=>press(String(k));p.appendChild(b);});}
+buildPad();
+function startSession(mode,list,opt){opt=opt||{};const queue=list.map(p=>Array.isArray(p)?mk(p):p);
+ S={mode,queue,i:0,first:0,total:queue.length,wk:{},times:[],timeouts:0,T:opt.T||0,title:opt.title||'',tries:0,inp:'',locked:false,rq:{},again:opt.again||null};
+ go('s-play');$('p-title').textContent=S.title;$('p-timer').style.display=S.T?'block':'none';showQ();}
+function startRow(r){startSession('row',shuffle([1,2,3,4,5,6,7,8,9,10]).map(m=>[r,m]),{title:r+'er-Reihe',again:()=>startRow(r)});}
+function startKnack(){const extra=poolFacts().filter(p=>{const f=F(norm(p[0],p[1]));return f.w>0&&f.b<3&&p[0]<6;});
+ startSession('knack',wpick(allFacts(6,9).concat(extra),10),{title:'Knacknüsse 🔥',again:startKnack});}
+function startMix(){startSession('mix',wpick(poolFacts(),15),{title:'Alles gemischt',again:startMix});}
+function startTest(T){startSession('test',shuffle(poolFacts()).slice(0,20),{T,title:'Test-Simulation',again:()=>go('s-testsetup')});}
+function startList(title,pairs){let l=shuffle(pairs);while(l.length<8&&pairs.length)l=l.concat(shuffle(pairs));l=l.slice(0,Math.max(8,Math.min(12,pairs.length)));
+ startSession('list',l,{title,again:()=>startList(title,pairs)});}
+function showQ(){S.tries=0;S.inp='';S.locked=false;const q=S.queue[S.i];$('p-q').textContent=q.a+' × '+q.b;updAns();
+ $('p-fb').textContent='';$('p-fb').className='fb';$('p-hint').style.display='none';$('p-fill').style.width=(S.i/S.queue.length*100)+'%';
+ if(S.T){const f=$('p-tfill');f.style.transition='none';f.style.width='100%';void f.offsetWidth;f.style.transition='width '+S.T+'s linear';f.style.width='0%';S.tm=setTimeout(onTimeout,S.T*1000);}
+ S.t0=Date.now();}
+function updAns(){const a=$('p-ans');a.textContent=S.inp||'…';a.classList.toggle('empty',!S.inp);}
+function press(k){if(!S||S.locked)return;if(k==='b')S.inp=S.inp.slice(0,-1);else if(k==='ok')return submit();else if(S.inp.length<3)S.inp+=k;updAns();}
+function addWrong(q){S.wk[norm(q.a,q.b)]=[q.a,q.b];}
+function requeue(q){const k=norm(q.a,q.b);if(S.rq[k])return;S.rq[k]=1;S.queue.splice(Math.min(S.queue.length,S.i+4),0,{a:q.b,b:q.a});}
+function submit(){if(S.locked||S.inp==='')return;const q=S.queue[S.i],k=norm(q.a,q.b),f=F(k),ok=+S.inp===q.a*q.b,el=(Date.now()-S.t0)/1000;clearTimeout(S.tm);const fb=$('p-fb');
+ if(S.mode==='test'){S.locked=true;f.n++;S.times.push(el);if(ok){S.first++;if(el<=8)f.b=Math.min(4,f.b+1);}else{f.w++;f.b=Math.max(0,f.b-2);addWrong(q);}
+  fb.textContent='✓';fb.className='fb';save();S.nx=setTimeout(nextQ,350);return;}
+ if(ok){S.locked=true;if(S.tries===0){S.first++;f.n++;if(el<=8)f.b=Math.min(4,f.b+1);fb.textContent=PRAISE[rng(PRAISE.length)];}else fb.textContent='Genau! So merkst du es dir. 💚';
+  fb.className='fb good';save();S.nx=setTimeout(nextQ,S.tries===0?800:1500);return;}
+ S.tries++;if(S.tries===1){f.n++;f.w++;f.b=Math.max(0,f.b-2);addWrong(q);requeue(q);save();}
+ const h=$('p-hint'),t=tipFor(q.a,q.b);h.style.display='block';S.inp='';updAns();const an=$('p-ans');an.classList.remove('shake');void an.offsetWidth;an.classList.add('shake');
+ if(S.tries===1){fb.textContent='Fast! Versuch es nochmal.';fb.className='fb bad';h.innerHTML=`<b>💡 Tipp (${t.name}):</b><br>${t.hint}`;}
+ else{fb.textContent='Tipp die richtige Lösung ein – dann sitzt sie besser!';fb.className='fb bad';
+  h.innerHTML=`<b>${q.a} × ${q.b} = ${t.p}</b> – ${t.name}${t.vis}<ul class="steps">${t.steps.map(s=>`<li>${s}</li>`).join('')}</ul>${t.hook?`<div class="hook">${t.hook}</div>`:''}<button class="btn bblue" style="text-align:center;margin:8px 0 0" onclick="sayEq(${q.a},${q.b})">🔊 Anhören</button>`;}}
+function onTimeout(){if(!S||S.locked)return;S.locked=true;const q=S.queue[S.i],f=F(norm(q.a,q.b));f.n++;f.w++;f.b=Math.max(0,f.b-1);S.timeouts++;addWrong(q);S.times.push(S.T);
+ $('p-fb').textContent='⏰';save();S.nx=setTimeout(nextQ,500);}
+function nextQ(){S.i++;if(S.i>=S.queue.length)finish();else showQ();}
+function addScrolls(n){if(n<=0)return;try{const s=JSON.parse(localStorage.getItem(APPKEY)||'null');if(s&&typeof s.scrolls==='number'){s.scrolls+=n;localStorage.setItem(APPKEY,JSON.stringify(s));}}catch(e){}}
+function finish(){ST.sessions++;save();const sc=Math.floor(S.first/3);addScrolls(sc);const done=S,wr=Object.values(done.wk),ratio=done.first/done.total;go('s-result');S=done;
+ $('rs-title').textContent=ratio>=.9?'Meisterhaft! 🌟':ratio>=.7?'Stark gemacht! 💪':'Gut geübt – dranbleiben! 🪨';
+ $('rs-score').textContent=done.first+' / '+done.total;
+ let info='richtig beim ersten Versuch';if(done.mode==='test'&&done.times.length){const avg=done.times.reduce((a,b)=>a+b,0)/done.times.length;info+=`<br>Durchschnitt: ${avg.toFixed(1)} Sekunden pro Aufgabe`;if(done.timeouts)info+=`<br>Zu langsam: ${done.timeouts}`;}
+ if(sc>0)info+=`<br>+${sc} 📜 Schriftrollen`;$('rs-info').innerHTML=info;
+ $('rs-wrong').innerHTML=wr.length?`<div class="card"><div class="lead">Diese Aufgaben üben wir nochmal (tippen für den Trick):</div><div class="chips">${wr.map(p=>`<button class="chip" onclick="showTip(${p[0]},${p[1]})">${p[0]} × ${p[1]}</button>`).join('')}</div></div>`:'<div class="card lead" style="text-align:center">Keine Fehler – wow! 🎉</div>';
+ const wj=JSON.stringify(wr);
+ $('rs-btns').innerHTML=(wr.length?`<button class="btn bfire" onclick='startList("Nochmal üben",${wj})'>🎯 Nur diese üben</button>`:'')+(done.again?`<button class="btn bgreen" onclick="S.again()">🔁 Nochmal</button>`:'')+`<button class="btn bgray" style="display:block;width:100%;text-align:center" onclick="go('s-home')">🏠 Zur Übersicht</button>`;}
+document.addEventListener('keydown',e=>{if(!$('s-play').classList.contains('on')||!S)return;if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace')press('b');else if(e.key==='Enter')press('ok');});
+renderHome();
+</script>
+</body></html>

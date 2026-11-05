@@ -1,5 +1,5 @@
-const CACHE = 'akademie-v2';
-const ASSETS = ['./', './index.html', './arena.html', './zerya.html', './manifest.webmanifest', './icon.svg'];
+const CACHE = 'akademie-v3';
+const ASSETS = ['./', './index.html', './arena.html', './zerya.html', './einmaleins.html', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
