@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Wolkenrennen – Kyoshi-Spielplatz</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#12263A;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:10px}
+a.back{align-self:flex-start;color:#BFE3F6;font-weight:800;text-decoration:none;margin-bottom:6px}
+#wrap{position:relative;width:100%;max-width:960px}
+canvas{width:100%;height:auto;display:block;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+#ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,30,50,.93),rgba(20,60,90,.93));border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px}
+#ov h1{font-family:'Fredoka',sans-serif;font-size:clamp(28px,6vw,50px);color:#7FD6FF;text-shadow:0 3px 0 #0B3A5A}
+#ov p{font-weight:800;font-size:clamp(13px,2.4vw,18px);opacity:.9;margin:6px 0 14px;max-width:560px}
+#ov button{font-family:'Fredoka',sans-serif;font-size:clamp(17px,3.2vw,26px);padding:10px 26px;margin:5px;border:none;border-radius:12px;background:linear-gradient(135deg,#6AC9FF,#1E7FBF);color:#fff;cursor:pointer;box-shadow:0 4px 0 #0B3A5A}
+#ov button.b2{background:linear-gradient(135deg,#FF9A4D,#D8381F);box-shadow:0 4px 0 #7A1E0C}
+#help{max-width:960px;width:100%;margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-weight:700;font-size:14px}
+#help div{background:rgba(255,255,255,.08);border-radius:10px;padding:8px 12px;line-height:1.6}
+kbd{background:#BFE3F6;color:#0B2A44;border-radius:5px;padding:1px 7px;font-weight:900;font-family:inherit}
+</style></head>
+<body>
+<a class="back" href="spielplatz.html">← Kyoshi-Spielplatz</a>
+<div id="wrap">
+ <canvas id="cv" width="960" height="540"></canvas>
+ <div id="ov">
+  <h1>☁️ Wolkenrennen</h1>
+  <p>Gleite über die Berge zum <b>Lufttempel</b>! Spring über Felsen und Flammen, sammle Wind-Kugeln und zünde den Wirbel-Turbo. Wer zuerst ankommt, gewinnt!</p>
+  <div><button onclick="start(false)">👭 Zu zweit</button><button class="b2" onclick="start(true)">🤖 Rosa gegen Computer</button></div>
+ </div>
+</div>
+<div id="help">
+ <div><b>🌸 Rosa (oben)</b><br><kbd>W</kbd> springen · <kbd>S</kbd> Turbo (halten)</div>
+ <div><b>🏹 Papa (unten)</b><br><kbd>↑</kbd> springen · <kbd>↓</kbd> Turbo (halten)</div>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const W=960,LH=250,LEN=11000,GY=196,PX=190,GRAV=1900,JUMP=640;
+const down={},tap={};
+addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();if(!down[e.code])tap[e.code]=1;down[e.code]=1;});
+addEventListener('keyup',e=>{down[e.code]=0;});
+let AC=null;function sfx(f,d,type,vol){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type||'triangle';o.frequency.setValueAtTime(f,AC.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(40,f*.5),AC.currentTime+d);g.gain.setValueAtTime(vol||.05,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d);}catch(e){}}
+
+let OBS=[],P=[],R={state:'menu',t:0,win:-1},clouds=[];
+for(let i=0;i<8;i++)clouds.push({x:Math.random()*2000,y:20+Math.random()*100,s:.6+Math.random()*.9});
+function gen(){OBS=[];let s=800,n=0;while(s<LEN-700){const r=Math.random();
+  if(r<.42)OBS.push({s,t:'rock',w:36,h:40});else if(r<.78)OBS.push({s,t:'flame',w:30,h:76});else{OBS.push({s,t:'rock',w:36,h:40});OBS.push({s:s+70,t:'rock',w:36,h:40});}
+  n++;if(n%2===0)OBS.push({s:s+170+Math.random()*60,t:'orb',w:30,h:Math.random()<.5?0:90});
+  s+=300+Math.random()*190;}
+ OBS.sort((a,b)=>a.s-b.s);}
+function mkP(name,col,jk,bk,ai){return{name,col,jk,bk,ai,z:0,y:0,vy:0,spd:0,meter:0.3,stun:0,inv:0,boosting:false,done:false,t:0,hits:0,noise:{},got:{}};}
+function start(ai){document.getElementById('ov').style.display='none';gen();P=[mkP('Rosa','#FF6FA5','KeyW','KeyS',false),mkP(ai?'Computer':'Papa','#FFB84D','ArrowUp','ArrowDown',ai)];R={state:'count',t:3.2,win:-1,time:0};}
+
+function step(p,dt){p.t+=dt;p.stun=Math.max(0,p.stun-dt);p.inv=Math.max(0,p.inv-dt);
+ let jumpP=tap[p.jk],boost=down[p.bk];
+ if(p.ai){const nx=OBS.find(o=>o.t!=='orb'&&o.s>p.z-10);if(nx){const key=nx.s;if(p.noise[key]===undefined)p.noise[key]=(Math.random()-.5)*60+(Math.random()<.07?-170:0);
+   const d=nx.s-p.z;if(p.y===0&&d<p.spd*.30+p.noise[key]&&d>0)jumpP=true;}
+  boost=p.meter>.55&&(p.t%6<2.2);}
+ const ground=p.y===0;
+ if(jumpP&&ground&&R.state==='run'){p.vy=-JUMP;sfx(520,.12,'triangle',.04);}
+ p.boosting=!!boost&&p.meter>0&&R.state==='run'&&p.stun<=0;
+ if(p.boosting)p.meter=Math.max(0,p.meter-.42*dt);
+ const target=R.state!=='run'?0:(p.stun>0?110:300+(p.boosting?170:0));
+ p.spd+=(target-p.spd)*Math.min(1,(target>p.spd?2.2:5)*dt);
+ p.z+=p.spd*dt;
+ p.vy+=GRAV*dt;p.y-=p.vy*dt*-1;if(p.y>0){p.y=0;p.vy=0;}
+ // vy>0 = nach unten, y<=0 = Höhe über Boden als negative Zahl
+ for(const o of OBS){if(o.s<p.z-60)continue;if(o.s>p.z+60)break;
+  const hgt=-p.y;
+  if(o.t==='orb'){if(!p.got[o.s]&&Math.abs(o.s-p.z)<30&&Math.abs(hgt-o.h)<55){p.got[o.s]=1;p.meter=Math.min(1,p.meter+.22);sfx(880,.15,'sine',.05);}}
+  else if(Math.abs(o.s-p.z)<(o.w/2+13)&&hgt<o.h-6&&p.inv<=0){p.stun=.75;p.inv=1.3;p.hits++;p.vy=Math.max(p.vy,0);sfx(110,.25,'sawtooth',.07);}}
+ if(!p.done&&p.z>=LEN&&R.state==='run'){p.done=true;if(R.win<0){R.win=P.indexOf(p);R.state='end';R.t=0;sfx(660,.6,'triangle',.07);}}}
+function update(dt){dt=Math.min(dt,1/30);clouds.forEach(c=>{c.x-=8*dt*c.s;});
+ if(R.state==='count'){R.t-=dt;P.forEach(p=>step(p,dt));if(R.t<=0){R.state='run';sfx(660,.3,'square',.05);}}
+ else if(R.state==='run'){R.time+=dt;P.forEach(p=>step(p,dt));}
+ else if(R.state==='end'){R.t+=dt;P.forEach(p=>{if(p.z<LEN+400)p.z+=p.spd*dt;p.spd*=.99;p.y=Math.min(0,p.y);});if(tap.Enter||tap.Space){document.getElementById('ov').style.display='';R.state='menu';}}
+ for(const k in tap)delete tap[k];}
+
+/* ---------- Zeichnen ---------- */
+function lane(g,p,idx){g.save();g.beginPath();g.rect(0,0,W,LH);g.clip();
+ const z=p.z;const sk=g.createLinearGradient(0,0,0,LH);sk.addColorStop(0,idx?'#79C4F0':'#8FD0F5');sk.addColorStop(1,'#FFE9C4');g.fillStyle=sk;g.fillRect(0,0,W,LH);
+ g.fillStyle='rgba(255,247,200,.8)';g.beginPath();g.arc(780,52,30,0,7);g.fill();
+ g.fillStyle='rgba(120,150,190,.5)';const mo=-(z*.08)%520;for(let k=-1;k<3;k++){const ox=mo+k*520;g.beginPath();g.moveTo(ox,GY-4);g.lineTo(ox+90,GY-120);g.lineTo(ox+190,GY-30);g.lineTo(ox+300,GY-150);g.lineTo(ox+420,GY-40);g.lineTo(ox+520,GY-4);g.fill();}
+ clouds.forEach(c=>{const x=((c.x-z*.25*c.s)%1400+1400)%1400-200;g.fillStyle='rgba(255,255,255,.8)';g.beginPath();g.ellipse(x,c.y,56*c.s,16*c.s,0,0,7);g.ellipse(x+26*c.s,c.y-10*c.s,32*c.s,15*c.s,0,0,7);g.fill();});
+ g.fillStyle='#E9DDC6';g.fillRect(0,GY,W,LH-GY);g.fillStyle='#C9B48E';g.fillRect(0,GY,W,6);
+ g.fillStyle='rgba(255,255,255,.55)';const ds=-(z%90);for(let x=ds;x<W;x+=90)g.fillRect(x,GY+26,44,5);
+ // Lufttempel am Ziel
+ const fx=PX+(LEN-z);if(fx<W+300){g.fillStyle='#F2E4CC';g.fillRect(fx+40,GY-90,170,90);[[60,70],[100,100],[140,130],[180,70]].forEach(s=>{g.fillStyle='#E8C07A';g.beginPath();g.moveTo(fx+s[0]-14,GY-90);g.lineTo(fx+s[0]+8,GY-90-s[1]);g.lineTo(fx+s[0]+30,GY-90);g.fill();});
+  g.fillStyle='#9C7A4A';g.fillRect(fx+100,GY-50,34,50);
+  g.fillStyle='#fff';g.fillRect(fx,GY-70,6,70);g.fillStyle='#FF4D4D';g.fillRect(fx+6,GY-70,36,22);
+  g.fillStyle='rgba(0,0,0,.25)';for(let r=0;r<4;r++)for(let c=0;c<2;c++)g.fillRect(fx-10+(r%2?10:0)+c*0,GY+4+r*8,10,8);}
+ // Hindernisse
+ OBS.forEach(o=>{const x=PX+(o.s-z);if(x<-60||x>W+60)return;
+  if(o.t==='rock'){g.fillStyle='#8C7A66';g.beginPath();g.moveTo(x-18,GY);g.lineTo(x-10,GY-o.h);g.lineTo(x+8,GY-o.h-4);g.lineTo(x+18,GY);g.fill();g.fillStyle='#A8957E';g.beginPath();g.moveTo(x-10,GY-o.h);g.lineTo(x+8,GY-o.h-4);g.lineTo(x+2,GY-o.h+14);g.fill();}
+  else if(o.t==='flame'){const f=Math.sin(performance.now()/90+o.s)*4;g.fillStyle='#6B3B22';g.fillRect(x-14,GY-12,28,12);g.fillStyle='#FF5A1F';g.beginPath();g.moveTo(x-14,GY-12);g.quadraticCurveTo(x-18+f,GY-o.h*.6,x+f,GY-o.h);g.quadraticCurveTo(x+18-f,GY-o.h*.5,x+14,GY-12);g.fill();g.fillStyle='#FFC24D';g.beginPath();g.moveTo(x-7,GY-12);g.quadraticCurveTo(x-8,GY-o.h*.5,x+f*.5,GY-o.h*.7);g.quadraticCurveTo(x+9,GY-o.h*.4,x+7,GY-12);g.fill();}
+  else{if(P[idx].got[o.s])return;const y=GY-26-o.h;g.strokeStyle='#fff';g.lineWidth=4;g.globalAlpha=.9;g.beginPath();g.arc(x,y,14,0,5);g.stroke();g.strokeStyle='#7FD6FF';g.beginPath();g.arc(x,y,7,1,6);g.stroke();g.globalAlpha=1;}});
+ // Spieler auf dem Luftgleiter
+ const px=PX,py=GY+p.y-6,blink=p.inv>0&&Math.floor(p.t*18)%2===0;g.globalAlpha=blink?.35:1;
+ g.fillStyle='rgba(0,0,0,.2)';g.beginPath();g.ellipse(px,GY+4,24,5,0,0,7);g.fill();
+ if(p.boosting){g.fillStyle='rgba(180,235,255,.7)';for(let k=0;k<4;k++){g.beginPath();g.ellipse(px-40-k*26,py-26+(k%2)*8,22-k*3,5,0,0,7);g.fill();}}
+ const run=Math.sin(p.t*18)*(p.y<0?0:1);
+ g.fillStyle='#3B2A22';g.save();g.translate(px,py);
+ g.fillRect(-4,-22,7,22+run*3);g.fillRect(4,-22,7,22-run*3);
+ g.fillStyle=p.col;g.beginPath();g.roundRect(-10,-52,24,34,8);g.fill();
+ g.fillStyle='#F0C8A0';g.beginPath();g.arc(3,-62,11,0,7);g.fill();g.fillStyle='#2a1a10';g.beginPath();g.arc(1,-65,11,Math.PI,Math.PI*2.1);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(7,-63,3,0,7);g.fill();
+ // Gleiter-Stab & Flügel
+ g.strokeStyle='#6B4A2A';g.lineWidth=4;g.beginPath();g.moveTo(-40,-60);g.lineTo(44,-48);g.stroke();
+ g.fillStyle=p.col+'CC';g.beginPath();g.moveTo(-40,-60);g.lineTo(44,-48);g.lineTo(-6,-100);g.closePath();g.fill();
+ g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.moveTo(-20,-60);g.lineTo(-6,-100);g.moveTo(10,-55);g.lineTo(-6,-100);g.stroke();
+ g.restore();g.globalAlpha=1;
+ if(p.stun>0){g.fillStyle='#fff';g.font='800 22px Nunito';g.textAlign='center';g.fillText('Autsch!',px,py-120);}
+ // Turbo-Anzeige
+ g.fillStyle='rgba(0,0,0,.4)';g.fillRect(14,LH-22,160,12);g.fillStyle=p.meter>.99?'#FFD84D':'#4DA8FF';g.fillRect(14,LH-22,160*p.meter,12);g.strokeStyle='#fff';g.lineWidth=2;g.strokeRect(14,LH-22,160,12);
+ g.fillStyle='#fff';g.font='700 18px Fredoka, sans-serif';g.textAlign='left';g.fillText(p.name+(p.hits?'  ·  '+p.hits+'× gestolpert':''),14,26);
+ g.restore();}
+function draw(){const g=ctx;g.fillStyle='#12263A';g.fillRect(0,0,W,540);
+ if(!P.length){g.fillStyle='#8FD0F5';g.fillRect(0,0,W,540);return;}
+ P.forEach((p,i)=>{g.save();g.translate(0,i?290:0);lane(g,p,i);g.restore();});
+ // Fortschrittsbalken
+ g.fillStyle='#1E3F5E';g.fillRect(0,250,W,40);g.fillStyle='rgba(255,255,255,.18)';g.fillRect(40,268,W-80,6);
+ g.fillStyle='#fff';g.font='800 20px Nunito';g.textAlign='center';g.fillText('🏯',W-26,277);
+ P.forEach((p,i)=>{const x=40+Math.min(1,p.z/LEN)*(W-80);g.fillStyle=p.col;g.beginPath();g.arc(x,271,i?9:9,0,7);g.fill();g.strokeStyle='#fff';g.lineWidth=2;g.stroke();});
+ g.textAlign='center';g.lineJoin='round';
+ const big=(t,s)=>{g.font='700 90px Fredoka, sans-serif';g.lineWidth=10;g.strokeStyle='#0B3A5A';g.strokeText(t,W/2,290-LH*0+20);g.fillStyle='#FFE37A';g.fillText(t,W/2,310);if(s){g.font='800 26px Nunito';g.lineWidth=5;g.strokeText(s,W/2,350);g.fillStyle='#fff';g.fillText(s,W/2,350);}};
+ if(R.state==='count')big(R.t>2.2?'3':R.t>1.2?'2':R.t>.2?'1':'LOS!');
+ if(R.state==='run'&&R.time<.8)big('LOS!');
+ if(R.state==='end'){g.fillStyle='rgba(10,30,50,.55)';g.fillRect(0,0,W,540);big('🏯 '+P[R.win].name+' gewinnt!','Enter für noch ein Rennen · Zeit '+R.time.toFixed(1)+' s');}}
+let last=performance.now();function loop(now){update((now-last)/1000);last=now;draw();requestAnimationFrame(loop);}
+if(typeof requestAnimationFrame!=='undefined')requestAnimationFrame(loop);
+</script>
+</body></html>
