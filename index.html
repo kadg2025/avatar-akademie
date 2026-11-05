@@ -465,6 +465,18 @@ body.calm .questcard{box-shadow:none}
 .adapttoast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#3D2817;color:#FFE9B8;font-weight:800;font-size:15px;padding:11px 20px;border-radius:20px;z-index:1200;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:pop .3s;white-space:nowrap}
 /* ── Ruhe-Insel ── */
 #br-circle{will-change:transform}
+.dk-card{border:2px solid;border-radius:20px;padding:14px 16px;margin:12px 0;font-size:17px;line-height:1.55;font-weight:700}
+.dk-card p{margin:8px 0 4px}
+.dk-h{font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;margin-bottom:4px}
+.dk-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.dk-col{border-radius:14px;padding:10px 8px;text-align:center}
+.dk-colh{font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px}
+.dk-sm{font-size:14px;color:#8B7355;margin-bottom:4px}
+.dk-res{margin-top:8px;font-size:16px}
+.dk-merk{background:#fff;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:16px;line-height:1.55}
+.dk-step{display:flex;gap:10px;align-items:center;margin:8px 0}
+.dk-step>span{flex:none;width:30px;height:30px;border-radius:50%;background:#8B5CC8;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif}
+.dk-hl{color:#C8307A;font-weight:900;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:3px}
 </style>
 </head>
 <body>
@@ -1400,49 +1412,85 @@ body.calm .questcard{box-shadow:none}
   <button class="btn bgray" id="dk-tab-b" style="flex:1;margin:0;padding:11px;font-size:14px" onclick="dkTab('practice')">🎯 Ü·ben</button>
  </div>
  <div id="dk-learn">
-  <div class="story" style="font-size:16px">Drei Re·geln, drei Auf·ga·ben aus der Schu·le. Tip·pe auf ein Wort, um es zu hö·ren. 🔊</div>
-  <div class="story" style="font-size:16px;background:#E8F3FA;border-color:#8FC1DD">
-   <div style="font-family:'Fredoka',sans-serif;font-size:21px;color:#1E5E82">1️⃣ Re·gel: <b>z</b> oder <b>tz</b>?</div>
-   <p style="margin:8px 0">🪨 <b>Kur·zer, har·ter Vo·kal</b> (wie Tophs Stamp·fer) → <b>tz</b>:</p><div class="dk-words" data-w="Spatz,Platz,Spitze,glitzern,trotzen"></div>
-   <p style="margin:8px 0">🌬️ Sonst nur <b>z</b>. Der Vo·kal ist <b>lang</b>:</p><div class="dk-words" data-w="Ozean,duzen"></div>
-   <p style="margin:6px 0">Oder da·vor steht ein <b>Dop·pel·laut</b> (au, ei, eu):</p><div class="dk-words" data-w="Kreuz,Kauz,Schweiz"></div>
-   <p style="margin:8px 0">🧪 Test: Zieh den Vo·kal in die Län·ge. „Spaaatz“ klingt komisch → <b>tz</b>. „Ooozean“ klingt gut → <b>z</b>. Nach au, ei, eu steht <b>nie</b> tz!</p>
+  <div class="story" style="font-size:17px">Tippe auf ein Wort, dann hörst du es. 🔊</div>
+
+  <div class="dk-card" style="background:#FFF7E0;border-color:#E8C26A">
+   <div class="dk-h">🪨 Der Trick: kurz oder lang?</div>
+   <p>Sprich das Wort <b>langsam</b>. Hör auf den <b>Selbstlaut</b> (a, e, i, o, u).</p>
+   <div class="dk-two">
+    <div class="dk-col" style="background:#F4EAD9"><div class="dk-colh">🪨 KURZ</div><div class="dk-sm">hart, wie ein Stein</div><div class="dk-words" data-w="Sa[ck],Spa[tz],Mü[ck]e"></div><div class="dk-res">doppelt: <span class="dk-hl">ck</span> oder <span class="dk-hl">tz</span></div></div>
+    <div class="dk-col" style="background:#E8F3FA"><div class="dk-colh">🌬️ LANG</div><div class="dk-sm">weich, wie der Wind</div><div class="dk-words" data-w="La[k]en,O[z]ean,E[k]el"></div><div class="dk-res">einfach: <span class="dk-hl">k</span> oder <span class="dk-hl">z</span></div></div>
+   </div>
+   <div class="dk-merk">💡 Merke: <b>ck</b> ist ein doppeltes k. <b>tz</b> ist ein doppeltes z.</div>
   </div>
-  <div class="story" style="font-size:16px;background:#FDEFF3;border-color:#E8A4BC">
-   <div style="font-family:'Fredoka',sans-serif;font-size:21px;color:#A8305A">2️⃣ Re·gel: Reim·wör·ter mit <b>ck</b> und <b>tz</b></div>
-   <p style="margin:8px 0">Wör·ter, die sich <b>rei·men</b>, schreibt man am En·de <b>gleich</b>! Hör auf den Reim, dann weißt du, ob <b>ck</b> oder <b>tz</b> kommt:</p>
-   <div class="dk-words" data-w="Katze,Glatze,Tatze,Matratze"></div>
-   <div class="dk-words" data-w="sitzen,spritzen,flitzen,schwitzen"></div>
-   <div class="dk-words" data-w="Flocke,Locke,Glocke,Socke"></div>
-   <div class="dk-words" data-w="packen,hacken,backen,knacken"></div>
-   <p style="margin:8px 0">💡 <b>ck</b> ersetzt „kk“, <b>tz</b> ersetzt „zz“ — bei kur·zem Vo·kal.</p>
+
+  <div class="dk-card" style="background:#F3E9FB;border-color:#C9A8E8">
+   <div class="dk-h">🧭 So entscheidest du</div>
+   <div class="dk-step"><span>1</span><div>Sprich das Wort langsam.</div></div>
+   <div class="dk-step"><span>2</span><div>Ist der Selbstlaut <b>kurz</b>? (wie bei Sack)</div></div>
+   <div class="dk-step"><span>3</span><div><b>Ja</b> → <span class="dk-hl">ck</span> oder <span class="dk-hl">tz</span><br><b>Nein</b> → <span class="dk-hl">k</span> oder <span class="dk-hl">z</span></div></div>
+   <div class="dk-merk">🧪 Probier es aus: Zieh den Selbstlaut lang.<br>„Spaaatz“ klingt komisch → <b>tz</b>.<br>„Ooozean“ klingt gut → <b>z</b>.</div>
   </div>
-  <div class="story" style="font-size:16px;background:#F4EAD9;border-color:#C9A26B">
-   <div style="font-family:'Fredoka',sans-serif;font-size:21px;color:#6B4A1C">3️⃣ Re·gel: <b>k</b> oder <b>ck</b>?</div>
-   <p style="margin:8px 0">🪨 <b>Kur·zer, har·ter Vo·kal</b> → <b>ck</b>:</p><div class="dk-words" data-w="dreckig,Sack,Mücke,Flecken,spucken"></div>
-   <p style="margin:8px 0">🌬️ Sonst nur <b>k</b>. Der Vo·kal ist <b>lang</b>:</p><div class="dk-words" data-w="häkeln,Ekel,Laken,spuken"></div>
-   <p style="margin:8px 0">⚠️ Auf·pas·sen: <b>spu·cken</b> (aus·spu·cken, kur·zes u) und <b>spu·ken</b> (das Ge·spenst spukt, lan·ges u) sind ver·schie·den!</p>
-   <p style="margin:8px 0">🧪 Test: „Saaack“ klingt komisch → <b>ck</b>. „Laaaken“ klingt gut → <b>k</b>. Nach l, n, r steht auch nur k: Wolke, Onkel, Marke.</p>
+
+  <div class="dk-card" style="background:#E8F3FA;border-color:#8FC1DD">
+   <div class="dk-h" style="color:#1E5E82">1️⃣ z oder tz?</div>
+   <p>🪨 Kurzer Selbstlaut → <b>tz</b></p><div class="dk-words" data-w="Spa[tz],Pla[tz],Spi[tz]e,gli[tz]ern,tro[tz]en"></div>
+   <p>🌬️ Langer Selbstlaut → nur <b>z</b></p><div class="dk-words" data-w="O[z]ean,du[z]en"></div>
   </div>
-  <button class="btn bblue" onclick="dkTab('practice')">🎯 Jetzt ü·ben!</button>
+
+  <div class="dk-card" style="background:#FDEFF3;border-color:#E8A4BC">
+   <div class="dk-h" style="color:#A8305A">2️⃣ Reimwörter</div>
+   <p>Wörter, die sich <b>reimen</b>, schreibt man am Ende <b>gleich</b>!</p>
+   <div class="dk-words" data-w="Katze,Gla[tz]e,Ta[tz]e,Matra[tz]e"></div>
+   <div class="dk-words" data-w="si[tz]en,spri[tz]en,fli[tz]en,schwi[tz]en"></div>
+   <div class="dk-words" data-w="Flo[ck]e,Lo[ck]e,Glo[ck]e,So[ck]e"></div>
+   <div class="dk-words" data-w="pa[ck]en,ha[ck]en,ba[ck]en,kna[ck]en"></div>
+   <div class="dk-merk">💡 Weisst du nicht weiter? Such ein Reimwort, das du schon kennst.</div>
+  </div>
+
+  <div class="dk-card" style="background:#F4EAD9;border-color:#C9A26B">
+   <div class="dk-h" style="color:#6B4A1C">3️⃣ k oder ck?</div>
+   <p>🪨 Kurzer Selbstlaut → <b>ck</b></p><div class="dk-words" data-w="dre[ck]ig,Sa[ck],Mü[ck]e,Fle[ck]en,spu[ck]en"></div>
+   <p>🌬️ Langer Selbstlaut → nur <b>k</b></p><div class="dk-words" data-w="hä[k]eln,E[k]el,La[k]en,spu[k]en"></div>
+   <div class="dk-merk">⚠️ <b>spucken</b> (ausspucken, kurzes u) und <b>spuken</b> (das Gespenst spukt, langes u) sind verschieden!</div>
+  </div>
+
+  <div class="dk-card" style="background:#FFEFE0;border-color:#E8985A">
+   <div class="dk-h" style="color:#A8501E">⚠️ Aufgepasst!</div>
+   <p>Nach <b>l, n, r</b> und nach <b>au, ei, eu</b> steht <b>nie</b> ck oder tz. Dort gibt es nur k oder z.</p>
+   <div class="dk-words" data-w="Wol[k]e,On[k]el,Mar[k]e"></div>
+   <div class="dk-words" data-w="Her[z],Sal[z],Ker[z]e"></div>
+   <div class="dk-words" data-w="Kreu[z],Kau[z],Schwei[z]"></div>
+  </div>
+  <button class="btn bblue" onclick="dkTab('practice')">🎯 Jetzt üben!</button>
  </div>
  <div id="dk-practice" style="display:none">
   <div id="dk-pick">
-   <div class="story" style="text-align:center;font-size:16px">Wähle ei·ne Re·gel zum Ü·ben. Es gibt je·des Mal ein paar Wör·ter — in Ru·he, oh·ne Zeit·druck. 🏛️</div>
+   <div class="story" style="text-align:center;font-size:17px">Wie möchtest du üben? Ganz in Ruhe, ohne Zeitdruck. 🏛️</div>
+   <div style="display:flex;gap:8px;margin:8px 0">
+    <button class="btn bgold" id="dk-m-click" style="flex:1;margin:0;padding:12px;font-size:16px" onclick="dkSetMode('click')">👆 Klicken</button>
+    <button class="btn bgray" id="dk-m-type" style="flex:1;margin:0;padding:12px;font-size:16px" onclick="dkSetMode('type')">⌨️ Tippen</button>
+   </div>
+   <div id="dk-m-desc" style="text-align:center;font-weight:700;color:var(--muted);font-size:15px;margin-bottom:8px"></div>
    <button class="btn bblue" onclick="dkStart('z')">1️⃣ z oder tz?</button>
-   <button class="btn bblue" onclick="dkStart('r')">2️⃣ Reim·wör·ter: ck oder tz?</button>
+   <button class="btn bblue" onclick="dkStart('r')">2️⃣ Reimwörter: ck oder tz?</button>
    <button class="btn bblue" onclick="dkStart('k')">3️⃣ k oder ck?</button>
+   <button class="btn bgreen" onclick="dkStart('d')">✍️ Diktat: ganzes Wort schreiben<span style="display:block;font-size:13px;font-weight:700;opacity:.9;margin-top:2px">Alle Regeln gemischt. Du hörst das Wort und schreibst es selbst.</span></button>
   </div>
   <div id="dk-quiz" style="display:none">
    <div class="progress-mini"><span id="dk-prog"></span><span>Mit Toph 🪨</span></div>
    <div class="qpanel" style="background-color:#F3E9FB;padding:20px">
     <div id="dk-anchor" style="font-size:17px;font-weight:800;color:#A8305A;min-height:22px"></div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:46px;color:#5B2A9A;letter-spacing:2px" id="dk-word"></div>
-    <button class="btn bgray" style="max-width:200px;margin:8px auto" onclick="dkSay()">🔊 Wort hö·ren</button>
-    <div style="display:flex;gap:12px;margin:10px 0">
+    <button class="btn bgray" style="max-width:200px;margin:8px auto" onclick="dkSay()">🔊 Wort hören</button>
+    <div id="dk-choices" style="display:flex;gap:12px;margin:10px 0">
      <button class="btn bblue" id="dk-o0" style="margin:0;font-size:30px" onclick="dkPick(0)"></button>
      <button class="btn bblue" id="dk-o1" style="margin:0;font-size:30px" onclick="dkPick(1)"></button>
     </div>
-    <div class="feedbk" id="dk-fb" style="font-size:15px"></div>
+    <div id="dk-typebox" style="display:none;margin:10px 0">
+     <input id="dk-inp" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')dkCheck()" style="width:100%;font-size:32px;font-family:'Fredoka',sans-serif;font-weight:600;text-align:center;padding:12px;border-radius:12px;border:3px solid #C9A8E8;background:#fff;color:#5B2A9A">
+     <button class="btn bgreen" style="text-align:center;margin:10px 0 0" onclick="dkCheck()">✓ Prüfen</button>
+    </div>
+    <div class="feedbk" id="dk-fb" style="font-size:16px"></div>
    </div>
   </div>
  </div>
@@ -2600,7 +2648,7 @@ const NATIONHUBS={
    {t:'Meine Familie',d:'Eng·lisch: Fa·mi·lie & Sät·ze',e:'👨🏿‍👩🏿‍👧🏿‍👦🏿',go:"go('s-en-family')"},
    {t:'Spiegel-Garten',d:'Spie·gel·ach·se ent·de·cken',e:'🪞',go:"go('s-mirror')"},
    {t:'Muster-Werkstatt',d:'Sym·me·trie üben',e:'✨',go:"go('s-symmetry')"},
-   {t:'Tophs Schreib-Regel',d:'Deutsch: z/tz, Reime, k/ck',e:'🪨',go:"go('s-de-ck')"}
+   {t:'Tophs Schreib-Regel',d:'Deutsch: z/tz, k/ck – hören, klicken, tippen',e:'🪨',go:"go('s-de-ck')"}
   ]}
 };
 function openNationHub(key){buildNationHub(key);go('s-nation-hub');history.replaceState(null,'','#'+key);}
@@ -4359,78 +4407,104 @@ function symRunDemo(){
 }
 
 // ════ WEISHEITS-TEMPEL: DEUTSCH CK / K / TZ / Z ════
-// [vorher, Lösung, nachher, Art(s=kurz,l=lang,c=Mitlaut,d=Doppellaut)]
-const DK_Z=[['Spa','tz','','s'],['O','z','ean','l'],['du','z','en','l'],['Kreu','z','','d'],['gli','tz','ern','s'],['Spi','tz','e','s'],['Pla','tz','','s'],['Kau','z','','d'],['tro','tz','en','s'],['Schwei','z','','d']];
-const DK_K=[['dre','ck','ig','s'],['Sa','ck','','s'],['Mü','ck','e','s'],['Fle','ck','en','s'],['spu','ck','en','s'],['hä','k','eln','l'],['spu','k','en','l'],['E','k','el','l'],['La','k','en','l']];
-// Reime: [Ankerwort, Anfang, richtiges Ende, falsches Ende]
-const DK_R=[['Katze','Gl','atze','acke'],['Katze','T','atze','acke'],['Katze','Matr','atze','acke'],['sitzen','spr','itzen','icken'],['sitzen','fl','itzen','icken'],['sitzen','schw','itzen','icken'],['Flocke','L','ocke','otze'],['Flocke','S','ocke','otze'],['Flocke','Gl','ocke','otze'],['packen','h','acken','atzen'],['packen','kn','acken','atzen'],['packen','b','acken','atzen']];
-const DK_WHY={s:'Der Vo·kal ist kurz und hart (wie ein Stein) — da·rum dop·pelt: ',l:'Der Vo·kal ist lang — da·rum nur ',c:'Davor steht ein Mit·laut (l, n, r) — da·rum nur ',d:'Davor steht ein Dop·pel·laut (au, ei, eu) — da·rum nur '};
-let dk=null;
+// [vorher, Lösung, nachher, Art(s=kurz,l=lang,c=nach Mitlaut,d=nach Doppellaut)]
+const DK_Z=[['Spa','tz','','s'],['O','z','ean','l'],['du','z','en','l'],['Kreu','z','','d'],['gli','tz','ern','s'],['Spi','tz','e','s'],['Pla','tz','','s'],['Kau','z','','d'],['tro','tz','en','s'],['Schwei','z','','d'],['Her','z','','c'],['Sal','z','','c'],['Ker','z','e','c']];
+const DK_K=[['dre','ck','ig','s'],['Sa','ck','','s'],['Mü','ck','e','s'],['Fle','ck','en','s'],['spu','ck','en','s'],['hä','k','eln','l'],['spu','k','en','l'],['E','k','el','l'],['La','k','en','l'],['Wol','k','e','c'],['On','k','el','c'],['Mar','k','e','c']];
+// Reime: [Ankerwort, Anfang, richtiges Ende, (unbenutzt)]
+const DK_R=[['Katze','Gl','atze'],['Katze','T','atze'],['Katze','Matr','atze'],['sitzen','spr','itzen'],['sitzen','fl','itzen'],['sitzen','schw','itzen'],['Flocke','L','ocke'],['Flocke','S','ocke'],['Flocke','Gl','ocke'],['packen','h','acken'],['packen','kn','acken'],['packen','b','acken']];
+const DK_WHY={s:'Der Selbstlaut ist kurz 🪨, darum doppelt: ',l:'Der Selbstlaut ist lang 🌬️, darum einfach: ',c:'Davor steht ein Mitlaut (l, n, r), darum nur ',d:'Davor steht ein Doppellaut (au, ei, eu), darum nur '};
+let dk=null,dkMode='click';
 function dkTab(t){
  document.getElementById('dk-learn').style.display=t==='learn'?'':'none';
  document.getElementById('dk-practice').style.display=t==='practice'?'':'none';
  document.getElementById('dk-tab-a').className='btn '+(t==='learn'?'bgold':'bgray');
  document.getElementById('dk-tab-b').className='btn '+(t==='practice'?'bgold':'bgray');
  document.getElementById('dk-tab-a').style.cssText=document.getElementById('dk-tab-b').style.cssText='flex:1;margin:0;padding:11px;font-size:14px';
- if(t==='practice'){document.getElementById('dk-pick').style.display='';document.getElementById('dk-quiz').style.display='none';}
+ if(t==='practice'){document.getElementById('dk-pick').style.display='';document.getElementById('dk-quiz').style.display='none';dkSetMode(dkMode);}
 }
+function dkSetMode(m){dkMode=m;
+ const a=document.getElementById('dk-m-click'),b=document.getElementById('dk-m-type');
+ a.className='btn '+(m==='click'?'bgold':'bgray');b.className='btn '+(m==='type'?'bgold':'bgray');
+ a.style.cssText=b.style.cssText='flex:1;margin:0;padding:12px;font-size:16px';
+ document.getElementById('dk-m-desc').textContent=m==='click'?'Du hörst das Wort und tippst auf die richtigen Buchstaben.':'Du hörst das Wort und schreibst die fehlenden Buchstaben selbst.';}
 function buildDeCk(){
  dkTab('learn');
  document.querySelectorAll('#dk-learn .dk-words').forEach(function(box){
   if(box.dataset.done)return;box.dataset.done=1;
-  box.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin:6px 0';
+  const small=!!box.closest('.dk-col');
+  box.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin:6px 0'+(small?';justify-content:center':'');
   box.dataset.w.split(',').forEach(function(w){
    const b=document.createElement('button');b.className='btn bgray';
-   b.style.cssText='width:auto;margin:0;padding:8px 14px;font-size:17px;color:#3a2a5a;background:#fff';
-   b.textContent='🔊 '+w;b.onclick=function(){speak(w);};box.appendChild(b);
+   b.style.cssText='width:auto;margin:0;padding:'+(small?'6px 10px':'8px 14px')+';font-size:'+(small?'16px':'18px')+';color:#3a2a5a;background:#fff';
+   b.innerHTML='🔊 '+w.replace(/\[(.*?)\]/g,'<span class="dk-hl">$1</span>');
+   const plain=w.replace(/[\[\]]/g,'');b.onclick=function(){speak(plain);};box.appendChild(b);
   });
  });
 }
-function dkStart(mode){
+function dkItems(rule){
+ const fromZK=function(w){return{pre:w[0],ans:w[1],post:w[2],kind:w[3],opts:(w[1]==='ck'||w[1]==='k')?['ck','k']:['tz','z']};};
+ const fromR=function(w){const m=w[2].match(/^(.*?)(tz|ck)(.*)$/);return{pre:w[1]+m[1],ans:m[2],post:m[3],kind:'s',anchor:w[0],opts:['ck','tz']};};
+ if(rule==='z')return DK_Z.map(fromZK);
+ if(rule==='k')return DK_K.map(fromZK);
+ if(rule==='r')return DK_R.map(fromR);
+ return DK_Z.map(fromZK).concat(DK_K.map(fromZK),DK_R.map(fromR));
+}
+function dkStart(rule){
  ensureAudio();
- const src=mode==='z'?DK_Z:mode==='k'?DK_K:DK_R;
- const pool=src.slice().sort(function(){return Math.random()-.5;}).map(function(w){
-  if(mode==='r')return{pre:w[1],ans:w[2],post:'',kind:'r',anchor:w[0],opts:[w[2],w[3]]};
-  const o=(w[1]==='ck'||w[1]==='k')?['ck','k']:['tz','z'];
-  return{pre:w[0],ans:w[1],post:w[2],kind:w[3],opts:o};
- });
- dk={q:pool,i:0,ok:0,lock:false};
+ const seen={};
+ const pool=dkItems(rule).sort(function(){return Math.random()-.5;}).filter(function(w){const f=dkFull(w);if(seen[f])return false;seen[f]=1;return true;}).slice(0,10);
+ dk={q:pool,i:0,ok:0,lock:false,retry:false,mode:rule==='d'?'d':dkMode};
  document.getElementById('dk-pick').style.display='none';
  document.getElementById('dk-quiz').style.display='';
  dkShow();
 }
 function dkCur(){return dk.q[dk.i];}
 function dkFull(w){return w.pre+w.ans+w.post;}
+function dkMark(w){return w.pre+'<span class="dk-hl">'+w.ans+'</span>'+w.post;}
+function dkWhy(w){return w.anchor?('Es reimt sich auf <b>'+w.anchor+'</b>, darum <b>'+w.ans+'</b>.'):(DK_WHY[w.kind]+'<b>'+w.ans+'</b>.');}
 function dkShow(){
- const w=dkCur();dk.lock=false;
+ const w=dkCur(),typing=dk.mode!=='click';dk.lock=false;dk.retry=false;
  document.getElementById('dk-prog').textContent='Wort '+(dk.i+1)+' von '+dk.q.length;
- document.getElementById('dk-anchor').textContent=w.kind==='r'?'Reimt sich auf: '+w.anchor.replace(/./g,function(c){return c;}):'';
- document.getElementById('dk-word').textContent=w.pre+'__'+w.post;
- dk.opts=Math.random()<.5?w.opts:w.opts.slice().reverse();
- for(let j=0;j<2;j++){const b=document.getElementById('dk-o'+j);b.textContent=dk.opts[j];b.className='btn bblue';}
+ document.getElementById('dk-anchor').textContent=(w.anchor&&dk.mode!=='d')?'Reimt sich auf: '+w.anchor:'';
+ document.getElementById('dk-word').textContent=dk.mode==='d'?dkFull(w).replace(/./g,'_ ').trim():w.pre+'__'+w.post;
+ document.getElementById('dk-choices').style.display=typing?'none':'flex';
+ document.getElementById('dk-typebox').style.display=typing?'':'none';
+ if(!typing){dk.opts=Math.random()<.5?w.opts:w.opts.slice().reverse();
+  for(let j=0;j<2;j++){const b=document.getElementById('dk-o'+j);b.textContent=dk.opts[j];b.className='btn bblue';}}
+ else{const inp=document.getElementById('dk-inp');inp.value='';inp.placeholder=dk.mode==='d'?'Schreibe das Wort':(w.anchor?'ck oder tz?':'Welche Buchstaben fehlen?');setTimeout(function(){inp.focus();},300);}
  setFb('dk-fb','',true);
  setTimeout(dkSay,250);
 }
-function dkSay(){if(!dk)return;const w=dkCur();speak(w.kind==='r'?w.anchor:dkFull(w));}
+function dkSay(){if(!dk)return;const w=dkCur();speak((w.anchor&&dk.mode!=='d')?w.anchor:dkFull(w));}
+function dkNext(ms){setTimeout(function(){dk.i++;if(dk.i>=dk.q.length)dkEnd();else dkShow();},ms);}
 function dkPick(j){
  if(!dk||dk.lock)return;dk.lock=true;
  const w=dkCur(),right=dk.opts[j]===w.ans;
- document.getElementById('dk-word').textContent=dkFull(w);
- const why=w.kind==='r'?('Es reimt sich auf <b>'+w.anchor+'</b> — da·rum <b>'+w.ans+'</b>.'):(DK_WHY[w.kind]+'<b>'+w.ans+'</b>.');
+ document.getElementById('dk-word').innerHTML=dkMark(w);
  const fb=document.getElementById('dk-fb');
- if(right){dk.ok++;sfxRight();maybeCheer();fb.className='feedbk ok';fb.innerHTML='✅ Rich·tig! '+why;speak(dkFull(w));}
- else{sfxWrong();fb.className='feedbk no';fb.innerHTML='Fast! Es heißt <b>'+dkFull(w)+'</b>. '+why;}
+ if(right){dk.ok++;sfxRight();maybeCheer();fb.className='feedbk ok';fb.innerHTML='✅ Richtig! '+dkWhy(w);speak(dkFull(w));}
+ else{sfxWrong();fb.className='feedbk no';fb.innerHTML='Fast! Es heißt <b>'+dkFull(w)+'</b>. '+dkWhy(w);}
  document.getElementById('dk-o'+j).className='btn '+(right?'bgold':'bgray');
- setTimeout(function(){
-  dk.i++;
-  if(dk.i>=dk.q.length)dkEnd();else dkShow();
- },right?2600:3800);
+ dkNext(right?2600:3800);
+}
+function dkCheck(){
+ if(!dk)return;const inp=document.getElementById('dk-inp'),val=inp.value.trim().toLowerCase();if(!val)return;
+ const w=dkCur(),target=(dk.mode==='d'?dkFull(w):w.ans).toLowerCase(),ok=val===target,fb=document.getElementById('dk-fb');
+ if(dk.retry){
+  if(ok){dk.retry=false;dk.lock=true;sfxRight();fb.className='feedbk ok';fb.innerHTML='✅ Genau! So merkst du es dir.';dkNext(1600);}
+  else{sfxWrong();inp.value='';inp.focus();}
+  return;}
+ if(dk.lock)return;
+ document.getElementById('dk-word').innerHTML=dkMark(w);
+ if(ok){dk.lock=true;dk.ok++;sfxRight();maybeCheer();fb.className='feedbk ok';fb.innerHTML='✅ Richtig! '+dkWhy(w);speak(dkFull(w));dkNext(2600);}
+ else{dk.retry=true;sfxWrong();fb.className='feedbk no';fb.innerHTML='Fast! So schreibt man es: <b>'+dkFull(w)+'</b><br>'+dkWhy(w)+'<br>✍️ Schreib es noch einmal richtig ab.';
+  inp.value='';inp.placeholder=dk.mode==='d'?'Schreib das Wort ab':'Schreib die Buchstaben ab';inp.focus();speak(dkFull(w));}
 }
 function dkEnd(){
  const good=dk.ok>=Math.ceil(dk.q.length*0.8);
  award(good?2:1);
  document.getElementById('gw-emoji').textContent=good?'🪨':'🌟';
- document.getElementById('gw-msg').innerHTML='Du hast <b>'+dk.ok+' von '+dk.q.length+'</b> Wör·tern rich·tig! '+(good?'Su·per, Toph ist stolz auf dich!':'Gut ge·macht — üb ru·hig noch·mal, dann wird es im·mer leich·ter!')+' 📜';
+ document.getElementById('gw-msg').innerHTML='Du hast <b>'+dk.ok+' von '+dk.q.length+'</b> Wörtern richtig! '+(good?'Super, Toph ist stolz auf dich!':'Gut gemacht! Übe ruhig nochmal, dann wird es immer leichter!')+' 📜';
  document.getElementById('gw-again').onclick=function(){go('s-de-ck');dkTab('practice');};
  sfxWin();if(good)fireConfetti();
  go('s-gwin');
