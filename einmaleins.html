@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--erde:#6EA86E;--erded:#2E6228;--erdebg:#EDF5EC;--feuer:#D45878;--card:#FDFBF8;--bg:#F5EDE6;--text:#3D2817;--muted:#8B7355;--r:20px;--rs:12px;--sh:0 4px 16px rgba(120,60,80,.08);--sh2:0 10px 30px rgba(120,60,80,.15)}
+:root{--erde:#6EA86E;--erded:#2E6228;--erdebg:#EDF5EC;--feuer:#D45878;--card:#FDFBF8;--bg:#F5EDE6;--text:#3D2817;--muted:#8B7355;--r:20px;--rs:12px;--sh:0 4px 16px rgba(120,60,80,.08);--A:#4A96A8;--B:#E58A4B}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 #app{max-width:520px;margin:0 auto;padding:0 14px 50px}
@@ -19,21 +19,34 @@ html,body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text)
 .gt{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;color:var(--erded)}
 .gs{font-size:17px;color:var(--muted);font-weight:700;margin-top:4px}
 .btn{display:block;width:100%;padding:15px 16px;font-size:20px;font-weight:800;border:none;border-radius:var(--rs);cursor:pointer;font-family:'Nunito',sans-serif;margin:10px 0;text-align:center;line-height:1.25;color:#fff}
+.btn small{display:block;font-size:14px;font-weight:700;opacity:.92;margin-top:3px}
 .btn:active{transform:scale(.97)}
 .bgreen{background:linear-gradient(135deg,#6EA86E,#2E6228)}
 .bfire{background:linear-gradient(135deg,#E8806A,#B8381F)}
 .bblue{background:linear-gradient(135deg,#6AAAC8,#1E5E82)}
+.bgold{background:linear-gradient(135deg,#E8C26A,#A8801E)}
 .bgray{background:transparent;color:var(--muted);border:2px solid #DDD;font-size:15px;padding:10px 14px;width:auto;display:inline-block;margin:10px 0}
-.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
-.rbtn{border:none;border-radius:var(--r);padding:16px 8px;cursor:pointer;color:#fff;background:linear-gradient(135deg,#6AAAC8,#1E5E82);box-shadow:var(--sh);font-family:'Fredoka',sans-serif}
-.rbtn b{display:block;font-size:30px;font-weight:700}
-.rbtn span{display:block;font-size:14px;font-weight:600;opacity:.95;margin-top:2px;font-family:'Nunito',sans-serif}
+.today{padding:20px 16px;font-size:24px;font-family:'Fredoka',sans-serif}
+.rgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}
+.rbtn{border:none;border-radius:16px;padding:10px 2px;cursor:pointer;color:#fff;background:linear-gradient(135deg,#6AAAC8,#1E5E82);box-shadow:var(--sh);font-family:'Fredoka',sans-serif}
+.rbtn b{display:block;font-size:24px;font-weight:700}
+.rbtn span{display:block;font-size:12px;font-weight:700;font-family:'Nunito',sans-serif}
 .rbtn.done{background:linear-gradient(135deg,#E8C26A,#A8801E)}
-.rbtn:active{transform:scale(.96)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two .btn{margin:6px 0;font-size:17px}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin:12px 0;text-align:center}
+.sec{font-weight:900;color:var(--muted);font-size:15px;margin:14px 0 4px}
+.kg{background:#fff;border-radius:14px;padding:8px 10px;margin:6px 0;box-shadow:var(--sh)}
+.kg .kt{font-weight:900;font-size:14px;color:var(--muted)}
+.kc{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.kc span{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;padding:4px 10px;border-radius:99px;color:#fff;cursor:pointer}
+.s-1{background:#C9BFB2}.s0{background:#E06A5A}.s1{background:#E8985A}.s2{background:#C9A23E}.s3{background:#4E9A52}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .ptitle{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;color:var(--muted)}
 .pbar{height:10px;background:#E8DFD2;border-radius:99px;overflow:hidden}
 .pbar>div{height:100%;width:0;background:var(--erde);transition:width .3s}
+.tbar{height:10px;background:#F3D9D0;border-radius:99px;overflow:hidden;margin-top:6px}
+.tbar>div{height:100%;width:100%;background:var(--feuer)}
 .qpanel{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;text-align:center;margin:12px 0}
 .qbig{font-family:'Fredoka',sans-serif;font-weight:700;font-size:56px;line-height:1.1;margin:4px 0 8px}
 .ans{font-family:'Fredoka',sans-serif;font-weight:700;font-size:44px;min-height:70px;line-height:62px;border:3px solid #DDD0BE;border-radius:var(--rs);background:#fff;color:var(--erded);width:60%;margin:0 auto}
@@ -46,26 +59,34 @@ html,body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text)
 .pad button{height:64px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:30px;border:none;border-radius:var(--rs);background:#fff;color:var(--text);box-shadow:var(--sh);cursor:pointer}
 .pad button:active{transform:scale(.94);background:var(--erdebg)}
 .pad .ok{background:var(--erde);color:#fff}.pad .del{background:#F0E6D8}
-.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin:12px 0;text-align:center}
 .cq{font-family:'Fredoka',sans-serif;font-weight:700;font-size:44px;line-height:1.1}
 .cq b{color:var(--erded)}
-.ctitle{font-weight:900;font-size:18px;color:var(--erded);margin:6px 0}
-.clines{font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;line-height:1.5}
-.clines b{color:var(--erded)}
-.hook{background:#FFF5D6;border-radius:var(--rs);padding:8px 12px;font-weight:800;font-size:17px;margin-top:8px}
+.ctitle{font-weight:900;font-size:19px;color:var(--erded);margin:8px 0 4px}
+.cline{font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;margin:6px 0}
+.cline b{color:var(--erded)}
+.ca{color:var(--A);font-weight:900}.cb{color:var(--B);font-weight:900}
+.hook{background:#FFF5D6;border-radius:var(--rs);padding:8px 12px;font-weight:800;font-size:18px;margin:8px 0}
+.grps{margin:8px 0}
+.grow{display:flex;align-items:center;justify-content:center;gap:4px;margin:3px 0}
+.grow i.dt{width:16px;height:16px;border-radius:50%;flex:none}
+.c0{background:var(--A)}.c1{background:var(--B)}
+.grow b{min-width:40px;text-align:left;font-family:'Fredoka',sans-serif;font-size:17px;color:var(--muted);padding-left:6px}
+.grow.last b{color:var(--erded);font-size:24px}
+.grow.hd i{width:16px;font-size:10px;font-style:normal;color:var(--muted);text-align:center;font-weight:800}
 .arr{display:block;margin:8px auto;height:auto;width:100%}
-.chain{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:10px 0}
-.bub{font-family:'Fredoka',sans-serif;font-weight:700;font-size:26px;background:#fff;border:3px solid #4A96A8;border-radius:50%;min-width:56px;height:56px;display:inline-flex;align-items:center;justify-content:center;opacity:0;animation:fadein .5s forwards}
-.bub.last{background:var(--erde);border-color:var(--erded);color:#fff}
-.opx{font-weight:900;color:var(--muted);font-size:15px;opacity:0;animation:fadein .5s forwards}
-@keyframes fadein{to{opacity:1}}
+.fdig{font-family:'Fredoka',sans-serif;font-weight:700;font-size:54px;letter-spacing:6px}
 .big{font-family:'Fredoka',sans-serif;font-weight:700;font-size:56px;color:var(--erded);text-align:center}
 .lead{font-size:18px;line-height:1.5;font-weight:700}
+.ex{text-align:left;font-weight:800;font-size:18px;line-height:1.7}
+.rline{display:flex;justify-content:space-between;align-items:center;font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;background:#fff;border-radius:var(--rs);padding:8px 16px;margin:5px 0;cursor:pointer;border:2px solid transparent}
+.rline.hl{border-color:var(--erde);background:var(--erdebg)}
+.rline .res{color:var(--erded)}
 .bx{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:var(--rs);padding:10px 14px;margin:8px 0;box-shadow:var(--sh);cursor:pointer;font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px}
 .bx small{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--muted);display:block;text-align:right}
 .bx .dots{color:var(--erde);font-size:22px;letter-spacing:2px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
 .chip{border:2px solid #DDD0BE;background:#fff;color:var(--text);font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;padding:8px 14px;border-radius:999px;cursor:pointer}
+.chip.on{background:var(--erde);border-color:var(--erded);color:#fff}
 .modal{position:fixed;inset:0;background:rgba(40,25,10,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:14px}
 .modal.on{display:flex}
 .mbox{background:var(--card);border-radius:var(--r);padding:18px;max-width:460px;width:100%;max-height:90vh;overflow:auto;text-align:center}
@@ -77,11 +98,23 @@ a.link{color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;text-dec
 <!-- HOME -->
 <div class="sc on" id="s-home">
  <button class="btn bgray" onclick="location.href='index.html#weisheit'">← Weisheits-Tempel</button>
- <div class="gh"><div class="gt">✖️ Einmaleins</div><div class="gs">Wähle eine Reihe zum Üben</div></div>
+ <div class="gh"><div class="gt">✖️ Einmaleins</div><div class="gs" id="h-days"></div></div>
+ <button class="btn bgreen today" onclick="startToday()">▶ Heute trainieren<small id="h-sub"></small></button>
+ <div class="sec">Reihen mit Beispielen</div>
  <div class="rgrid" id="h-rows"></div>
- <button class="btn bgreen" onclick="startAll()">🎲 Alle Reihen gemischt</button>
- <button class="btn bfire" id="h-box" onclick="openBox()">📦 Fehlerkiste</button>
- <div style="text-align:center;margin-top:6px"><a class="link" onclick="resetAll()">Alles zurücksetzen</a></div>
+ <div class="two">
+  <button class="btn bfire" id="h-box" onclick="go('s-box')">📦 Fehlerkiste</button>
+  <button class="btn bgold" onclick="startTest()">📝 Mini-Test<small>wie in der Schule</small></button>
+ </div>
+ <div class="sec">Meine 21 Knacker – tippe für den Merk-Trick</div>
+ <div id="h-knack"></div>
+ <div style="text-align:center;margin-top:10px"><a class="link" onclick="resetAll()">Alles zurücksetzen</a></div>
+</div>
+
+<!-- REIHE -->
+<div class="sc" id="s-row">
+ <button class="btn bgray" onclick="go('s-home')">← Zurück</button>
+ <div id="r-body"></div>
 </div>
 
 <!-- FEHLERKISTE -->
@@ -90,13 +123,14 @@ a.link{color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;text-dec
  <div class="gh"><div class="gt">📦 Fehlerkiste</div><div class="gs">Diese Aufgaben üben wir extra</div></div>
  <div id="b-list"></div>
  <button class="btn bfire" id="b-train" onclick="startBox()">🎯 Fehlerkiste trainieren</button>
- <div style="text-align:center;font-weight:700;color:var(--muted);font-size:14px">Zweimal richtig beantwortet = die Aufgabe darf aus der Kiste. ✓✓</div>
+ <div style="text-align:center;font-weight:700;color:var(--muted);font-size:14px">Zwei Runden richtig = die Aufgabe darf raus ●●</div>
 </div>
 
 <!-- ÜBEN -->
 <div class="sc" id="s-play">
  <div class="topbar"><button class="btn bgray" onclick="go('s-home')">← Aufhören</button><div class="ptitle" id="p-title"></div></div>
  <div class="pbar"><div id="p-fill"></div></div>
+ <div class="tbar" id="p-timer" style="display:none"><div id="p-tfill"></div></div>
  <div id="p-card" style="display:none"></div>
  <div id="p-ask">
   <div class="qpanel">
@@ -121,114 +155,174 @@ a.link{color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;text-dec
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="mbox" id="mbox"></div></div>
 
 <script>
-const KEY='roza_einmaleins_v2',APPKEY='roza_akademie_v1';
-let ST={box:{},rows:{},n:0};
-try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.box)ST=Object.assign(ST,s);}catch(e){}
+const KEY='roza_einmaleins_v3',APPKEY='roza_akademie_v1';
+let ST={facts:{},rows:{},newDay:null,days:[],n:0};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.facts)ST=Object.assign(ST,s);}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
 const $=id=>document.getElementById(id);
 const norm=(a,b)=>a<=b?a+'x'+b:b+'x'+a;
 const rng=n=>Math.floor(Math.random()*n);
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rng(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 const mk=p=>Math.random()<.5?{a:p[1],b:p[0]}:{a:p[0],b:p[1]};
+const kp=k=>k.split('x').map(Number);
 function allFacts(lo,hi){const r=[];for(let a=lo;a<=hi;a++)for(let b=a;b<=hi;b++)r.push([a,b]);return r;}
-const boxKeys=()=>Object.keys(ST.box);
-let S=null;
-function stopAll(){if(S){clearTimeout(S.nx);}try{speechSynthesis.cancel();}catch(e){}}
-function go(id){stopAll();document.querySelectorAll('.sc').forEach(e=>e.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);
- if(id==='s-home')renderHome();if(id==='s-box')renderBox();}
-function say(t){if(!('speechSynthesis' in window))return;
+const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
+function F(k){return ST.facts[k]||(ST.facts[k]={intro:0,b:0,due:0,c:0,s:0});}
+const inBox=k=>{const f=ST.facts[k];return !!f&&f.c>0&&f.s<2;};
+const boxKeys=()=>Object.keys(ST.facts).filter(inBox);
+const known=k=>{const f=ST.facts[k];return !!f&&(f.intro||f.b>=2);};
+
+/* ---- Die 21 Knacker in 4 Lern-Tagen ---- */
+const GROUPS=[
+ {t:'9er-Finger-Trick',e:'🖐️',f:['3x9','4x9','6x9','7x9','8x9','9x9']},
+ {t:'Kleine 3er und 4er',e:'☘️',f:['3x3','3x4','4x4','3x6','4x6']},
+ {t:'7er-Kalender',e:'📅',f:['3x7','4x7','6x7','7x7','7x8']},
+ {t:'6er und 8er',e:'🦬',f:['3x8','4x8','6x6','6x8','8x8']}];
+
+/* ---- Welten pro Reihe ---- */
+const ROW={
+ 2:{e:'👟',g1:'Paar',gp:'Paare',u:'Schuhe',per:2,note:'Ein Paar Schuhe sind 2.',ex:['5 Paar = 10 Schuhe','9 Paar = 18 Schuhe','Die Einer: 2 · 4 · 6 · 8 · 0']},
+ 3:{e:'☘️',g1:'Kleeblatt',gp:'Kleeblätter',u:'Blätter',per:3,note:'Ein Kleeblatt hat 3 Blätter.',ex:['4 Kleeblätter = 12 Blätter','7 Kleeblätter = 21 Blätter','Ein Dreirad hat 3 Räder']},
+ 4:{e:'🚗',g1:'Auto',gp:'Autos',u:'Räder',per:4,note:'Ein Auto hat 4 Räder.',ex:['3 Autos = 12 Räder','7 Autos = 28 Räder','8 Autos = 32 Räder']},
+ 5:{e:'✋',g1:'Hand',gp:'Hände',u:'Finger',per:5,note:'Eine Hand hat 5 Finger.',ex:['4 Hände = 20 Finger','Uhr: 7 × 5 = 35 Minuten','Endet immer auf 5 oder 0']},
+ 6:{e:'🦬',g1:'Appa',gp:'Appas',u:'Beine',per:6,note:'Appa hat 6 Beine!',ex:['4 Appas = 24 Beine','Eierkarton: 6 Eier','7 Eierkartons = 42 Eier']},
+ 7:{e:'📅',g1:'Woche',gp:'Wochen',u:'Tage',per:7,note:'Eine Woche hat 7 Tage.',ex:['3 Wochen = 21 Tage','6 Wochen Ferien = 42 Tage','8 Wochen = 56 Tage']},
+ 8:{e:'🐙',g1:'Oktopus',gp:'Oktopusse',u:'Arme',per:8,note:'Ein Oktopus hat 8 Arme.',ex:['3 Oktopusse = 24 Arme','4 Oktopusse = 32 Arme','Schachbrett: 8 × 8 = 64 Felder ♟️']},
+ 9:{e:'🖐️',note:'Die 9er-Reihe geht mit den Fingern!',ex:['Tippe unten eine Zahl an','Finger runter: links = Zehner, rechts = Einer']},
+ 10:{e:'🙌',note:'Zehn Finger an beiden Händen.',ex:['7 × 10 = 70','Hänge einfach eine Null an']},
+ 1:{e:'🍎',note:'Mal 1 bleibt gleich.',ex:['5 × 1 = 5','Eine Zahl bleibt, wie sie ist']}};
+const HOOKS={'7x8':'🧠 5 · 6 · 7 · 8 → 56 = 7 × 8','8x8':'♟️ Ein Schachbrett: 8 × 8 = 64 Felder','4x8':'♟️ 32 Schachfiguren','3x8':'🕐 Ein Tag hat 24 Stunden','4x6':'🕐 Ein Tag hat 24 Stunden','3x4':'🥚 Ein Dutzend = 12','6x7':'🏖️ 6 Wochen Sommerferien = 42 Tage'};
+
+/* ---- Audio ---- */
+const CH={id:0};
+function say(t,cb,rate){if(!('speechSynthesis' in window)){if(cb)setTimeout(cb,800);return;}
  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);const vs=speechSynthesis.getVoices();
   const v=vs.find(v=>/^de[-_]CH/i.test(v.lang))||vs.find(v=>/^de/i.test(v.lang));
-  if(v){u.voice=v;u.lang=v.lang;}else u.lang='de-DE';u.rate=.85;speechSynthesis.speak(u);}catch(e){}}
+  if(v){u.voice=v;u.lang=v.lang;}else u.lang='de-DE';u.rate=rate||.85;
+  u.onend=()=>{if(cb)cb();};u.onerror=()=>{if(cb)cb();};speechSynthesis.speak(u);}catch(e){if(cb)setTimeout(cb,800);}}
 function sayEq(a,b){say(a+' mal '+b+' ist '+a*b);}
+function chant3(a,b){const id=++CH.id;let c=0;const nx=()=>{if(CH.id!==id||c++>=3)return;say(a+'. mal. '+b+'. ist. '+a*b+'!',()=>setTimeout(nx,250),.75);};nx();}
+function chantRow(r){const id=++CH.id;let m=1;const nx=()=>{document.querySelectorAll('.rline').forEach(e=>e.classList.remove('hl'));if(CH.id!==id||m>10)return;
+  const el=$('rl'+m);if(el)el.classList.add('hl');const mm=m;say(mm+' mal '+r+' ist '+mm*r,()=>{m++;setTimeout(nx,200);});};nx();}
+let S=null;
+function stopAll(){CH.id++;if(S){clearTimeout(S.nx);clearTimeout(S.tm);}try{speechSynthesis.cancel();}catch(e){}}
+function go(id){stopAll();document.querySelectorAll('.sc').forEach(e=>e.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);
+ if(id==='s-home')renderHome();if(id==='s-box')renderBox();}
 
-/* ---------- Bilder ---------- */
-function arr(rows,cols,o){o=o||{};const cs=Math.max(12,Math.min(26,Math.floor(300/cols)));const r=cs*.36,W=cols*cs,H=rows*cs;
- let s=`<svg viewBox="0 0 ${W} ${H}" class="arr" style="max-width:${Math.min(W,260)}px" aria-hidden="true">`;
- for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){let c='#4A96A8',x=0;if(o.split&&j>=o.split)c='#E58A4B';
-  if(o.cross&&j>=cols-o.cross){c='#D8CFC2';x=1;}
-  const cx=j*cs+cs/2,cy=i*cs+cs/2;s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${c}"/>`;
-  if(x)s+=`<path d="M${cx-r*.7} ${cy-r*.7}L${cx+r*.7} ${cy+r*.7}M${cx+r*.7} ${cy-r*.7}L${cx-r*.7} ${cy+r*.7}" stroke="#B0413E" stroke-width="2" stroke-linecap="round"/>`;}
- return s+'</svg>';}
-function chain(vals,ops){let h='<div class="chain">',d=0;vals.forEach((v,i)=>{h+=`<span class="bub${i===vals.length-1?' last':''}" style="animation-delay:${d}s">${v}</span>`;d+=.45;
-  if(i<ops.length){h+=`<span class="opx" style="animation-delay:${d}s">${ops[i]} ➜</span>`;d+=.35;}});return h+'</div>';}
+/* ---- Bilder ---- */
+function groupsHTML(m,n){let h='<div class="grps">';
+ if(n===7)h+='<div class="grow hd">'+['Mo','Di','Mi','Do','Fr','Sa','So'].map(d=>`<i>${d}</i>`).join('')+'<b></b></div>';
+ for(let i=1;i<=m;i++)h+=`<div class="grow${i===m?' last':''}">`+Array.from({length:n},()=>`<i class="dt c${i%2}"></i>`).join('')+`<b>${i*n}</b></div>`;
+ return h+'</div>';}
+function fingerHTML(n){const H=[56,72,80,72,44,44,72,80,72,56];let s='<svg viewBox="0 0 350 130" class="arr" style="max-width:360px">';
+ for(let i=0;i<10;i++){const k=i+1,x=10+i*32+(i>=5?18:0),f=k===n,h=f?18:H[i],c=f?'#D8CFC2':(k<n?'#4A96A8':'#E58A4B');
+  s+=`<rect x="${x}" y="${108-h}" width="26" height="${h}" rx="12" fill="${c}"/><text x="${x+13}" y="124" text-anchor="middle" font-size="12" fill="#8B7355" font-weight="800">${k}</text>`;}
+ return s+`</svg><div class="fdig"><span class="ca">${n-1}</span><span class="cb">${10-n}</span></div>`;}
+function anchor(a,b){const o9=a===9?b:(b===9?a:0);if(o9>=3&&o9<=9)return{finger:true,n:o9};
+ for(const n of [7,8,6,4,3,5,2,10,1])if(a===n||b===n)return{n,m:a===n?b:a};}
+function cardHTML(a,b){const p=a*b,an=anchor(a,b),hook=HOOKS[norm(a,b)]||'';let top,pic='',story;
+ if(an.finger){top='<div class="ctitle">🖐️ 9er-Finger-Trick</div>';pic=fingerHTML(an.n);story=`<div class="cline">Finger ${an.n} runter:<br>links <b class="ca">${an.n-1}</b> · rechts <b class="cb">${10-an.n}</b></div>`;}
+ else if(an.n===10){top='<div class="ctitle">🙌 Mal 10</div>';story=`<div class="cline">${an.m} → hänge eine Null an: <b>${p}</b></div>`;}
+ else if(an.n===1){top='<div class="ctitle">🍎 Mal 1</div>';story='<div class="cline">Es bleibt gleich.</div>';}
+ else{const R=ROW[an.n],m=an.m;top=`<div class="ctitle">${R.e} 1 ${R.g1} = ${R.per} ${R.u}</div>`;pic=groupsHTML(m,an.n);story=`<div class="cline">${m} ${m===1?R.g1:R.gp} = <b>${p}</b> ${R.u}</div>`;}
+ return `<div class="cq">${a} × ${b} = <b>${p}</b></div>${top}${pic}${story}${hook?`<div class="hook">${hook}</div>`:''}<button class="btn bblue" onclick="chant3(${a},${b})">🔊 Sag es laut mit!</button>`;}
+function showTip(a,b){$('mbox').innerHTML=cardHTML(a,b)+'<button class="btn bgreen" style="margin-top:0" onclick="closeModal()">OK</button>';$('modal').classList.add('on');}
+function closeModal(){$('modal').classList.remove('on');stopAll();}
 
-/* ---------- Ein einfacher Trick pro Aufgabe ---------- */
-const ORDER=[10,1,2,5,9,4,3,6,8,7];
-function tipFor(a,b){const p=a*b,s=ORDER.find(n=>a===n||b===n),o=(a===s)?b:a;let title,lines=[],vis='';
- switch(s){
-  case 10:title='Null anhängen';lines=[`${o} × 10 = <b>${p}</b>`];break;
-  case 1:title='Bleibt gleich';lines=[`${o} × 1 = <b>${p}</b>`];break;
-  case 2:title='Doppelt';lines=[`${o} + ${o} = <b>${p}</b>`];vis=arr(o,2);break;
-  case 5:title='Halbe vom 10er';lines=[`10 × ${o} = ${10*o}`,`die Hälfte = <b>${p}</b>`];vis=arr(o,5);break;
-  case 9:title='10er minus 1';lines=[`10 × ${o} = ${10*o}`,`${10*o} − ${o} = <b>${p}</b>`];vis=arr(o,10,{cross:1});break;
-  case 4:title='Doppelt, doppelt';vis=chain([o,2*o,p],['×2','×2']);break;
-  case 3:title='2er plus 1';lines=[`2 × ${o} = ${2*o}`,`${2*o} + ${o} = <b>${p}</b>`];vis=arr(o,3,{split:2});break;
-  case 6:title='5er plus 1';lines=[`5 × ${o} = ${5*o}`,`${5*o} + ${o} = <b>${p}</b>`];vis=arr(o,6,{split:5});break;
-  case 8:title='Dreimal doppelt';vis=chain([o,2*o,4*o,p],['×2','×2','×2']);break;
-  default:title='5er plus 2er';lines=[`5 × ${o} = ${5*o}`,`2 × ${o} = ${2*o}`,`${5*o} + ${2*o} = <b>${p}</b>`];vis=arr(o,7,{split:5});}
- return {title,lines,vis,p,hook:norm(a,b)==='7x8'?'🧠 Merk dir: 5 · 6 · 7 · 8 → 56 = 7 × 8':''};}
-function cardHTML(a,b){const t=tipFor(a,b);
- return `<div class="cq">${a} × ${b} = <b>${t.p}</b></div><div class="ctitle">Trick: ${t.title}</div>${t.vis}${t.lines.length?`<div class="clines">${t.lines.join('<br>')}</div>`:''}${t.hook?`<div class="hook">${t.hook}</div>`:''}<button class="btn bblue" onclick="sayEq(${a},${b})">🔊 Anhören</button>`;}
-function showTip(a,b){$('mbox').innerHTML=cardHTML(a,b)+`<button class="btn bgreen" style="margin-top:0" onclick="closeModal()">OK</button>`;$('modal').classList.add('on');}
-function closeModal(){$('modal').classList.remove('on');try{speechSynthesis.cancel();}catch(e){}}
-
-/* ---------- Start & Kiste ---------- */
-function renderHome(){const g=$('h-rows');g.innerHTML='';
+/* ---- Startseite ---- */
+function renderHome(){const t=today();
+ $('h-days').textContent=ST.days.length?'Du hast an '+ST.days.length+' Tag'+(ST.days.length>1?'en':'')+' geübt 💪':'Auf geht’s – Schritt für Schritt!';
+ const g=GROUPS.find(g=>g.f.some(k=>!known(k)));
+ $('h-sub').textContent=ST.newDay===t?'Heute war schon etwas Neues dran – jetzt wiederholen':g?'Heute neu: '+g.e+' '+g.t:'Alles gelernt – jetzt festigen';
+ const gr=$('h-rows');gr.innerHTML='';
  for(let r=1;r<=10;r++){const st=ST.rows[r],done=st&&st.best>=9;const b=document.createElement('button');b.className='rbtn'+(done?' done':'');
-  b.innerHTML=`<b>${r}er</b><span>${st?(done?'⭐ ':'')+st.best+' / 10':'los geht’s'}</span>`;b.onclick=()=>startRow(r);g.appendChild(b);}
- const n=boxKeys().length;$('h-box').textContent='📦 Fehlerkiste ('+n+')';}
-function renderBox(){const ks=boxKeys().sort((x,y)=>ST.box[y].c-ST.box[x].c);
- $('b-list').innerHTML=ks.length?ks.map(k=>{const [a,b]=k.split('x').map(Number),f=ST.box[k];
+  b.innerHTML=`<b>${r}er</b><span>${st?(done?'⭐':st.best+'/10'):'&nbsp;'}</span>`;b.onclick=()=>openRow(r);gr.appendChild(b);}
+ $('h-box').textContent='📦 Fehlerkiste ('+boxKeys().length+')';
+ $('h-knack').innerHTML=GROUPS.map(g=>`<div class="kg"><div class="kt">${g.e} ${g.t}</div><div class="kc">${g.f.map(k=>{const f=ST.facts[k],c=(!f||(!f.intro&&!f.n))?'s-1':'s'+f.b,[a,b]=kp(k);return `<span class="${c}" onclick="showTip(${a},${b})">${a} × ${b}</span>`;}).join('')}</div></div>`).join('');}
+function resetAll(){if(confirm('Alles zurücksetzen?')){ST={facts:{},rows:{},newDay:null,days:[],n:0};save();renderHome();}}
+
+/* ---- Reihe mit Beispielen ---- */
+let fgN=7;
+function openRow(r){go('s-row');const R=ROW[r];let h=`<div class="gh"><div class="gt">${R.e} ${r}er-Reihe</div><div class="gs">${R.note}</div></div>`;
+ h+=`<div class="card"><div class="ex">${R.ex.map(x=>'• '+x).join('<br>')}</div></div>`;
+ if(r===9)h+='<div class="chips" id="fg-ch"></div><div class="card" id="fg-box"></div>';
+ for(let m=1;m<=10;m++)h+=`<div class="rline" id="rl${m}" onclick="sayEq(${m},${r})"><span>${m} × ${r}</span><span class="res">= ${m*r}</span></div>`;
+ h+=`<button class="btn bblue" onclick="chantRow(${r})">🔊 Reihe aufsagen</button><button class="btn bgreen" onclick="startRow(${r})">🎯 ${r}er-Reihe üben</button>`;
+ $('r-body').innerHTML=h;
+ if(r===9)drawFg(fgN);}
+function drawFg(n){fgN=n;const c=$('fg-ch');c.innerHTML='';for(let i=1;i<=10;i++){const b=document.createElement('button');b.className='chip'+(i===n?' on':'');b.textContent='9×'+i;b.onclick=()=>drawFg(i);c.appendChild(b);}
+ $('fg-box').innerHTML=`<div class="cline">Finger ${n} runter:<br>links <b class="ca">${n-1}</b> · rechts <b class="cb">${10-n}</b> → <b>${9*n}</b></div>`+fingerHTML(n);}
+
+/* ---- Fehlerkiste ---- */
+function renderBox(){const ks=boxKeys().sort((x,y)=>ST.facts[y].c-ST.facts[x].c);
+ $('b-list').innerHTML=ks.length?ks.map(k=>{const [a,b]=kp(k),f=ST.facts[k];
   return `<div class="bx" onclick="showTip(${a},${b})"><span>${a} × ${b}</span><span><span class="dots">${'●'.repeat(f.s)+'○'.repeat(Math.max(0,2-f.s))}</span><small>${f.c}× falsch</small></span></div>`;}).join(''):'<div class="card lead">Die Kiste ist leer. 🎉<br>Alles sitzt – weiter so!</div>';
  $('b-train').style.display=ks.length?'':'none';}
-function resetAll(){if(confirm('Alles zurücksetzen?')){ST={box:{},rows:{},n:0};save();renderHome();}}
 
-/* ---------- Üben ---------- */
+/* ---- Üben ---- */
 function buildPad(){const p=$('pad');p.innerHTML='';[1,2,3,4,5,6,7,8,9,'b',0,'ok'].forEach(k=>{const b=document.createElement('button');
   b.textContent=k==='b'?'⌫':k==='ok'?'✓':k;if(k==='b')b.className='del';if(k==='ok')b.className='ok';b.onclick=()=>press(String(k));p.appendChild(b);});}
 buildPad();
-function startSession(mode,queue,opt){S={mode,queue,i:0,first:0,total:queue.filter(q=>!q.learn).length,tries:0,inp:'',locked:false,retype:false,stage:'ask',rq:{},newBox:{},freed:[],rowKey:opt.rowKey||null,title:opt.title,again:opt.again};
- go('s-play');$('p-title').textContent=S.title;showQ();}
+function startSession(mode,queue,opt){S={mode,queue,i:0,first:0,total:queue.filter(q=>!q.learn&&!q.warm).length,tries:0,inp:'',locked:false,retype:false,stage:'ask',rq:{},newBox:{},freed:[],times:[],timeouts:0,
+  rowKey:opt.rowKey||null,title:opt.title,again:opt.again,T:opt.T||0,newKeys:opt.newKeys||[]};
+ go('s-play');$('p-title').textContent=S.title;$('p-timer').style.display=S.T?'block':'none';showQ();}
 function startRow(r){startSession('row',shuffle([1,2,3,4,5,6,7,8,9,10]).map(m=>mk([r,m])),{title:r+'er-Reihe',rowKey:r,again:()=>startRow(r)});}
-function startAll(){startSession('all',shuffle(allFacts(1,10)).slice(0,20).map(mk),{title:'Alle Reihen',rowKey:'all',again:startAll});}
+function startTest(){startSession('test',shuffle(allFacts(2,9)).slice(0,20).map(mk),{title:'Mini-Test',T:10,again:startTest});}
+function learnItems(keys){return keys.map(k=>Object.assign(mk(kp(k)),{learn:true}));}
 function startBox(){const ks=boxKeys();if(!ks.length)return;
- const pick=shuffle(ks).sort((x,y)=>ST.box[y].c-ST.box[x].c).slice(0,5).map(k=>k.split('x').map(Number));
- const learn=pick.map(p=>Object.assign(mk(p),{learn:true})),again=shuffle(pick).map(mk);
- startSession('box',learn.concat(again),{title:'Fehlerkiste 📦',again:startBox});}
-function showQ(){const q=S.queue[S.i];S.tries=0;S.inp='';S.locked=false;S.retype=false;
+ const pick=shuffle(ks).sort((x,y)=>ST.facts[y].c-ST.facts[x].c).slice(0,5);
+ startSession('box',learnItems(pick).concat(shuffle(pick).map(k=>mk(kp(k)))),{title:'Fehlerkiste 📦',again:startBox});}
+function startToday(){const t=today();let newKeys=[],title='Heute trainieren';
+ if(ST.newDay!==t){const g=GROUPS.find(g=>g.f.some(k=>!known(k)));if(g){newKeys=g.f.filter(k=>!known(k));title=g.e+' '+g.t;}}
+ const easy=allFacts(2,9).filter(p=>(p.includes(2)||p.includes(5))&&!p.includes(7)&&!p.includes(8));
+ const warm=shuffle(easy).slice(0,3).map(p=>Object.assign(mk(p),{warm:true}));
+ const due=Object.keys(ST.facts).filter(k=>{const f=ST.facts[k];return f.intro&&f.due<=t&&!newKeys.includes(k);}).sort((x,y)=>(inBox(y)-inBox(x))||(ST.facts[x].b-ST.facts[y].b)).slice(0,10);
+ let q=warm.concat(learnItems(newKeys),due.map(k=>mk(kp(k))),shuffle(newKeys).map(k=>mk(kp(k))));
+ if(!newKeys.length&&!due.length){const all=GROUPS.reduce((a,g)=>a.concat(g.f),[]);q=warm.concat(shuffle(all).slice(0,12).map(k=>mk(kp(k))));title='Festigen';}
+ startSession('today',q,{title,newKeys,again:startToday});}
+function showQ(){const q=S.queue[S.i];S.tries=0;S.inp='';S.locked=false;S.retype=false;clearTimeout(S.tm);
  $('p-fill').style.width=(S.i/S.queue.length*100)+'%';
- if(q.learn&&!q.seen){S.stage='card';$('p-ask').style.display='none';$('p-card').style.display='';
+ if(q.learn&&!q.seen){S.stage='card';F(norm(q.a,q.b)).intro=1;F(norm(q.a,q.b)).due=today();save();$('p-ask').style.display='none';$('p-card').style.display='';
   $('p-card').innerHTML=`<div class="card"><div class="ctitle" style="font-size:20px">👀 Merk dir diese Aufgabe</div>${cardHTML(q.a,q.b)}</div><button class="btn bgreen" onclick="cardGo()">Jetzt abfragen ▶</button>`;
-  setTimeout(()=>sayEq(q.a,q.b),300);return;}
+  setTimeout(()=>chant3(q.a,q.b),300);return;}
  S.stage='ask';$('p-card').style.display='none';$('p-ask').style.display='';
- $('p-q').textContent=q.a+' × '+q.b;updAns();$('p-fb').textContent='';$('p-fb').className='fb';$('p-hint').style.display='none';}
-function cardGo(){S.queue[S.i].seen=true;showQ();}
+ $('p-q').textContent=q.a+' × '+q.b;updAns();$('p-fb').textContent='';$('p-fb').className='fb';$('p-hint').style.display='none';
+ if(S.T){const f=$('p-tfill');f.style.transition='none';f.style.width='100%';void f.offsetWidth;f.style.transition='width '+S.T+'s linear';f.style.width='0%';S.tm=setTimeout(onTimeout,S.T*1000);}
+ S.t0=Date.now();}
+function cardGo(){CH.id++;try{speechSynthesis.cancel();}catch(e){}S.queue[S.i].seen=true;showQ();}
 function updAns(){const a=$('p-ans');a.textContent=S.inp||'…';a.classList.toggle('empty',!S.inp);}
 function press(k){if(!S||S.locked||S.stage!=='ask')return;if(k==='b')S.inp=S.inp.slice(0,-1);else if(k==='ok')return submit();else if(S.inp.length<3)S.inp+=k;updAns();}
 function shake(){const an=$('p-ans');an.classList.remove('shake');void an.offsetWidth;an.classList.add('shake');}
-function submit(){if(S.locked||S.inp==='')return;const q=S.queue[S.i],k=norm(q.a,q.b),ok=+S.inp===q.a*q.b,fb=$('p-fb');
+function judge(q,ok){const k=norm(q.a,q.b),f=F(k),t=today();
+ if(ok){if(q.learn||q.rq)return;f.b=Math.min(3,f.b+1);f.due=t+[0,1,2,4][f.b];
+  if(f.c>0&&f.s<2){f.s++;if(f.s>=2){S.freed.push([q.a,q.b]);return 'freed';}}}
+ else{f.c++;f.s=0;f.b=0;f.due=t;S.newBox[k]=[q.a,q.b];}}
+function submit(){if(S.locked||S.inp==='')return;const q=S.queue[S.i],ok=+S.inp===q.a*q.b,fb=$('p-fb');clearTimeout(S.tm);
+ if(S.mode==='test'){S.locked=true;S.times.push((Date.now()-S.t0)/1000);if(ok)S.first++;judge(q,ok);fb.textContent='✓';save();S.nx=setTimeout(nextQ,350);return;}
  if(S.retype){if(ok){S.locked=true;fb.textContent='Genau! So merkst du es dir. 💚';fb.className='fb good';S.nx=setTimeout(nextQ,1200);}else{shake();S.inp='';updAns();}return;}
- if(ok){S.locked=true;if(!q.learn&&!q.rq)S.first++;let msg=['Richtig! ✨','Super! 💪','Stark! 🪨','Klasse! 🔥'][rng(4)];
-  const f=ST.box[k];if(f&&!q.learn&&!q.rq){f.s++;if(f.s>=2){delete ST.box[k];S.freed.push([q.a,q.b]);msg='Raus aus der Kiste! 🎉';}}
-  fb.textContent=msg;fb.className='fb good';save();S.nx=setTimeout(nextQ,msg.startsWith('Raus')?1300:800);return;}
- const f=ST.box[k]||(ST.box[k]={c:0,s:0});f.c++;f.s=0;S.newBox[k]=[q.a,q.b];save();
+ if(ok){S.locked=true;if(!q.learn&&!q.rq&&!q.warm)S.first++;let msg=['Richtig! ✨','Super! 💪','Stark! 🪨','Klasse! 🔥'][rng(4)];
+  if(judge(q,true)==='freed')msg='Raus aus der Kiste! 🎉';fb.textContent=msg;fb.className='fb good';save();S.nx=setTimeout(nextQ,msg.startsWith('Raus')?1300:800);return;}
+ judge(q,false);const k=norm(q.a,q.b);save();
  if(!S.rq[k]){S.rq[k]=1;S.queue.splice(Math.min(S.queue.length,S.i+4),0,{a:q.b,b:q.a,rq:true});}
  S.retype=true;S.inp='';updAns();shake();fb.textContent='Fast! Schau hin und tipp die Lösung ein.';fb.className='fb bad';
- const h=$('p-hint');h.style.display='';h.innerHTML=`<div class="ctitle">📦 Kommt in die Fehlerkiste</div>`+cardHTML(q.a,q.b);}
+ const h=$('p-hint');h.style.display='';h.innerHTML='<div class="ctitle">📦 Kommt in die Fehlerkiste</div>'+cardHTML(q.a,q.b);}
+function onTimeout(){if(!S||S.locked)return;S.locked=true;const q=S.queue[S.i];S.timeouts++;S.times.push(S.T);judge(q,false);$('p-fb').textContent='⏰';save();S.nx=setTimeout(nextQ,500);}
 function nextQ(){S.i++;if(S.i>=S.queue.length)finish();else showQ();}
 function addScrolls(n){if(n<=0)return;try{const s=JSON.parse(localStorage.getItem(APPKEY)||'null');if(s&&typeof s.scrolls==='number'){s.scrolls+=n;localStorage.setItem(APPKEY,JSON.stringify(s));}}catch(e){}}
-function finish(){const d=S;ST.n++;
+function finish(){const d=S,t=today();ST.n++;
  if(d.rowKey){const r=ST.rows[d.rowKey]||{best:0};r.best=Math.max(r.best,d.first);r.last=d.first;ST.rows[d.rowKey]=r;}
+ if(d.mode==='today'||d.mode==='box'){if(!ST.days.includes(t))ST.days.push(t);}
+ if(d.mode==='today'&&d.newKeys.length)ST.newDay=t;
  save();const sc=Math.floor(d.first/3);addScrolls(sc);go('s-result');S=d;
- const ratio=d.first/d.total;
+ const ratio=d.total?d.first/d.total:1;
  $('rs-title').textContent=ratio>=.9?'Meisterhaft! 🌟':ratio>=.7?'Stark gemacht! 💪':'Gut geübt! 🪨';
  $('rs-score').textContent=d.first+' / '+d.total;
- let info='gleich richtig';if(d.freed.length)info+=`<br>🎉 ${d.freed.length} Aufgabe${d.freed.length>1?'n':''} raus aus der Kiste`;if(sc>0)info+=`<br>+${sc} 📜`;
+ let info='gleich richtig';if(d.mode==='test'&&d.times.length){info+=`<br>⏱️ ${(d.times.reduce((a,b)=>a+b,0)/d.times.length).toFixed(1)} Sekunden pro Aufgabe`;if(d.timeouts)info+=`<br>Zu langsam: ${d.timeouts}`;}
+ if(d.freed.length)info+=`<br>🎉 ${d.freed.length} Aufgabe${d.freed.length>1?'n':''} raus aus der Kiste`;if(sc>0)info+=`<br>+${sc} 📜`;
  $('rs-info').innerHTML=info;
  const nb=Object.values(d.newBox);
- $('rs-box').innerHTML=nb.length?`<div class="card"><div class="lead">📦 Neu in der Fehlerkiste (tippen für den Trick):</div><div class="chips">${nb.map(p=>`<button class="chip" onclick="showTip(${p[0]},${p[1]})">${p[0]} × ${p[1]}</button>`).join('')}</div></div>`:'';
- $('rs-btns').innerHTML=(boxKeys().length?`<button class="btn bfire" onclick="startBox()">📦 Fehlerkiste trainieren</button>`:'')+`<button class="btn bgreen" onclick="S.again()">🔁 Nochmal</button><button class="btn bgray" style="display:block;width:100%" onclick="go('s-home')">🏠 Übersicht</button>`;}
+ $('rs-box').innerHTML=nb.length?`<div class="card"><div class="lead">📦 In der Fehlerkiste (tippen für den Merk-Trick):</div><div class="chips">${nb.map(p=>`<button class="chip" onclick="showTip(${p[0]},${p[1]})">${p[0]} × ${p[1]}</button>`).join('')}</div></div>`:'';
+ $('rs-btns').innerHTML=(boxKeys().length?'<button class="btn bfire" onclick="startBox()">📦 Fehlerkiste trainieren</button>':'')+'<button class="btn bgreen" onclick="S.again()">🔁 Nochmal</button><button class="btn bgray" style="display:block;width:100%" onclick="go(\'s-home\')">🏠 Übersicht</button>';}
 document.addEventListener('keydown',e=>{if(!$('s-play').classList.contains('on')||!S)return;
  if(S.stage==='card'){if(e.key==='Enter')cardGo();return;}
  if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace')press('b');else if(e.key==='Enter')press('ok');});
