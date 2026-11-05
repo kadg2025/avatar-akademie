@@ -1,4 +1,4 @@
-const CACHE = 'akademie-v4';
+const CACHE = 'akademie-v5';
 const ASSETS = ['./', './index.html', './arena.html', './zerya.html', './einmaleins.html', './spielplatz.html', './agnikai.html', './rennen.html', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', e => {
