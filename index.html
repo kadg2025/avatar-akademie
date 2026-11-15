@@ -667,7 +667,7 @@ body.calm .questcard{box-shadow:none}
 
 <!-- NATION-HUB -->
 <div id="s-nation-hub" class="sc">
- <button class="btn bgray" onclick="go('s-hub')">← Zurück</button>
+ <button class="btn bgray" id="nh-back" onclick="go('s-hub')">← Zurück</button>
  <div class="gh"><div class="gt" id="nh-title"></div><div class="gs" id="nh-sub"></div></div>
  <div class="story" id="nh-intro" style="text-align:center"></div>
  <div class="menu" id="nh-games"></div>
@@ -676,10 +676,11 @@ body.calm .questcard{box-shadow:none}
 
 <!-- ENGLISCH-AKADEMIE: HUB -->
 <div id="s-en-hub" class="sc">
- <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <button class="btn bgray" onclick="openNationHub('weisheit')">← Zurück</button>
  <div class="gh"><div class="gt" style="font-size:26px">🇬🇧 English</div><div class="gs">Mit Team Avatar auf Eng·lisch!</div></div>
  <div class="story" style="text-align:center;font-size:15px">Wähle ei·ne Unit. In je·der Unit hörst du Wör·ter, Sät·ze, Dia·lo·ge und Ge·schich·ten mit Aang, Ka·ta·ra &amp; Co. 🌬️🌊🪨🔥</div>
  <div class="menu" id="en2-units"></div>
+ <button class="btn bgold" style="margin-top:4px" onclick="go('s-en-numbers')">🔢 Zah·len-Werk·statt (1 bis 20)</button>
  <button class="btn bgray" style="margin-top:4px" onclick="go('s-en-words')">🎒 Schul·wör·ter (Start)</button>
 </div>
 
@@ -1369,7 +1370,7 @@ body.calm .questcard{box-shadow:none}
 <!-- WEISHEITS-TEMPEL: SCHULE -->
 <!-- ENGLISCH: ZAHLEN 1-20 -->
 <div id="s-en-numbers" class="sc">
- <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <button class="btn bgray" onclick="go('s-en-hub')">← Zurück</button>
  <div class="gh"><div class="gt" style="font-size:26px">🔢 Zahlen-Werkstatt</div><div class="gs">Eng·lisch: 1 bis 20</div></div>
  <div style="display:flex;gap:8px;margin:10px 0">
   <button class="btn bgold" id="en-mode-a" style="flex:1;margin:0;padding:11px;font-size:14px" onclick="enSetMode('hear')">🔊 Hö·ren &amp; Ver·ste·hen</button>
@@ -1395,7 +1396,7 @@ body.calm .questcard{box-shadow:none}
 
 <!-- ENGLISCH: SCHULWÖRTER -->
 <div id="s-en-words" class="sc">
- <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <button class="btn bgray" onclick="go('s-en-hub')">← Zurück</button>
  <div class="gh"><div class="gt" style="font-size:26px">🎒 Schulwörter</div><div class="gs">Eng·lisch: Din·ge in der Schu·le</div></div>
  <div class="story" style="text-align:center;font-size:15px">Tip·pe auf ein Bild, um das Wort auf Eng·lisch zu hö·ren! 🔊</div>
  <div class="enumgrid" id="en-words-grid"></div>
@@ -2708,24 +2709,34 @@ const NATIONHUBS={
    {t:'Ruhe-Insel',d:'At·men & ent·span·nen mit Appa',e:'🏝️',go:"startBreathe()"}
   ]},
  weisheit:{name:'Weisheits-Tempel',emoji:'🏛️',sub:'Übungen für die Schule',bg:'#F3E9FB',fg:'#5B2A9A',
-  intro:'Im Weis·heits-Tem·pel übst du für die Schu·le. Hier lernst du Eng·lisch, Ma·the und Deutsch — ganz in Ru·he und oh·ne Zeit·druck. 🏛️',
+  intro:'Im Weis·heits-Tem·pel übst du für die Schu·le — ganz in Ru·he und oh·ne Zeit·druck. Wäh·le dein Fach: Ma·the, Deutsch oder Eng·lisch. 🏛️',
+  games:[
+   {t:'Mathe',d:'Ein·mal·eins, Spie·geln, Mus·ter',e:'🔢',bg:'#E4EEFB',fg:'#1E4E8C',go:"openNationHub('mathe')"},
+   {t:'Deutsch',d:'Schrei·ben & Re·geln',e:'✏️',bg:'#FDEBE3',fg:'#A8431C',go:"openNationHub('deutsch')"},
+   {t:'English',d:'6 Units mit Team Avatar + Zah·len',e:'🇬🇧',bg:'#E6F4EA',fg:'#2C6B2C',go:"go('s-en-hub')"}
+  ]},
+ mathe:{name:'Mathe',emoji:'🔢',sub:'Weisheits-Tempel',bg:'#E4EEFB',fg:'#1E4E8C',back:'weisheit',
+  intro:'Hier übst du Ma·the: das Ein·mal·eins, Spie·geln und Mus·ter. 🔢',
   games:[
    {t:'Einmaleins-Dojo',d:'Das gan·ze Ein·mal·eins ü·ben',e:'✖️',go:"location.href='einmaleins.html'"},
-   {t:'Zahlen-Werkstatt',d:'Eng·lisch: 1 bis 20',e:'🔢',go:"go('s-en-numbers')"},
-   {t:'English',d:'6 Units mit Team Avatar',e:'🇬🇧',go:"go('s-en-hub')"},
    {t:'Spiegel-Garten',d:'Spie·gel·ach·se ent·de·cken',e:'🪞',go:"go('s-mirror')"},
-   {t:'Muster-Werkstatt',d:'Sym·me·trie üben',e:'✨',go:"go('s-symmetry')"},
-   {t:'Tophs Schreib-Regel',d:'Deutsch: z/tz, k/ck – hören, klicken, tippen',e:'🪨',go:"go('s-de-ck')"}
+   {t:'Muster-Werkstatt',d:'Sym·me·trie üben',e:'✨',go:"go('s-symmetry')"}
+  ]},
+ deutsch:{name:'Deutsch',emoji:'✏️',sub:'Weisheits-Tempel',bg:'#FDEBE3',fg:'#A8431C',back:'weisheit',
+  intro:'Hier übst du Deutsch: Schrei·ben und Recht·schreib-Re·geln. ✏️',
+  games:[
+   {t:'Tophs Schreib-Regel',d:'z/tz, k/ck – hören, klicken, tippen',e:'🪨',go:"go('s-de-ck')"}
   ]}
 };
 function openNationHub(key){buildNationHub(key);go('s-nation-hub');history.replaceState(null,'','#'+key);}
 function buildNationHub(key){
  const n=NATIONHUBS[key];if(!n)return;
  document.getElementById('nh-title').textContent=n.emoji+' '+n.name;
+ {const bk=document.getElementById('nh-back');if(bk)bk.onclick=n.back?function(){openNationHub(n.back);}:function(){go('s-hub');};}
  document.getElementById('nh-sub').textContent=n.sub;
  document.getElementById('nh-intro').textContent=n.intro;
  const g=document.getElementById('nh-games');g.innerHTML='';
- n.games.forEach(gm=>{const d=document.createElement('div');d.className='mcard';d.style.background=n.bg;d.style.color=n.fg;d.innerHTML=`<div style="font-size:38px">${gm.e}</div><div class="mtitle">${gm.t}</div><div class="mdesc">${gm.d}</div>`;d.setAttribute('onclick',gm.go);g.appendChild(d);});
+ n.games.forEach(gm=>{const d=document.createElement('div');d.className='mcard';d.style.background=gm.bg||n.bg;d.style.color=gm.fg||n.fg;d.innerHTML=`<div style="font-size:38px">${gm.e}</div><div class="mtitle">${gm.t}</div><div class="mdesc">${gm.d}</div>`;d.setAttribute('onclick',gm.go);g.appendChild(d);});
 }
 let storiesDone=[];
 let storyUnlocked=[];
