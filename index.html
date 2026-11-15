@@ -477,6 +477,53 @@ body.calm .questcard{box-shadow:none}
 .dk-step{display:flex;gap:10px;align-items:center;margin:8px 0}
 .dk-step>span{flex:none;width:30px;height:30px;border-radius:50%;background:#8B5CC8;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif}
 .dk-hl{color:#C8307A;font-weight:900;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:3px}
+
+/* ENGLISCH-AKADEMIE */
+.en2-unit{border-radius:var(--r);padding:14px 10px;text-align:center;cursor:pointer;font-weight:800;box-shadow:var(--sh);transition:transform .15s;color:#fff}
+.en2-unit:active{transform:scale(.96)}
+.en2-unit .u-n{font-family:'Fredoka',sans-serif;font-size:12px;opacity:.9;letter-spacing:1px}
+.en2-unit .u-e{font-size:38px;line-height:1.2}
+.en2-unit .u-t{font-family:'Fredoka',sans-serif;font-size:18px;line-height:1.1}
+.en2-unit .u-d{font-size:11.5px;font-weight:700;opacity:.95;margin-top:3px}
+.en2-unit .u-s{margin-top:6px;font-size:13px;letter-spacing:2px}
+.en2-tabs{display:flex;gap:6px;margin:10px 0}
+.en2-tab{flex:1;min-width:0;padding:8px 2px;border-radius:12px;border:2px solid #DDD;background:transparent;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:var(--muted);cursor:pointer;line-height:1.2}
+.en2-tab.on{color:#fff;border-color:transparent}
+.en2-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.en2-wc{position:relative;background:var(--card);border-radius:14px;padding:10px 4px 8px;text-align:center;cursor:pointer;box-shadow:var(--sh);transition:transform .15s}
+.en2-wc .e{font-size:32px;line-height:1.2}
+.en2-wc .w{font-weight:800;font-size:15px;color:var(--text);margin-top:3px;word-break:break-word}
+.en2-wc .d{font-size:11px;font-weight:600;color:var(--muted);margin-top:1px}
+.en2-wc .p{font-size:11px;font-weight:800;color:#C8628F;margin-top:2px}
+.en2-slow,.en2-slow2{border:none;background:#F3E9FB;border-radius:50%;cursor:pointer;font-size:14px;line-height:1}
+.en2-slow{position:absolute;top:4px;right:4px;width:26px;height:26px}
+.en2-slow2{flex:none;width:34px;height:34px}
+.en2-chip2{display:inline-block;background:#F3E9FB;color:#5B2A9A;font-weight:800;font-size:13.5px;padding:6px 11px;border-radius:999px;margin:3px 4px 0 0;cursor:pointer}
+.en2-bub{display:flex;gap:8px;align-items:flex-start;margin:9px 0}
+.en2-av{flex:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:23px;background:#fff;box-shadow:var(--sh)}
+.en2-bt{flex:1;background:#fff;border-radius:6px 16px 16px 16px;padding:8px 12px;box-shadow:var(--sh);cursor:pointer}
+.en2-bt .nm{font-size:11px;font-weight:800;color:var(--muted)}
+.en2-bt .en{font-weight:800;font-size:16.5px;line-height:1.35}
+.en2-bt .de,.en2-sent .de{display:none;font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.en2-showde .de{display:block}
+.en2-bub.hi .en2-bt{outline:3px solid #E8A4BC;background:#FFF3F7}
+.en2-bub.wait .en2-bt{outline:3px dashed #5B2A9A;background:#F3E9FB}
+.en2-banner{position:sticky;top:6px;z-index:5;background:#F3E9FB;border:2px solid #5B2A9A;border-radius:14px;padding:10px 12px;margin:8px 0;font-weight:700;font-size:14.5px;text-align:center;color:#3D2817}
+.en2-art{font-size:46px;text-align:center;letter-spacing:6px;margin-bottom:6px}
+.en2-sent{font-size:19px;line-height:1.55;font-weight:700;padding:6px 8px;border-radius:10px;cursor:pointer}
+.en2-sent.hi{background:#FFF1B8}
+.en2-kw{border-bottom:3px solid #C8628F;font-weight:900;cursor:pointer}
+.en2-kwbar{margin-top:8px;padding:8px 10px;border-radius:10px;background:#F3E9FB;font-size:13.5px;font-weight:700;text-align:center;color:#5B2A9A}
+.en2-slots,.en2-letters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0 10px}
+.en2-built{min-height:54px;border-bottom:4px solid #C9B99A;display:flex;flex-wrap:wrap;gap:6px;padding:6px 0;margin:10px 0;justify-content:center}
+.en2-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.en2-chip{padding:9px 13px;border-radius:12px;border:2px solid #DDC;background:var(--bg);font-weight:800;font-size:17px;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--text)}
+.en2-chip.on{background:#fff;border-color:var(--gold);cursor:default}
+.en2-chip.used{opacity:.2;pointer-events:none}
+.enscene{display:flex;align-items:center;justify-content:center;gap:6px;font-size:42px;min-height:84px;line-height:1.1}
+.enscene.col{flex-direction:column;gap:0}
+.enscene .encont{display:inline-block;border:3px dashed #8B6B3E;border-radius:14px;padding:4px 14px;background:#FFF8EA}
+.qopt .enscene{font-size:30px;min-height:56px}
 </style>
 </head>
 <body>
@@ -624,6 +671,25 @@ body.calm .questcard{box-shadow:none}
  <div class="gh"><div class="gt" id="nh-title"></div><div class="gs" id="nh-sub"></div></div>
  <div class="story" id="nh-intro" style="text-align:center"></div>
  <div class="menu" id="nh-games"></div>
+</div>
+
+
+<!-- ENGLISCH-AKADEMIE: HUB -->
+<div id="s-en-hub" class="sc">
+ <button class="btn bgray" onclick="go('s-nation-hub')">← Zurück</button>
+ <div class="gh"><div class="gt" style="font-size:26px">🇬🇧 English</div><div class="gs">Mit Team Avatar auf Eng·lisch!</div></div>
+ <div class="story" style="text-align:center;font-size:15px">Wähle ei·ne Unit. In je·der Unit hörst du Wör·ter, Sät·ze, Dia·lo·ge und Ge·schich·ten mit Aang, Ka·ta·ra &amp; Co. 🌬️🌊🪨🔥</div>
+ <div class="menu" id="en2-units"></div>
+ <button class="btn bgray" style="margin-top:4px" onclick="go('s-en-words')">🎒 Schul·wör·ter (Start)</button>
+</div>
+
+<!-- ENGLISCH-AKADEMIE: UNIT -->
+<div id="s-en-unit" class="sc">
+ <button class="btn bgray" onclick="go('s-en-hub')">← Alle Units</button>
+ <div class="gh"><div class="gt" id="en2-title" style="font-size:25px"></div><div class="gs" id="en2-sub"></div></div>
+ <div class="story" id="en2-guide" style="font-size:15px;padding:13px 15px"></div>
+ <div class="en2-tabs" id="en2-tabs"></div>
+ <div id="en2-body"></div>
 </div>
 
 <!-- RACE PICK -->
@@ -1696,6 +1762,7 @@ function award(n,uncapped){
 }
 function go(id){
  if('speechSynthesis' in window)speechSynthesis.cancel();
+ if(typeof enStop==='function')enStop();
  if(typeof srStop==='function')srStop();   // Vorlesen endet beim Verlassen des Screens
  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
  document.getElementById(id).classList.add('on');window.scrollTo(0,0);
@@ -1714,7 +1781,7 @@ if(id==='s-stories-nation'){/* already built by openStoriesNation */}
  if(id==='s-fairy-hub')buildFairyHub();if(id==='s-trace')startTrace();if(id==='s-dots')startDots();if(id==='s-percept')startPercept();
  if(id==='s-shop')buildShop();
  if(id==='s-family-hub')buildFamilyHub();if(id==='s-family-theater')startFamTheater();
- if(id==='s-en-numbers')buildEnNumbers();if(id==='s-en-words')buildEnWords();if(id==='s-en-family')buildEnFamily();if(id==='s-mirror')buildMirror();if(id==='s-symmetry')buildSymmetry();if(id==='s-de-ck')buildDeCk();
+ if(id==='s-en-hub')buildEnHub();if(id==='s-en-numbers')buildEnNumbers();if(id==='s-en-words')buildEnWords();if(id==='s-en-family')buildEnFamily();if(id==='s-mirror')buildMirror();if(id==='s-symmetry')buildSymmetry();if(id==='s-de-ck')buildDeCk();
 }
 
 function buildHub(){
@@ -2645,8 +2712,7 @@ const NATIONHUBS={
   games:[
    {t:'Einmaleins-Dojo',d:'Das gan·ze Ein·mal·eins ü·ben',e:'✖️',go:"location.href='einmaleins.html'"},
    {t:'Zahlen-Werkstatt',d:'Eng·lisch: 1 bis 20',e:'🔢',go:"go('s-en-numbers')"},
-   {t:'Schulwörter',d:'Eng·lisch: Wör·ter in der Schu·le',e:'🎒',go:"go('s-en-words')"},
-   {t:'Meine Familie',d:'Eng·lisch: Fa·mi·lie & Sät·ze',e:'👨🏿‍👩🏿‍👧🏿‍👦🏿',go:"go('s-en-family')"},
+   {t:'English',d:'6 Units mit Team Avatar',e:'🇬🇧',go:"go('s-en-hub')"},
    {t:'Spiegel-Garten',d:'Spie·gel·ach·se ent·de·cken',e:'🪞',go:"go('s-mirror')"},
    {t:'Muster-Werkstatt',d:'Sym·me·trie üben',e:'✨',go:"go('s-symmetry')"},
    {t:'Tophs Schreib-Regel',d:'Deutsch: z/tz, k/ck – hören, klicken, tippen',e:'🪨',go:"go('s-de-ck')"}
@@ -4104,6 +4170,670 @@ function genEnNumberListen(){
  return {visual:'<div style="font-size:50px;text-align:center;margin:6px 0">🔊</div>',q:'Wel·che Zahl hast du ge·hört?',ans:w.n,opts,say:w.w,sayWin:w.w,lang:'en-US'};
 }
 function startEnListen(){startQuiz({title:'Zah·len hö·ren 🔊',sub:'Listen and guess! 🇬🇧',count:8,emoji:'🔢',again:startEnListen,gen:genEnNumberListen,winMsg:s=>'Su·per! <b>'+s+' von 8</b> Zah·len rich·tig er·kannt! +4 📜'});}
+
+// ════ ENGLISCH-AKADEMIE: DATEN UNIT 1-3 ════
+const EN2_CHR={Aang:'🌬️',Katara:'🌊',Sokka:'🪃',Toph:'🪨',Zuko:'🔥',Iroh:'🍵',Azula:'⚡',Momo:'🐒',Appa:'🦬',Seller:'🧑‍🌾',Roza:'🌸'};
+const EN2_SPK={Aang:{pitch:1.55,rate:.9},Katara:{pitch:1.3,rate:.88},Sokka:{pitch:.95,rate:.92},Toph:{pitch:1.4,rate:.95},Zuko:{pitch:.7,rate:.85},Iroh:{pitch:.5,rate:.78},Azula:{pitch:1.1,rate:.85},Momo:{pitch:1.8,rate:1},Appa:{pitch:.4,rate:.8},Seller:{pitch:1.0,rate:.85},Roza:{pitch:1.2,rate:.85}};
+const EN2={};
+EN2.u1={n:1,col:['#8EC9EC','#2E6E9E'],emoji:'🌬️',title:'Family & Friends',mission:'Team Avatar stellt sich vor',
+ guide:{who:'Aang',de:'Hal·lo Ro·za! Ich bin Aang. Heu·te stel·len wir uns vor und re·den ü·ber Fa·mi·lie und Freun·de. Los geht’s! 🌬️',en:'Hello, Roza! I am Aang. Welcome to Unit 1!'},
+ words:[
+  ['family','Fa·mi·lie','👨🏿‍👩🏿‍👧🏿‍👦🏿','FÄ-mi-li'],['mother','Mut·ter','👩🏿','MA-dha'],['father','Va·ter','👨🏿','FAA-dha'],['sister','Schwes·ter','👧🏿'],['brother','Bru·der','👦🏿','BRA-dha'],
+  ['baby','Ba·by','👶🏿'],['grandmother','Gross·mut·ter','👵🏿','GRÄN-ma-dha'],['grandfather','Gross·va·ter','👴🏿','GRÄN-faa-dha'],['aunt','Tan·te','👩🏿','AANT'],['uncle','On·kel','👨🏿','ANKL'],
+  ['cousin','Cou·sin','🧑🏿','KASN'],['cat','Kat·ze','🐱'],['dog','Hund','🐶'],['flag','Fah·ne','🏳️'],['language','Spra·che','🗣️','LÄNG-gwidsch'],
+  ['English','Eng·lisch','🇬🇧','ING-lisch'],['German','Deutsch','🇩🇪','DSCHÖ-man'],['French','Fran·zö·sisch','🇫🇷','FRENTSCH'],['Italian','I·ta·lie·nisch','🇮🇹','i-TÄL-jan'],
+  ['map','Land·kar·te','🗺️'],['Switzerland','Schweiz','🇨🇭','SWIT-sa-land']],
+ tips:[
+  {t:'«th» in mother, father, brother: Zun·ge leicht zwi·schen die Zäh·ne und sanft sum·men — wie ei·ne Bie·ne. 🐝',ex:['mother','father','brother']},
+  {t:'«cousin» liest man «KASN». Das «ou» klingt wie «a».',ex:['cousin']},
+  {t:'«w» in Switzerland: Lip·pen rund wie bei «u», nicht wie das deut·sche W.',ex:['Switzerland','language']}],
+ sent:[
+  ['Hello, my name is Aang.','Hal·lo, mein Na·me ist Aang.','👋'],['What’s your name?','Wie heisst du?','❓'],['His name is Sokka.','Er heisst Sok·ka.','🪃'],
+  ['Where are you from?','Wo·her kommst du?','🌍'],['I am from the Air Temple.','Ich kom·me aus dem Luft·tem·pel.','🌬️'],['I live in Switzerland.','Ich woh·ne in der Schweiz.','🇨🇭'],
+  ['She lives with her grandmother.','Sie wohnt bei ih·rer Gross·mut·ter.','🏠'],['This is my brother.','Das ist mein Bru·der.','👦🏿'],['This is my uncle.','Das ist mein On·kel.','👨🏿'],
+  ['He is my best friend.','Er ist mein bes·ter Freund.','🤗'],['I speak English.','Ich spre·che Eng·lisch.','🇬🇧'],['She speaks French.','Sie spricht Fran·zö·sisch.','🇫🇷']],
+ dlgTitle:'At the campfire 🔥',
+ dlg:[
+  ['Aang','Hello! My name is Aang. What’s your name?','Hallo! Ich heisse Aang. Wie heisst du?'],
+  ['Toph','Hi! My name is Toph.','Hi! Ich heisse Toph.'],
+  ['Aang','Where are you from, Toph?','Woher kommst du, Toph?'],
+  ['Toph','I am from the Earth Kingdom. I live in Gaoling.','Ich komme aus dem Erdkönigreich. Ich wohne in Gaoling.'],
+  ['Aang','This is my friend Katara. She is from the Water Tribe.','Das ist meine Freundin Katara. Sie kommt aus dem Wasserstamm.'],
+  ['Katara','Hello, Toph! This is my brother, Sokka.','Hallo, Toph! Das ist mein Bruder Sokka.'],
+  ['Sokka','Hi! Aang is my best friend.','Hi! Aang ist mein bester Freund.'],
+  ['Toph','Do you have a big family?','Habt ihr eine grosse Familie?'],
+  ['Katara','Yes! Team Avatar is our family.','Ja! Team Avatar ist unsere Familie.'],
+  ['Toph','Great! Now I have a new family, too.','Super! Jetzt habe ich auch eine neue Familie.']],
+ story:{title:'Aang’s Big Family',pages:[
+  {art:'🌬️🦬🧒🏿',s:[['Aang is a boy.','Aang ist ein Junge.'],['He is from the Air Temple.','Er kommt aus dem Lufttempel.'],['His best friend is Appa.','Sein bester Freund ist Appa.'],['Appa is a big bison.','Appa ist ein grosser Bison.']]},
+  {art:'🌊👧🏿👵🏿',s:[['Katara is a girl from the Water Tribe.','Katara ist ein Mädchen aus dem Wasserstamm.'],['Sokka is her brother.','Sokka ist ihr Bruder.'],['Their grandmother is Gran Gran.','Ihre Grossmutter ist Gran Gran.'],['She lives at the South Pole.','Sie wohnt am Südpol.']]},
+  {art:'🔥👨🏿🍵',s:[['Zuko is from the Fire Nation.','Zuko kommt aus der Feuernation.'],['His uncle is Iroh.','Sein Onkel ist Iroh.'],['Uncle Iroh makes good tea.','Onkel Iroh macht guten Tee.'],['Now Zuko is Aang’s friend.','Jetzt ist Zuko Aangs Freund.']]},
+  {art:'🇨🇭🌸🗺️',s:[['Roza is from Switzerland.','Roza kommt aus der Schweiz.'],['She speaks German and English.','Sie spricht Deutsch und Englisch.'],['Team Avatar is a big family.','Team Avatar ist eine grosse Familie.'],['Who is in your family?','Wer ist in deiner Familie?']]}]},
+ kw:['friend','brother','grandmother','uncle','family','lives','speaks','Switzerland','English','German']};
+
+EN2.u2={n:2,col:['#B7D58A','#4F6B2A'],emoji:'🪨',title:'My Body',mission:'Tophs Bändigungs-Training',
+ guide:{who:'Toph',de:'Hey Ro·za! Ich bin Toph. Ein gu·ter Bän·di·ger kennt sei·nen Kör·per. Heu·te trai·nie·ren wir — und du be·wegst dich mit! 🪨',en:'Hey, Roza! I am Toph. Today we train!'},
+ words:[
+  ['face','Ge·sicht','🙂'],['eyebrow','Au·gen·braue','🤨','AI-brau'],['ear','Ohr','👂'],['nose','Na·se','👃'],['tooth','Zahn','🦷','TUHS'],
+  ['teeth','Zäh·ne','😁','TIIS'],['neck','Hals, Na·cken','🦒'],['hand','Hand','✋'],['elbow','Ell·bo·gen','🦾','EL-boh'],['finger','Fin·ger','☝️'],
+  ['foot','Fuss','🦶','FUT'],['feet','Füs·se','👣','FIIT'],['toes','Ze·hen','🦶','TOHS'],['move','sich be·we·gen','↔️','MUHW'],['touch','be·rüh·ren','👆','TATSCH'],
+  ['run','lau·fen, ren·nen','🏃'],['shake','schüt·teln','📳'],['body','Kör·per','🧍','BO-di'],['bone','Kno·chen','🦴'],['muscle','Mus·kel','💪','MASL'],
+  ['knees','Knie','🦵','NIIS'],['shoulders','Schul·tern','🤷','SCHOHL-das']],
+ tips:[
+  {t:'«tooth» und «teeth»: «th» am En·de — Zun·ge zwi·schen die Zäh·ne und lei·se bla·sen, oh·ne Sum·men. 🌬️',ex:['tooth','teeth']},
+  {t:'Das «k» in «knees» spricht man nicht! Es heisst «niis». Stum·mes K!',ex:['knees']},
+  {t:'«foot» ist kurz (FUT), «feet» ist lang (FIIT).',ex:['foot','feet']},
+  {t:'«muscle»: das «c» ist stumm — «MASL».',ex:['muscle']}],
+ sent:[
+  ['I have long hair.','Ich ha·be lan·ges Haar.','👩🏿‍🦱'],['He is tall.','Er ist gross.','🧍‍♂️'],['Aang is not tall.','Aang ist nicht gross.','🧒🏿'],['Clap your hands!','Klatsch in die Hän·de!','👏'],
+  ['Jump on one leg.','Hüpf auf ei·nem Bein.','🦩'],['Turn your head.','Dreh den Kopf.','↩️'],['Shut your eyes.','Schliess die Au·gen.','😌'],['Bend your knees.','Beug die Knie.','🏋️'],
+  ['Touch your nose.','Be·rühr dei·ne Na·se.','👃'],['I move my body.','Ich be·we·ge mei·nen Kör·per.','🕺']],
+ cmds:[
+  ['Jump on one leg.','Hüpf auf ei·nem Bein.','🦩'],['Turn your head.','Dreh den Kopf.','↩️'],['Shut your eyes.','Schliess die Au·gen.','😌'],['Lift your shoulders.','Heb die Schul·tern.','🤷'],
+  ['Open your mouth wide.','Öff·ne den Mund weit.','😮'],['Bend your knees.','Beug die Knie.','🏋️'],['Put your arms up.','Heb die Ar·me hoch.','🙆'],['Kick your foot.','Tritt mit dem Fuss.','🦵'],['Clap your hands!','Klatsch in die Hän·de!','👏']],
+ dlgTitle:'Toph’s training 🪨',
+ dlg:[
+  ['Toph','Listen! Today we train. Clap your hands!','Hört zu! Heute trainieren wir. Klatscht in die Hände!'],
+  ['Aang','Like this?','So?'],
+  ['Toph','Good! Now bend your knees.','Gut! Jetzt beugt die Knie.'],
+  ['Sokka','Why? I am tall!','Warum? Ich bin gross!'],
+  ['Toph','Earthbending starts in your feet.','Erdbändigen beginnt in den Füssen.'],
+  ['Aang','Can I jump on one leg?','Kann ich auf einem Bein hüpfen?'],
+  ['Toph','Yes! Jump, Aang!','Ja! Hüpf, Aang!'],
+  ['Sokka','Wow! Look at his muscles!','Wow! Schau dir seine Muskeln an!'],
+  ['Toph','Now kick your foot!','Jetzt tritt mit dem Fuss!'],
+  ['Aang','A rock moves! I am an earthbender!','Ein Fels bewegt sich! Ich bin ein Erdbändiger!']],
+ story:{title:'Toph’s Secret Lesson',pages:[
+  {art:'🪨👧🏿🦶',s:[['Toph is small, but she is strong.','Toph ist klein, aber sie ist stark.'],['She feels the earth with her feet.','Sie spürt die Erde mit ihren Füssen.'],['“Move your feet, Aang!” she says.','«Beweg deine Füsse, Aang!», sagt sie.']]},
+  {art:'🧒🏿🦩👏',s:[['Aang jumps on one leg.','Aang hüpft auf einem Bein.'],['He claps his hands.','Er klatscht in die Hände.'],['Sokka runs and shakes his hands.','Sokka rennt und schüttelt seine Hände.'],['“My elbow hurts!” he says.','«Mein Ellbogen tut weh!», sagt er.']]},
+  {art:'🪨💪🏋️',s:[['Toph touches the ground.','Toph berührt den Boden.'],['“Now bend your knees and kick your foot!”','«Jetzt beug die Knie und tritt mit dem Fuss!»'],['A big rock moves!','Ein grosser Fels bewegt sich!'],['“You have strong muscles, Aang!”','«Du hast starke Muskeln, Aang!»']]}]},
+ kw:['hands','feet','foot','knees','elbow','muscles','touches','runs','shakes','bend','kick','clap']};
+
+EN2.u3={n:3,col:['#F6A57B','#B3361C'],emoji:'🔥',title:'Food & Shopping',mission:'Irohs Teeladen & Markt',
+ guide:{who:'Iroh',de:'Will·kom·men, Ro·za! Ich bin On·kel I·roh. Heu·te geht es ums Es·sen und Ein·kau·fen. Ein gu·ter Tee braucht gu·te Zu·ta·ten! 🍵',en:'Welcome, Roza! I am Uncle Iroh. Let us talk about food!'},
+ words:[
+  ['food','Es·sen','🍽️','FUHD'],['sweets','Süs·sig·kei·ten','🍬'],['cheese','Kä·se','🧀','TSCHIIS'],['crisps','Chips','🥔'],['vegetable','Ge·mü·se','🥦','WEDSCH-ta-bl'],
+  ['fruit','Frucht, Obst','🍇','FRUHT'],['egg','Ei','🥚'],['fish fingers','Fisch·stäb·chen','🐟'],['banana','Ba·na·ne','🍌','ba-NAA-na'],['apple','Ap·fel','🍎'],
+  ['bread','Brot','🍞'],['carrot','Rüe·bli, Ka·rot·te','🥕'],['eat','es·sen','🍴'],['drink','trin·ken','🥤'],['water','Was·ser','💧','WOH-ta'],
+  ['tomato','To·ma·te','🍅','ta-MAA-to'],['ice-cream','Gla·ce, Eis','🍦'],['orange juice','Oran·gen·saft','🍊','O-rindsch DSCHUHS'],['fridge','Kühl·schrank','🧊','FRIDSCH'],['freezer','Tief·küh·ler','🥶','FRII-sa'],
+  ['cupboard','Schrank','🗄️','KA-bad'],['supermarket','Su·per·markt','🛒'],['shopping list','Ein·kaufs·lis·te','📝'],['buy','kau·fen','🛍️','BAI']],
+ tips:[
+  {t:'«vegetable»: WEDSCH-ta-bl — nur drei Sil·ben, das mitt·le·re «e» ver·schwin·det!',ex:['vegetable']},
+  {t:'«cheese» = TSCHIIS, «fruit» = FRUHT. Das «ui» in fruit ist lang wie «uh».',ex:['cheese','fruit']},
+  {t:'«cupboard»: das «p» ist stumm — es klingt wie «KA-bad».',ex:['cupboard']},
+  {t:'«orange juice»: O-rindsch DSCHUHS. Das «j» klingt wie «dsch».',ex:['orange juice']}],
+ sent:[
+  ['I like fish fingers.','Ich mag Fisch·stäb·chen.','🐟'],['I don’t like carrots.','Ich mag kei·ne Ka·rot·ten.','🥕'],['Do you like cheese?','Magst du Kä·se?','🧀'],['Her favourite food is fruit.','Ihr Lieb·lings·es·sen ist Obst.','🍇'],
+  ['He drinks water.','Er trinkt Was·ser.','💧'],['Can you help me, please?','Kön·nen Sie mir bit·te hel·fen?','🙋'],['What do you need?','Was brau·chen Sie?','❓'],['I want to buy a tomato.','Ich will ei·ne To·ma·te kau·fen.','🍅'],
+  ['Do you have bread?','Ha·ben Sie Brot?','🍞'],['Thanks a lot!','Dan·ke sehr!','🙏'],['Put the ice-cream in the freezer!','Leg die Gla·ce in den Tief·küh·ler!','🍦'],['I put the orange juice in the fridge.','Ich stel·le den Oran·gen·saft in den Kühl·schrank.','🍊'],
+  ['She puts the crisps in the cupboard.','Sie stellt die Chips in den Schrank.','🥔'],['He puts the fruit on the table.','Er legt die Früch·te auf den Tisch.','🍎']],
+ dlgTitle:'At the market in Ba Sing Se 🛒',
+ dlg:[
+  ['Iroh','Sokka, what is on the shopping list?','Sokka, was steht auf der Einkaufsliste?'],
+  ['Sokka','Cheese, a tomato and bread.','Käse, eine Tomate und Brot.'],
+  ['Sokka','Hello! Can you help me, please?','Hallo! Können Sie mir bitte helfen?'],
+  ['Seller','Yes. What do you need?','Ja. Was brauchen Sie?'],
+  ['Sokka','I want to buy a tomato and some cheese.','Ich will eine Tomate und etwas Käse kaufen.'],
+  ['Seller','Here you are.','Bitte sehr.'],
+  ['Sokka','Do you have fish fingers?','Haben Sie Fischstäbchen?'],
+  ['Seller','No, sorry. But we have eggs and bread.','Nein, leider nicht. Aber wir haben Eier und Brot.'],
+  ['Sokka','Where are the carrots?','Wo sind die Rüebli?'],
+  ['Seller','The carrots are over there.','Die Rüebli sind dort drüben.'],
+  ['Sokka','Thanks a lot!','Vielen Dank!']],
+ story:{title:'Sokka’s Shopping List',pages:[
+  {art:'🍵📝🛒',s:[['Uncle Iroh has a tea shop.','Onkel Iroh hat einen Teeladen.'],['He writes a shopping list for Sokka.','Er schreibt eine Einkaufsliste für Sokka.'],['Two apples, three carrots, bread, cheese and eggs.','Zwei Äpfel, drei Rüebli, Brot, Käse und Eier.']]},
+  {art:'🪃🐟🍬',s:[['Sokka goes to the market.','Sokka geht auf den Markt.'],['He likes fish fingers, but he doesn’t like vegetables.','Er mag Fischstäbchen, aber er mag kein Gemüse.'],['“I want sweets!” he says.','«Ich will Süssigkeiten!», sagt er.'],['Katara’s favourite food is fruit.','Kataras Lieblingsessen ist Obst.']]},
+  {art:'🧊🍦🏠',s:[['Sokka buys everything on the list.','Sokka kauft alles auf der Liste.'],['He puts the ice-cream in the freezer.','Er legt die Glace in den Tiefkühler.'],['He puts the cheese in the fridge.','Er stellt den Käse in den Kühlschrank.'],['Then he eats a carrot. “Not bad!” he says.','Dann isst er ein Rüebli. «Gar nicht schlecht!», sagt er.']]}]},
+ kw:['shopping list','cheese','tomato','carrots','apples','eggs','bread','fish fingers','vegetables','sweets','fruit','ice-cream','freezer','fridge','buys','eats','market','favourite']};
+
+// ════ ENGLISCH-AKADEMIE: DATEN UNIT 4-6 ════
+EN2.u4={n:4,col:['#7EC4EC','#1E5E82'],emoji:'🌊',title:'Clothes & Weather',mission:'Reise durch vier Jahreszeiten',
+ guide:{who:'Katara',de:'Hal·lo Ro·za! Ich bin Ka·ta·ra. Mit Aang flie·ge ich durch al·le vier Na·ti·o·nen. Dort ist das Wet·ter ganz ver·schie·den! 🌊',en:'Hello, Roza! I am Katara. Let us fly around the world!'},
+ words:[
+  ['T-shirt','T-Shirt','👕','TII-schört'],['pullover','Pul·lo·ver','🧶','PUL-oh-wa'],['coat','Man·tel','🧥','KOHT'],['socks','So·cken','🧦'],['swimsuit','Bade·an·zug','🩱','SWIM-suut'],
+  ['clothes','Klei·der','👚','KLOHDHS'],['winter','Win·ter','⛄'],['spring','Früh·ling','🌸'],['summer','Som·mer','🏖️'],['autumn','Herbst','🍂','OH-tm'],
+  ['cold','kalt','🥶','KOHLD'],['snow','Schnee','❄️','SNOH'],['wind','Wind','💨','WIND'],['rain','Re·gen','🌧️','REIN'],['wet','nass','💦','WET'],
+  ['sun','Son·ne','🌞','SAN'],['warm','warm','🙂','WOHM'],['hot','heiss','🥵'],['weather','Wet·ter','🌦️','WE-dha'],['degrees','Grad','🌡️','di-GRIIS'],
+  ['snowman','Schnee·mann','☃️','SNOH-män'],['wear','tra·gen','🧍','WEA']],
+ tips:[
+  {t:'«w» in wet, warm, wind, weather: Lip·pen rund wie bei «u» und dann «e» — nicht wie das deut·sche W!',ex:['wet','warm','wind','weather']},
+  {t:'«th» in weather und clothes: Zun·ge zwi·schen die Zäh·ne, sanft sum·men.',ex:['weather','clothes']},
+  {t:'«autumn»: das «n» am En·de ist stumm — «OH-tm».',ex:['autumn']},
+  {t:'«snow» und «coat»: Das «o» wird zu «oh» wie in «Oh!».',ex:['snow','coat']}],
+ sent:[
+  ['We put on our coats.','Wir zie·hen uns die Män·tel an.','🧥'],['We take off our socks.','Wir zie·hen die So·cken aus.','🧦'],['She is wearing a T-shirt.','Sie trägt ein T-Shirt.','👕'],['It’s cold.','Es ist kalt.','🥶'],
+  ['It’s snowy.','Es ist Schnee-Wet·ter.','❄️'],['Let’s build a snowman!','Lass uns ei·nen Schnee·mann bau·en!','☃️'],['It’s windy.','Es ist win·dig.','💨'],['It’s rainy.','Es ist reg·ne·risch.','🌧️'],
+  ['It’s sunny.','Es ist son·nig.','🌞'],['What’s the weather like?','Wie ist das Wet·ter?','🌦️'],['In the Fire Nation the weather is hot.','In der Feu·er·na·ti·on ist das Wet·ter heiss.','🔥'],['It’s 25 degrees in Cairo.','Es ist 25 Grad warm in Kai·ro.','🌡️']],
+ dlgTitle:'Packing for the journey 🎒',
+ dlg:[
+  ['Aang','Katara, what’s the weather like in the Water Tribe?','Katara, wie ist das Wetter im Wasserstamm?'],
+  ['Katara','It’s cold and snowy. Put on your coat!','Es ist kalt und es schneit. Zieh deinen Mantel an!'],
+  ['Aang','Let’s build a snowman!','Lass uns einen Schneemann bauen!'],
+  ['Sokka','Great idea! But my socks are wet.','Tolle Idee! Aber meine Socken sind nass.'],
+  ['Aang','What’s the weather like in the Fire Nation, Zuko?','Wie ist das Wetter in der Feuernation, Zuko?'],
+  ['Zuko','It’s hot and sunny. It’s 35 degrees!','Es ist heiss und sonnig. Es hat 35 Grad!'],
+  ['Katara','Then we take off our coats and put on our T-shirts.','Dann ziehen wir die Mäntel aus und die T-Shirts an.'],
+  ['Sokka','And what about the Air Temple?','Und was ist mit dem Lufttempel?'],
+  ['Aang','It’s windy there. I love the wind!','Dort ist es windig. Ich liebe den Wind!'],
+  ['Katara','Look! It’s rainy in Ba Sing Se.','Schau! In Ba Sing Se regnet es.']],
+ story:{title:'Four Seasons, Four Nations',pages:[
+  {art:'⛄🌊🧥',s:[['It is winter in the Water Tribe.','Im Wasserstamm ist Winter.'],['It’s cold and snowy.','Es ist kalt und es schneit.'],['Katara puts on her coat.','Katara zieht ihren Mantel an.'],['Aang and Katara build a snowman.','Aang und Katara bauen einen Schneemann.']]},
+  {art:'🏖️🔥🩱',s:[['Now it is summer in the Fire Nation.','Jetzt ist Sommer in der Feuernation.'],['It’s hot and sunny.','Es ist heiss und sonnig.'],['It’s 35 degrees!','Es hat 35 Grad!'],['Sokka takes off his pullover and wears a T-shirt.','Sokka zieht den Pullover aus und trägt ein T-Shirt.']]},
+  {art:'🍂🌬️💨',s:[['It is autumn at the Air Temple.','Im Lufttempel ist Herbst.'],['It’s windy and the weather is cool.','Es ist windig und das Wetter ist kühl.'],['Aang loves the wind.','Aang liebt den Wind.'],['Momo plays with the leaves.','Momo spielt mit den Blättern.']]},
+  {art:'🌸🌧️🪨',s:[['It is spring in Ba Sing Se.','In Ba Sing Se ist Frühling.'],['It’s rainy and the socks are wet.','Es regnet und die Socken sind nass.'],['“What’s the weather like?” Roza asks.','«Wie ist das Wetter?», fragt Roza.'],['“It’s sunny!” says Aang. The rain stops.','«Es ist sonnig!», sagt Aang. Der Regen hört auf.']]}]},
+ kw:['winter','summer','autumn','spring','cold','snowy','hot','sunny','windy','rainy','wet','coat','pullover','T-shirt','socks','snowman','degrees','weather','wears']};
+
+EN2.u5={n:5,col:['#F5D77A','#8A5A00'],emoji:'⏰',title:'Time & My Day',mission:'Aangs Tag',
+ guide:{who:'Momo',de:'Hal·lo Ro·za! Ich bin Mo·mo. Ich ken·ne al·le Zei·ten — Mor·gen, Mit·tag, A·bend! Was tun wir ge·ra·de? ⏰',en:'Hello, Roza! I am Momo. What is the time?'},
+ words:[
+  ['morning','Mor·gen','🌅'],['noon','Mit·tag','☀️','NUHN'],['afternoon','Nach·mit·tag','🌤️','aaf-ta-NUHN'],['evening','A·bend','🌇','IIW-ning'],['night','Nacht','🌙','NAIT'],
+  ['midnight','Mit·ter·nacht','🌑','MID-nait'],['clock','Uhr','🕐'],['minute','Mi·nu·te','⏱️','MI-nit'],['hour','Stun·de','⌛','AU-a'],['day','Tag','📅'],
+  ['week','Wo·che','🗓️'],['month','Mo·nat','📆','MANTH'],['year','Jahr','🎆','JIA'],['breakfast','Früh·stück','🥣','BREK-fast'],['lunch','Mit·tag·es·sen','🍱','LANTSCH'],
+  ['dinner','A·bend·es·sen','🍲'],['homework','Haus·auf·ga·ben','📚','HOHM-wörk'],['sleeping','schla·fen','😴'],['reading','le·sen','📖','RIIDING'],['playing games','Spie·le spie·len','🎮'],
+  ['getting up','auf·ste·hen','⏰'],['getting dressed','sich an·zie·hen','👕'],['watching TV','fern·se·hen','📺'],["o'clock",'Uhr (ge·nau)','🕔','a-KLOK'],['half past','halb','🕧','HAAF PAAST'],['quarter','Vier·tel','🕒','KWOH-ta']],
+ tips:[
+  {t:'«o’clock» klingt wie «a-KLOK». Es heisst «of the clock» in kurz!',ex:["o'clock"]},
+  {t:'«half» und «hour»: Das «l» in half ist stumm, das «h» in hour auch: «HAAF» und «AU-a».',ex:['half past','hour']},
+  {t:'«night» und «midnight»: «gh» ist stumm — «NAIT».',ex:['night','midnight']},
+  {t:'«quarter» = KWOH-ta. Das «qu» klingt wie «kw».',ex:['quarter']}],
+ sent:[
+  ['What time is it?','Wie spät ist es?','🕐'],['It’s five o’clock.','Es ist fünf Uhr.','🕔'],['It’s half past one.','Es ist halb zwei.','🕧'],['It’s a quarter past two.','Es ist Vier·tel nach zwei.','🕑'],
+  ['It’s a quarter to three.','Es ist Vier·tel vor drei.','🕒'],['The cat is sleeping.','Die Kat·ze schläft ge·ra·de.','😴'],['I am getting up.','Ich ste·he ge·ra·de auf.','⏰'],['She is eating breakfast.','Sie früh·stückt ge·ra·de.','🥣'],
+  ['They are learning at school.','Sie ler·nen ge·ra·de in der Schu·le.','🏫'],['He is eating lunch.','Er isst ge·ra·de zu Mit·tag.','🍱'],['She is doing her homework.','Sie macht ge·ra·de die Haus·auf·ga·ben.','📚'],['He is playing games.','Er spielt ge·ra·de Spie·le.','🎮']],
+ dlgTitle:'What time is it? ⏰',
+ dlg:[
+  ['Katara','Good morning! What time is it?','Guten Morgen! Wie spät ist es?'],
+  ['Sokka','It’s seven o’clock.','Es ist sieben Uhr.'],
+  ['Katara','Where is Aang?','Wo ist Aang?'],
+  ['Sokka','He is sleeping. Appa is sleeping, too.','Er schläft. Appa schläft auch.'],
+  ['Aang','No! I am getting up!','Nein! Ich stehe gerade auf!'],
+  ['Katara','Good. Zuko is eating breakfast.','Gut. Zuko frühstückt gerade.'],
+  ['Zuko','It’s half past seven. Iroh is making tea.','Es ist halb acht. Iroh macht gerade Tee.'],
+  ['Sokka','What time is lunch?','Wann ist das Mittagessen?'],
+  ['Katara','At noon. It’s a quarter to twelve now.','Am Mittag. Es ist jetzt Viertel vor zwölf.'],
+  ['Aang','Then we have time. Let’s play games!','Dann haben wir Zeit. Lasst uns Spiele spielen!']],
+ story:{title:'Aang’s Day',pages:[
+  {art:'🌅⏰🥣',s:[['It is morning. It’s seven o’clock.','Es ist Morgen. Es ist sieben Uhr.'],['Aang is waking up.','Aang wacht gerade auf.'],['Momo is getting up, too.','Momo steht auch gerade auf.'],['They are eating breakfast.','Sie essen gerade Frühstück.']]},
+  {art:'☀️🍱📚',s:[['It is noon. It’s twelve o’clock.','Es ist Mittag. Es ist zwölf Uhr.'],['Aang is eating lunch.','Aang isst gerade zu Mittag.'],['In the afternoon, Katara is learning waterbending.','Am Nachmittag lernt Katara gerade Wasserbändigen.'],['Sokka is doing his homework.','Sokka macht gerade seine Hausaufgaben.']]},
+  {art:'🌇📺🎮',s:[['It is evening. It’s half past six.','Es ist Abend. Es ist halb sieben.'],['Iroh is eating dinner.','Iroh isst gerade zu Abend.'],['Zuko is reading a book.','Zuko liest gerade ein Buch.'],['Sokka is playing games.','Sokka spielt gerade Spiele.']]},
+  {art:'🌙😴🦬',s:[['It is night. It’s midnight.','Es ist Nacht. Es ist Mitternacht.'],['Appa is sleeping.','Appa schläft gerade.'],['Aang is sleeping, too.','Aang schläft auch.'],['Good night, Team Avatar!','Gute Nacht, Team Avatar!']]}]},
+ kw:['morning','noon','afternoon','evening','night','midnight',"o'clock",'o’clock','half past','quarter','sleeping','getting up','waking up','eating','breakfast','lunch','dinner','homework','playing','reading','learning']};
+
+EN2.u6={n:6,col:['#D9B58A','#6B4A2A'],emoji:'🏠',title:'My House',mission:'Irohs Haus in Ba Sing Se',
+ guide:{who:'Iroh',de:'Will·kom·men in mei·nem Haus in Ba Sing Se, Ro·za! Heu·te ler·nen wir Zim·mer, Mö·bel und wo al·les steht. Komm he·rein! 🏠',en:'Welcome to my house, Roza! Come in!'},
+ words:[
+  ['house','Haus','🏠','HAUS'],['room','Raum, Zim·mer','🚪','RUHM'],['attic','Es·trich','🏚️'],['bedroom','Schlaf·zim·mer','🛏️'],['bathroom','Ba·de·zim·mer','🛁','BAAS-ruhm'],
+  ['kitchen','Kü·che','🍳','KI-tschn'],['hall','Gang, Kor·ri·dor','🚶','HOHL'],['living room','Wohn·zim·mer','🛋️'],['bathtub','Ba·de·wan·ne','🛀'],['shower','Du·sche','🚿','SCHAU-a'],
+  ['bed','Bett','🛏️'],['wardrobe','Klei·der·schrank','👔','WOHD-rohb'],['table','Tisch','🍽️'],['chair','Stuhl','🪑'],['armchair','Ses·sel','💺'],
+  ['bookcase','Bü·cher·re·gal','📚'],['cupboard','Schrank','🗄️','KA-bad'],['fridge','Kühl·schrank','🧊','FRIDSCH'],['lamp','Lam·pe','💡'],['sofa','So·fa','🛋️'],
+  ['stone','Stein','🪨'],['straw','Stroh','🌾','STROH'],['wood','Holz','🪵','WUD'],['brick','Zie·gel·stein','🧱'],['flat','Woh·nung','🏢'],['tent','Zelt','⛺']],
+ tips:[
+  {t:'«kitchen» klingt wie «KI-tschn» und «bathroom» wie «BAAS-ruhm» (th wie ein sanf·tes S).',ex:['kitchen','bathroom']},
+  {t:'«wardrobe» = WOHD-rohb und «cupboard» = KA-bad. Zwei ver·rück·te Wör·ter — das «p» in cupboard ist stumm!',ex:['wardrobe','cupboard']},
+  {t:'«between» betont man hinten: bi-TWIIN. Das «w» ist wie ein rundes «u».',ex:['between']},
+  {t:'«wood» (Holz) klingt wie «WUD» — kurz, wie «Wut» mit kurzem u.',ex:['wood']}],
+ sent:[
+  ['The cooker is in the kitchen.','Der Herd ist in der Kü·che.','🍳'],['Momo is under the table.','Mo·mo ist un·ter dem Tisch.','🐒'],['The cat is on the bed.','Die Kat·ze ist auf dem Bett.','🐱'],['The shoes are next to the bed.','Die Schu·he sind ne·ben dem Bett.','👟'],
+  ['The basket is behind the lamp.','Der Korb ist hin·ter der Lam·pe.','🧺'],['Appa is in front of the house.','Ap·pa ist vor dem Haus.','🦬'],['The table is between the armchair and the sofa.','Der Tisch ist zwi·schen dem Ses·sel und dem So·fa.','↔️'],
+  ['The house is made of bricks.','Das Haus ist aus Zie·gel·stei·nen ge·baut.','🧱'],['It’s cool inside.','Es ist kühl drin·nen.','😌'],['It’s warm inside.','Es ist warm drin·nen.','🙂']],
+ dlgTitle:'Where is Momo? 🐒',
+ dlg:[
+  ['Aang','Uncle Iroh, where is Momo?','Onkel Iroh, wo ist Momo?'],
+  ['Katara','Is he in the kitchen?','Ist er in der Küche?'],
+  ['Sokka','No, he isn’t there.','Nein, dort ist er nicht.'],
+  ['Iroh','Look! He is under the table.','Schau! Er ist unter dem Tisch.'],
+  ['Aang','Oh! And where is Appa?','Oh! Und wo ist Appa?'],
+  ['Iroh','Appa is in front of the house.','Appa ist vor dem Haus.'],
+  ['Sokka','Where are my shoes?','Wo sind meine Schuhe?'],
+  ['Katara','They are next to the bed.','Sie sind neben dem Bett.'],
+  ['Iroh','And the teapot is between the armchair and the sofa.','Und die Teekanne ist zwischen dem Sessel und dem Sofa.'],
+  ['Aang','I love your house! It’s warm inside.','Ich liebe dein Haus! Es ist warm drinnen.']],
+ story:{title:'Iroh’s Tea House',pages:[
+  {art:'🏠🧱🍵',s:[['Uncle Iroh has a house in Ba Sing Se.','Onkel Iroh hat ein Haus in Ba Sing Se.'],['The house is made of stone and wood.','Das Haus ist aus Stein und Holz gebaut.'],['There is a kitchen, a bedroom and a living room.','Es hat eine Küche, ein Schlafzimmer und ein Wohnzimmer.']]},
+  {art:'🛋️🍽️🐒',s:[['In the living room, the table is between the armchair and the sofa.','Im Wohnzimmer steht der Tisch zwischen dem Sessel und dem Sofa.'],['Momo is under the table.','Momo ist unter dem Tisch.'],['The lamp is next to the bookcase.','Die Lampe ist neben dem Bücherregal.']]},
+  {art:'🍳🧊🗄️',s:[['In the kitchen, the tea is in the cupboard.','In der Küche ist der Tee im Schrank.'],['The milk is in the fridge.','Die Milch ist im Kühlschrank.'],['Iroh makes tea for everyone.','Iroh macht Tee für alle.']]},
+  {art:'🛏️🦬🌙',s:[['In the bedroom, the cat is on the bed.','Im Schlafzimmer ist die Katze auf dem Bett.'],['The shoes are next to the wardrobe.','Die Schuhe sind neben dem Kleiderschrank.'],['Appa is in front of the house and he is sleeping.','Appa ist vor dem Haus und schläft.'],['It’s warm inside. Good night!','Drinnen ist es warm. Gute Nacht!']]}]},
+ kw:['house','stone','wood','kitchen','bedroom','living room','table','armchair','sofa','lamp','bookcase','cupboard','fridge','bed','wardrobe','shoes','under','between','next to','in front of','on','in']};
+EN2.u6.preps=['in','on','under','next to','between'];
+
+// ════ ENGLISCH-AKADEMIE: LOGIK ════
+const EN2_KEY='akademie-en2-v1';
+let en2P={};try{en2P=JSON.parse(localStorage.getItem(EN2_KEY)||'{}')||{};}catch(e){en2P={};}
+const EN2_ACTS=['dialog','story','quiz','write','puzzle','echo'];
+function en2Mark(u,a){en2P[u]=en2P[u]||{};if(en2P[u][a])return false;en2P[u][a]=1;try{localStorage.setItem(EN2_KEY,JSON.stringify(en2P));}catch(e){}return true;}
+function en2Stars(u){const p=en2P[u]||{};return EN2_ACTS.filter(a=>p[a]).length;}
+const en2Shuf=()=>Math.random()-.5;
+function en2Enc(s){return encodeURIComponent(s).replace(/'/g,'%27');}
+function en2Toast(t){const d=document.createElement('div');d.className='adapttoast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600);}
+
+// ── Sprachausgabe (britisches Englisch, Stimmen pro Figur) ──
+let en2Tok=0,en2Voice=null,en2Rec=null,en2Next=null,en2Cur=null;
+function en2PickVoice(){try{const vs=speechSynthesis.getVoices()||[];const f=l=>vs.find(v=>(v.lang||'').replace('_','-').toLowerCase().indexOf(l)===0);en2Voice=f('en-gb')||f('en-us')||f('en')||null;}catch(e){}}
+if('speechSynthesis' in window){en2PickVoice();try{speechSynthesis.addEventListener('voiceschanged',en2PickVoice);}catch(e){}}
+const EN2_FIX=[[/Iroh/g,'Eye-roh'],[/Aang/g,'Ahng'],[/Katara/g,'Ka-tah-ra'],[/Sokka/g,'Sock-a'],[/Toph/g,'Tohf'],[/Zuko/g,'Zoo-koh'],[/Azula/g,'A-zoo-la'],[/Appa/g,'Ap-pa']];
+function en2Clean(t){let s=String(t).replace(/[·­]/g,'');EN2_FIX.forEach(f=>{s=s.replace(f[0],f[1]);});return s;}
+function en2Say(t,o,cb){
+ o=o||{};
+ if(!('speechSynthesis' in window)){if(cb)setTimeout(cb,900);return;}
+ try{speechSynthesis.cancel();}catch(e){}
+ const u=new SpeechSynthesisUtterance(en2Clean(t));u.lang='en-GB';
+ if(en2Voice){u.voice=en2Voice;u.lang=en2Voice.lang;}
+ u.rate=o.rate||.85;u.pitch=o.pitch||1;
+ let done=false;const fin=()=>{if(done)return;done=true;if(cb)cb();};
+ u.onend=fin;u.onerror=fin;
+ try{speechSynthesis.speak(u);}catch(e){fin();}
+ if(cb)setTimeout(fin,Math.max(2500,String(t).length*150/(o.rate||.85)+1500));
+}
+function en2SayE(e,slow){en2Say(decodeURIComponent(e),{rate:slow?.5:.85});}
+function enStop(){try{en2Tok++;en2Next=null;if(en2Rec){try{en2Rec.abort();}catch(e){}en2Rec=null;}}catch(e){}}
+function en2Win(emoji,msg,again){
+ document.getElementById('gw-emoji').textContent=emoji;
+ document.getElementById('gw-msg').innerHTML=msg;
+ document.getElementById('gw-again').onclick=again;
+ sfxWin();fireConfetti();maybeBreak();go('s-gwin');
+}
+
+// ── Hub & Unit-Seite ──
+let en2K='u1',en2Tab='words',en2DE=false,en2Pg=0;
+function buildEnHub(){
+ const g=document.getElementById('en2-units');if(!g)return;g.innerHTML='';
+ Object.keys(EN2).forEach(k=>{
+  const u=EN2[k],st=en2Stars(k),n=EN2_ACTS.length;
+  const d=document.createElement('div');d.className='en2-unit';
+  d.style.background='linear-gradient(150deg,'+u.col[0]+','+u.col[1]+')';
+  d.innerHTML='<div class="u-n">UNIT '+u.n+'</div><div class="u-e">'+u.emoji+'</div><div class="u-t">'+u.title+'</div><div class="u-d">'+u.mission+'</div><div class="u-s">'+'★'.repeat(st)+'☆'.repeat(n-st)+'</div>';
+  d.onclick=()=>openEnUnit(k);g.appendChild(d);
+ });
+}
+function openEnUnit(k,tab){
+ en2K=k;en2Tab=tab||'words';en2Pg=0;const u=EN2[k];
+ document.getElementById('en2-title').textContent=u.emoji+' Unit '+u.n+': '+u.title;
+ document.getElementById('en2-sub').textContent=u.mission;
+ document.getElementById('en2-guide').innerHTML='<b>'+EN2_CHR[u.guide.who]+' '+u.guide.who+':</b> '+u.guide.de+'<br><button class="en2-chip2" style="margin-top:6px" onclick="en2Say(EN2[en2K].guide.en,EN2_SPK[EN2[en2K].guide.who])">🔊 In English</button>';
+ go('s-en-unit');en2Render();
+}
+const EN2_TABS=[['words','📖','Wörter'],['sent','💬','Sätze'],['dlg','🗣️','Dialog'],['story','📚','Story'],['play','🎮','Üben']];
+function en2Render(){
+ const u=EN2[en2K];const tabs=document.getElementById('en2-tabs');tabs.innerHTML='';
+ const active=['write','puzzle','echo','cmds'].indexOf(en2Tab)>=0?'play':en2Tab;
+ EN2_TABS.forEach(t=>{
+  const b=document.createElement('button');b.className='en2-tab'+(t[0]===active?' on':'');
+  if(t[0]===active)b.style.background='linear-gradient(135deg,'+u.col[0]+','+u.col[1]+')';
+  b.innerHTML='<div style="font-size:20px">'+t[1]+'</div>'+t[2];
+  b.onclick=()=>{enStop();en2Tab=t[0];en2Render();};tabs.appendChild(b);
+ });
+ const body=document.getElementById('en2-body');body.className=en2DE?'en2-showde':'';
+ const fn={words:en2Words,sent:en2Sent,dlg:en2Dlg,story:en2Story,play:en2Play,write:en2WriteRender,puzzle:en2PuzzleRender,echo:en2EchoRender,cmds:en2CmdsRender}[en2Tab];
+ fn(body,u);
+}
+function en2ToggleDE(){en2DE=!en2DE;const b=document.getElementById('en2-body');b.className=en2DE?'en2-showde':'';const btn=document.getElementById('en2-de-btn');if(btn)btn.className='btn '+(en2DE?'bgold':'bgray');}
+
+// ── Tab: Wörter + Aussprache-Dojo ──
+function en2Words(b,u){
+ let h='<div class="story" style="font-size:15px;padding:12px 14px"><b>🎤 Aussprache-Dojo</b>';
+ u.tips.forEach(t=>{h+='<div style="margin-top:9px;font-size:14.5px;line-height:1.5;font-weight:600">'+t.t+'<div style="margin-top:5px">'+t.ex.map(w=>'<span class="en2-chip2" onclick="en2SayE(\''+en2Enc(w)+'\')">🔊 '+w+'</span>').join('')+'</div></div>';});
+ h+='</div><div class="story" style="text-align:center;font-size:14px;padding:10px">Tip·pe auf ei·ne Kar·te, um das Wort zu hö·ren. 🐢 = lang·sam.</div><div class="en2-grid">';
+ u.words.forEach((w,i)=>{h+='<div class="en2-wc" onclick="en2WordTap(this,'+i+')"><button class="en2-slow" onclick="event.stopPropagation();en2Say(EN2[en2K].words['+i+'][0],{rate:.5})">🐢</button><div class="e">'+w[2]+'</div><div class="w">'+w[0]+'</div><div class="d">'+w[1]+'</div>'+(w[3]?'<div class="p">'+w[3]+'</div>':'')+'</div>';});
+ h+='</div>';b.innerHTML=h;
+}
+function en2WordTap(el,i){el.style.transform='scale(1.08)';setTimeout(()=>{el.style.transform='';},230);en2Say(EN2[en2K].words[i][0]);}
+
+// ── Tab: Sätze ──
+function en2Sent(b,u){
+ let h='<div class="story" style="text-align:center;font-size:14px;padding:10px">Tip·pe auf ei·nen Satz, um ihn zu hö·ren. Sprich ihn dann laut nach! 🗣️</div>';
+ u.sent.forEach((s,i)=>{h+='<div class="famsentcard" onclick="en2SentTap(this,'+i+')"><div class="famsent-emoji">'+s[2]+'</div><div style="flex:1"><div class="famsent-en">'+s[0]+'</div><div class="famsent-de">'+s[1]+'</div></div><button class="en2-slow2" onclick="event.stopPropagation();en2Say(EN2[en2K].sent['+i+'][0],{rate:.5})">🐢</button></div>';});
+ b.innerHTML=h;
+}
+function en2SentTap(el,i){el.style.transform='scale(1.03)';setTimeout(()=>{el.style.transform='';},230);en2Say(EN2[en2K].sent[i][0]);}
+
+// ── Tab: Dialog (anhören oder mitspielen) ──
+function en2Dlg(b,u){
+ const cast=[];u.dlg.forEach(l=>{if(cast.indexOf(l[0])<0)cast.push(l[0]);});
+ let h='<div class="story" style="text-align:center;padding:12px"><b>'+u.dlgTitle+'</b></div>';
+ h+='<div style="display:flex;gap:8px;margin-bottom:6px"><button class="btn bblue" style="margin:0;padding:11px;font-size:14px" onclick="en2DlgPlay(null)">▶ Alles anhören</button><button class="btn '+(en2DE?'bgold':'bgray')+'" id="en2-de-btn" style="margin:0;padding:11px;font-size:14px;width:auto" onclick="en2ToggleDE()">🇩🇪 Hilfe</button></div>';
+ h+='<div class="story" style="padding:10px 12px;font-size:14px;text-align:center">🎭 Spiel mit! Wähle dei·ne Rol·le:<div style="margin-top:6px">'+cast.map(c=>'<span class="en2-chip2" onclick="en2DlgPlay(\''+c+'\')">'+EN2_CHR[c]+' '+c+'</span>').join('')+'</div></div>';
+ h+='<div id="en2-banner"></div><div id="en2-dlg">';
+ u.dlg.forEach((l,i)=>{h+='<div class="en2-bub" id="bub'+i+'" onclick="en2LineTap('+i+')"><div class="en2-av">'+EN2_CHR[l[0]]+'</div><div class="en2-bt"><div class="nm">'+l[0]+'</div><div class="en">'+l[1]+'</div><div class="de">'+l[2]+'</div></div></div>';});
+ h+='</div>';b.innerHTML=h;
+}
+function en2LineTap(i){const l=EN2[en2K].dlg[i];enStop();en2Say(l[1],EN2_SPK[l[0]]);}
+function en2Banner(html){const el=document.getElementById('en2-banner');if(el)el.innerHTML=html?'<div class="en2-banner">'+html+'</div>':'';}
+function en2SayLine(){if(en2Cur)en2Say(en2Cur[1],EN2_SPK[en2Cur[0]]);}
+function en2DlgPlay(role){
+ enStop();const tok=en2Tok;const u=EN2[en2K];let i=0;
+ const clear=()=>document.querySelectorAll('.en2-bub').forEach(x=>x.classList.remove('hi','wait'));
+ clear();en2Banner(role?'🎭 Du bist <b>'+role+'</b>! Ich spre·che die an·de·ren.':'');
+ function step(){
+  if(tok!==en2Tok)return;clear();
+  if(i>=u.dlg.length){
+   en2Banner('');en2Cur=null;
+   if(en2Mark(en2K,'dialog')){award(1);en2Toast('🎉 Dialog geschafft! +1 📜');}else en2Toast('🎉 Super gesprochen!');
+   return;
+  }
+  const l=u.dlg[i],el=document.getElementById('bub'+i);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+  if(role&&l[0]===role){
+   if(el)el.classList.add('wait');en2Cur=l;
+   en2Banner('🎤 Du bist dran, <b>'+role+'</b>!<br>Sag den Satz laut auf Eng·lisch.<div style="display:flex;gap:8px;margin-top:8px"><button class="btn bblue" style="margin:0;padding:10px;font-size:14px" onclick="en2SayLine()">🔊 Hilfe</button><button class="btn bgold" style="margin:0;padding:10px;font-size:14px" onclick="en2Next&&en2Next()">Wei·ter ▶</button></div>');
+   en2Next=()=>{if(tok!==en2Tok)return;en2Next=null;en2Banner('🎭 Du bist <b>'+role+'</b>!');i++;step();};
+  }else{
+   if(el)el.classList.add('hi');
+   en2Say(l[1],EN2_SPK[l[0]],()=>{if(tok!==en2Tok)return;i++;setTimeout(step,300);});
+  }
+ }
+ step();
+}
+
+// ── Tab: Story ──
+function en2KwRe(u){
+ const arr=u.kw.slice().sort((a,b)=>b.length-a.length).map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+ return new RegExp('(^|[^A-Za-z])('+arr.join('|')+')(?![A-Za-z])','gi');
+}
+function en2HL(txt,u){
+ return txt.replace(en2KwRe(u),(m,pre,w)=>pre+'<span class="en2-kw" onclick="event.stopPropagation();en2Kw(\''+en2Enc(w)+'\')">'+w+'</span>');
+}
+function en2Kw(enc){
+ const w=decodeURIComponent(enc);en2Say(w);
+ const u=EN2[en2K];const f=u.words.find(x=>x[0].toLowerCase()===w.toLowerCase().replace(/’/g,"'"));
+ const el=document.getElementById('en2-kwbar');if(el)el.innerHTML=f?('🔊 <b>'+f[0]+'</b> = '+f[1]+' '+f[2]):('🔊 <b>'+w+'</b>');
+}
+function en2Story(b,u){
+ const st=u.story,pg=st.pages[en2Pg],last=en2Pg===st.pages.length-1;
+ let h='<div class="story" style="text-align:center;padding:12px"><b>📖 '+st.title+'</b><div style="font-size:12.5px;color:var(--muted);margin-top:2px">Sei·te '+(en2Pg+1)+' von '+st.pages.length+'</div></div>';
+ h+='<div class="qpanel" style="padding:16px 12px;background:#FFFDF6"><div class="en2-art">'+pg.art+'</div>';
+ pg.s.forEach((s,i)=>{h+='<div class="en2-sent" id="sn'+i+'" onclick="en2StorySay('+i+')">'+en2HL(s[0],u)+'<span class="de">'+s[1]+'</span></div>';});
+ h+='<div class="en2-kwbar" id="en2-kwbar">Tip·pe auf einen Satz oder auf ein <span class="en2-kw">un·ter·strich·e·nes</span> Wort.</div></div>';
+ h+='<div style="display:flex;gap:8px;margin:8px 0"><button class="btn bblue" style="margin:0;padding:12px;font-size:15px" onclick="en2StoryPlay()">▶ Seite vor·le·sen</button><button class="btn '+(en2DE?'bgold':'bgray')+'" id="en2-de-btn" style="margin:0;padding:12px;font-size:14px;width:auto" onclick="en2ToggleDE()">🇩🇪 Hilfe</button></div>';
+ h+='<div style="display:flex;gap:8px"><button class="btn bgray" style="margin:0;flex:1" '+(en2Pg===0?'disabled style="margin:0;flex:1;opacity:.4"':'')+' onclick="en2PageGo(-1)">← Zu·rück</button><button class="btn bgold" style="margin:0;flex:1;font-size:17px" onclick="en2PageGo(1)">'+(last?'Fer·tig 🎉':'Wei·ter →')+'</button></div>';
+ b.innerHTML=h;
+}
+function en2StorySay(i){enStop();const s=EN2[en2K].story.pages[en2Pg].s[i];en2Say(s[0]);document.querySelectorAll('.en2-sent').forEach((x,xi)=>x.classList.toggle('hi',xi===i));}
+function en2StoryPlay(){
+ enStop();const tok=en2Tok;const pg=EN2[en2K].story.pages[en2Pg];let i=0;
+ function step(){
+  if(tok!==en2Tok)return;
+  document.querySelectorAll('.en2-sent').forEach((x,xi)=>x.classList.toggle('hi',xi===i));
+  if(i>=pg.s.length){setTimeout(()=>{if(tok===en2Tok)document.querySelectorAll('.en2-sent').forEach(x=>x.classList.remove('hi'));},700);return;}
+  en2Say(pg.s[i][0],{rate:.8},()=>{if(tok!==en2Tok)return;i++;setTimeout(step,350);});
+ }
+ step();
+}
+function en2PageGo(d){
+ enStop();const st=EN2[en2K].story;
+ if(d>0&&en2Pg===st.pages.length-1){
+  if(en2Mark(en2K,'story')){award(2);en2Toast('📚 Geschichte gelesen! +2 📜');}else en2Toast('📚 Schön gelesen!');
+  fireConfetti();en2Pg=0;en2Render();window.scrollTo(0,0);return;
+ }
+ en2Pg=Math.max(0,Math.min(st.pages.length-1,en2Pg+d));en2Render();window.scrollTo(0,0);
+}
+
+// ── Tab: Üben ──
+function en2Play(b,u){
+ const p=en2P[en2K]||{};
+ const items=[['🎧','Hö·ren & Bild','en2QuizHear()','quiz'],['🖼️','Bild → Wort','en2QuizPic()','quiz'],['💬','Satz ver·ste·hen','en2QuizSent()','quiz'],['✏️','Wör·ter schrei·ben','en2WriteStart()','write'],['🧩','Satz-Puz·zle','en2PuzzleStart()','puzzle'],['🎤','Aus·spra·che-Mut·pro·be','en2EchoStart()','echo']];
+ if(u.cmds)items.push(['🪨','Toph sagt …','en2CmdsStart()','']);
+ if(en2K==='u5')items.push(['🕐','Uhr le·sen','en2QuizClock()','quiz']);
+ if(en2K==='u6'){items.push(['🛏️','Wo ist Mo·mo?','en2QuizScene()','quiz']);items.push(['👂','Hö·ren & Sze·ne','en2QuizSceneHear()','quiz']);}
+ let h='<div class="story" style="text-align:center;font-size:14.5px;padding:12px">Je·des Spiel bringt dir 📜. Fal·sche Ant·wor·ten kom·men in die Re·van·che — so übst du sie noch·mal! 💪</div><div class="menu">';
+ items.forEach(it=>{h+='<div class="mcard" style="background:#fff;color:#3D2817;box-shadow:var(--sh);position:relative" onclick="'+it[2]+'">'+((it[3]&&p[it[3]]&&it[3]!=='quiz')?'<div style="position:absolute;top:6px;right:9px;font-size:15px">✅</div>':'')+'<div style="font-size:34px">'+it[0]+'</div><div class="mtitle" style="font-size:15px">'+it[1]+'</div></div>';});
+ h+='</div>';b.innerHTML=h;
+}
+function en2Opts4(u,w,fn){
+ const seen=new Set([w[2]]);const ds=[];
+ u.words.slice().sort(en2Shuf).forEach(x=>{if(ds.length<3&&x[0]!==w[0]&&!seen.has(x[2])){seen.add(x[2]);ds.push(x);}});
+ return [w].concat(ds).sort(en2Shuf).map(fn);
+}
+function en2QuizHear(){
+ const u=EN2[en2K],k=en2K;
+ startQuiz({title:'Hö·ren & Bild 🔊',sub:'Listen and choose! 🇬🇧',count:8,emoji:u.emoji,again:()=>{openEnUnit(k,'play');en2QuizHear();},
+  gen:()=>{const w=u.words[rnd(0,u.words.length-1)];
+   return {visual:'<div style="font-size:50px;text-align:center;margin:6px 0;cursor:pointer" onclick="en2SayE(\''+en2Enc(w[0])+'\')">🔊</div>',q:'Was hast du ge·hört?<span style="display:none">'+w[0]+'</span>',ans:w[0],ansLabel:w[2]+' '+w[0],
+    opts:en2Opts4(u,w,x=>({label:'<span style="font-size:40px">'+x[2]+'</span>',val:x[0]})),say:w[0],sayWin:w[0],lang:'en-GB'};},
+  winMsg:s=>{en2Mark(k,'quiz');return 'Su·per! <b>'+s+' von 8</b> Wör·ter rich·tig er·kannt! +4 📜';}});
+}
+function en2QuizPic(){
+ const u=EN2[en2K],k=en2K;
+ startQuiz({title:'Bild → Wort 🖼️',sub:'Wie heisst das auf Englisch?',count:8,emoji:u.emoji,again:()=>{openEnUnit(k,'play');en2QuizPic();},
+  gen:()=>{const w=u.words[rnd(0,u.words.length-1)];
+   return {visual:'<div style="font-size:64px;text-align:center;margin:4px 0">'+w[2]+'</div><div style="text-align:center;font-weight:700;color:var(--muted)">'+w[1]+'</div>',q:'Wie heisst das auf Eng·lisch?<span style="display:none">'+w[0]+'</span>',ans:w[0],
+    opts:en2Opts4(u,w,x=>({label:x[0],val:x[0]})),sayWin:w[0],lang:'en-GB'};},
+  winMsg:s=>{en2Mark(k,'quiz');return 'Stark! <b>'+s+' von 8</b> Wör·ter auf Eng·lisch ge·wusst! +4 📜';}});
+}
+function en2QuizSent(){
+ const u=EN2[en2K],k=en2K;
+ startQuiz({title:'Satz ver·ste·hen 💬',sub:'Listen and understand! 🇬🇧',count:8,emoji:u.emoji,again:()=>{openEnUnit(k,'play');en2QuizSent();},
+  gen:()=>{const s=u.sent[rnd(0,u.sent.length-1)];
+   const opts=[s].concat(u.sent.filter(x=>x[0]!==s[0]).sort(en2Shuf).slice(0,3)).sort(en2Shuf).map(x=>({label:x[1],val:x[0]}));
+   return {visual:'<div style="font-size:50px;text-align:center;margin:6px 0;cursor:pointer" onclick="en2SayE(\''+en2Enc(s[0])+'\')">🔊</div>',q:'Was be·deu·tet der Satz?<span style="display:none">'+s[0]+'</span>',ans:s[0],ansLabel:s[1],opts:opts,say:s[0],sayWin:null,lang:'en-GB'};},
+  winMsg:s=>{en2Mark(k,'quiz');return 'Su·per! <b>'+s+' von 8</b> Sät·ze ver·stan·den! +4 📜';}});
+}
+
+// ── Wörter schreiben ──
+let en2W=null;
+function en2WriteStart(){
+ const u=EN2[en2K];
+ const list=u.words.filter(w=>/^[a-zA-Z]{3,11}$/.test(w[0])).sort(en2Shuf).slice(0,8);
+ en2W={i:0,list:list,built:[],pool:[]};en2Tab='write';en2Render();
+}
+function en2WriteRender(b){
+ b.innerHTML='<button class="btn bgray" onclick="enStop();en2Tab=\'play\';en2Render()">← Üben</button><div class="progress-mini"><span id="w-prog"></span><span>Mit Onkel Iroh ☕</span></div>'+
+ '<div class="qpanel" style="text-align:center;background-color:#F3E9FB;padding:20px"><div style="font-size:60px" id="w-emoji"></div><div id="w-de" style="font-weight:800;color:#5B2A9A;margin-bottom:4px"></div>'+
+ '<button class="btn bblue" style="max-width:240px;margin:8px auto;font-size:17px;padding:12px" onclick="en2WSay()">🔊 Wort an·hö·ren</button>'+
+ '<div class="en2-slots" id="w-slots"></div><div class="en2-letters" id="w-letters"></div><button class="btn bgray" style="max-width:170px;margin:4px auto" onclick="en2WBack()">⌫ Lö·schen</button><div class="feedbk" id="w-fb"></div></div>';
+ en2WNew();
+}
+function en2WNew(){
+ const w=en2W.list[en2W.i];en2W.built=[];
+ en2W.pool=w[0].toUpperCase().split('').sort(en2Shuf).map(ch=>({ch:ch,used:false}));
+ document.getElementById('w-prog').textContent=(en2W.i+1)+'/'+en2W.list.length;
+ document.getElementById('w-emoji').textContent=w[2];
+ document.getElementById('w-de').textContent=w[1].replace(/·/g,'');
+ document.getElementById('w-fb').textContent='';
+ en2WDraw();setTimeout(en2WSay,450);
+}
+function en2WDraw(){
+ const w=en2W.list[en2W.i];const sl=document.getElementById('w-slots'),lt=document.getElementById('w-letters');if(!sl||!lt)return;
+ sl.innerHTML='';for(let i=0;i<w[0].length;i++){const d=document.createElement('div');const p=en2W.built[i];d.className='spslot'+(p?' filled':'');d.textContent=p?p.ch:'';sl.appendChild(d);}
+ lt.innerHTML='';en2W.pool.forEach((p,idx)=>{const bt=document.createElement('button');bt.className='spletter'+(p.used?' used':'');bt.textContent=p.ch;bt.onclick=()=>en2WTap(idx);lt.appendChild(bt);});
+}
+function en2WSay(){if(en2W&&en2W.list[en2W.i]&&document.getElementById('w-slots'))en2Say(en2W.list[en2W.i][0]);}
+function en2WBack(){if(!en2W||!en2W.built.length)return;const p=en2W.built.pop();p.used=false;en2WDraw();}
+function en2WTap(idx){
+ const w=en2W.list[en2W.i];if(en2W.built.length>=w[0].length)return;const p=en2W.pool[idx];if(p.used)return;
+ p.used=true;en2W.built.push(p);sfxStep();en2WDraw();
+ if(en2W.built.length===w[0].length)setTimeout(en2WCheck,320);
+}
+function en2WCheck(){
+ const w=en2W.list[en2W.i],k=en2K;const made=en2W.built.map(p=>p.ch).join('').toLowerCase();
+ if(made===w[0].toLowerCase()){
+  setFb('w-fb','✅ Rich·tig ge·schrie·ben!',true);sfxRight();maybeCheer();en2Say(w[0]);
+  setTimeout(()=>{en2W.i++;if(en2W.i>=en2W.list.length){en2Mark(k,'write');award(2);en2Win('✏️','Fan·tas·tisch! Du hast <b>'+en2W.list.length+' Wör·ter</b> rich·tig auf Eng·lisch ge·schrie·ben! +4 📜',()=>{openEnUnit(k,'play');en2WriteStart();});}else en2WNew();},1150);
+ }else{
+  setFb('w-fb','Fast! Hör noch·mal und ver·such es wie·der. 💙',false);sfxWrong();
+  const sl=document.getElementById('w-slots');sl.classList.add('shakeit');
+  setTimeout(()=>{sl.classList.remove('shakeit');en2W.built.forEach(p=>p.used=false);en2W.built=[];en2WDraw();en2WSay();},950);
+ }
+}
+
+// ── Satz-Puzzle ──
+let en2Z=null;
+function en2PuzzleStart(){
+ const u=EN2[en2K];
+ const list=u.sent.filter(s=>{const n=s[0].split(' ').length;return n>=3&&n<=8;}).sort(en2Shuf).slice(0,6);
+ en2Z={i:0,list:list,built:[],chips:[]};en2Tab='puzzle';en2Render();
+}
+function en2PuzzleRender(b){
+ b.innerHTML='<button class="btn bgray" onclick="enStop();en2Tab=\'play\';en2Render()">← Üben</button><div class="progress-mini"><span id="z-prog"></span><span>Mit Onkel Iroh ☕</span></div>'+
+ '<div class="qpanel" style="text-align:center;background-color:#F3E9FB;padding:18px"><div style="font-size:52px" id="z-emoji"></div><div id="z-de" style="font-weight:800;color:#5B2A9A;margin:4px 0"></div>'+
+ '<button class="btn bblue" style="max-width:240px;margin:8px auto;font-size:16px;padding:11px" onclick="en2ZSay()">🔊 Satz an·hö·ren</button>'+
+ '<div class="en2-built" id="z-built"></div><div class="en2-chips" id="z-chips"></div><button class="btn bgray" style="max-width:170px;margin:4px auto" onclick="en2ZBack()">⌫ Lö·schen</button><div class="feedbk" id="z-fb"></div></div>';
+ en2ZNew();
+}
+function en2ZNew(){
+ const s=en2Z.list[en2Z.i];en2Z.built=[];
+ const toks=s[0].split(' ').map(w=>({w:w,used:false}));
+ let ch=toks.slice(),t=0;do{ch=toks.slice().sort(en2Shuf);t++;}while(ch.map(x=>x.w).join(' ')===s[0]&&t<20);
+ en2Z.chips=ch;
+ document.getElementById('z-prog').textContent=(en2Z.i+1)+'/'+en2Z.list.length;
+ document.getElementById('z-emoji').textContent=s[2];
+ document.getElementById('z-de').textContent=s[1].replace(/·/g,'');
+ document.getElementById('z-fb').textContent='';
+ en2ZDraw();setTimeout(en2ZSay,450);
+}
+function en2ZDraw(){
+ const bl=document.getElementById('z-built'),cl=document.getElementById('z-chips');if(!bl||!cl)return;
+ bl.innerHTML='';en2Z.built.forEach(c=>{const d=document.createElement('span');d.className='en2-chip on';d.textContent=c.w;bl.appendChild(d);});
+ cl.innerHTML='';en2Z.chips.forEach((c,idx)=>{const d=document.createElement('button');d.className='en2-chip'+(c.used?' used':'');d.textContent=c.w;d.onclick=()=>en2ZTap(idx);cl.appendChild(d);});
+}
+function en2ZSay(){if(en2Z&&en2Z.list[en2Z.i]&&document.getElementById('z-built'))en2Say(en2Z.list[en2Z.i][0]);}
+function en2ZBack(){if(!en2Z||!en2Z.built.length)return;const c=en2Z.built.pop();c.used=false;en2ZDraw();}
+function en2ZTap(idx){
+ const s=en2Z.list[en2Z.i];const c=en2Z.chips[idx];if(c.used)return;c.used=true;en2Z.built.push(c);sfxStep();en2ZDraw();
+ if(en2Z.built.length===en2Z.chips.length)setTimeout(en2ZCheck,350);
+}
+function en2ZCheck(){
+ const s=en2Z.list[en2Z.i],k=en2K;const made=en2Z.built.map(c=>c.w).join(' ');
+ if(made===s[0]){
+  setFb('z-fb','✅ Rich·tig! Su·per Satz!',true);sfxRight();maybeCheer();en2Say(s[0]);
+  setTimeout(()=>{en2Z.i++;if(en2Z.i>=en2Z.list.length){en2Mark(k,'puzzle');award(2);en2Win('🧩','Stark! Du hast <b>'+en2Z.list.length+' Sät·ze</b> rich·tig zu·sam·men·ge·baut! +4 📜',()=>{openEnUnit(k,'play');en2PuzzleStart();});}else en2ZNew();},1300);
+ }else{
+  setFb('z-fb','Fast! Hör den Satz noch·mal und ver·such es wie·der. 💙',false);sfxWrong();
+  const bl=document.getElementById('z-built');bl.classList.add('shakeit');
+  setTimeout(()=>{bl.classList.remove('shakeit');en2Z.built.forEach(c=>c.used=false);en2Z.built=[];en2ZDraw();en2ZSay();},1000);
+ }
+}
+
+// ── Aussprache-Mutprobe (hören, nachsprechen, selbst prüfen) ──
+let en2E=null;
+const EN2_SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function en2EchoStart(){
+ const u=EN2[en2K];
+ const ws=u.words.filter(w=>w[0].length>=4).sort(en2Shuf).slice(0,4).map(w=>({en:w[0],de:w[1],e:w[2],p:w[3]||''}));
+ const ss=u.sent.slice().sort(en2Shuf).slice(0,2).map(s=>({en:s[0],de:s[1],e:s[2],p:''}));
+ en2E={i:0,list:ws.concat(ss),good:0};en2Tab='echo';en2Render();
+}
+function en2EchoRender(b){
+ b.innerHTML='<button class="btn bgray" onclick="enStop();en2Tab=\'play\';en2Render()">← Üben</button><div class="progress-mini"><span id="e-prog"></span><span>Mit Toph 🪨</span></div>'+
+ '<div class="qpanel" style="text-align:center;background-color:#F3E9FB;padding:20px"><div style="font-size:60px" id="e-emoji"></div><div id="e-en" style="font-family:\'Fredoka\',sans-serif;font-weight:700;font-size:28px;color:#5B2A9A;margin:4px 0"></div><div id="e-p" style="font-weight:800;color:#C8628F;font-size:15px"></div><div id="e-de" style="font-weight:700;color:var(--muted);font-size:14px;margin-bottom:8px"></div>'+
+ '<div style="display:flex;gap:8px;justify-content:center"><button class="btn bblue" style="margin:0;padding:11px;font-size:15px" onclick="en2ESay(false)">🔊 Hö·ren</button><button class="btn bblue" style="margin:0;padding:11px;font-size:15px" onclick="en2ESay(true)">🐢 Lang·sam</button></div>'+
+ (EN2_SR?'<button class="btn bgold" style="margin:12px 0 0;font-size:18px" id="e-mic" onclick="en2EMic()">🎤 Jetzt du! Sprich laut</button>':'<div class="story" style="font-size:14px;text-align:center;margin:12px 0 0;padding:10px">Sprich das Wort laut nach. Dann tippe auf «Ich hab’s ge·sagt».</div>')+
+ '<button class="btn bgray" style="margin:10px 0 0" onclick="en2EDone(true)">🙂 Ich hab’s ge·sagt!</button><button class="btn bgray" style="margin:6px 0 0" onclick="en2EDone(false)">Wei·ter ▶ (noch üben)</button><div class="feedbk" id="e-fb"></div></div>';
+ en2ENew();
+}
+function en2ENew(){
+ const it=en2E.list[en2E.i];
+ document.getElementById('e-prog').textContent=(en2E.i+1)+'/'+en2E.list.length;
+ document.getElementById('e-emoji').textContent=it.e;
+ document.getElementById('e-en').textContent=it.en;
+ document.getElementById('e-p').textContent=it.p?('sprich: '+it.p):'';
+ document.getElementById('e-de').textContent=it.de.replace(/·/g,'');
+ document.getElementById('e-fb').textContent='';
+ setTimeout(()=>en2ESay(false),400);
+}
+function en2ESay(slow){if(en2E&&en2E.list[en2E.i]&&document.getElementById('e-en'))en2Say(en2E.list[en2E.i].en,{rate:slow?.5:.85});}
+function en2ENorm(s){return String(s).toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
+function en2EMic(){
+ if(!EN2_SR||!en2E)return;
+ const it=en2E.list[en2E.i];const btn=document.getElementById('e-mic');
+ try{speechSynthesis.cancel();}catch(e){}
+ let r;try{r=new EN2_SR();}catch(e){return;}
+ en2Rec=r;r.lang='en-GB';r.interimResults=false;r.maxAlternatives=3;
+ if(btn)btn.textContent='🎧 Ich hö·re zu …';
+ r.onresult=ev=>{
+  const alts=[];for(let i=0;i<ev.results[0].length;i++)alts.push(en2ENorm(ev.results[0][i].transcript));
+  const want=en2ENorm(it.en).split(' ');
+  let best=0;alts.forEach(a=>{const got=a.split(' ');const hit=want.filter(w=>got.indexOf(w)>=0).length;best=Math.max(best,hit/want.length);});
+  if(best>=0.6){setFb('e-fb','🌟 Su·per ge·spro·chen!',true);sfxRight();setTimeout(()=>en2EDone(true),1100);}
+  else{setFb('e-fb','Ich ha·be «'+alts[0]+'» ge·hört. Hör noch·mal zu und ver·such es wie·der! 💙',false);}
+ };
+ r.onerror=()=>{setFb('e-fb','Das Mik·ro·fon hat nichts ge·hört. Ver·such es noch·mal oder tip·pe «Ich hab’s ge·sagt».',false);};
+ r.onend=()=>{if(btn)btn.textContent='🎤 Jetzt du! Sprich laut';};
+ try{r.start();}catch(e){}
+}
+function en2EDone(ok){
+ if(!en2E)return;enStop();if(ok)en2E.good++;en2E.i++;
+ if(en2E.i>=en2E.list.length){const k=en2K;en2Mark(k,'echo');award(2);en2Win('🎤','Mu·tig! Du hast <b>'+en2E.good+' von '+en2E.list.length+'</b> Wör·tern und Sät·zen laut ge·spro·chen! +4 📜',()=>{openEnUnit(k,'play');en2EchoStart();});}
+ else en2ENew();
+}
+
+// ── Toph sagt … (Bewegungs-Spiel, Unit 2) ──
+let en2C=null;
+function en2CmdsStart(){const u=EN2[en2K];en2C={i:0,list:u.cmds.slice().sort(en2Shuf)};en2Tab='cmds';en2Render();}
+function en2CmdsRender(b){
+ b.innerHTML='<button class="btn bgray" onclick="enStop();en2Tab=\'play\';en2Render()">← Üben</button><div class="progress-mini"><span id="c-prog"></span><span>Mit Toph 🪨</span></div>'+
+ '<div class="qpanel" style="text-align:center;background-color:#EFF6E4;padding:20px"><div style="font-weight:800;color:#4F6B2A;margin-bottom:4px">Toph says …</div><div style="font-size:64px" id="c-emoji"></div><div id="c-en" style="font-family:\'Fredoka\',sans-serif;font-weight:700;font-size:26px;color:#4F6B2A;margin:6px 0"></div><div id="c-de" style="font-weight:700;color:var(--muted);font-size:14px;min-height:20px"></div>'+
+ '<div style="display:flex;gap:8px;justify-content:center;margin:8px 0"><button class="btn bblue" style="margin:0;padding:11px;font-size:15px" onclick="en2CSay()">🔊 Nochmal</button><button class="btn bgray" style="margin:0;padding:11px;font-size:14px;width:auto" onclick="en2CDE()">🇩🇪 zeigen</button></div>'+
+ '<button class="btn bgold" style="margin-top:8px;font-size:19px" onclick="en2CDone()">✅ Ich hab’s ge·macht!</button></div>';
+ en2CNew();
+}
+function en2CNew(){
+ const c=en2C.list[en2C.i];
+ document.getElementById('c-prog').textContent=(en2C.i+1)+'/'+en2C.list.length;
+ document.getElementById('c-emoji').textContent=c[2];
+ document.getElementById('c-en').textContent=c[0];
+ document.getElementById('c-de').textContent='';
+ setTimeout(en2CSay,350);
+}
+function en2CSay(){if(en2C&&en2C.list[en2C.i]&&document.getElementById('c-en'))en2Say(en2C.list[en2C.i][0],EN2_SPK.Toph);}
+function en2CDE(){if(en2C&&en2C.list[en2C.i])document.getElementById('c-de').textContent=en2C.list[en2C.i][1].replace(/·/g,'');}
+function en2CDone(){
+ if(!en2C)return;sfxRight();en2C.i++;
+ if(en2C.i>=en2C.list.length){const k=en2K;award(2);en2Win('🪨','Su·per be·wegt! Du bist ei·ne ech·te Bän·di·ge·rin! <b>'+en2C.list.length+' Be·feh·le</b> auf Eng·lisch ge·macht! +4 📜',()=>{openEnUnit(k,'play');en2CmdsStart();});}
+ else en2CNew();
+}
+
+// ── Unit 5: Uhr lesen ──
+const EN2_NUM=['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+function en2TimeTxt(h,m){const n=EN2_NUM[h],nx=EN2_NUM[(h%12)+1];if(m===0)return 'It’s '+n+' o’clock.';if(m===30)return 'It’s half past '+n+'.';if(m===15)return 'It’s a quarter past '+n+'.';return 'It’s a quarter to '+nx+'.';}
+function en2QuizClock(){
+ const k=en2K;
+ startQuiz({title:'Uhr le·sen 🕐',sub:'What time is it?',count:6,emoji:'🕐',again:()=>{openEnUnit(k,'play');en2QuizClock();},
+  gen:()=>{const h=rnd(1,12),m=[0,15,30,45][rnd(0,3)];const ans=en2TimeTxt(h,m);const set=new Set([ans]);let g=0;
+   while(set.size<4&&g++<60)set.add(en2TimeTxt(rnd(1,12),[0,15,30,45][rnd(0,3)]));
+   const opts=[...set].sort(en2Shuf);
+   return {visual:clockSVG(h,m),q:'What time is it?<span style="display:none">'+h+':'+m+'</span>',ans:ans,opts:opts,sayWin:ans,lang:'en-GB'};},
+  winMsg:s=>{en2Mark(k,'quiz');return 'Su·per! <b>'+s+' von 6</b> Uhr·zei·ten auf Eng·lisch ge·le·sen! +4 📜';}});
+}
+
+// ── Unit 6: Szenen (in, on, under, next to, between) ──
+const EN2_SUBJ=[['Momo','🐒'],['The cat','🐱'],['The dog','🐶'],['The mouse','🐭']];
+const EN2_FURN=[['bed','🛏️'],['table','🍽️'],['chair','🪑'],['sofa','🛋️'],['wardrobe','👔']];
+function en2Scene(p,s,f,f2){
+ const S='<span class="s">'+s+'</span>',F='<span class="f">'+f+'</span>';
+ if(p==='on')return '<div class="enscene col">'+S+F+'</div>';
+ if(p==='under')return '<div class="enscene col">'+F+S+'</div>';
+ if(p==='next to')return '<div class="enscene">'+F+S+'</div>';
+ if(p==='in')return '<div class="enscene"><span class="encont">'+S+'</span></div>';
+ return '<div class="enscene">'+F+S+'<span class="f">'+(f2||'🪑')+'</span></div>';
+}
+function en2SceneSent(subj,p,fn,fn2){
+ if(p==='in')return subj+' is in the box.';
+ if(p==='between')return subj+' is between the '+fn+' and the '+fn2+'.';
+ return subj+' is '+p+' the '+fn+'.';
+}
+function en2SceneBase(){
+ const sb=EN2_SUBJ[rnd(0,EN2_SUBJ.length-1)];const fs=EN2_FURN.slice().sort(en2Shuf);
+ return {sb:sb,f:fs[0],f2:fs[1]};
+}
+function en2QuizScene(){
+ const k=en2K,preps=EN2[k].preps;
+ startQuiz({title:'Wo ist Mo·mo? 🛏️',sub:'Where is it?',count:6,emoji:'🐒',again:()=>{openEnUnit(k,'play');en2QuizScene();},
+  gen:()=>{const b=en2SceneBase();const p=preps[rnd(0,preps.length-1)];const sent=en2SceneSent(b.sb[0],p,b.f[0],b.f2[0]);
+   const opts=[p].concat(preps.filter(x=>x!==p).sort(en2Shuf).slice(0,3)).sort(en2Shuf);
+   return {visual:en2Scene(p,b.sb[1],b.f[1],b.f2[1]),q:'Where is '+(b.sb[0]==='Momo'?'Momo':b.sb[0].toLowerCase())+'?<span style="display:none">'+p+b.f[0]+b.sb[0]+'</span>',ans:p,opts:opts,sayWin:sent,lang:'en-GB'};},
+  winMsg:s=>{en2Mark(k,'quiz');return 'Su·per! <b>'+s+' von 6</b> Or·te rich·tig er·kannt! +4 📜';}});
+}
+function en2QuizSceneHear(){
+ const k=en2K,preps=EN2[k].preps;
+ startQuiz({title:'Hö·ren & Sze·ne 👂',sub:'Listen and choose!',count:6,emoji:'🛏️',again:()=>{openEnUnit(k,'play');en2QuizSceneHear();},
+  gen:()=>{const b=en2SceneBase();const p=preps[rnd(0,preps.length-1)];
+   if(p==='in'){b.f=['box','📦'];}
+   const sent=en2SceneSent(b.sb[0],p,b.f[0],b.f2[0]);
+   const ps=[p].concat(preps.filter(x=>x!==p).sort(en2Shuf).slice(0,3)).sort(en2Shuf);
+   const opts=ps.map(x=>({label:en2Scene(x,b.sb[1],b.f[1],b.f2[1]),val:x}));
+   return {visual:'<div style="font-size:50px;text-align:center;margin:6px 0;cursor:pointer" onclick="en2SayE(\''+en2Enc(sent)+'\')">🔊</div>',q:'Wel·che Sze·ne passt?<span style="display:none">'+sent+'</span>',ans:p,ansLabel:sent,opts:opts,say:sent,sayWin:null,lang:'en-GB'};},
+  winMsg:s=>{en2Mark(k,'quiz');return 'Stark! <b>'+s+' von 6</b> Sze·nen rich·tig er·kannt! +4 📜';}});
+}
 
 // ════ WEISHEITS-TEMPEL: MEINE FAMILIE & SÄTZE ════
 const FAM_WORDS=[
