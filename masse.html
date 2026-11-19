@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#4A96A8">
+<title>Mass-Werkstatt – Avatar Lern-Akademie</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--wasser:#4A96A8;--wd:#1E5E82;--erded:#2E6228;--feuer:#D45878;--card:#FDFBF8;--bg:#F5EDE6;--text:#3D2817;--muted:#8B7355;--r:20px;--rs:12px;--sh:0 4px 16px rgba(120,60,80,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+#app{max-width:520px;margin:0 auto;padding:0 14px 50px}
+.sc{display:none}.sc.on{display:block;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.gh{text-align:center;padding:14px 10px 6px}
+.gt{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;color:var(--wd)}
+.gs{font-size:17px;color:var(--muted);font-weight:700;margin-top:4px}
+.btn{display:block;width:100%;padding:15px 16px;font-size:20px;font-weight:800;border:none;border-radius:var(--rs);cursor:pointer;font-family:'Nunito',sans-serif;margin:10px 0;text-align:center;line-height:1.25;color:#fff}
+.btn small{display:block;font-size:14px;font-weight:700;opacity:.92;margin-top:3px}
+.btn:active{transform:scale(.97)}
+.bgreen{background:linear-gradient(135deg,#6EA86E,#2E6228)}
+.bfire{background:linear-gradient(135deg,#E8806A,#B8381F)}
+.bblue{background:linear-gradient(135deg,#6AAAC8,#1E5E82)}
+.bgold{background:linear-gradient(135deg,#E8C26A,#A8801E)}
+.bpurple{background:linear-gradient(135deg,#A98BD6,#5B2A9A)}
+.bgray{background:transparent;color:var(--muted);border:2px solid #DDD;font-size:15px;padding:10px 14px;width:auto;display:inline-block;margin:10px 0}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin:12px 0;text-align:center}
+.lead{font-weight:800;font-size:19px;line-height:1.35;margin:4px 0 8px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ptitle{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;color:var(--muted)}
+.dots{display:flex;gap:8px;justify-content:center;margin:2px 0 6px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#DDD0BE}
+.dots i.d{background:#4E9A52}.dots i.c{background:var(--wasser);transform:scale(1.25)}
+.fb{min-height:30px;font-weight:900;font-size:19px;margin:8px 0;text-align:center;line-height:1.3}
+.fb.good{color:var(--erded)}.fb.bad{color:#B8651F}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.opts.u4{grid-template-columns:repeat(2,1fr)}
+.opt{border:none;border-radius:16px;padding:16px 4px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:26px;color:#fff;cursor:pointer;box-shadow:var(--sh);background:linear-gradient(135deg,#6AAAC8,#1E5E82)}
+.opt:active{transform:scale(.96)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.good{opacity:1;background:linear-gradient(135deg,#6EA86E,#2E6228)}
+.opt.bad{opacity:1;background:linear-gradient(135deg,#E8985A,#B8651F)}
+.o-mm{background:linear-gradient(135deg,#9AA9B0,#5E7078)}.o-cm{background:linear-gradient(135deg,#E8C26A,#A8801E)}.o-m{background:linear-gradient(135deg,#6AAAC8,#1E5E82)}.o-km{background:linear-gradient(135deg,#6EA86E,#2E6228)}
+.msv,.stv{width:100%;height:auto;display:block;margin:6px auto}
+.msv{touch-action:none;background:#FFFDF8;border-radius:14px}
+.stv{max-width:360px}
+.hint{font-weight:800;color:var(--muted);font-size:16px;margin:4px 0 2px;min-height:22px}
+.ans{display:inline-block;min-width:88px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:40px;line-height:58px;border:3px solid #DDD0BE;border-radius:var(--rs);background:#fff;color:var(--erded);padding:0 10px;vertical-align:middle}
+.ans.empty{color:#CCC}
+.ans.shake{animation:shake .4s;border-color:var(--feuer)}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.big{font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;line-height:1.3;margin:6px 0}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.pad button{height:60px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:28px;border:none;border-radius:var(--rs);background:#fff;color:var(--text);box-shadow:var(--sh);cursor:pointer}
+.pad button:active{transform:scale(.94);background:#E4EEFB}
+.sl{width:100%;height:36px;accent-color:#4A96A8;margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.chip{font-weight:800;font-size:14px;padding:5px 11px;border-radius:99px;background:#FDEBE3;color:#A8431C}
+.tip{display:flex;align-items:center;gap:12px;border-radius:16px;padding:12px 14px;margin:10px 0;text-align:left;box-shadow:var(--sh)}
+.tip .te{font-size:38px}.tip b{font-family:'Fredoka',sans-serif;font-size:22px;display:block}.tip span{font-weight:700;font-size:15px;color:#5B4630}
+.sm{font-size:14px;color:var(--muted);font-weight:700}
+</style></head>
+<body><div id="app">
+
+<div id="s-home" class="sc on">
+ <div class="gh"><div class="gt">📏 Mass-Werkstatt</div><div class="gs">mm · cm · m — messen &amp; schätzen</div></div>
+ <div id="hm"></div>
+ <button class="btn bgray" onclick="location.href='index.html#mathe'">← Mathe</button>
+</div>
+
+<div id="s-play" class="sc">
+ <div class="topbar"><button class="btn bgray" onclick="go('s-home')">✕ Stopp</button><div class="ptitle" id="ptitle"></div></div>
+ <div class="dots" id="dots"></div>
+ <div id="stage"></div>
+</div>
+
+<div id="s-tips" class="sc">
+ <div class="gh"><div class="gt" style="font-size:26px">🧠 Merk-Bilder</div><div class="gs">So gross ist das ungefähr</div></div>
+ <div id="tipl"></div>
+ <button class="btn bgray" onclick="go('s-home')">← Zurück</button>
+</div>
+
+<div id="s-result" class="sc">
+ <div class="card"><div class="big" id="rs-title"></div><div class="big" id="rs-score" style="font-size:44px"></div><div class="lead" id="rs-info"></div></div>
+ <div id="rs-box"></div>
+ <div id="rs-btns"></div>
+</div>
+
+</div>
+<script>
+const KEY='roza_masse_v1',APPKEY='roza_akademie_v1';
+let ST={box:{},best:{},n:0},S=null;
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.box)ST=Object.assign(ST,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
+const $=id=>document.getElementById(id);
+const rng=n=>Math.floor(Math.random()*n);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rng(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function addScrolls(n){if(n<=0)return;try{const s=JSON.parse(localStorage.getItem(APPKEY)||'null');if(s&&typeof s.scrolls==='number'){s.scrolls+=n;localStorage.setItem(APPKEY,JSON.stringify(s));}}catch(e){}}
+function go(id){document.querySelectorAll('.sc').forEach(e=>e.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);if(id==='s-home')renderHome();}
+
+/* ---------- Daten ---------- */
+const SC=3,X0=14,RY=96,CY=56;            // 3 px pro mm, Startpunkt, Lineal-Höhe, Mitte der Gegenstände
+const OBJ={
+ pencil:{nm:'der Bleistift',draw:(x,L)=>{const n=L*SC,h=20,tip=Math.min(36,n*.25),er=Math.min(24,n*.12);
+  return `<rect x="${x}" y="${CY-h/2}" width="${er}" height="${h}" fill="#E8806A"/><rect x="${x+er}" y="${CY-h/2}" width="${n-tip-er}" height="${h}" fill="#F2C94C"/><polygon points="${x+n-tip},${CY-h/2} ${x+n},${CY} ${x+n-tip},${CY+h/2}" fill="#E8C9A0"/>`;}},
+ fish:{nm:'Sokkas Fisch',draw:(x,L)=>{const n=L*SC,ry=Math.min(22,n*.17);
+  return `<ellipse cx="${x+n*.4}" cy="${CY}" rx="${n*.4}" ry="${ry}" fill="#6AAAC8"/><polygon points="${x+n*.72},${CY} ${x+n},${CY-ry*.9} ${x+n},${CY+ry*.9}" fill="#4A96A8"/><circle cx="${x+n*.12+4}" cy="${CY-ry*.25}" r="3" fill="#fff"/><circle cx="${x+n*.12+5}" cy="${CY-ry*.25}" r="1.5" fill="#333"/>`;}},
+ stick:{nm:'Aangs Stab',draw:(x,L)=>{const n=L*SC;
+  return `<rect x="${x}" y="${CY-6}" width="${n}" height="12" rx="6" fill="#A8743C"/><rect x="${x+n*.25}" y="${CY-9}" width="8" height="18" rx="2" fill="#6B4423"/>`;}},
+ rubber:{nm:'der Radiergummi',draw:(x,L)=>{const n=L*SC;
+  return `<rect x="${x}" y="${CY-12}" width="${n/2}" height="24" rx="4" fill="#F2A6B8"/><rect x="${x+n/2}" y="${CY-12}" width="${n/2}" height="24" rx="4" fill="#6AAAC8"/>`;}},
+ scroll:{nm:'die Schriftrolle',draw:(x,L)=>{const n=L*SC;
+  return `<rect x="${x}" y="${CY-12}" width="${n}" height="24" fill="#F3E6C4" stroke="#C9A24B"/><rect x="${x}" y="${CY-16}" width="7" height="32" rx="3" fill="#A8743C"/><rect x="${x+n-7}" y="${CY-16}" width="7" height="32" rx="3" fill="#A8743C"/>`;}},
+ branch:{nm:'der Kirschblüten-Zweig',draw:(x,L)=>{const n=L*SC;
+  return `<rect x="${x}" y="${CY-3}" width="${n}" height="6" fill="#8B5A3C"/><circle cx="${x+n*.3}" cy="${CY-9}" r="8" fill="#F2A6B8"/><circle cx="${x+n*.6}" cy="${CY-9}" r="8" fill="#F7C6D3"/><circle cx="${x+n*.88}" cy="${CY-9}" r="8" fill="#F2A6B8"/>`;}}
+};
+const ZU=[
+ {id:'ameise',e:'🐜',n:'eine Ameise',u:'mm',t:'Eine Ameise ist etwa 3 mm lang.'},
+ {id:'reis',e:'🍚',n:'ein Reiskorn',u:'mm',t:'Ein Reiskorn ist etwa 7 mm lang.'},
+ {id:'muenze',e:'🪙',n:'die Dicke einer Münze',u:'mm',t:'Eine Münze ist nur etwa 2 mm dick.'},
+ {id:'geo',e:'📐',n:'die Dicke deines Geodreiecks',u:'mm',t:'Genau 1 mm — das ist dein Merk-Bild!'},
+ {id:'stift',e:'✏️',n:'einen Bleistift',u:'cm',t:'Ein Bleistift ist etwa 15 cm lang.'},
+ {id:'radier',e:'🧽',n:'einen Radiergummi',u:'cm',t:'Ein Radiergummi ist etwa 4 cm lang.'},
+ {id:'finger',e:'☝️',n:'die Dicke deines Zeigefingers',u:'cm',t:'Dein Zeigefinger ist etwa 1 cm dick.'},
+ {id:'heft',e:'📓',n:'ein Schulheft',u:'cm',t:'Ein Schulheft ist etwa 30 cm lang.'},
+ {id:'katze',e:'🐈',n:'eine Katze (Momo ist ähnlich gross)',u:'cm',t:'Eine Katze ist etwa 40 cm lang.'},
+ {id:'appa',e:'🦬',n:'Appa, den fliegenden Bison',u:'m',t:'Appa ist riesig: etwa 6 m lang.'},
+ {id:'tuer',e:'🚪',n:'die Höhe einer Tür',u:'m',t:'Eine Tür ist etwa 2 m hoch.'},
+ {id:'bus',e:'🚌',n:'die Länge eines Busses',u:'m',t:'Ein Bus ist etwa 12 m lang.'},
+ {id:'zimmer',e:'🏫',n:'die Länge deines Klassenzimmers',u:'m',t:'Ein Klassenzimmer ist etwa 8 m lang.'},
+ {id:'kind',e:'🧒',n:'die Grösse eines dreijährigen Kindes',u:'m',t:'Ein dreijähriges Kind ist etwa 1 m gross.'},
+ {id:'fuss',e:'🚶',n:'einen flotten Fussmarsch von 10 Minuten',u:'km',t:'Das sind etwa 1 km.'},
+ {id:'zug',e:'🚆',n:'die Zugfahrt von Frauenfeld nach Zürich',u:'km',t:'Das sind etwa 40 km.'},
+ {id:'wandern',e:'🥾',n:'eine lange Wanderung',u:'km',t:'Wanderungen misst man in km, zum Beispiel 12 km.'},
+ {id:'reise',e:'🌍',n:'Aangs Reise mit Appa um die Welt',u:'km',t:'Das sind viele Tausend km!'}
+];
+const U=['km','m','dm','cm','mm'],F=[1000,10,10,10];
+function fac(a,b){const i=U.indexOf(a),j=U.indexOf(b);let f=1;for(let k=Math.min(i,j);k<Math.max(i,j);k++)f*=F[k];return f;}
+const isDown=q=>U.indexOf(q.a)<U.indexOf(q.b);
+const tAns=q=>isDown(q)?q.v*fac(q.a,q.b):q.v/fac(q.a,q.b);
+const kq=q=>q.g==='mes'?`mes:${q.t}:${q.L}:${q.u}`:q.g==='tre'?`tre:${q.a}:${q.b}:${q.v}`:q.g==='zu'?`zu:${q.id}`:'';
+const boxN=()=>Object.keys(ST.box).length;
+
+/* ---------- Aufgaben erzeugen ---------- */
+function genMes(){const ts=shuffle(Object.keys(OBJ)),out=[];
+ for(let i=0;i<5;i++){let u,L;if(i<3){u='cm';L=(4+rng(9))*10;}else{u='mm';do{L=25+rng(71);}while(L%10===0);}out.push({g:'mes',t:ts[i],L,u});}return out;}
+function genSch(){const ts=shuffle(Object.keys(OBJ)),ls=shuffle([3,4,5,6,7,8,9,10,11,12]);return [0,1,2,3,4].map(i=>({g:'sch',t:ts[i],L:ls[i]*10}));}
+const TP=[()=>({a:'m',b:'cm',v:1+rng(9)}),()=>({a:'cm',b:'mm',v:2+rng(8)}),()=>({a:'dm',b:'cm',v:2+rng(8)}),()=>({a:'m',b:'dm',v:2+rng(8)}),()=>({a:'km',b:'m',v:2+rng(8)}),
+ ()=>({a:'cm',b:'m',v:(1+rng(9))*100}),()=>({a:'mm',b:'cm',v:(2+rng(8))*10}),()=>({a:'cm',b:'dm',v:(2+rng(8))*10}),()=>({a:'m',b:'km',v:(1+rng(9))*1000})];
+function genTre(){return shuffle([0,1,2,3,4,5,6,7,8]).slice(0,5).map(i=>Object.assign({g:'tre'},TP[i]()));}
+function genZu(){return shuffle(ZU).slice(0,5).map(z=>({g:'zu',id:z.id}));}
+
+/* ---------- Ablauf ---------- */
+const TITLES={mes:'📏 Messen',sch:'🎯 Schätzen',tre:'🪜 Treppe',zu:'🧺 Was passt wohin?',box:'📦 Fehlerkiste'};
+const GEN={mes:genMes,sch:genSch,tre:genTre,zu:genZu};
+function start(mode){const queue=mode==='box'?shuffle(Object.values(ST.box)).slice(0,5):GEN[mode]();
+ if(!queue.length)return;S={mode,queue,i:0,pts:0,stars:0,wrong:[]};go('s-play');show();}
+function startBox(){start('box');}
+function show(){const q=S.queue[S.i];S.locked=false;S.inp='';S.tries=0;S.snapped=false;
+ $('ptitle').textContent=TITLES[S.mode]+' · '+(S.i+1)+' von '+S.queue.length;
+ $('dots').innerHTML=S.queue.map((_,i)=>`<i class="${i<S.i?'d':i===S.i?'c':''}"></i>`).join('');
+ window.scrollTo(0,0);({mes:rMes,sch:rSch,tre:rTre,zu:rZu})[q.g](q);}
+function next(){S.i++;if(S.i>=S.queue.length)finish();else show();}
+function showNext(){$('nx').innerHTML=`<button class="btn bgreen" onclick="next()">${S.i>=S.queue.length-1?'Fertig 🌟':'Weiter ➜'}</button>`;}
+function mark(q,ok,first){S.locked=true;const k=kq(q);
+ if(ok&&first){S.pts++;delete ST.box[k];}else if(!ok){ST.box[k]=q;S.wrong.push(q);}
+ save();showNext();}
+function fb(t,c){const e=$('fb');e.textContent=t;e.className='fb '+(c||'');}
+
+/* ---------- Lineal ---------- */
+function rulerSVG(){let d='',t='';for(let m=0;m<=150;m++){const x=m*SC,l=m%10===0?16:(m%5===0?11:7);d+=`M${x} 0v${l}`;if(m%10===0&&m>0)t+=`<text x="${x}" y="34" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="12" fill="#5B4630">${m/10}</text>`;}
+ return `<rect x="0" y="0" width="${150*SC}" height="42" rx="4" fill="#FBEFC2" stroke="#C9A23E"/><path d="${d}" stroke="#7A5A1E" stroke-width="1" fill="none"/>${t}<text x="3" y="34" font-family="Nunito" font-weight="900" font-size="12" fill="#B8381F">0</text><text x="${150*SC-6}" y="14" text-anchor="end" font-family="Nunito" font-weight="800" font-size="11" fill="#8B7355">cm</text>`;}
+
+/* ---------- 1. Messen ---------- */
+function rMes(q){const o=OBJ[q.t];S.rx=X0+90+rng(60);
+ $('stage').innerHTML=`<div class="card"><div class="lead">Wie lang ist ${o.nm}? <br><span class="sm">Antwort in ${q.u}</span></div>
+ <svg id="msv" class="msv" viewBox="0 0 480 150">
+  <line x1="${X0}" y1="${CY+20}" x2="${X0}" y2="${RY}" stroke="#D45878" stroke-width="2" stroke-dasharray="4 3"/>
+  ${o.draw(X0,q.L/1)}
+  <g id="rul" transform="translate(${S.rx},${RY})" style="cursor:grab">${rulerSVG()}</g>
+ </svg>
+ <div class="hint" id="hint">🧲 Zieh das Lineal so, dass die <b>0</b> am Anfang liegt.</div>
+ <button class="bgray btn" id="help" onclick="snap()">🧲 Hilf mir</button></div>
+ <div id="ch"></div><div id="fb" class="fb"></div><div id="nx"></div>`;
+ const svg=$('msv'),g=$('rul');let drag=false,sx=0,r0=0;
+ const px=e=>e.clientX*(480/svg.getBoundingClientRect().width);
+ g.addEventListener('pointerdown',e=>{if(S.snapped)return;drag=true;sx=px(e);r0=S.rx;try{g.setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();});
+ g.addEventListener('pointermove',e=>{if(!drag||S.snapped)return;S.rx=Math.max(-30,Math.min(260,r0+px(e)-sx));g.setAttribute('transform',`translate(${S.rx},${RY})`);if(Math.abs(S.rx-X0)<=9){drag=false;snap();}});
+ g.addEventListener('pointerup',()=>{drag=false;});g.addEventListener('pointercancel',()=>{drag=false;});}
+function snap(){if(!S||S.snapped||S.queue[S.i].g!=='mes')return;S.snapped=true;S.rx=X0;
+ $('rul').setAttribute('transform',`translate(${X0},${RY})`);$('rul').style.cursor='default';$('help').style.display='none';
+ const q=S.queue[S.i],n=q.u==='cm'?q.L/10:q.L;let c=q.u==='cm'?[n-1,n,n+1]:[n-3,n,n+10];if(c[0]<1)c=[n,n+1,n+2];
+ $('hint').innerHTML='✅ Die 0 liegt am Anfang. Wo <b>endet</b> der Gegenstand?';
+ $('ch').innerHTML='<div class="opts">'+shuffle(c).map(v=>`<button class="opt" onclick="ansMes(this,${v})">${v} ${q.u}</button>`).join('')+'</div>';}
+function ansMes(b,v){if(S.locked)return;const q=S.queue[S.i],n=q.u==='cm'?q.L/10:q.L,ok=v===n;
+ document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.textContent===n+' '+q.u)x.classList.add('good');});if(!ok)b.classList.add('bad');
+ const ex=X0+q.L*SC;$('msv').insertAdjacentHTML('beforeend',`<line x1="${ex}" y1="${CY-24}" x2="${ex}" y2="${RY+4}" stroke="#2E6228" stroke-width="2.5"/>`);
+ fb(ok?`Richtig! 🌟 ${n} ${q.u}`:`Fast! 💪 Es sind ${n} ${q.u}`+(q.u==='mm'?` (${Math.floor(q.L/10)} cm und ${q.L%10} mm)`:''),ok?'good':'bad');mark(q,ok,true);}
+
+/* ---------- 2. Schätzen & Messen ---------- */
+function schSVG(q,res){const o=OBJ[q.t],showRef=S.i<2||S.ref;let s=`<svg class="msv" style="touch-action:auto" viewBox="0 0 480 ${res?150:showRef?150:100}">`;
+ let oy=0;if(!res&&showRef){s+=`<rect x="${X0}" y="8" width="${SC*10}" height="14" fill="#E8806A"/><text x="${X0+SC*10+8}" y="20" font-family="Nunito" font-weight="800" font-size="13" fill="#5B4630">1 cm = Zeigefinger ☝️</text>
+  <rect x="${X0}" y="30" width="${SC*100}" height="14" fill="#E8C26A"/><text x="${X0+SC*100+8}" y="42" font-family="Nunito" font-weight="800" font-size="13" fill="#5B4630">1 dm 🃏</text>`;oy=52;}
+ s+=`<g transform="translate(0,${oy})">${o.draw(X0,q.L)}`;
+ if(res){const est=res.est*10;s+=`<line x1="${X0+est*SC}" y1="${CY-26}" x2="${X0+est*SC}" y2="${RY+2}" stroke="#4A96A8" stroke-width="2.5" stroke-dasharray="5 3"/><line x1="${X0+q.L*SC}" y1="${CY-26}" x2="${X0+q.L*SC}" y2="${RY+2}" stroke="#2E6228" stroke-width="2.5"/><g transform="translate(${X0},${RY})">${rulerSVG()}</g>`;}
+ return s+'</g></svg>';}
+function rSch(q){S.ref=false;$('stage').innerHTML=`<div class="card"><div class="lead">Wie lang ist ${OBJ[q.t].nm}? <br><span class="sm">Schätze, ohne zu messen!</span></div>
+ <div id="sv">${schSVG(q)}</div><div class="big" id="se">8 cm</div>
+ <input class="sl" id="slr" type="range" min="1" max="14" step="1" value="8" oninput="$('se').textContent=this.value+' cm'">
+ <button class="btn bgold" id="sb" onclick="doSch()">🎯 Ich schätze — jetzt messen!</button>
+ ${S.i<2?'':'<button class="btn bgray" id="sh" onclick="S.ref=true;$(\'sv\').innerHTML=schSVG(S.queue[S.i]);this.style.display=\'none\'">💡 Hilfe zeigen</button>'}</div>
+ <div id="fb" class="fb"></div><div id="nx"></div>`;}
+function doSch(){if(S.locked)return;const q=S.queue[S.i],est=+$('slr').value,real=q.L/10,d=Math.abs(est-real),st=d===0?3:d===1?2:1;
+ S.stars+=st;if(st>=2)S.pts++;S.locked=true;$('sv').innerHTML=schSVG(q,{est});$('slr').disabled=true;$('sb').style.display='none';if($('sh'))$('sh').style.display='none';
+ fb((st===3?'Wow, genau! ':st===2?'Fast genau! ':'Gut gemessen! ')+'⭐'.repeat(st)+`\nDu: ${est} cm · Gemessen: ${real} cm`+(st===1?'\nTipp: Vergleiche mit der Spielkarte (10 cm).':''),'good');$('fb').style.whiteSpace='pre-line';showNext();}
+
+/* ---------- 3. Einheiten-Treppe ---------- */
+function stairs(a,b){const i0=U.indexOf(a),i1=U.indexOf(b),lo=Math.min(i0,i1),hi=Math.max(i0,i1),dn=i0<i1;let s='<svg viewBox="0 0 340 176" class="stv">';
+ for(let i=0;i<5;i++){const x=8+i*64,y=10+i*28,on=i>=lo&&i<=hi,end=i===i0||i===i1;
+  s+=`<rect x="${x}" y="${y}" width="64" height="${170-y}" rx="6" fill="${on?(i===i0?'#4A96A8':i===i1?'#E58A4B':'#BFE0E8'):'#EFE7DC'}"/><text x="${x+32}" y="${y+20}" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="17" fill="${on&&end?'#fff':'#5B4630'}">${U[i]}</text>`;
+  if(i<4)s+=`<text x="${x+67}" y="${y+22}" font-size="13" font-weight="800" font-family="Nunito" fill="${i>=lo&&i<hi?'#B8381F':'#B8A58C'}">${dn?'×':'÷'}${F[i]}</text>`;}
+ return s+'</svg>';}
+function expl(q){const i0=U.indexOf(q.a),i1=U.indexOf(q.b),lo=Math.min(i0,i1),hi=Math.max(i0,i1),sy=isDown(q)?'×':'÷',fs=[];for(let k=lo;k<hi;k++)fs.push(F[k]);
+ return `${q.a} ➜ ${q.b}: ${fs.map(f=>sy+f).join(' · ')} = ${sy}${fac(q.a,q.b)}`;}
+function hintTre(){const q=S.queue[S.i];$('hint').innerHTML=stairs(q.a,q.b)+`<div class="hint">${expl(q)}</div>`;if($('hb'))$('hb').style.display='none';}
+function rTre(q){S.hintOn=S.i<2;
+ $('stage').innerHTML=`<div class="card"><div class="lead">Rechne um!</div><div class="big">${q.v} ${q.a} = <span class="ans empty" id="ans">…</span> ${q.b}</div>
+ <div id="hint"></div>${S.hintOn?'':'<button class="btn bgray" id="hb" onclick="hintTre()">💡 Treppe zeigen</button>'}</div>
+ <div class="pad" id="pad"></div><div id="fb" class="fb"></div><div id="nx"></div>`;
+ $('pad').innerHTML=[1,2,3,4,5,6,7,8,9,'b',0,'ok'].map(k=>`<button onclick="press('${k}')">${k==='b'?'⌫':k==='ok'?'✓':k}</button>`).join('');
+ if(S.hintOn)hintTre();}
+function updAns(){const a=$('ans');a.textContent=S.inp||'…';a.classList.toggle('empty',!S.inp);}
+function press(k){if(!S||S.locked||S.queue[S.i].g!=='tre')return;if(k==='b')S.inp=S.inp.slice(0,-1);else if(k==='ok')return subTre();else if(S.inp.length<5)S.inp+=k;updAns();}
+function subTre(){if(S.locked||!S.inp)return;const q=S.queue[S.i],ans=tAns(q),ok=+S.inp===ans;
+ if(ok){fb('Richtig! 🌟','good');mark(q,true,S.tries===0);}
+ else if(S.tries===0){S.tries=1;S.inp='';updAns();const a=$('ans');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');hintTre();fb('Fast! 💪 Schau auf die Treppe und versuch es nochmal.','bad');}
+ else{$('ans').textContent=ans;$('ans').classList.remove('empty');hintTre();fb(`Die Lösung: ${q.v} ${q.a} = ${ans} ${q.b}`,'bad');mark(q,false,false);}}
+document.addEventListener('keydown',e=>{if(!S||!$('s-play').classList.contains('on'))return;if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace')press('b');else if(e.key==='Enter')press('ok');});
+
+/* ---------- 4. Was passt wohin ---------- */
+function rZu(q){const it=ZU.find(x=>x.id===q.id);
+ $('stage').innerHTML=`<div class="card"><div style="font-size:84px;line-height:1.15">${it.e}</div><div class="lead">Welche Einheit passt zu <b>${it.n}</b>?</div></div>
+ <div class="opts u4">${['mm','cm','m','km'].map(u=>`<button class="opt o-${u}" onclick="ansZu(this,'${u}')">${u}</button>`).join('')}</div><div id="fb" class="fb"></div><div id="nx"></div>`;}
+function ansZu(b,u){if(S.locked)return;const q=S.queue[S.i],it=ZU.find(x=>x.id===q.id),ok=u===it.u;
+ document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.textContent===it.u)x.classList.add('good');});if(!ok)b.classList.add('bad');
+ fb(ok?`Richtig! 🌟 ${it.t}`:`Fast! 💪 ${it.t} Das passt zu ${it.u}.`,ok?'good':'bad');mark(q,ok,true);}
+
+/* ---------- Ergebnis ---------- */
+function chipTxt(q){if(q.g==='mes')return OBJ[q.t].nm.replace(/^(der|die|das) /,'')+': '+(q.u==='cm'?q.L/10+' cm':q.L+' mm');
+ if(q.g==='tre')return `${q.v} ${q.a} = ${tAns(q)} ${q.b}`;const it=ZU.find(x=>x.id===q.id);return it.e+' '+it.u;}
+function finish(){const n=S.queue.length,sc=Math.floor(S.pts/3);ST.n++;ST.best[S.mode]=Math.max(ST.best[S.mode]||0,S.pts);save();addScrolls(sc);go('s-result');
+ const r=S.pts/n;$('rs-title').textContent=r>=.9?'Meisterhaft! 🌟':r>=.6?'Stark gemacht! 💪':'Gut geübt! 🌱';
+ $('rs-score').textContent=S.pts+' / '+n;
+ $('rs-info').innerHTML=(S.mode==='sch'?`${'⭐'.repeat(Math.min(S.stars,15))}<br>`:'')+(sc>0?`+${sc} 📜`:'');
+ $('rs-box').innerHTML=S.wrong.length?`<div class="card"><div class="lead">📦 Das üben wir nochmal:</div><div class="chips">${S.wrong.map(q=>`<span class="chip">${chipTxt(q)}</span>`).join('')}</div></div>`:'';
+ const m=S.mode;$('rs-btns').innerHTML=(boxN()&&m!=='box'?`<button class="btn bfire" onclick="startBox()">📦 Fehlerkiste trainieren</button>`:'')+`<button class="btn bgreen" onclick="start('${m}')">🔁 Nochmal</button><button class="btn bgray" style="display:block;width:100%" onclick="go('s-home')">🏠 Mass-Werkstatt</button>`;}
+
+/* ---------- Start & Merk-Bilder ---------- */
+function renderHome(){const B=ST.best,s=(k)=>B[k]!=null?`<small>Bestwert: ${B[k]} von 5</small>`:'';
+ $('hm').innerHTML=`<button class="btn bblue" onclick="start('mes')">📏 Messen<small>Lineal anlegen &amp; ablesen</small>${s('mes')}</button>
+ <button class="btn bgold" onclick="start('sch')">🎯 Schätzen &amp; Messen<small>Erst schätzen, dann prüfen</small>${s('sch')}</button>
+ <button class="btn bgreen" onclick="start('tre')">🪜 Einheiten-Treppe<small>Umrechnen mit Stufen</small>${s('tre')}</button>
+ <button class="btn bfire" onclick="start('zu')">🧺 Was passt wohin?<small>mm, cm, m oder km?</small>${s('zu')}</button>
+ <button class="btn bpurple" onclick="go('s-tips')">🧠 Merk-Bilder<small>So gross ist das ungefähr</small></button>`
+ +(boxN()?`<button class="btn bgray" style="display:block;width:100%" onclick="startBox()">📦 Fehlerkiste (${boxN()})</button>`:'');}
+const TIPS=[['🚶','1 km','1 km = 1000 m','ein flotter Fussmarsch, etwa 10 Minuten','#F3EBC8'],['🧒','1 m','1 m = 100 cm','so gross wie ein dreijähriges Kind','#EADBD6'],['🃏','1 dm','1 dm = 10 cm','so lang wie eine Spielkarte','#F9DAD6'],['☝️','1 cm','1 cm = 10 mm','so dick wie dein Zeigefinger','#FBE7A8'],['📐','1 mm','1 mm = 0,1 cm','so dick wie dein Geodreieck','#DCE3E2']];
+$('tipl').innerHTML=TIPS.map(t=>`<div class="tip" style="background:${t[4]}"><div class="te">${t[0]}</div><div><b>${t[1]} <span class="sm" style="color:#5B4630">· ${t[2]}</span></b><span>${t[3]}</span></div></div>`).join('');
+renderHome();
+</script>
+</body></html>
