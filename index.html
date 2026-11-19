@@ -681,6 +681,7 @@ body.calm .questcard{box-shadow:none}
  <div class="story" style="text-align:center;font-size:15px">Wähle ei·ne Unit. In je·der Unit hörst du Wör·ter, Sät·ze, Dia·lo·ge und Ge·schich·ten mit Aang, Ka·ta·ra &amp; Co. 🌬️🌊🪨🔥</div>
  <div class="menu" id="en2-units"></div>
  <button class="btn bgold" style="margin-top:4px" onclick="go('s-en-numbers')">🔢 Zah·len-Werk·statt (1 bis 20)</button>
+ <button class="btn bblue" style="margin-top:4px" onclick="location.href='body.html'">🧍 Body-Werk·statt (Kör·per·tei·le)</button>
  <button class="btn bgray" style="margin-top:4px" onclick="go('s-en-words')">🎒 Schul·wör·ter (Start)</button>
 </div>
 
@@ -5341,6 +5342,7 @@ function aqFinish(){award(2);const s=AQ.score,t=AQ.q.length;
  sfxWin();fireConfetti();}
 (function(){const btn=document.getElementById('ed-quiz-btn');if(btn)btn.onclick=startElementQuiz;})();
 
+if(location.hash==='#english')go('s-en-hub');
 </script>
 
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{reg.addEventListener('updatefound',()=>{const nw=reg.installing;nw&&nw.addEventListener('statechange',()=>{if(nw.state==='activated')location.reload();});});setInterval(()=>reg.update(),60000);});</script>

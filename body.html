@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1E5E82">
+<title>Body-Werkstatt – Avatar Lern-Akademie</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--erded:#2E6228;--card:#FDFBF8;--bg:#EAF2F7;--text:#2B3A47;--muted:#6F8496;--r:20px;--rs:12px;--sh:0 4px 16px rgba(30,94,130,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+#app{max-width:520px;margin:0 auto;padding:0 14px 50px}
+.sc{display:none}.sc.on{display:block;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.gh{text-align:center;padding:14px 10px 6px}
+.gt{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;color:#1E5E82}
+.gs{font-size:17px;color:var(--muted);font-weight:700;margin-top:4px}
+.sec{font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px;color:var(--muted);margin:16px 0 0;text-align:center}
+.btn{display:block;width:100%;padding:15px 16px;font-size:20px;font-weight:800;border:none;border-radius:var(--rs);cursor:pointer;font-family:'Nunito',sans-serif;margin:10px 0;text-align:center;line-height:1.25;color:#fff}
+.btn small{display:block;font-size:14px;font-weight:700;opacity:.92;margin-top:3px}
+.btn:active{transform:scale(.97)}
+.bgreen{background:linear-gradient(135deg,#6EA86E,#2E6228)}
+.bfire{background:linear-gradient(135deg,#E8806A,#B8381F)}
+.bblue{background:linear-gradient(135deg,#6AAAC8,#1E5E82)}
+.bgold{background:linear-gradient(135deg,#E8C26A,#A8801E)}
+.bpurple{background:linear-gradient(135deg,#A98BD6,#5B2A9A)}
+.bteal{background:linear-gradient(135deg,#5BBFB0,#1F7A6E)}
+.bgray{background:transparent;color:var(--muted);border:2px solid #CBD7E0;font-size:15px;padding:10px 14px;width:auto;display:inline-block;margin:10px 0}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin:12px 0;text-align:center}
+.card svg{display:block;margin:0 auto;height:auto;max-width:100%}
+.lead{font-weight:800;font-size:20px;line-height:1.45;margin:4px 0 8px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ptitle{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;color:var(--muted)}
+.dots{display:flex;gap:8px;justify-content:center;margin:2px 0 6px;min-height:16px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#C9D8E3}
+.dots i.d{background:#4E9A52}.dots i.c{background:#1E5E82;transform:scale(1.25)}
+.fb{min-height:30px;font-weight:900;font-size:19px;margin:8px 0;text-align:center;line-height:1.35}
+.fb.good{color:var(--erded)}.fb.bad{color:#B8651F}
+.opts{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0}
+.opt{border:none;border-radius:16px;padding:14px 10px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:26px;line-height:1.15;color:#fff;cursor:pointer;box-shadow:var(--sh);background:linear-gradient(135deg,#6AAAC8,#1E5E82)}
+.opt small{display:block;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;opacity:.92;margin-top:3px}
+.opt:active{transform:scale(.96)}.opt:disabled{cursor:default;opacity:.55}
+.opt.good,.pic.good{opacity:1;background:linear-gradient(135deg,#6EA86E,#2E6228)}
+.opt.bad{opacity:1;background:linear-gradient(135deg,#E8985A,#B8651F)}
+.pics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.pic{border:4px solid transparent;border-radius:16px;padding:6px 2px;background:#fff;cursor:pointer;box-shadow:var(--sh)}
+.pic svg{display:block;margin:0 auto;width:100%;height:auto;max-height:150px}
+.pic:active{transform:scale(.96)}.pic:disabled{cursor:default}
+.pic.good{border-color:#2E6228;background:#E3F1E1}.pic.bad{border-color:#D98B3F;background:#FCEFE0}
+.mi{background:#E4EEFB;border-radius:12px;padding:8px 10px;margin:6px 0;text-align:left;font-weight:700;font-size:16px;line-height:1.4}
+.mi b{display:block;color:#1E5E82;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.chip{font-weight:800;font-size:14px;padding:5px 11px;border-radius:99px;background:#DCEBF5;color:#1E5E82}
+.big{font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;line-height:1.3;margin:6px 0}
+.sm{font-size:14px;color:var(--muted);font-weight:700}
+.resp{font-weight:900;font-size:21px;color:#B8651F;margin:2px 0}
+.bub{background:#E4EEFB;border-radius:14px;padding:10px 12px;margin:10px 0;text-align:left;font-weight:700;font-size:17px;line-height:1.45}
+.bub u{text-decoration:none;background:#FFE08A;border-radius:6px;padding:0 4px;font-weight:900}
+.nav{display:flex;gap:10px}.nav .btn{margin:6px 0}
+/* Highlights */
+.h{fill:rgba(255,140,0,.38);stroke:#E8590C;stroke-width:3.5}
+.hp{fill:none;stroke:rgba(255,140,0,.45);stroke-width:26;stroke-linecap:round;stroke-linejoin:round}
+.hs{fill:none;stroke:rgba(255,140,0,.6);stroke-width:14;stroke-linecap:round}
+.hr{fill:none;stroke:#E8590C;stroke-width:4;stroke-dasharray:9 6}
+/* Wort-Suche */
+.grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:10px 0}
+.cell{aspect-ratio:1;border:none;border-radius:9px;background:#fff;box-shadow:var(--sh);font-family:'Fredoka',sans-serif;font-weight:600;font-size:22px;color:var(--text);cursor:pointer;padding:0}
+.cell.s{background:#FFE08A}.cell.f{background:#9BD19B;color:#1C4A1C}.cell.tip{background:#FFD24D;outline:3px solid #E8590C}
+.tgs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.tg{width:92px;background:#fff;border-radius:14px;padding:6px 4px;text-align:center;box-shadow:var(--sh)}
+.tg svg{display:block;margin:0 auto;width:58px;height:auto}
+.tg .de{font-weight:800;font-size:13px;color:var(--muted)}
+.tg .sl{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;color:#8AA0B2;min-height:22px}
+.tg.f{background:#E3F1E1}.tg.f .sl{color:#2E6228}
+</style></head>
+<body><div id="app">
+
+<div id="s-home" class="sc on">
+ <div class="gh"><div class="gt">🧍 Body-Werkstatt</div><div class="gs">Kör·per·tei·le auf Eng·lisch – mit Team Avatar</div></div>
+ <div id="hm"></div>
+ <button class="btn bgray" onclick="location.href='index.html#english'">← English</button>
+</div>
+
+<div id="s-learn" class="sc">
+ <div class="topbar"><button class="btn bgray" onclick="go('s-home')">✕ Stopp</button><div class="ptitle" id="ltitle"></div></div>
+ <div class="card">
+  <div id="lpic"></div>
+  <div class="big" id="lw"></div>
+  <div class="resp" id="lresp"></div>
+  <div class="sm" id="lde"></div>
+  <button class="btn bblue" onclick="hearW()">🔊 Wort hören</button>
+  <div class="bub" id="lbub"></div>
+  <button class="btn bpurple" onclick="hearS()">🎭 Satz hören</button>
+  <div class="sm">Sprich laut nach! 🗣️</div>
+ </div>
+ <div class="nav"><button class="btn bgray" id="lprev" onclick="stepL(-1)">←</button><button class="btn bgreen" id="lnext" onclick="stepL(1)"></button></div>
+</div>
+
+<div id="s-play" class="sc">
+ <div class="topbar"><button class="btn bgray" onclick="go('s-home')">✕ Stopp</button><div class="ptitle" id="ptitle"></div></div>
+ <div class="dots" id="dots"></div>
+ <div id="stage"></div>
+</div>
+
+<div id="s-search" class="sc">
+ <div class="topbar"><button class="btn bgray" onclick="go('s-home')">✕ Stopp</button><div class="ptitle">🔍 Wort-Su·che</div></div>
+ <div class="sm" style="text-align:center">Tippe auf den ers·ten und dann auf den letz·ten Buch·sta·ben. Wörter gehen → oder ↓ (auch rück·wärts).</div>
+ <div class="tgs" id="tgs"></div>
+ <div class="grid" id="grid"></div>
+ <div class="fb" id="sfb"></div>
+ <button class="btn bgold" onclick="tipS()">💡 Hilf mir</button>
+</div>
+
+<div id="s-result" class="sc">
+ <div class="card"><div class="big" id="rs-title"></div><div class="big" id="rs-score" style="font-size:44px"></div><div class="lead" id="rs-info"></div></div>
+ <div id="rs-box"></div>
+ <div id="rs-btns"></div>
+</div>
+
+</div>
+<script>
+const KEY='roza_body_v1',APPKEY='roza_akademie_v1';
+let ST={box:{},best:{},seen:{},n:0},S=null,L=null,SR=null;
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.box)ST=Object.assign(ST,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
+const $=id=>document.getElementById(id);
+const rng=n=>Math.floor(Math.random()*n);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rng(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+const pick=(a,n)=>shuffle(a).slice(0,n);
+function addScrolls(n){if(n<=0)return;try{const s=JSON.parse(localStorage.getItem(APPKEY)||'null');if(s&&typeof s.scrolls==='number'){s.scrolls+=n;localStorage.setItem(APPKEY,JSON.stringify(s));}}catch(e){}}
+function go(id){try{if(window.speechSynthesis)speechSynthesis.cancel();}catch(e){}document.querySelectorAll('.sc').forEach(e=>e.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);if(id==='s-home')renderHome();}
+const boxN=()=>Object.keys(ST.box).length;
+function fb(t,c,id){const e=$(id||'fb');if(e){e.textContent=t;e.className='fb '+(c||'');}}
+
+/* ---------- Sprache (Englisch) ---------- */
+let voice=null;const TTS=('speechSynthesis' in window);
+function pickVoice(){try{const vs=speechSynthesis.getVoices()||[];const f=l=>vs.find(v=>(v.lang||'').replace('_','-').toLowerCase().indexOf(l)===0);voice=f('en-gb')||f('en-us')||f('en')||null;}catch(e){}}
+if(TTS){pickVoice();try{speechSynthesis.onvoiceschanged=pickVoice;}catch(e){}}
+const FIX=[[/Iroh/g,'Eye-roh'],[/Aang/g,'Ahng'],[/Katara/g,'Ka-tah-ra'],[/Sokka/g,'Sock-a'],[/Toph/g,'Tohf'],[/Zuko/g,'Zoo-koh'],[/Appa/g,'Ap-pa']];
+function say(t,rate,cb){if(!TTS){cb&&cb();return;}try{speechSynthesis.cancel();FIX.forEach(f=>{t=t.replace(f[0],f[1]);});const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';if(voice){u.voice=voice;u.lang=voice.lang;}u.rate=rate||.8;if(cb){u.onend=cb;u.onerror=cb;}speechSynthesis.speak(u);}catch(e){cb&&cb();}}
+function sayWS(x){say(x.w,.7,()=>setTimeout(()=>say(x.s,.85),300));}
+
+/* ---------- Wörter ---------- */
+const CH={Aang:'💨',Katara:'💧',Sokka:'🪃',Toph:'🪨',Zuko:'🔥',Iroh:'🍵',Appa:'🦬',Momo:'🐒'};
+const PACKS={
+ kopf:{t:'Kopf & Ge·sicht',e:'🧑',c:'bblue',d:'7 Wör·ter'},
+ arme:{t:'Schul·tern, Ar·me & Hän·de',e:'💪',c:'bteal',d:'6 Wör·ter'},
+ rumpf:{t:'Bauch, Rü·cken & Bei·ne',e:'🦵',c:'bpurple',d:'6 Wör·ter'}};
+// [wort, deutsch, Aussprache, Bild, Figur, Satz, Paket, th]
+const WORDS=[
+ ['head','Kopf','häd','body','Aang','Aang has an arrow on his head.','kopf'],
+ ['eyebrow','Au·gen·brau·e','AI-brau','face','Zuko','Zuko lifts one eyebrow.','kopf'],
+ ['ear','Ohr','ier','face','Momo','Momo has a big ear.','kopf'],
+ ['mouth','Mund','mauth','face','Appa','Appa opens his mouth and roars.','kopf',1],
+ ['teeth','Zäh·ne','tiith','face','Sokka','Sokka brushes his teeth.','kopf',1],
+ ['tongue','Zun·ge','tang','face','Momo','Momo sticks out his tongue.','kopf'],
+ ['neck','Hals','näk','body','Katara','Katara wears a necklace on her neck.','kopf'],
+ ['shoulders','Schul·tern','SCHOUL-dörs','body','Iroh',"Iroh puts his hands on Zuko's shoulders.",'arme'],
+ ['arm','Arm','ahm','body','Katara','Katara moves her arm and the water follows.','arme'],
+ ['elbow','Ell·bo·gen','ÄL-bou','body','Sokka','Sokka hits his elbow on a rock.','arme'],
+ ['hand','Hand','händ','hand','Zuko','Zuko makes fire with his hand.','arme'],
+ ['finger','Fin·ger','FING-ger','hand','Toph','Toph points with one finger.','arme'],
+ ['thumb','Dau·men','thamm','hand','Aang','Aang shows his thumb up.','arme',1],
+ ['back','Rü·cken','bäk','back','Aang',"Aang sits on Appa's back.",'rumpf'],
+ ['belly','Bauch','BÄ-li','body','Appa','Appa has a soft belly.','rumpf'],
+ ['bottom','Po','BO-tom','back','Momo','Momo sits on his bottom.','rumpf'],
+ ['leg','Bein','läg','body','Toph','Toph stamps the ground with her leg.','rumpf'],
+ ['foot','Fuss','fut','foot','Toph','Toph feels the earth with her foot.','rumpf'],
+ ['toe','Zeh','tou','foot','Sokka','Sokka hurts his toe.','rumpf']
+].map(a=>({w:a[0],de:a[1],r:a[2],v:a[3],ch:a[4],s:a[5],p:a[6],th:!!a[7]}));
+const byW=w=>WORDS.find(x=>x.w===w);
+
+/* ---------- Bilder (SVG) ---------- */
+const SK='#F2C198',SD='#D9A074',HAIR='#4A2E1B';
+function bodyBase(back){return `<g stroke-linecap="round" stroke-linejoin="round">
+<line x1="68" y1="100" x2="46" y2="142" stroke="${SK}" stroke-width="18"/><line x1="46" y1="142" x2="40" y2="186" stroke="${SK}" stroke-width="16"/><circle cx="40" cy="196" r="10" fill="${SK}"/>
+<line x1="132" y1="100" x2="154" y2="142" stroke="${SK}" stroke-width="18"/><line x1="154" y1="142" x2="160" y2="186" stroke="${SK}" stroke-width="16"/><circle cx="160" cy="196" r="10" fill="${SK}"/>
+<line x1="86" y1="176" x2="84" y2="262" stroke="${SK}" stroke-width="24"/><line x1="114" y1="176" x2="116" y2="262" stroke="${SK}" stroke-width="24"/>
+<ellipse cx="78" cy="272" rx="17" ry="8" fill="#8A5A3C"/><ellipse cx="122" cy="272" rx="17" ry="8" fill="#8A5A3C"/>
+<rect x="92" y="66" width="16" height="22" fill="${SK}"/>
+<rect x="64" y="84" width="72" height="96" rx="20" fill="#4F8FC6"/>
+<rect x="66" y="166" width="68" height="34" rx="10" fill="#6C4E9B"/>
+<circle cx="100" cy="42" r="28" fill="${back?HAIR:SK}"/>
+${back?'':`<circle cx="91" cy="38" r="3" fill="#2B3A47"/><circle cx="109" cy="38" r="3" fill="#2B3A47"/><path d="M92 50 Q100 57 108 50" fill="none" stroke="#B5533C" stroke-width="3"/>`}
+</g>`;}
+const BASE={
+ body:bodyBase(false),back:bodyBase(true),
+ face:`<circle cx="28" cy="108" r="13" fill="${SK}"/><circle cx="172" cy="108" r="13" fill="${SK}"/><circle cx="100" cy="100" r="70" fill="${SK}"/>
+<path d="M30 92 Q30 28 100 28 Q170 28 170 92 Q150 55 100 55 Q50 55 30 92Z" fill="${HAIR}"/>
+<circle cx="75" cy="92" r="6" fill="#2B3A47"/><circle cx="125" cy="92" r="6" fill="#2B3A47"/>
+<path d="M60 76 Q75 64 90 74" fill="none" stroke="${HAIR}" stroke-width="5" stroke-linecap="round"/><path d="M110 74 Q125 64 140 76" fill="none" stroke="${HAIR}" stroke-width="5" stroke-linecap="round"/>
+<path d="M100 98 Q93 112 102 114" fill="none" stroke="${SD}" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="100" cy="142" rx="28" ry="17" fill="#8B2E2E"/><rect x="80" y="127" width="40" height="11" rx="4" fill="#fff"/><ellipse cx="100" cy="151" rx="16" ry="8" fill="#F06A7A"/>`,
+ hand:`<rect x="62" y="98" width="86" height="72" rx="24" fill="${SK}"/><rect x="64" y="42" width="19" height="70" rx="9.5" fill="${SK}"/><rect x="86" y="28" width="19" height="84" rx="9.5" fill="${SK}"/><rect x="108" y="34" width="19" height="78" rx="9.5" fill="${SK}"/><rect x="130" y="52" width="18" height="60" rx="9" fill="${SK}"/><ellipse cx="58" cy="122" rx="14" ry="34" transform="rotate(-38 58 122)" fill="${SK}"/><rect x="72" y="160" width="58" height="34" rx="10" fill="#4F8FC6"/>`,
+ foot:`<ellipse cx="100" cy="135" rx="52" ry="62" fill="${SK}"/><g stroke="${SD}" stroke-width="2" fill="${SK}"><circle cx="74" cy="62" r="15"/><circle cx="100" cy="54" r="11"/><circle cx="120" cy="58" r="10"/><circle cx="137" cy="68" r="9"/><circle cx="150" cy="82" r="8"/></g>`
+};
+const HL={
+ head:'<circle class="h" cx="100" cy="42" r="34"/>',
+ neck:'<ellipse class="h" cx="100" cy="77" rx="15" ry="13"/>',
+ shoulders:'<circle class="h" cx="68" cy="98" r="19"/><circle class="h" cx="132" cy="98" r="19"/>',
+ arm:'<polyline class="hp" points="68,100 46,142 40,186"/><polyline class="hp" points="132,100 154,142 160,186"/>',
+ elbow:'<circle class="h" cx="46" cy="142" r="16"/><circle class="h" cx="154" cy="142" r="16"/>',
+ belly:'<ellipse class="h" cx="100" cy="150" rx="30" ry="22"/>',
+ leg:'<polyline class="hp" points="86,182 84,262"/><polyline class="hp" points="114,182 116,262"/>',
+ back:'<ellipse class="h" cx="100" cy="125" rx="34" ry="40"/>',
+ bottom:'<ellipse class="h" cx="88" cy="186" rx="17" ry="15"/><ellipse class="h" cx="112" cy="186" rx="17" ry="15"/>',
+ eyebrow:'<path class="hs" d="M60 76 Q75 64 90 74"/><path class="hs" d="M110 74 Q125 64 140 76"/>',
+ ear:'<circle class="h" cx="28" cy="108" r="19"/><circle class="h" cx="172" cy="108" r="19"/>',
+ mouth:'<ellipse class="hr" cx="100" cy="142" rx="42" ry="28"/>',
+ teeth:'<rect class="h" x="76" y="123" width="48" height="19" rx="6"/>',
+ tongue:'<ellipse class="h" cx="100" cy="152" rx="21" ry="11"/>',
+ hand:'<ellipse class="hr" cx="98" cy="108" rx="72" ry="90"/>',
+ finger:'<rect class="h" x="60" y="38" width="27" height="78" rx="13"/>',
+ thumb:'<ellipse class="h" cx="58" cy="122" rx="18" ry="38" transform="rotate(-38 58 122)"/>',
+ foot:'<ellipse class="hr" cx="100" cy="108" rx="68" ry="90"/>',
+ toe:'<circle class="h" cx="74" cy="62" r="21"/>'
+};
+function fig(w,px){const x=byW(w),tall=(x.v==='body'||x.v==='back');return `<svg viewBox="0 0 200 ${tall?300:200}" style="width:${px}px" role="img" aria-label="${w}">${BASE[x.v]}${HL[w]}</svg>`;}
+
+/* ---------- Lern-Karten ---------- */
+function startLearn(p){L={p,list:WORDS.filter(x=>x.p===p),i:0};go('s-learn');showL();}
+function showL(){const x=L.list[L.i],n=L.list.length;
+ $('ltitle').textContent=(L.i+1)+' / '+n;$('lpic').innerHTML=fig(x.w,x.v==='body'||x.v==='back'?150:190);
+ $('lw').textContent=x.w;$('lresp').innerHTML='🗣️ '+x.r+(x.th?'<div class="sm">th = Zun·ge zwi·schen die Zäh·ne 👅</div>':'');$('lde').textContent=x.de;
+ $('lbub').innerHTML=`<b>${CH[x.ch]} ${x.ch}:</b> „${x.s.replace(new RegExp('\\b'+x.w+'\\b','i'),m=>'<u>'+m+'</u>')}“`;
+ $('lprev').style.visibility=L.i?'visible':'hidden';$('lnext').textContent=L.i<n-1?'Weiter →':'Fertig 🌟';
+ setTimeout(()=>say(x.w,.7),250);}
+function hearW(){say(L.list[L.i].w,.65);}
+function hearS(){say(L.list[L.i].s,.8);}
+function stepL(d){const n=L.list.length;if(d>0&&L.i===n-1){ST.seen[L.p]=1;save();go('s-home');return;}L.i=Math.max(0,Math.min(n-1,L.i+d));showL();}
+
+/* ---------- Quiz ---------- */
+function start(mode){const pool=mode==='box'?Object.keys(ST.box).map(byW).filter(Boolean):WORDS;
+ const ws=pick(pool,5);S={mode,queue:ws.map(x=>({t:mode==='box'?(rng(2)?'hoer':'wort'):mode,w:x.w})),i:0,pts:0,wrong:[],locked:false};go('s-play');show();}
+function startBox(){start('box');}
+function dots(){$('dots').innerHTML=S.queue.map((q,i)=>`<i class="${i<S.i?'d':i===S.i?'c':''}"></i>`).join('');}
+function show(){const q=S.queue[S.i],x=byW(q.w);S.locked=false;dots();
+ $('ptitle').textContent=q.t==='hoer'?'🎧 Bild fin·den':'👀 Wort fin·den';
+ let h='';
+ if(q.t==='hoer'){const o=shuffle([x].concat(pick(WORDS.filter(y=>y.w!==x.w&&y.v!==x.v),2)));
+  h=`<div class="card"><div class="lead">Hör zu! Welches Bild passt?</div><button class="btn bgold" onclick="hearQ()">🔊 Hören</button></div><div class="pics">${o.map(y=>`<button class="pic" data-w="${y.w}" onclick="ans(this.dataset.w)">${fig(y.w,110)}</button>`).join('')}</div>`;}
+ else{const same=WORDS.filter(y=>y.w!==x.w&&y.v===x.v);let oth=pick(same,2);if(oth.length<2)oth=oth.concat(pick(WORDS.filter(y=>y.w!==x.w&&y.v!==x.v),2-oth.length));
+  const o=shuffle([x].concat(oth));
+  h=`<div class="card">${fig(x.w,x.v==='body'||x.v==='back'?150:190)}<div class="lead">Wie heisst das auf Eng·lisch?</div><button class="btn bgold" onclick="hearQ()">🔊 Hören</button></div><div class="opts">${o.map(y=>`<button class="opt" data-w="${y.w}" onclick="ans(this.dataset.w)">${y.w}<small>${y.r}</small></button>`).join('')}</div>`;}
+ $('stage').innerHTML=h+'<div class="fb" id="fb"></div><div id="after"></div>';
+ if(q.t==='hoer')setTimeout(hearQ,300);}
+function hearQ(){const q=S&&S.queue[S.i];if(q&&$('s-play').classList.contains('on'))say(q.w,.65);}
+function ans(w){if(S.locked)return;S.locked=true;const q=S.queue[S.i],x=byW(q.w),ok=w===q.w;
+ document.querySelectorAll('#stage [data-w]').forEach(b=>{b.disabled=true;if(b.dataset.w===q.w)b.classList.add('good');else if(b.dataset.w===w)b.classList.add('bad');});
+ fb(ok?'Richtig! 🌟':'Fast! 💪 Das ist: '+x.w+' = '+x.de.replace(/·/g,''),ok?'good':'bad');
+ $('after').innerHTML=`<div class="mi"><b>${CH[x.ch]} ${x.ch} sagt:</b>„${x.s}“</div><button class="btn bgreen" onclick="nextQ()">Weiter →</button>`;
+ mark(q,ok);sayWS(x);}
+function mark(q,ok){if(ok){S.pts++;delete ST.box[q.w];}else{S.wrong.push(byW(q.w));ST.box[q.w]=1;}save();}
+function nextQ(){S.i++;if(S.i>=S.queue.length)finish();else show();}
+
+/* ---------- Wort-Suche ---------- */
+const N=9,FILL='ABCDEFGHIKLMNOPRSTUW';
+function startSearch(){const ws=pick(WORDS,5);let g,pl,ok=false;
+ for(let tries=0;tries<300&&!ok;tries++){g=Array.from({length:N},()=>Array(N).fill(''));pl=[];ok=true;
+  for(const x of shuffle(ws)){const W=x.w.toUpperCase();let placed=false;
+   for(let t=0;t<80&&!placed;t++){const hz=rng(2)===0,r=rng(hz?N:N-W.length+1),c=rng(hz?N-W.length+1:N);let fit=true;
+    for(let k=0;k<W.length;k++){const a=g[hz?r:r+k][hz?c+k:c];if(a&&a!==W[k]){fit=false;break;}}
+    if(fit){for(let k=0;k<W.length;k++)g[hz?r:r+k][hz?c+k:c]=W[k];pl.push({w:x.w,r,c,hz});placed=true;}}
+   if(!placed){ok=false;break;}}}
+ for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!g[r][c])g[r][c]=FILL[rng(FILL.length)];
+ SR={g,pl,found:{},sel:null,tip:null};go('s-search');fb('','','sfb');
+ $('tgs').innerHTML=pl.map(p=>{const x=byW(p.w);return `<div class="tg" id="tg-${p.w}">${fig(p.w,58)}<div class="de">${x.de}</div><div class="sl" id="sl-${p.w}">${'_ '.repeat(p.w.length).trim()}</div></div>`;}).join('');
+ $('grid').innerHTML=g.map((row,r)=>row.map((ch,c)=>`<button class="cell" id="c-${r}-${c}" onclick="cell(${r},${c})">${ch}</button>`).join('')).join('');}
+function paintS(){document.querySelectorAll('.cell.s,.cell.tip').forEach(e=>e.classList.remove('s','tip'));
+ if(SR.sel)$(`c-${SR.sel[0]}-${SR.sel[1]}`).classList.add('s');
+ if(SR.tip)$(`c-${SR.tip[0]}-${SR.tip[1]}`).classList.add('tip');}
+function cell(r,c){if(!SR)return;SR.tip=null;
+ if(!SR.sel||(SR.sel[0]!==r&&SR.sel[1]!==c)){SR.sel=[r,c];paintS();return;}
+ const r0=SR.sel[0],c0=SR.sel[1];if(r0===r&&c0===c){SR.sel=null;paintS();return;}
+ const dr=Math.sign(r-r0),dc=Math.sign(c-c0);let rr=r0,cc=c0,s='',cells=[];
+ for(;;){s+=SR.g[rr][cc];cells.push([rr,cc]);if(rr===r&&cc===c)break;rr+=dr;cc+=dc;}
+ const rev=s.split('').reverse().join('');
+ const hit=SR.pl.find(p=>!SR.found[p.w]&&(p.w.toUpperCase()===s||p.w.toUpperCase()===rev));
+ SR.sel=null;paintS();
+ if(hit){SR.found[hit.w]=1;cells.forEach(a=>$(`c-${a[0]}-${a[1]}`).classList.add('f'));
+  $('tg-'+hit.w).classList.add('f');$('sl-'+hit.w).textContent=hit.w.toUpperCase();
+  const left=SR.pl.filter(p=>!SR.found[p.w]).length;
+  fb(left?'Gefunden! 🌟 Noch '+left+'.':'Alle gefunden! 🏆','good','sfb');
+  if(left){say(hit.w,.7);}else{const x=byW(hit.w);say(hit.w,.7,()=>setTimeout(()=>{S={mode:'search',queue:[1,1,1,1,1],pts:5,wrong:[]};finish();},400));}}
+ else fb('Noch nicht – probier es nochmal. 💡 Hilf mir hilft!','bad','sfb');}
+function tipS(){if(!SR)return;const p=SR.pl.find(p=>!SR.found[p.w]);if(!p)return;SR.sel=null;SR.tip=[p.r,p.c];paintS();fb('Gelb: Hier fängt „'+byW(p.w).de.replace(/·/g,'')+'“ an.','good','sfb');}
+
+/* ---------- Ergebnis ---------- */
+function finish(){const n=S.queue.length,sc=Math.floor(S.pts/3);ST.n++;ST.best[S.mode]=Math.max(ST.best[S.mode]||0,S.pts);save();addScrolls(sc);go('s-result');
+ const r=S.pts/n;$('rs-title').textContent=r>=.9?'Meisterhaft! 🌟':r>=.6?'Stark gemacht! 💪':'Gut geübt! 🌱';$('rs-score').textContent=S.pts+' / '+n;$('rs-info').innerHTML=sc>0?`+${sc} 📜`:'';
+ $('rs-box').innerHTML=S.wrong.length?`<div class="card"><div class="lead">📦 Das üben wir nochmal:</div><div class="chips">${S.wrong.map(q=>`<span class="chip">${q.w} = ${q.de.replace(/·/g,'')}</span>`).join('')}</div></div>`:'';
+ const m=S.mode;$('rs-btns').innerHTML=(boxN()&&m!=='box'?`<button class="btn bfire" onclick="startBox()">📦 Fehlerkiste trainieren</button>`:'')+(m==='search'?`<button class="btn bgreen" onclick="startSearch()">🔁 Nochmal</button>`:m!=='box'?`<button class="btn bgreen" onclick="start('${m}')">🔁 Nochmal</button>`:'')+`<button class="btn bgray" style="display:block;width:100%" onclick="go('s-home')">← Body-Werkstatt</button>`;}
+function renderHome(){const B=ST.best;
+ const bs=k=>B[k]!=null?`<small>Bestwert: ${B[k]} von 5</small>`:'';
+ $('hm').innerHTML=`<div class="sec">1 · Ken·nen·ler·nen</div>`+Object.keys(PACKS).map(k=>{const P=PACKS[k];return `<button class="btn ${P.c}" onclick="startLearn('${k}')">${P.e} ${P.t}<small>${P.d}${ST.seen[k]?' · ✅ geschafft':''}</small></button>`;}).join('')
+ +`<div class="sec">2 · Üben</div>`
+ +`<button class="btn bgold" onclick="start('hoer')">🎧 Hören &amp; Bild fin·den${bs('hoer')}</button>`
+ +`<button class="btn bgreen" onclick="start('wort')">👀 Bild sehen &amp; Wort fin·den${bs('wort')}</button>`
+ +`<button class="btn bfire" onclick="startSearch()">🔍 Wort-Su·che${bs('search')}</button>`
+ +(boxN()?`<button class="btn bgray" style="display:block;width:100%" onclick="startBox()">📦 Fehlerkiste (${boxN()})</button>`:'');}
+renderHome();
+</script>
+</body></html>
