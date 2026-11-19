@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#C8643C">
+<title>Deutsch-Werkstatt – Avatar Lern-Akademie</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--erded:#2E6228;--card:#FDFBF8;--bg:#F5EDE6;--text:#3D2817;--muted:#8B7355;--r:20px;--rs:12px;--sh:0 4px 16px rgba(120,60,80,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+#app{max-width:520px;margin:0 auto;padding:0 14px 50px}
+.sc{display:none}.sc.on{display:block;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.gh{text-align:center;padding:14px 10px 6px}
+.gt{font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;color:#A8431C}
+.gs{font-size:17px;color:var(--muted);font-weight:700;margin-top:4px}
+.btn{display:block;width:100%;padding:15px 16px;font-size:20px;font-weight:800;border:none;border-radius:var(--rs);cursor:pointer;font-family:'Nunito',sans-serif;margin:10px 0;text-align:center;line-height:1.25;color:#fff}
+.btn small{display:block;font-size:14px;font-weight:700;opacity:.92;margin-top:3px}
+.btn:active{transform:scale(.97)}
+.bgreen{background:linear-gradient(135deg,#6EA86E,#2E6228)}
+.bfire{background:linear-gradient(135deg,#E8806A,#B8381F)}
+.bblue{background:linear-gradient(135deg,#6AAAC8,#1E5E82)}
+.bgold{background:linear-gradient(135deg,#E8C26A,#A8801E)}
+.bpurple{background:linear-gradient(135deg,#A98BD6,#5B2A9A)}
+.bteal{background:linear-gradient(135deg,#5BBFB0,#1F7A6E)}
+.bgray{background:transparent;color:var(--muted);border:2px solid #DDD;font-size:15px;padding:10px 14px;width:auto;display:inline-block;margin:10px 0}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin:12px 0;text-align:center}
+.lead{font-weight:800;font-size:20px;line-height:1.45;margin:4px 0 8px}
+.lead b{color:#A8431C}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ptitle{font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;color:var(--muted)}
+.dots{display:flex;gap:8px;justify-content:center;margin:2px 0 6px;min-height:16px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#DDD0BE}
+.dots i.d{background:#4E9A52}.dots i.c{background:#C8643C;transform:scale(1.25)}
+.fb{min-height:30px;font-weight:900;font-size:19px;margin:8px 0;text-align:center;line-height:1.35}
+.fb.good{color:var(--erded)}.fb.bad{color:#B8651F}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.opts.u2{grid-template-columns:repeat(2,1fr)}.opts.v1{grid-template-columns:1fr}
+.opt{border:none;border-radius:16px;padding:15px 6px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:23px;line-height:1.2;color:#fff;cursor:pointer;box-shadow:var(--sh);background:linear-gradient(135deg,#6AAAC8,#1E5E82)}
+.opts.v1 .opt{font-size:20px;padding:14px 10px}
+.opt:active{transform:scale(.96)}.opt:disabled{cursor:default;opacity:.55}
+.opt.good{opacity:1;background:linear-gradient(135deg,#6EA86E,#2E6228)}
+.opt.bad{opacity:1;background:linear-gradient(135deg,#E8985A,#B8651F)}
+.qt{font-family:'Fredoka',sans-serif;font-weight:600;font-size:24px;color:var(--text)}
+.mc{text-align:left;font-weight:700;font-size:17px;line-height:1.5;margin:6px 0}
+.mc div{background:#FBF3EA;border-radius:12px;padding:8px 12px;margin:6px 0}
+.pool{display:grid;gap:8px;margin:10px 0}
+.chipb{border:none;border-radius:14px;padding:13px;font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;line-height:1.35;background:#fff;color:var(--text);box-shadow:var(--sh);text-align:left;cursor:pointer}
+.chipb:disabled{opacity:.35}.chipb.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.mi{background:#E4EEFB;border-radius:12px;padding:8px 10px;margin:6px 0;text-align:left;font-weight:700;font-size:16px}
+.mi b{display:block;color:#1E5E82;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.chip{font-weight:800;font-size:14px;padding:5px 11px;border-radius:99px;background:#FDEBE3;color:#A8431C}
+.big{font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;line-height:1.3;margin:6px 0}
+.sm{font-size:14px;color:var(--muted);font-weight:700}
+</style></head>
+<body><div id="app">
+
+<div id="s-home" class="sc on">
+ <div class="gh"><div class="gt">🧩 Deutsch-Werkstatt</div><div class="gs">Wörter, Sätze, Reime &amp; Geschichten</div></div>
+ <div id="hm"></div>
+ <button class="btn bgray" onclick="location.href='index.html#deutsch'">← Deutsch</button>
+</div>
+
+<div id="s-play" class="sc">
+ <div class="topbar"><button class="btn bgray" onclick="go('s-home')">✕ Stopp</button><div class="ptitle" id="ptitle"></div></div>
+ <div class="dots" id="dots"></div>
+ <div id="stage"></div>
+</div>
+
+<div id="s-result" class="sc">
+ <div class="card"><div class="big" id="rs-title"></div><div class="big" id="rs-score" style="font-size:44px"></div><div class="lead" id="rs-info"></div></div>
+ <div id="rs-box"></div>
+ <div id="rs-btns"></div>
+</div>
+
+</div>
+<script>
+const KEY='roza_deutsch_v1',APPKEY='roza_akademie_v1';
+let ST={box:{},best:{},n:0},S=null;
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.box)ST=Object.assign(ST,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
+const $=id=>document.getElementById(id);
+const rng=n=>Math.floor(Math.random()*n);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rng(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+const pick=(a,n)=>shuffle(a).slice(0,n);
+const h=s=>{let x=0;for(let i=0;i<s.length;i++)x=(x*31+s.charCodeAt(i))|0;return (x>>>0).toString(36);};
+const uniq=a=>a.filter((x,i)=>a.indexOf(x)===i);
+function addScrolls(n){if(n<=0)return;try{const s=JSON.parse(localStorage.getItem(APPKEY)||'null');if(s&&typeof s.scrolls==='number'){s.scrolls+=n;localStorage.setItem(APPKEY,JSON.stringify(s));}}catch(e){}}
+function go(id){document.querySelectorAll('.sc').forEach(e=>e.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);if(id==='s-home')renderHome();}
+const boxN=()=>Object.keys(ST.box).length;
+
+/* ---------- Aufgaben-Bausteine ---------- */
+function MC(p,q,o,a,tip,e,lab){return {g:'mc',p,k:p+':'+h(q+a),q,o:uniq(o),a,tip:tip||'',e:e||'',lab:lab||a};}
+const ORD_LAB=['✨ Überschrift','📍 Einleitung','🔥 Hauptteil','🏁 Schluss'];
+
+/* ---- Verben ---- */
+const TUN=[['springt','Berg','blau'],['brennt','Feuer','Appa'],['kocht','Reis','warm'],['schleudert','laut','Toph'],['klettert','Momo','klein'],['lacht','Wolke','gross'],['rennt','Insel','süss'],['schneidet','Schwert','scharf'],['plant','Sokka','hell'],['fliegt','Aang','Wind']];
+const V={fliegen:['fliege','fliegst','fliegt','fliegen','fliegt'],springen:['springe','springst','springt','springen','springt'],kochen:['koche','kochst','kocht','kochen','kocht'],laufen:['laufe','läufst','läuft','laufen','lauft'],fahren:['fahre','fährst','fährt','fahren','fahrt'],schwimmen:['schwimme','schwimmst','schwimmt','schwimmen','schwimmt'],lachen:['lache','lachst','lacht','lachen','lacht'],tanzen:['tanze','tanzt','tanzt','tanzen','tanzt']};
+const PR=['ich','du','er','wir','ihr'];
+const ZEIT=[['Aang flog über die Berge.','gestern'],['Katara wird Wasser bändigen.','morgen'],['Toph schleudert einen Felsen.','heute'],['Zuko hat Tee getrunken.','gestern'],['Sokka wird einen Plan machen.','morgen'],['Momo frisst eine Frucht.','heute'],['Iroh kochte Tee.','gestern'],['Appa wird schlafen.','morgen']];
+const ZTIP={gestern:'gestern: flog, kochte oder hat … getrunken',heute:'heute: Gegenwart, zum Beispiel schleudert',morgen:'morgen: wird … + Verb'};
+function genVerben(){
+ const tun=pick(TUN,2).map(([a,b,c])=>MC('verben','Welches Wort ist ein <b>Verb</b>?<br><span class="sm">Tunprobe: Was kann man tun?</span>',[a,b,c],a,`„${a}“ sagt, was jemand tut.`,'🦵'));
+ const idw=pick(Object.keys(V),2).map(inf=>{const p=rng(5),f=V[inf],a=f[p];return MC('verben',`<span class="qt">${PR[p]} ___</span> <span class="sm">(${inf})</span><br><span class="sm">Ich-du-wir-Probe</span>`,[a,...pick(uniq(f).filter(x=>x!==a),2)],a,`ich ${f[0]} · du ${f[1]} · er ${f[2]} · wir ${f[3]} · ihr ${f[4]}`,'👥',`${PR[p]} ${a}`);});
+ const z=pick(ZEIT,1).map(([s,a])=>MC('verben',`Wann passiert das?<br><span class="qt">${s}</span><br><span class="sm">Zeitformenprobe</span>`,['gestern','heute','morgen'],a,ZTIP[a],'📅',s));
+ return [...idw.slice(0,1),...tun.slice(0,1),...idw.slice(1),...tun.slice(1),...z].slice(0,5);}
+
+/* ---- Wer sagt was ---- */
+const LEISE=['flüstern','murmeln','wispern'],LAUT=['rufen','schreien','brüllen','kreischen'];
+const QUOTES=[['Sei leise, sonst finden sie uns!','Katara','flüstert','brüllt','jammert'],['Ich habe schon wieder Kopfweh!','Sokka','jammert','flüstert','antwortet'],['Wie weit ist es noch bis Ba Sing Se?','Aang','fragt','schimpft','kichert'],['Hört sofort damit auf!','Zuko','schimpft','flüstert','antwortet'],['Hihi, der Witz ist so gut!','Toph','kichert','weint','murmelt'],['Ich habe Momo verloren …','Aang','schluchzt','ruft','lacht'],['Rennt, schnell, der Feuerball kommt!','Sokka','schreit','flüstert','murmelt'],['Ja, ich komme gleich.','Katara','antwortet','fragt','brüllt']];
+function genSagen(){
+ const ll=pick([...LEISE.map(w=>[w,'🔈 leise']),...LAUT.map(w=>[w,'🔊 laut'])],2).map(([w,a])=>MC('sagen',`Laut oder leise?<br><span class="qt">${w}</span>`,['🔈 leise','🔊 laut'],a,`${w} = ${a.slice(3)}`,'🗣️',w));
+ const qs=pick(QUOTES,3).map(([t,sp,a,d1,d2])=>MC('sagen',`<span class="qt">„${t}“,</span><br><span class="qt">___ ${sp}.</span>`,[a,d1,d2],a,`${a} ${sp} — das passt zu „${t}“`,'💬',`${a} ${sp}`));
+ return [ll[0],qs[0],qs[1],ll[1],qs[2]];}
+
+/* ---- Nomen ---- */
+const ART=[['Hund','der'],['Uhr','die'],['Gebäude','das'],['Berg','der'],['Tür','die'],['Feuer','das'],['Wasser','das'],['Erde','die'],['Luft','die'],['Baum','der'],['Schwert','das'],['Boot','das'],['Stadt','die'],['Tee','der'],['Kind','das'],['Wind','der']];
+const HAUS=[['Appa','Lebewesen'],['Momo','Lebewesen'],['Baum','Lebewesen'],['Schwert','Dinge'],['Boomerang','Dinge'],['Fernglas','Dinge'],['Freude','Gefühle'],['Angst','Gefühle'],['Mut','Gefühle'],['Gewitter','Ereignisse'],['Feier','Ereignisse'],['Kampf','Ereignisse'],['Ba Sing Se','Orte'],['Fluss','Orte'],['Insel','Orte'],['Wüste','Orte']];
+const HE={Lebewesen:'🐾 Lebewesen',Dinge:'🔧 Dinge',Gefühle:'❤️ Gefühle',Ereignisse:'⚡ Ereignisse',Orte:'📍 Orte'};
+const PLUR=[['das','Kleid','Kleider','Kleids','Kleidern'],['der','Baum','Bäume','Baums','Baumen'],['die','Tür','Türen','Türs','Türe'],['das','Buch','Bücher','Buchs','Büchen'],['der','Hund','Hunde','Hunds','Hündern'],['das','Haus','Häuser','Hauser','Häusen'],['die','Blume','Blumen','Blums','Blumer']];
+const ZUS=[['Haus','Tür','Haustür','Türhaus','Hausetür'],['Wasser','Stamm','Wasserstamm','Stammwasser','Wasserestamm'],['Luft','Tempel','Lufttempel','Tempelluft','Luftetempel'],['schreiben','Tisch','Schreibtisch','Tischschreiben','Schreibetisch'],['alt','Papier','Altpapier','Papieralt','Altenpapier'],['Feuer','Nation','Feuernation','Nationfeuer','Feuerenation']];
+function genNomen(){
+ const art=pick(ART,2).map(([w,a])=>MC('nomen',`<span class="qt">___ ${w}</span><br><span class="sm">Der-die-das-Probe</span>`,['der','die','das'],a,`${a} ${w}`,'🚚',`${a} ${w}`));
+ const hs=pick(HAUS,1).map(([w,a])=>MC('nomen',`In welches Haus gehört <b>${w}</b>?`,[HE[a],...pick(Object.values(HE).filter(x=>x!==HE[a]),2)],HE[a],`${w} ist: ${a}`,'🏠',`${w} → ${a}`));
+ const pl=pick(PLUR,1).map(([ar,s,a,d1,d2])=>MC('nomen',`Einzahl: <b>${ar} ${s}</b><br>Mehrzahl: <b>die ___</b>`,[a,d1,d2],a,`${ar} ${s} – die ${a}`,'👥',`die ${a}`));
+ const zs=pick(ZUS,1).map(([a,b,c,d1,d2])=>MC('nomen',`<span class="qt">${a} + ${b}</span><br>Was ist das neue Wort?`,[c,d1,d2],c,`${a} + ${b} = ${c}`,'🔗',c));
+ return [art[0],hs[0],art[1],pl[0],zs[0]];}
+
+/* ---- Adjektive ---- */
+const ADJ=[['gross','Berg','springt'],['Appa','flink','rennt'],['schläft','Tee','heiss'],['Katara','ruhig','badet'],['laut','Toph','schreit'],['Feuer','kalt','brennt']];
+const ADJW=['gross','flink','heiss','ruhig','laut','kalt'];
+const SAND=[['der','Berg','grosse','springt','gestern'],['der','Momo','flinke','rennt','heute'],['das','Feuer','heisse','brennt','dort'],['die','Luft','kalte','weht','morgen'],['der','Onkel','alte','kocht','gestern'],['das','Schwert','scharfe','schneidet','hier']];
+const STEI=[['süss – süsser – am ___',['süssesten','süssten','süsster'],'süssesten'],['klein – kleiner – am ___',['kleinsten','kleinesten','kleinster'],'kleinsten'],['hoch – ___ – am höchsten',['höher','hochter','hocher'],'höher'],['kalt – ___ – am kältesten',['kälter','kaltter','kalter'],'kälter'],['warm – wärmer – am ___',['wärmsten','wärmesten','warmsten'],'wärmsten'],['gross – grösser – am ___',['grössten','grossten','grösseren'],'grössten'],['laut – ___ – am lautesten',['lauter','lautter','läuter'],'lauter'],['schnell – schneller – am ___',['schnellsten','schnellesten','schnelleren'],'schnellsten']];
+const VGL=[['sauer','eine','Zitrone','Banane','Wolke'],['rund','ein','Kreis','Dreieck','Würfel'],['glatt','ein','Spiegel','Igel','Stein'],['kühl','','Eis','Feuer','Suppe'],['heiss','ein','Feuer','Eis','Schnee'],['alt','ein','Opa','Baby','Ei'],['spitz','eine','Nadel','Kugel','Wolke'],['schnell','der','Wind','Schnecke','Stein']];
+function genAdj(){
+ const ap=pick(ADJ,1).map(([a,b,c])=>{const ans=[a,b,c].find(w=>ADJW.includes(w));return MC('adj','Welches Wort sagt, <b>wie</b> etwas ist?<br><span class="sm">Wie-Probe</span>',[a,b,c],ans,`„${ans}“ ist ein Adjektiv.`,'❓');});
+ const sw=pick(SAND,2).map(([ar,n,a,d1,d2])=>MC('adj',`<span class="qt">${ar} ___ ${n}</span><br>Welches Wort ist der <b>Käse</b> im Sandwich?<br><span class="sm">Sandwichprobe</span>`,[a,d1,d2],a,`${ar} ${a} ${n}`,'🥪',`${ar} ${a} ${n}`));
+ const st=pick(STEI,1).map(([q,o,a])=>MC('adj',`<span class="qt">${q}</span><br><span class="sm">Steigerungsprobe</span>`,o,a,q.replace('___',a),'✏️',a));
+ const vg=pick(VGL,1).map(([adj,ar,c,d1,d2])=>MC('adj',`<span class="qt">${adj} wie ${ar?ar+' ':''}___</span>`,[c,d1,d2],c,`${adj} wie ${ar?ar+' ':''}${c}`,'🔎',`${adj} wie ${c}`));
+ return [ap[0],sw[0],st[0],sw[1],vg[0]];}
+
+/* ---- Reime ---- */
+const REIM=[['Haus','Maus','Tür','Baum'],['Weg','Steg','Tag','Berg'],['Kuss','Bus','Kuh','Kiste'],['Schnee','See','Schuh','Schaf'],['Baum','Traum','Berg','Brot'],['Nuss','Schluss','Nase','Nest'],['Wal','Saal','Wolf','Wind'],['Reh','Zeh','Reis','Rad'],['Luft','Duft','Last','Lust']];
+const ANL=[['Wölfe wandern weit.','Hunde bellen laut.','Katzen mögen Fisch.'],['Biber bauen Burgen.','Kinder spielen draussen.','Vögel singen Lieder.'],['Kamele klettern kaum.','Aang fliegt hoch.','Toph liebt Steine.'],['Momo mag Mangos mächtig.','Aang isst Reis.','Toph spielt laut.'],['Katara kauft kleine Kekse.','Appa frisst viel Gras.','Zuko trinkt heissen Tee.']];
+const TIER=[['Känguru','Kängu','Ru','Gu','Rü'],['Zitteraal','Zitter','Aal','Al','Aa'],['Pandabär','Panda','Bär','Bar','Per'],['Regenwurm','Regen','Wurm','Turm','Wurf'],['Elefant','Ele','Fant','Tant','Fanz'],['Skorpion','Skorpi','On','An','Om']];
+function genReime(){
+ const rm=pick(REIM,2).map(([w,a,d1,d2])=>MC('reime',`Was reimt sich auf <span class="qt">${w}</span>?`,[a,d1,d2],a,`${w} – ${a}`,'🎵',`${w} – ${a}`));
+ const an=pick(ANL,1).map(([a,d1,d2])=>MC('reime','Welcher Satz fängt bei <b>allen Wörtern gleich</b> an?<br><span class="sm">Anlaut-Spiel</span>',[a,d1,d2],a,`${a} — alle Wörter beginnen gleich.`,'🔤',a));
+ const ti=pick(TIER,2).map(([f,hd,t,d1,d2])=>MC('reime',`<span class="qt">${f}</span> = ${hd} und ___`,[t,d1,d2],t,`${f} = ${hd} + ${t}`,'🐾',`${f}: ${t}`));
+ return [rm[0],an[0],ti[0],rm[1],ti[1]];}
+
+/* ---- Geschichten-Rakete ---- */
+const WF=[['Gestern spielte Katara am Fluss.','Wann?','Gestern',['Gestern','Katara','am Fluss']],['Gestern spielte Katara am Fluss.','Wo?','am Fluss',['Gestern','Katara','am Fluss']],['Gestern spielte Katara am Fluss.','Wer?','Katara',['Gestern','Katara','am Fluss']],['Heute Morgen flog Aang über die Berge.','Wann?','Heute Morgen',['Heute Morgen','Aang','über die Berge']],['Heute Morgen flog Aang über die Berge.','Wo?','über die Berge',['Heute Morgen','Aang','über die Berge']],['Am Abend kochte Iroh im Lager Tee.','Wer?','Iroh',['Am Abend','Iroh','im Lager']],['Am Abend kochte Iroh im Lager Tee.','Wo?','im Lager',['Am Abend','Iroh','im Lager']],['Am Abend kochte Iroh im Lager Tee.','Wann?','Am Abend',['Am Abend','Iroh','im Lager']]];
+const TYP=[['Welcher Satz ist <b>wörtliche Rede</b>?',['„Hilf mir!“, rief Aang.','Aang rief nach Hilfe.','Aang war müde.'],'Wörtliche Rede steht in Anführungszeichen.'],['Welcher Satz ist ein <b>Ausruf</b>?',['Pass auf!','Du hast Hunger.','Wo ist Appa?'],'Ein Ausruf endet mit einem Ausrufezeichen.'],['Welcher Satz ist eine <b>Frage</b>?',['Wo ist Appa?','Appa schläft.','Appa, komm!'],'Eine Frage endet mit einem Fragezeichen.'],['Welcher Satz zeigt ein <b>Gefühl</b>?',['Katara hatte grosse Angst.','Katara ging zum Fluss.','Katara war am Fluss.'],'Gefühle und Gedanken machen eine Geschichte lebendig.']];
+const STORY=[['Appas grosser Flug','Gestern flog Aang mit Appa über die Berge.','Plötzlich kam ein Sturm und Appa musste ganz tief fliegen.','Am Abend landeten beide sicher und assen Reis.'],['Katara und der Wasserfall','Am Morgen ging Katara zum Fluss.','Da sah sie einen Wasserfall und bändigte das Wasser hoch in die Luft.','Zum Schluss lachte sie und trank ein Glas frisches Wasser.'],['Tophs Steintanz','Am Nachmittag übte Toph im Hof.','Mit einem Stampfen liess sie einen Felsen wie einen Ball fliegen.','Danach klatschte Sokka laut und alle assen Kuchen.']];
+function genStory(){
+ const wf=pick(WF,2).map(([s,q,a,o])=>MC('story',`<span class="qt">${s}</span><br>Welcher Teil antwortet auf <b>${q}</b>`,o,a,`${q} → ${a}`,'📍',`${q} ${a}`));
+ const ty=pick(TYP,2).map(([q,o,tip])=>MC('story',q,o,o[0],tip,'💬',o[0]));
+ const st=pick(STORY,1).map(s=>({g:'ord',p:'story',k:'story:'+h(s[0]),q:'Bringe die Geschichte in Ordnung!<br><span class="sm">Tippe zuerst die Überschrift an, dann Einleitung, Hauptteil und Schluss.</span>',items:s,tip:ORD_LAB.join(' · '),lab:s[0]}));
+ return [wf[0],ty[0],wf[1],ty[1],st[0]];}
+
+/* ---------- Themen ---------- */
+const PACKS={
+ verben:{e:'🏃',t:'Verben',d:'Tunprobe, Ich-du-wir, Zeiten',c:'bblue',gen:genVerben,card:['🦵 <b>Tunprobe:</b> Was kann man tun? springen, kochen, fliegen','👥 <b>Ich-du-wir:</b> ich fahre · du fährst · wir fahren','📅 <b>Zeiten:</b> gestern flog · heute fliegt · morgen wird fliegen']},
+ sagen:{e:'🗣️',t:'Wer sagt was?',d:'Verben des Sagens',c:'bgold',gen:genSagen,card:['🔈 <b>leise:</b> flüstern, murmeln, wispern','🔊 <b>laut:</b> rufen, schreien, brüllen, kreischen','💬 <b>auch:</b> antworten, fragen, schimpfen, jammern, kichern, weinen']},
+ nomen:{e:'🏠',t:'Nomen-Häuser',d:'der · die · das und mehr',c:'bgreen',gen:genNomen,card:['🏠 <b>Fünf Häuser:</b> Lebewesen · Dinge · Gefühle · Ereignisse · Orte','🚚 <b>der · die · das</b> (ein · eine)','🔠 Nomen schreibt man <b>gross</b>. Haus + Tür = Haustür']},
+ adj:{e:'🥪',t:'Adjektive & Sandwich',d:'Wie ist es? süss, süsser …',c:'bfire',gen:genAdj,card:['❓ <b>Wie-Probe:</b> Wie ist der Hund? süss','✏️ <b>Steigerung:</b> süss – süsser – am süssesten','🥪 <b>Sandwich:</b> der <b>süsse</b> Hund']},
+ reime:{e:'🎵',t:'Reim-Werkstatt',d:'Reime, Anlaute, Wort-Spiele',c:'bpurple',gen:genReime,card:['🎵 <b>Reim:</b> Haus – Maus','🔤 <b>Anlaut:</b> Wölfe wandern weit','🐾 <b>Wort-Spiel:</b> Känguru = Kängu + Ru']},
+ story:{e:'🚀',t:'Geschichten-Rakete',d:'So baust du eine Geschichte',c:'bteal',gen:genStory,card:['✨ <b>Überschrift:</b> macht neugierig','📍 <b>Einleitung:</b> Wer? Wo? Wann? Was?','🔥 <b>Hauptteil:</b> Was passiert? Höhepunkt','🏁 <b>Schluss:</b> Geschichte abschliessen']}
+};
+
+/* ---------- Ablauf ---------- */
+function start(mode){S={mode,queue:[],i:0,pts:0,wrong:[]};go('s-play');
+ if(mode==='box'){S.queue=shuffle(Object.values(ST.box)).slice(0,5);if(!S.queue.length)return go('s-home');show();return;}
+ S.queue=PACKS[mode].gen();const P=PACKS[mode];$('ptitle').textContent=P.e+' '+P.t;$('dots').innerHTML='';
+ $('stage').innerHTML=`<div class="card"><div class="big">${P.e} ${P.t}</div><div class="lead" style="font-size:16px;color:var(--muted)">Merk-Bild</div><div class="mc">${P.card.map(x=>`<div>${x}</div>`).join('')}</div></div><button class="btn bgreen" onclick="show()">Los geht’s ➜</button>`;}
+function startBox(){start('box');}
+function show(){const q=S.queue[S.i];S.locked=false;
+ $('ptitle').textContent=(S.mode==='box'?'📦 Fehlerkiste':PACKS[S.mode].e+' '+PACKS[S.mode].t)+' · '+(S.i+1)+' von '+S.queue.length;
+ $('dots').innerHTML=S.queue.map((_,i)=>`<i class="${i<S.i?'d':i===S.i?'c':''}"></i>`).join('');
+ window.scrollTo(0,0);(q.g==='ord'?rOrd:rMC)(q);}
+function next(){S.i++;if(S.i>=S.queue.length)finish();else show();}
+function showNext(){$('nx').innerHTML=`<button class="btn bgreen" onclick="next()">${S.i>=S.queue.length-1?'Fertig 🌟':'Weiter ➜'}</button>`;}
+function mark(q,ok){S.locked=true;if(ok){S.pts++;delete ST.box[q.k];}else{ST.box[q.k]=q;S.wrong.push(q);}save();showNext();}
+function fb(t,c){const e=$('fb');e.textContent=t;e.className='fb '+(c||'');}
+
+function rMC(q){const long=q.o.some(x=>x.length>14),two=q.o.length===2;
+ $('stage').innerHTML=`<div class="card">${q.e?`<div style="font-size:60px;line-height:1.1">${q.e}</div>`:''}<div class="lead">${q.q}</div></div>
+ <div class="opts ${long?'v1':two?'u2':''}">${shuffle(q.o).map(o=>`<button class="opt">${o}</button>`).join('')}</div><div id="fb" class="fb"></div><div id="nx"></div>`;
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>ansMC(b,q));}
+function ansMC(b,q){if(S.locked)return;const ok=b.textContent===q.a;
+ document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.textContent===q.a)x.classList.add('good');});if(!ok)b.classList.add('bad');
+ fb(ok?`Richtig! 🌟 ${q.tip}`:`Fast! 💪 Richtig ist: ${q.a}. ${q.tip}`,ok?'good':'bad');mark(q,ok);}
+
+function rOrd(q){S.pl=0;S.mis=0;
+ $('stage').innerHTML=`<div class="card"><div style="font-size:60px;line-height:1.1">🚀</div><div class="lead">${q.q}</div><div id="mine"></div></div>
+ <div class="pool">${shuffle(q.items.map((t,i)=>({t,i}))).map(x=>`<button class="chipb" data-i="${x.i}">${x.t}</button>`).join('')}</div><div id="fb" class="fb"></div><div id="nx"></div>`;
+ document.querySelectorAll('.chipb').forEach(b=>b.onclick=()=>tapOrd(b,q));}
+function tapOrd(b,q){if(S.locked)return;const i=+b.dataset.i;
+ if(i===S.pl){S.pl++;b.disabled=true;$('mine').insertAdjacentHTML('beforeend',`<div class="mi"><b>${ORD_LAB[i]}</b>${q.items[i]}</div>`);fb('');
+  if(S.pl===q.items.length){const ok=S.mis===0;fb(ok?'Richtig sortiert! 🌟':'Geschafft! 💪 Beim nächsten Mal klappt es ohne Umweg.',ok?'good':'bad');mark(q,ok);}}
+ else{S.mis++;b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');fb('Noch nicht dran — probier ein anderes Teil.','bad');}}
+
+/* ---------- Ergebnis ---------- */
+function finish(){const n=S.queue.length,sc=Math.floor(S.pts/3);ST.n++;ST.best[S.mode]=Math.max(ST.best[S.mode]||0,S.pts);save();addScrolls(sc);go('s-result');
+ const r=S.pts/n;$('rs-title').textContent=r>=.9?'Meisterhaft! 🌟':r>=.6?'Stark gemacht! 💪':'Gut geübt! 🌱';$('rs-score').textContent=S.pts+' / '+n;$('rs-info').innerHTML=sc>0?`+${sc} 📜`:'';
+ $('rs-box').innerHTML=S.wrong.length?`<div class="card"><div class="lead">📦 Das üben wir nochmal:</div><div class="chips">${S.wrong.map(q=>`<span class="chip">${q.lab}</span>`).join('')}</div></div>`:'';
+ const m=S.mode;$('rs-btns').innerHTML=(boxN()&&m!=='box'?`<button class="btn bfire" onclick="startBox()">📦 Fehlerkiste trainieren</button>`:'')+(m!=='box'?`<button class="btn bgreen" onclick="start('${m}')">🔁 Nochmal</button>`:'')+`<button class="btn bgray" style="display:block;width:100%" onclick="go('s-home')">🏠 Deutsch-Werkstatt</button>`;}
+function renderHome(){const B=ST.best;
+ $('hm').innerHTML=Object.keys(PACKS).map(k=>{const P=PACKS[k];return `<button class="btn ${P.c}" onclick="start('${k}')">${P.e} ${P.t}<small>${P.d}</small>${B[k]!=null?`<small>Bestwert: ${B[k]} von 5</small>`:''}</button>`;}).join('')
+ +(boxN()?`<button class="btn bgray" style="display:block;width:100%" onclick="startBox()">📦 Fehlerkiste (${boxN()})</button>`:'');}
+renderHome();
+</script>
+</body></html>
